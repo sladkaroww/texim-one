@@ -39,14 +39,42 @@ function normalizeEvent(e) {
     };
 }
 
-async function fetchEvent(id) {
+async function fetchEvent(id, proxyUrl) {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 3500);
+    const timer = setTimeout(() => controller.abort(), 6000);
     const headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
         Accept: 'application/json',
     };
     try {
+        // Preferred: a non-Cloudflare proxy (clean IP) that can reach TruckersMP.
+        if (proxyUrl) {
+            try {
+                const r = await fetch(`${proxyUrl.replace(/\/+$/, '')}/api/event?id=${encodeURIComponent(id)}`, {
+                    headers,
+                    signal: controller.signal,
+                });
+                if (r.ok) {
+                    const j = await r.json();
+                    if (j && j.success && j.id) {
+                        return {
+                            id: String(j.id),
+                            name: j.name,
+                            game: j.game,
+                            url: j.url,
+                            date: j.date,
+                            time: j.time,
+                            route: j.route,
+                            confirmed: j.confirmed,
+                            server: j.server,
+                        };
+                    }
+                }
+            } catch {
+                // fall through to direct fetch
+            }
+        }
+        // Fallback: direct from our host (usually blocked by TruckersMP's challenge).
         for (const host of TMP_HOSTS) {
             try {
                 const res = await fetch(host + id, { headers, signal: controller.signal });
@@ -95,8 +123,10 @@ export async function onRequest(context) {
     }
 
     // Best-effort auto-fetch of the convoy details from TruckersMP.
+    // Uses TMP_PROXY_URL (a non-Cloudflare proxy) when set, so details actually
+    // fill in; otherwise it falls back to the name parsed from the link.
     const eventId = data.eventId || (data.eventLink || '').match(/truckersmp\.com\/events\/(\d+)/i)?.[1];
-    const event = eventId ? await fetchEvent(eventId) : null;
+    const event = eventId ? await fetchEvent(eventId, env.TMP_PROXY_URL) : null;
 
     const fields = [
         { name: 'Driver Name', value: data.name || 'N/A', inline: true },

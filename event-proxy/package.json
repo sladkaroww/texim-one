@@ -1,0 +1,12 @@
+{
+  "name": "texim-event-proxy",
+  "version": "1.0.0",
+  "description": "TruckersMP event proxy for TEXIM ONE convoy invites (bypasses Cloudflare challenge from Pages).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
