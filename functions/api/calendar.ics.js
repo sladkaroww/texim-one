@@ -38,11 +38,23 @@ export async function onRequest() {
             tmFetch('/events/attending')
         ]);
 
+        // TruckersMP is behind Cloudflare's bot challenge, which can block the
+        // Pages egress. Fall back to a static list when the live fetch is empty.
+        const FALLBACK = [
+            { id: 33929, name: '8yrs on the road with BVAR Trucking', start_at: '2026-08-22T18:00:00', game: 'ETS2', server: { name: 'Event Server' }, event_type: { name: 'Convoy' }, departure: { location: 'Slots', city: 'Tirana' } },
+            { id: 34193, name: 'Truck Club | 4th Anniversary', start_at: '2026-08-27T19:00:00', game: 'ETS2', server: { name: 'Event Server' }, event_type: { name: 'Convoy' }, departure: { location: 'Slots', city: 'TruckersMP HQ' } },
+            { id: 33621, name: 'EGY-TRUCKERS | AUGUST 2026', start_at: '2026-08-28T18:00:00', game: 'ETS2', server: { name: 'Event Server' }, event_type: { name: 'Convoy' }, departure: null },
+            { id: 34536, name: 'Borry Logistics | 2 YEAR ANNIVERSARY', start_at: '2026-08-31T18:00:00', game: 'ETS2', server: { name: 'Event Server' }, event_type: { name: 'Truckfest And Convoy' }, departure: null },
+            { id: 34976, name: 'Krone Liner | 3 Year Anniversary', start_at: '2026-09-06T18:00:00', game: 'ETS2', server: { name: 'Event Server' }, event_type: { name: 'Convoy' }, departure: null },
+            { id: 34097, name: 'NorthStar Group | Opening Convoy', start_at: '2026-10-03T17:00:00', game: 'ETS2', server: { name: 'To be determined' }, event_type: { name: 'Convoy' }, departure: null },
+        ];
+        const source = (organized.length === 0 && attending.length === 0) ? FALLBACK : [...organized, ...attending];
+
         const now = new Date();
         const seen = new Set();
         const events = [];
 
-        [...organized, ...attending].forEach((e) => {
+        source.forEach((e) => {
             if (!e.start_at || seen.has(e.id)) return;
             const start = toDate(e.start_at);
             if (start.getTime() < now.getTime() - 60 * 60 * 1000) return;
