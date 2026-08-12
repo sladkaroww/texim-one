@@ -47,11 +47,9 @@ export async function onRequest(context) {
             { name: 'Driver Name', value: data.name || 'N/A', inline: true },
             { name: 'Discord Tag', value: data.discord || 'N/A', inline: true },
             { name: 'Email', value: data.email || 'N/A', inline: false },
-            { name: 'Convoy Name', value: data.convoyName || 'N/A', inline: false },
+            { name: 'Convoy Name', value: data.eventName || 'N/A', inline: false },
             { name: 'Convoy Link', value: data.eventLink || 'N/A', inline: false },
             { name: 'TruckersMP Event ID', value: data.eventId || 'N/A', inline: true },
-            { name: 'Preferred Date', value: data.date || 'N/A', inline: true },
-            { name: 'Preferred Time (UTC)', value: data.time || 'N/A', inline: true },
             { name: 'Additional Details', value: data.details || 'No additional details provided.', inline: false }
         ],
         footer: { text: 'TEXIM ONE - Convoy Invites' }

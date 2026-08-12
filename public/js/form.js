@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // request, so it can never be blocked. Date/time/details stay manual.
     const eventLink = document.getElementById('event-link');
     const eventHint = document.getElementById('eventLinkHint');
-    const convoyName = form.querySelector('#convoy-name');
+    const eventNameInput = form.querySelector('#event-name');
     const eventIdInput = form.querySelector('#event-id');
 
     function t(key, fallback) {
@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (eventIdInput) eventIdInput.value = id || '';
 
         const slugMatch = value.match(/truckersmp\.com\/events\/\d+-([^/?#]+)/i);
-        if (slugMatch && convoyName && !convoyName.value.trim()) {
-            convoyName.value = titleCase(slugMatch[1].replace(/[-_|]+/g, ' ').trim());
+        if (slugMatch && eventNameInput && !eventNameInput.value.trim()) {
+            eventNameInput.value = titleCase(slugMatch[1].replace(/[-_|]+/g, ' ').trim());
         }
 
         if (eventHint) {
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = Object.fromEntries(formData.entries());
 
         // Validate
-        const required = ['name', 'discord', 'convoyName', 'date', 'time'];
+        const required = ['name', 'discord'];
         for (const field of required) {
             if (!data[field]) {
                 alert('Please fill in all required fields.');
