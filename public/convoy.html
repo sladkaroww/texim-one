@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convoy Schedule | TEXIM ONE</title>
-    <meta name="description" content="TEXIM ONE convoy schedule and past convoy highlights.">
+    <meta name="description" content="TEXIM ONE upcoming convoys, automatically synced from TruckersMP. Subscribe to our live calendar.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
@@ -38,15 +38,28 @@
     <section class="page-hero">
         <div class="container">
             <h1 class="page-title">Convoy Schedule</h1>
-            <p class="page-subtitle">Upcoming and past convoy operations.</p>
+            <p class="page-subtitle">All upcoming convoys automatically imported from TruckersMP.</p>
         </div>
     </section>
 
     <section class="section section--light">
         <div class="container">
-            <div class="join-cta">
-                <p class="join-text">Convoy schedules and event info are coming soon. Join our Discord to stay updated on all TEXIM ONE convoys.</p>
-                <a href="https://discord.com/invite/2sSKVKXUtn" class="btn btn-primary">Join Our Discord</a>
+            <h2 class="section-title">Subscribe to Our Calendar</h2>
+            <p class="section-subtitle">Import all upcoming TEXIM ONE convoys straight into your calendar. The feed updates automatically as new events are added.</p>
+            <div class="calendar-actions">
+                <a href="/api/calendar.ics" class="btn btn-primary" download>Download .ics File</a>
+                <a href="#" id="googleCalBtn" class="btn btn-outline" target="_blank" rel="noopener">Add to Google Calendar</a>
+                <a href="#" id="webcalBtn" class="btn btn-outline">Subscribe (webcal)</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Upcoming Convoys</h2>
+            <p class="section-subtitle">Live events synced from our TruckersMP profile. Auto-refreshes.</p>
+            <div id="eventsList" class="events-list">
+                <div class="events-empty">Loading upcoming convoys...</div>
             </div>
         </div>
     </section>
@@ -78,5 +91,6 @@
     </footer>
 
     <script src="/js/main.js"></script>
+    <script src="/js/convoy.js"></script>
 </body>
 </html>

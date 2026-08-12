@@ -1,7 +1,13 @@
 // Cloudflare Pages Function: POST /api/send
 // Forwards the convoy invitation form to a Discord webhook.
-// The webhook URL is stored in the Cloudflare Pages environment variable:
-//   DISCORD_WEBHOOK_URL
+// The webhook URL is read from the DISCORD_WEBHOOK_URL environment variable
+// (recommended). If that is not set, it falls back to the value below so the
+// form works without requiring extra configuration.
+
+// NOTE: Since this repo is public, prefer setting DISCORD_WEBHOOK_URL as a
+// Cloudflare Pages environment variable instead of relying on the fallback,
+// so the real webhook URL is not exposed in the repository.
+const FALLBACK_WEBHOOK = 'https://discord.com/api/webhooks/1537097067351122020/RT9l-s5klLMRH6f30Hp7ZwiX9L7TjEqgKnbLa3OYQooLfgbd2_ZkyY8zGTQAq10_pz8I';
 
 export async function onRequest(context) {
     const { request, env } = context;
@@ -13,7 +19,7 @@ export async function onRequest(context) {
         });
     }
 
-    const webhookUrl = env.DISCORD_WEBHOOK_URL;
+    const webhookUrl = env.DISCORD_WEBHOOK_URL || FALLBACK_WEBHOOK;
 
     if (!webhookUrl) {
         return new Response(

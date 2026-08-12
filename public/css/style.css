@@ -499,3 +499,105 @@ button { cursor: pointer; border: none; background: none; }
     .hero-btns { flex-direction: column; }
     .hero-content { max-width: 100%; }
 }
+
+/* Events & Calendar */
+.calendar-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.event-card {
+    display: flex;
+    gap: 1.5rem;
+    background: #111118;
+    border: 1px solid #1a1a2e;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.3s, transform 0.3s;
+}
+.event-card:hover {
+    border-color: #ff0000;
+    transform: translateY(-3px);
+}
+.event-date {
+    text-align: center;
+    min-width: 70px;
+    background: #0a0a0f;
+    border: 1px solid #1a1a2e;
+    border-radius: 8px;
+    padding: 0.5rem;
+    height: fit-content;
+}
+.event-day {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ff0000;
+}
+.event-month {
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.event-year {
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+.event-body {
+    flex: 1;
+}
+.event-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+.event-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+}
+.event-tag {
+    background: #0a0a0f;
+    border: 1px solid #1a1a2e;
+    color: #ff0000;
+    border-radius: 4px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.8rem;
+}
+.event-when {
+    color: #e0e0e0;
+    margin-bottom: 0.25rem;
+}
+.event-where {
+    color: #9ca3af;
+    margin-bottom: 0.25rem;
+}
+.event-count {
+    color: #9ca3af;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+.event-body .btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+}
+.events-empty {
+    text-align: center;
+    color: #9ca3af;
+    padding: 2rem;
+}
+@media (max-width: 480px) {
+    .event-card {
+        flex-direction: column;
+    }
+}
+
