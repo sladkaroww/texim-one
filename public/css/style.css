@@ -408,8 +408,23 @@ button { cursor: pointer; border: none; background: none; }
     border: 1px solid #ff0000;
     border-radius: 6px;
     background: rgba(255, 0, 0, 0.08);
-    color: #ff6b6b;
+    color: #ffe2e2;
     font-weight: 500;
+}
+
+.form-hint.discord-invite {
+    margin-top: 0.35rem;
+}
+
+.form-hint.discord-invite a {
+    color: #ff6b6b;
+    text-decoration: underline;
+    font-weight: 600;
+    word-break: break-all;
+}
+
+.form-hint.discord-invite a:hover {
+    color: #ff9d9d;
 }
 
 /* Footer */
