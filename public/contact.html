@@ -46,6 +46,11 @@
             <div class="form-wrapper">
                 <form class="invite-form" id="inviteForm">
                     <div class="form-group">
+                        <label for="event-link" data-i18n="contact.eventLink">TruckersMP Event Link</label>
+                        <input type="url" id="event-link" name="eventLink" placeholder="https://truckersmp.com/events/34097" data-i18n-placeholder="contact.placeholder.eventLink" autocomplete="off">
+                        <p class="form-hint" id="eventLinkHint" data-i18n="contact.eventLinkHint">Paste a TruckersMP event link and the form fills in automatically.</p>
+                    </div>
+                    <div class="form-group">
                         <label for="name" data-i18n="contact.name">Full Name *</label>
                         <input type="text" id="name" name="name" required data-i18n-placeholder="contact.placeholder.name">
                     </div>

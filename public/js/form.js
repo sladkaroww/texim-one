@@ -8,6 +8,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!form) return;
 
+    // --- Auto-fill from a pasted TruckersMP event link ---
+    const eventLink = document.getElementById('event-link');
+    const eventHint = document.getElementById('eventLinkHint');
+
+    function extractEventId(value) {
+        if (!value) return null;
+        const match = value.match(/truckersmp\.com\/events\/(\d+)/i);
+        return match ? match[1] : null;
+    }
+
+    async function fillFromEvent(value) {
+        const id = extractEventId(value);
+        if (!id) {
+            if (eventHint) eventHint.textContent = window.t ? window.t('contact.eventLinkHint') : 'Paste a TruckersMP event link and the form fills in automatically.';
+            return;
+        }
+        if (eventHint) eventHint.textContent = window.t ? window.t('contact.loadingEvent') : 'Loading event details...';
+
+        try {
+            const res = await fetch(`/api/event?id=${id}`);
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message || 'Event not found');
+
+            if (data.name) form.querySelector('#convoy-name').value = data.name;
+            if (data.date) form.querySelector('#date').value = data.date;
+            if (data.time) form.querySelector('#time').value = data.time;
+            if (data.details) {
+                const details = form.querySelector('#details');
+                details.value = data.details;
+            }
+            if (eventHint) eventHint.textContent = window.t ? window.t('contact.eventLoaded') : 'Event details loaded — you can add extra info below.';
+        } catch (err) {
+            if (eventHint) eventHint.textContent = err.message || 'Could not load event. Fill the fields manually.';
+        }
+    }
+
+    if (eventLink) {
+        eventLink.addEventListener('input', (e) => fillFromEvent(e.target.value));
+        eventLink.addEventListener('blur', (e) => fillFromEvent(e.target.value));
+    }
+
+    // Re-run fill if language changes after the page loads
+    document.addEventListener('texim:langchange', () => {
+        if (eventHint && eventLink && eventLink.value.trim()) {
+            const id = extractEventId(eventLink.value);
+            if (id) eventHint.textContent = window.t('contact.eventLoaded');
+        }
+    });
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 

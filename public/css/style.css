@@ -396,6 +396,12 @@ button { cursor: pointer; border: none; background: none; }
     text-align: center;
 }
 
+.form-hint {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin: 0;
+}
+
 /* Footer */
 .footer {
     background: #050508;
