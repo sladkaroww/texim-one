@@ -13,6 +13,40 @@ const VTC_ID = '74050';
 const USER_AGENT = 'TEXIM-ONE-Site/1.0 (official website; via Cloudflare Pages)';
 const TIMEOUT_MS = 8000;
 
+// Static fallback list (kept roughly in sync with /api/events). Used so
+// auto-fill still works for known upcoming convoys when the TMP API is
+// unreachable (it rate-limits / blocks Cloudflare's network at times).
+const FALLBACK_EVENTS = [
+    { id: 33929, name: '8yrs on the road with BVAR Trucking', type: 'Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-08-22T18:00:00.000Z', departure: { location: 'Slots', city: 'Tirana' }, confirmed: 144, url: 'https://truckersmp.com/events/33929-8yrs-on-the-road-with-bvar-trucking' },
+    { id: 34193, name: 'Truck Club | 4th Anniversary', type: 'Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-08-27T19:00:00.000Z', departure: { location: 'Slots', city: 'TruckersMP HQ' }, confirmed: 152, url: 'https://truckersmp.com/events/34193-truck-club|4th-anniversary' },
+    { id: 33621, name: 'EGY-TRUCKERS | AUGUST 2026', type: 'Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-08-28T18:00:00.000Z', departure: null, confirmed: 186, url: 'https://truckersmp.com/events/33621-egy-truckers|-august2026' },
+    { id: 34536, name: 'Borry Logistics | 2 YEAR ANNIVERSARY', type: 'Truckfest And Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-08-31T18:00:00.000Z', departure: null, confirmed: 120, url: 'https://truckersmp.com/events/34536-borry-logistics|2-year-anniversary' },
+    { id: 34976, name: 'Krone Liner | 3 Year Anniversary', type: 'Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-09-06T18:00:00.000Z', departure: null, confirmed: 118, url: 'https://truckersmp.com/events/34976-krone-liner|3-year-anniversary' },
+    { id: 34097, name: 'NorthStar Group | Opening Convoy', type: 'Convoy', game: 'ETS2', server: 'To be determined', startAt: '2026-10-03T17:00:00.000Z', departure: null, confirmed: 124, url: 'https://truckersmp.com/events/34097-northstar-group|-opening-convoy' }
+];
+
+function normalizeFallback(item) {
+    const start = new Date(item.startAt);
+    const departure = item.departure ? `${item.departure.city || ''}${item.departure.location ? ' (' + item.departure.location + ')' : ''}`.trim() : '';
+    const details = [
+        `Game: ${item.game || 'ETS2'}`,
+        `Server: ${item.server || ''}`,
+        departure ? `Route: ${departure}` : '',
+        `Start: ${item.startAt.replace('T', ' ').replace('.000Z', '')} UTC`
+    ].filter(Boolean).join('\n');
+    return {
+        id: item.id,
+        name: item.name || '',
+        date: start.toISOString().slice(0, 10),
+        time: start.toISOString().slice(11, 16),
+        meetup: start.toISOString().slice(11, 16),
+        server: item.server || '',
+        game: item.game || '',
+        route: departure,
+        details
+    };
+}
+
 async function tmFetch(path) {
     const url = `https://api.truckersmp.com/v2/vtc/${VTC_ID}${path}`;
     const controller = new AbortController();
@@ -91,6 +125,11 @@ export async function onRequest(context) {
                 if (item.id === wanted) match = normalize(item);
             });
         });
+
+        if (!match) {
+            const fb = FALLBACK_EVENTS.find((e) => e.id === wanted);
+            if (fb) match = normalizeFallback(fb);
+        }
 
         if (!match) {
             return new Response(JSON.stringify({
