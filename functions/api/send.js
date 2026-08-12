@@ -1,13 +1,69 @@
 // Cloudflare Pages Function: POST /api/send
-// Forwards the convoy invitation form to a Discord webhook.
-// The webhook URL is read from the DISCORD_WEBHOOK_URL environment variable
-// (recommended). If that is not set, it falls back to the value below so the
-// form works without requiring extra configuration.
+// Forwards the convoy invitation form to a Discord webhook, and attempts to
+// auto-fill the convoy details by fetching the TruckersMP event.
+//
+// NOTE: TruckersMP sits behind Cloudflare's bot challenge, which blocks
+// requests from the Pages egress. When the live fetch is blocked we fall back
+// to the name parsed from the event link (set on the client) so the invite is
+// still useful. A non-Cloudflare proxy is required for 100% reliable fetching.
 
-// NOTE: Since this repo is public, prefer setting DISCORD_WEBHOOK_URL as a
-// Cloudflare Pages environment variable instead of relying on the fallback,
-// so the real webhook URL is not exposed in the repository.
+// The webhook URL is read from the DISCORD_WEBHOOK_URL environment variable
+// (recommended). If that is not set, it falls back to the value below.
+// Prefer setting DISCORD_WEBHOOK_URL in Cloudflare Pages settings so the real
+// webhook URL is not exposed in this public repo.
 const FALLBACK_WEBHOOK = 'https://discord.com/api/webhooks/1537097067351122020/RT9l-s5klLMRH6f30Hp7ZwiX9L7TjEqgKnbLa3OYQooLfgbd2_ZkyY8zGTQAq10_pz8I';
+
+const TMP_HOSTS = [
+    'https://truckersmp.com/api/v2/events/',
+    'https://api.truckersmp.com/v2/events/',
+];
+
+function normalizeEvent(e) {
+    if (!e || !e.id) return null;
+    const start = new Date(e.startAt || e.start_at);
+    const departure = e.departure || null;
+    const arrive = e.arrive || null;
+    const depCity = departure ? [departure.city, departure.location].filter(Boolean).join(' ') : '';
+    const arrCity = arrive ? [arrive.city, arrive.location].filter(Boolean).join(' ') : '';
+    const route = [depCity, arrCity].filter(Boolean).join(' → ');
+    return {
+        id: String(e.id),
+        name: e.name || '',
+        game: e.game || '',
+        server: typeof e.server === 'string' ? e.server : (e.server && e.server.name) || '',
+        date: isNaN(start) ? '' : start.toISOString().slice(0, 10),
+        time: isNaN(start) ? '' : start.toISOString().slice(11, 16),
+        route,
+        confirmed: (e.attendances && e.attendances.confirmed) || e.confirmed || 0,
+        url: e.url || `https://truckersmp.com/events/${e.id}`,
+    };
+}
+
+async function fetchEvent(id) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 3500);
+    const headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        Accept: 'application/json',
+    };
+    try {
+        for (const host of TMP_HOSTS) {
+            try {
+                const res = await fetch(host + id, { headers, signal: controller.signal });
+                if (!res.ok) continue;
+                const json = await res.json();
+                const e = json.response || json;
+                const norm = normalizeEvent(e);
+                if (norm) return norm;
+            } catch {
+                // try the next host
+            }
+        }
+    } finally {
+        clearTimeout(timer);
+    }
+    return null;
+}
 
 export async function onRequest(context) {
     const { request, env } = context;
@@ -15,7 +71,7 @@ export async function onRequest(context) {
     if (request.method !== 'POST') {
         return new Response(JSON.stringify({ success: false, message: 'Method not allowed' }), {
             status: 405,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
         });
     }
 
@@ -23,7 +79,7 @@ export async function onRequest(context) {
 
     if (!webhookUrl) {
         return new Response(
-            JSON.stringify({ success: false, message: 'Webhook URL is not configured. Please set the DISCORD_WEBHOOK_URL environment variable in Cloudflare Pages settings.' }),
+            JSON.stringify({ success: false, message: 'Webhook URL is not configured.' }),
             { status: 500, headers: { 'Content-Type': 'application/json' } }
         );
     }
@@ -38,33 +94,53 @@ export async function onRequest(context) {
         );
     }
 
-    // Build the Discord embed
+    // Best-effort auto-fetch of the convoy details from TruckersMP.
+    const eventId = data.eventId || (data.eventLink || '').match(/truckersmp\.com\/events\/(\d+)/i)?.[1];
+    const event = eventId ? await fetchEvent(eventId) : null;
+
+    const fields = [
+        { name: 'Driver Name', value: data.name || 'N/A', inline: true },
+        { name: 'Discord Tag', value: data.discord || 'N/A', inline: true },
+        { name: 'Email', value: data.email || 'N/A', inline: false },
+    ];
+
+    if (event) {
+        fields.push(
+            { name: 'Convoy Name', value: event.name || 'N/A', inline: false },
+            { name: 'Date', value: event.date || 'N/A', inline: true },
+            { name: 'Time (UTC)', value: event.time || 'N/A', inline: true },
+            { name: 'Game', value: event.game || 'N/A', inline: true },
+            { name: 'Server', value: event.server || 'N/A', inline: true },
+        );
+        if (event.route) fields.push({ name: 'Route', value: event.route, inline: false });
+        if (event.confirmed) fields.push({ name: 'Attending', value: String(event.confirmed), inline: true });
+        fields.push({ name: 'Convoy Link', value: event.url || data.eventLink || 'N/A', inline: false });
+        fields.push({ name: 'TruckersMP Event ID', value: event.id, inline: true });
+    } else {
+        fields.push(
+            { name: 'Convoy Name', value: data.eventName || 'See event link', inline: false },
+            { name: 'Convoy Link', value: data.eventLink || 'N/A', inline: false },
+            { name: 'TruckersMP Event ID', value: data.eventId || 'N/A', inline: true },
+        );
+    }
+
+    if (data.details) {
+        fields.push({ name: 'Additional Details', value: data.details, inline: false });
+    }
+
     const embed = {
         title: 'New Convoy Invitation',
         color: 0xff0000,
         timestamp: new Date().toISOString(),
-        fields: [
-            { name: 'Driver Name', value: data.name || 'N/A', inline: true },
-            { name: 'Discord Tag', value: data.discord || 'N/A', inline: true },
-            { name: 'Email', value: data.email || 'N/A', inline: false },
-            { name: 'Convoy Name', value: data.eventName || 'N/A', inline: false },
-            { name: 'Convoy Link', value: data.eventLink || 'N/A', inline: false },
-            { name: 'TruckersMP Event ID', value: data.eventId || 'N/A', inline: true },
-            { name: 'Additional Details', value: data.details || 'No additional details provided.', inline: false }
-        ],
-        footer: { text: 'TEXIM ONE - Convoy Invites' }
+        fields,
+        footer: { text: 'TEXIM ONE - Convoy Invites' },
     };
-
-    const payload = JSON.stringify({
-        username: 'TEXIM ONE Bot',
-        embeds: [embed]
-    });
 
     try {
         const discordResponse = await fetch(webhookUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: payload
+            body: JSON.stringify({ username: 'TEXIM ONE Bot', embeds: [embed] }),
         });
 
         if (!discordResponse.ok) {
@@ -76,7 +152,7 @@ export async function onRequest(context) {
         }
 
         return new Response(
-            JSON.stringify({ success: true, message: 'Invitation sent successfully!' }),
+            JSON.stringify({ success: true, message: 'Invitation sent successfully!', fetched: !!event }),
             { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
     } catch (error) {
