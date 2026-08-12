@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = Object.fromEntries(formData.entries());
 
         // Validate required fields
-        const required = ['eventName', 'eventDate', 'email'];
+        const required = ['eventName', 'eventDate', 'discord'];
         for (const field of required) {
             if (!data[field] || !String(data[field]).trim()) {
                 alert(t('contact.required', 'Please fill in all required fields (Convoy Name, Date, Email).'));

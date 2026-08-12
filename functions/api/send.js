@@ -99,7 +99,7 @@ export async function onRequest(context) {
     } else {
         fields.push({
             name: 'Auto-Decision',
-            value: 'RECEIVED — no calendar conflict. Pending review; we will confirm by email (or Discord).',
+            value: 'RECEIVED — no calendar conflict. Pending review; we will DM you on Discord with our decision.',
             inline: false,
         });
     }
@@ -112,7 +112,7 @@ export async function onRequest(context) {
         color: conflict ? 0xff0000 : 0x1f6feb,
         timestamp: new Date().toISOString(),
         fields,
-        footer: { text: 'TEXIM ONE - Convoy Invites (calendar-checked)' },
+        footer: { text: 'TEXIM ONE - Convoy Invites (calendar-checked, DM via Discord)' },
     };
 
     try {
@@ -131,8 +131,8 @@ export async function onRequest(context) {
         }
 
         const message = conflict
-            ? 'Automatically declined: we already have a convoy on that date. We will email you to confirm.'
-            : 'Invite received! We will confirm attendance by email (or Discord).';
+            ? 'Automatically declined: we already have a convoy on that date. We will DM you on Discord to confirm.'
+            : 'Invite received! We will DM you on Discord with our decision.';
 
         return new Response(
             JSON.stringify({ success: true, status, message }),

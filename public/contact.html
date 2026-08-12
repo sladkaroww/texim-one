@@ -62,13 +62,13 @@
                         <input type="text" id="eventTime" name="eventTime" placeholder="e.g. 17:30" data-i18n-placeholder="contact.placeholder.eventTime">
                     </div>
                     <div class="form-group">
-                        <label for="discord" data-i18n="contact.discord">Discord User</label>
-                        <input type="text" id="discord" name="discord" placeholder="username" data-i18n-placeholder="contact.placeholder.discord">
+                        <label for="discord" data-i18n="contact.discord">Discord User *</label>
+                        <input type="text" id="discord" name="discord" required placeholder="username" data-i18n-placeholder="contact.placeholder.discord">
+                        <p class="form-hint highlight" id="discordNote" data-i18n="contact.discordNote">Crucial: join our Discord (https://discord.com/invite/2sSKVKXUtn) so we can DM you when we accept or decline. We no longer email invites.</p>
                     </div>
                     <div class="form-group">
-                        <label for="email" data-i18n="contact.email">Email Address *</label>
-                        <input type="email" id="email" name="email" required placeholder="you@example.com">
-                        <p class="form-hint highlight" id="emailNote" data-i18n="contact.emailNote">We confirm attendance by email. If we can't reach you on Discord, we'll use this email to accept or decline your invite.</p>
+                        <label for="email" data-i18n="contact.email">Email Address (optional)</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com">
                     </div>
                     <div class="form-group">
                         <label for="details" data-i18n="contact.details">Additional Details</label>
