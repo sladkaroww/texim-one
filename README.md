@@ -103,7 +103,7 @@ The convoy invite form collects:
 
 ## Customization
 
-- **Colors:** Edit the `:root` CSS variables (or the hardcoded hex values like `#00d4ff` accent blue).
+- **Colors:** Edit the hardcoded hex values (primary palette is black, white, and red — accent `#ff0000`).
 - **Content:** Update text in the HTML files under `public/`.
 - **Logo/branding:** Replace placeholder image divs and update the `logo` element.
 - **Social links:** Update footer `<a>` links in each HTML file.

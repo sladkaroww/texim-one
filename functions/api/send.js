@@ -35,7 +35,7 @@ export async function onRequest(context) {
     // Build the Discord embed
     const embed = {
         title: 'New Convoy Invitation',
-        color: 0x00d4ff,
+        color: 0xff0000,
         timestamp: new Date().toISOString(),
         fields: [
             { name: 'Driver Name', value: data.name || 'N/A', inline: true },
