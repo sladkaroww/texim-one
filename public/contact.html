@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invite Us to Your Convoy | TEXIM ONE</title>
     <meta name="description" content="Fill out our form to invite TEXIM ONE to your virtual trucking convoy event.">
-    <!-- Set this to your deployed event proxy URL (Vercel/Render) to enable
-         auto-fill for ANY TruckersMP event. Leave empty to use the built-in
-         Cloudflare lookup (TEXIM ONE events only). Example:
-         <meta name="event-proxy" content="https://texim-proxy.onrender.com">
-    -->
-    <meta name="event-proxy" content="">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
@@ -52,9 +46,9 @@
             <div class="form-wrapper">
                 <form class="invite-form" id="inviteForm">
                     <div class="form-group">
-                        <label for="event-link" data-i18n="contact.eventLink">TruckersMP Event Link</label>
+                        <label for="event-link" data-i18n="contact.eventLink">...or Paste a TruckersMP Event Link</label>
                         <input type="url" id="event-link" name="eventLink" placeholder="https://truckersmp.com/events/34097" data-i18n-placeholder="contact.placeholder.eventLink" autocomplete="off">
-                        <p class="form-hint" id="eventLinkHint" data-i18n="contact.eventLinkHint">Paste a TruckersMP event link and the form fills in automatically.</p>
+                        <p class="form-hint" id="eventLinkHint" data-i18n="contact.eventLinkHint">Pick a convoy from the list above, or paste a link to one of our events to auto-fill.</p>
                     </div>
                     <div class="form-group">
                         <label for="name" data-i18n="contact.name">Full Name *</label>
@@ -69,6 +63,12 @@
                             <label for="email" data-i18n="contact.email">Email Address</label>
                             <input type="email" id="email" name="email" placeholder="you@example.com">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="convoy-select" data-i18n="contact.pickConvoyLabel">Select One of Our Convoy Lists</label>
+                        <select id="convoy-select" name="convoySelect">
+                            <option value="">— Select a convoy —</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="convoy-name" data-i18n="contact.convoyName">Convoy Name / Event *</label>
