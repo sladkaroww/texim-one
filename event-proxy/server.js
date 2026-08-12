@@ -1,63 +1,116 @@
-// TEXIM ONE - TruckersMP event proxy
-// Deployed on a NON-Cloudflare host (Render / Railway / Fly) so it can reach
-// the TruckersMP API, which blocks requests coming from Cloudflare Pages.
+// TEXIM ONE - TruckersMP event proxy (HTML scraper)
+// The TruckersMP JSON API is blocked for server IPs by Cloudflare, but the
+// public event *page* (HTML) is reachable. This proxy fetches the event page
+// by id and parses the structured fields out of the HTML.
 // Exposes: GET /api/event?id=<truckersmp event id>  ->  normalized JSON
-// No external dependencies (uses Node's built-in http + global fetch, Node 18+).
+// No external dependencies (Node built-ins only).
 
 const http = require('http');
+const https = require('https');
 
 const PORT = process.env.PORT || 3000;
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
 
-function normalize(e) {
-  if (!e || !e.id) return null;
-  const start = new Date(e.startAt || e.start_at);
-  const dep = e.departure || null;
-  const arr = e.arrive || null;
-  const depCity = dep ? [dep.city, dep.location].filter(Boolean).join(' ') : '';
-  const arrCity = arr ? [arr.city, arr.location].filter(Boolean).join(' ') : '';
-  const route = [depCity, arrCity].filter(Boolean).join(' → ');
+function decode(s) {
+  return (s || '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .trim();
+}
+
+function stripHtml(s) {
+  return decode((s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
+}
+
+function match(re, html, group = 1) {
+  const m = re.exec(html);
+  return m ? decode(m[group]) : null;
+}
+
+function parseEvent(html, id) {
+  const titleRaw = match(/<title>([\s\S]*?)<\/title>/i, html);
+  const name = titleRaw
+    ? titleRaw
+        .replace(/\s*[-—]\s*Event\s*[-—]?\s*TruckersMP/i, '')
+        .replace(/\s*[-—]\s*TruckersMP/i, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+    : '';
+  const game = match(/title="Game"><\/i>\s*<b[^>]*>([^<]+)<\/b>/i, html);
+  const eventType = match(/title="Event Type"><\/i>\s*<b[^>]*>([^<]+)<\/b>/i, html);
+  const server = match(/title="Server"><\/i>\s*<b[^>]*>([^<]+)<\/b>/i, html);
+  const organizer = match(/title="Organizer"><\/i>\s*<span[^>]*>\s*<a[^>]*>([^<]+)<\/a>/i, html);
+
+  const rows = [...html.matchAll(/<th[^>]*>([\s\S]*?)<\/th>\s*<td[^>]*>([\s\S]*?)<\/td>/gi)];
+  const table = {};
+  for (const r of rows) {
+    const k = stripHtml(r[1]).toLowerCase();
+    const v = stripHtml(r[2]);
+    if (k) table[k] = v;
+  }
+
+  const meetupTime = table['meetup time'] || null;
+  const location = table['location'] || null;
+  const destination = table['destination'] || null;
+  const language = table['main language'] || null;
+  const communication = table['communication'] || null;
+  const link = table['link'] || null;
+
+  const route = [location, destination].filter(Boolean).join(' -> ');
+
   return {
-    id: String(e.id),
-    name: e.name || '',
-    game: e.game || '',
-    server: typeof e.server === 'string' ? e.server : (e.server && e.server.name) || '',
-    date: isNaN(start) ? '' : start.toISOString().slice(0, 10),
-    time: isNaN(start) ? '' : start.toISOString().slice(11, 16),
+    id: String(id),
+    name: name || '',
+    game: game || '',
+    eventType: eventType || '',
+    server: server || '',
+    organizer: organizer || '',
+    meetupTime: meetupTime || '',
     route,
-    confirmed: (e.attendances && e.attendances.confirmed) || e.confirmed || 0,
-    url: e.url || `https://truckersmp.com/events/${e.id}`,
+    location: location || '',
+    destination: destination || '',
+    language: language || '',
+    communication: communication || '',
+    link: link || '',
+    url: `https://truckersmp.com/events/${id}`,
+    source: 'html',
   };
 }
 
-async function fetchTMP(id) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8000);
-  const headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-    Accept: 'application/json',
-  };
-  const hosts = [
-    `https://api.truckersmp.com/v2/events/${id}`,
-    `https://truckersmp.com/api/v2/events/${id}`,
-  ];
-  try {
-    for (const url of hosts) {
-      try {
-        const r = await fetch(url, { headers, signal: controller.signal });
-        if (r.ok) {
-          const json = await r.json();
-          const e = json.response || json;
-          const norm = normalize(e);
-          if (norm) return { ok: true, data: norm };
+function fetchHtml(id) {
+  return new Promise((resolve) => {
+    const tryUrl = (url, depth) => {
+      if (depth > 5) return resolve(null);
+      const client = url.startsWith('https:') ? https : http;
+      const req = client.get(
+        url,
+        { headers: { 'User-Agent': UA, Accept: 'text/html' } },
+        (res) => {
+          const redirected = [301, 302, 303, 307, 308].includes(res.statusCode) && res.headers.location;
+          if (redirected) {
+            res.resume();
+            const next = new URL(res.headers.location, url).href;
+            return tryUrl(next, depth + 1);
+          }
+          let data = '';
+          res.setEncoding('utf8');
+          res.on('data', (c) => (data += c));
+          res.on('end', () => resolve(data));
         }
-      } catch {
-        // try next host
-      }
-    }
-  } finally {
-    clearTimeout(timer);
-  }
-  return { ok: false };
+      );
+      req.on('error', () => resolve(null));
+      req.setTimeout(9000, () => {
+        req.destroy();
+        resolve(null);
+      });
+    };
+    tryUrl(`https://truckersmp.com/events/${encodeURIComponent(id)}`, 0);
+  });
 }
 
 const server = http.createServer(async (req, res) => {
@@ -78,13 +131,19 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(400);
       return res.end(JSON.stringify({ error: 'invalid event id' }));
     }
-    const result = await fetchTMP(id);
-    if (!result.ok) {
+    const html = await fetchHtml(id);
+    const challenged = !html || /just a moment/i.test(html) || /cf-chl/i.test(html) || /attention required/i.test(html);
+    if (challenged) {
       res.writeHead(502);
-      return res.end(JSON.stringify({ error: 'could not fetch from TruckersMP (blocked or unavailable)' }));
+      return res.end(JSON.stringify({ error: 'TruckersMP blocked the page fetch (Cloudflare challenge)' }));
+    }
+    const data = parseEvent(html, id);
+    if (!data.name) {
+      res.writeHead(502);
+      return res.end(JSON.stringify({ error: 'could not parse event page' }));
     }
     res.writeHead(200);
-    return res.end(JSON.stringify({ success: true, ...result.data }));
+    return res.end(JSON.stringify({ success: true, ...data }));
   }
 
   res.writeHead(404);
