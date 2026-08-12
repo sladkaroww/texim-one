@@ -48,7 +48,7 @@ const server = http.createServer(async (req, res) => {
       return res.end(JSON.stringify({ error: 'invalid event id' }));
     }
     try {
-      const r = await fetch(`https://truckersmp.com/api/v2/events/${id}`, {
+      const r = await fetch(`https://api.truckersmp.com/v2/events/${id}`, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
           Accept: 'application/json',
