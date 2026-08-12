@@ -17,28 +17,26 @@
 
     <header class="header">
         <div class="container header-container">
-            <a href="/" class="logo">TEXIM<span class="logo-accent">ONE</span></a>
-            <nav class="nav" id="nav">
-                <div class="nav-close" id="navClose">&#10005;</div>
+            <a href="/" class="logo">TEXIM <span class="logo-accent">ONE</span></a>
+            <nav class="nav">
                 <ul class="nav-list">
-                    <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="/about.html" class="nav-link">About</a></li>
-                    <li><a href="/convoy.html" class="nav-link">Convoy</a></li>
-                    <li><a href="/contact.html" class="nav-link active">Join Us</a></li>
+                    <li><a href="/" class="nav-link" data-i18n="nav.home">Home</a></li>
+                    <li><a href="/about.html" class="nav-link" data-i18n="nav.about">About</a></li>
+                    <li><a href="/convoy.html" class="nav-link" data-i18n="nav.convoy">Convoy</a></li>
+                    <li><a href="/contact.html" class="nav-link active" data-i18n="nav.join">Join Us</a></li>
                 </ul>
             </nav>
-            <div class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <select id="langSwitcher" class="lang-switcher" aria-label="Language">
+                <option value="en">EN</option>
+                <option value="bg">BG</option>
+            </select>
         </div>
     </header>
 
     <section class="page-hero">
         <div class="container">
-            <h1 class="page-title">Invite Us to Your Convoy</h1>
-            <p class="page-subtitle">Fill out the form below and we'll send your invite to our Discord channel.</p>
+            <h1 class="page-title" data-i18n="contact.title">Invite Us to Your Convoy</h1>
+            <p class="page-subtitle" data-i18n="contact.sub">Fill out the form below and we'll send your invite to our Discord channel.</p>
         </div>
     </section>
 
@@ -47,49 +45,49 @@
             <div class="form-wrapper">
                 <form class="invite-form" id="inviteForm">
                     <div class="form-group">
-                        <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" required placeholder="Your name">
+                        <label for="name" data-i18n="contact.name">Full Name *</label>
+                        <input type="text" id="name" name="name" required data-i18n-placeholder="contact.placeholder.name">
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="discord">Discord Tag *</label>
+                            <label for="discord" data-i18n="contact.discord">Discord Tag *</label>
                             <input type="text" id="discord" name="discord" required placeholder="username#1234">
                         </div>
                         <div class="form-group">
-                            <label for="email">Email Address</label>
+                            <label for="email" data-i18n="contact.email">Email Address</label>
                             <input type="email" id="email" name="email" placeholder="you@example.com">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="convoy-name">Convoy Name / Event *</label>
-                        <input type="text" id="convoy-name" name="convoyName" required placeholder="e.g., EuroConvoy Weekly Event">
+                        <label for="convoy-name" data-i18n="contact.convoyName">Convoy Name / Event *</label>
+                        <input type="text" id="convoy-name" name="convoyName" required data-i18n-placeholder="contact.placeholder.convoyName">
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="date">Preferred Date *</label>
+                            <label for="date" data-i18n="contact.date">Preferred Date *</label>
                             <input type="date" id="date" name="date" required>
                         </div>
                         <div class="form-group">
-                            <label for="time">Preferred Time (UTC) *</label>
+                            <label for="time" data-i18n="contact.time">Preferred Time (UTC) *</label>
                             <input type="time" id="time" name="time" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="details">Additional Details</label>
-                        <textarea id="details" name="details" rows="4" placeholder="Any special instructions, cargo preferences, or other notes..."></textarea>
+                        <label for="details" data-i18n="contact.details">Additional Details</label>
+                        <textarea id="details" name="details" rows="4" data-i18n-placeholder="contact.placeholder.details"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">
-                        <span id="btnText">Send Invite</span>
+                        <span id="btnText" data-i18n="contact.submit">Send Invite</span>
                         <span id="btnLoading" class="loading-dots">Sending<span>.</span><span>.</span><span>.</span></span>
                     </button>
-                    <p class="form-note">* Required fields. Your information will be sent directly to our Discord team.</p>
-                </div>
+                    <p class="form-note" data-i18n="contact.note">* Required fields. Your information will be sent directly to our Discord team.</p>
+                </form>
 
                 <div class="form-success" id="formSuccess">
                     <div class="success-icon">✓</div>
-                    <h3>Invite Sent Successfully!</h3>
-                    <p>Your convoy invite has been sent to our team on Discord. We'll review it and respond soon.</p>
-                    <button class="btn btn-outline" id="closeSuccess">Send Another</button>
+                    <h3 data-i18n="contact.sent">Invite Sent Successfully!</h3>
+                    <p data-i18n="contact.sentText">Your convoy invite has been sent to our team on Discord. We'll review it and respond soon.</p>
+                    <button class="btn btn-outline" id="closeSuccess" data-i18n="contact.again">Send Another</button>
                 </div>
             </div>
         </div>
@@ -98,8 +96,8 @@
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-brand">
-                <a href="/" class="logo">TEXIM<span class="logo-accent">ONE</span></a>
-                <p class="footer-text">Professional virtual trucking logistics since 2019.</p>
+                <a href="/" class="logo">TEXIM <span class="logo-accent">ONE</span></a>
+                <p class="footer-text" data-i18n="footer.about">Professional virtual trucking logistics since 2019.</p>
                 <div class="social-links">
                     <a href="https://discord.com/invite/2sSKVKXUtn" class="social-link">Discord</a>
                     <a href="https://truckersmp.com/vtc/74050" class="social-link">TruckersMP</a>
@@ -108,19 +106,38 @@
                 </div>
             </div>
             <div class="footer-col">
-                <h4>Company</h4>
+                <h4 data-i18n="footer.company">Company</h4>
                 <ul class="footer-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about.html">About</a></li>
-                    <li><a href="/convoy.html">Convoy</a></li>
+                    <li><a href="/" data-i18n="nav.home">Home</a></li>
+                    <li><a href="/about.html" data-i18n="nav.about">About</a></li>
+                    <li><a href="/convoy.html" data-i18n="nav.convoy">Convoy</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; <span id="year"></span> TEXIM ONE. All rights reserved.</p>
+            <p>&copy; <span id="year"></span> TEXIM ONE. <span data-i18n="footer.rights">All rights reserved.</span></p>
         </div>
     </footer>
 
+    <!-- Language modal (shown on first visit) -->
+    <div class="lang-modal" id="langModal" aria-hidden="true">
+        <div class="lang-modal-box">
+            <button class="lang-close" aria-label="Close">&times;</button>
+            <div class="lang-flags">🇬🇧 🇧🇬</div>
+            <h2 class="lang-title" data-i18n="lang.title">Choose your language</h2>
+            <p class="lang-sub" data-i18n="lang.sub">Изберете вашия език</p>
+            <div class="lang-options">
+                <button class="lang-option" data-lang="en">
+                    <span class="lang-flag">🇬🇧</span><span class="lang-name">English</span>
+                </button>
+                <button class="lang-option" data-lang="bg">
+                    <span class="lang-flag">🇧🇬</span><span class="lang-name">Български</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/form.js"></script>
 </body>

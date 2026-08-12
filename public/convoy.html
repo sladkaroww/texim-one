@@ -17,47 +17,45 @@
 
     <header class="header">
         <div class="container header-container">
-            <a href="/" class="logo">TEXIM<span class="logo-accent">ONE</span></a>
-            <nav class="nav" id="nav">
-                <div class="nav-close" id="navClose">&#10005;</div>
+            <a href="/" class="logo">TEXIM <span class="logo-accent">ONE</span></a>
+            <nav class="nav">
                 <ul class="nav-list">
-                    <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="/about.html" class="nav-link">About</a></li>
-                    <li><a href="/convoy.html" class="nav-link active">Convoy</a></li>
-                    <li><a href="/contact.html" class="nav-link">Join Us</a></li>
+                    <li><a href="/" class="nav-link" data-i18n="nav.home">Home</a></li>
+                    <li><a href="/about.html" class="nav-link" data-i18n="nav.about">About</a></li>
+                    <li><a href="/convoy.html" class="nav-link active" data-i18n="nav.convoy">Convoy</a></li>
+                    <li><a href="/contact.html" class="nav-link" data-i18n="nav.join">Join Us</a></li>
                 </ul>
             </nav>
-            <div class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <select id="langSwitcher" class="lang-switcher" aria-label="Language">
+                <option value="en">EN</option>
+                <option value="bg">BG</option>
+            </select>
         </div>
     </header>
 
     <section class="page-hero">
         <div class="container">
-            <h1 class="page-title">Convoy Schedule</h1>
-            <p class="page-subtitle">All upcoming convoys automatically imported from TruckersMP.</p>
+            <h1 class="page-title" data-i18n="convoy.title">Convoy Schedule</h1>
+            <p class="page-subtitle" data-i18n="convoy.sub">All upcoming convoys automatically imported from TruckersMP.</p>
         </div>
     </section>
 
     <section class="section section--light">
         <div class="container">
-            <h2 class="section-title">Subscribe to Our Calendar</h2>
-            <p class="section-subtitle">Import all upcoming TEXIM ONE convoys straight into your calendar. The feed updates automatically as new events are added.</p>
+            <h2 class="section-title" data-i18n="convoy.subscribe">Subscribe to Our Calendar</h2>
+            <p class="section-subtitle" data-i18n="convoy.subscribe.sub">Import all upcoming TEXIM ONE convoys straight into your calendar. The feed updates automatically as new events are added.</p>
             <div class="calendar-actions">
-                <a href="/api/calendar.ics" class="btn btn-primary" download>Download .ics File</a>
-                <a href="#" id="googleCalBtn" class="btn btn-outline" target="_blank" rel="noopener">Add to Google Calendar</a>
-                <a href="#" id="webcalBtn" class="btn btn-outline">Subscribe (webcal)</a>
+                <a href="/api/calendar.ics" class="btn btn-primary" download data-i18n="convoy.download">Download .ics File</a>
+                <a href="#" id="googleCalBtn" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="convoy.google">Add to Google Calendar</a>
+                <a href="#" id="webcalBtn" class="btn btn-outline" data-i18n="convoy.webcal">Subscribe (webcal)</a>
             </div>
         </div>
     </section>
 
     <section class="section">
         <div class="container">
-            <h2 class="section-title">TEXIM ONE Calendar</h2>
-            <p class="section-subtitle">Our full event calendar, powered by Sesh. Live and always up to date.</p>
+            <h2 class="section-title" data-i18n="convoy.calendar">TEXIM ONE Calendar</h2>
+            <p class="section-subtitle" data-i18n="convoy.calendar.sub">Our full event calendar, powered by Sesh. Live and always up to date.</p>
             <div class="calendar-embed">
                 <iframe
                     src="https://sesh.fyi/calendar/565636007039467532"
@@ -67,17 +65,17 @@
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
             <div class="foreign-cta">
-                <a href="https://sesh.fyi/calendar/565636007039467532" class="btn btn-outline" target="_blank" rel="noopener">Open Calendar in New Tab</a>
+                <a href="https://sesh.fyi/calendar/565636007039467532" class="btn btn-outline" target="_blank" rel="noopener" data-i18n="convoy.open">Open Calendar in New Tab</a>
             </div>
         </div>
     </section>
 
     <section class="section section--light">
         <div class="container">
-            <h2 class="section-title">Upcoming Convoys</h2>
-            <p class="section-subtitle">Live events synced from our TruckersMP profile. Auto-refreshes.</p>
+            <h2 class="section-title" data-i18n="convoy.upcoming">Upcoming Convoys</h2>
+            <p class="section-subtitle" data-i18n="convoy.upcoming.sub">Live events synced from our TruckersMP profile. Auto-refreshes.</p>
             <div id="eventsList" class="events-list">
-                <div class="events-empty">Loading upcoming convoys...</div>
+                <div class="events-empty" data-i18n="convoy.loading">Loading upcoming convoys...</div>
             </div>
         </div>
     </section>
@@ -85,8 +83,8 @@
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-brand">
-                <a href="/" class="logo">TEXIM<span class="logo-accent">ONE</span></a>
-                <p class="footer-text">Professional virtual trucking logistics since 2019.</p>
+                <a href="/" class="logo">TEXIM <span class="logo-accent">ONE</span></a>
+                <p class="footer-text" data-i18n="footer.about">Professional virtual trucking logistics since 2019.</p>
                 <div class="social-links">
                     <a href="https://discord.com/invite/2sSKVKXUtn" class="social-link">Discord</a>
                     <a href="https://truckersmp.com/vtc/74050" class="social-link">TruckersMP</a>
@@ -95,19 +93,38 @@
                 </div>
             </div>
             <div class="footer-col">
-                <h4>Company</h4>
+                <h4 data-i18n="footer.company">Company</h4>
                 <ul class="footer-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about.html">About</a></li>
-                    <li><a href="/contact.html">Contact</a></li>
+                    <li><a href="/" data-i18n="nav.home">Home</a></li>
+                    <li><a href="/about.html" data-i18n="nav.about">About</a></li>
+                    <li><a href="/contact.html" data-i18n="nav.join">Join Us</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; <span id="year"></span> TEXIM ONE. All rights reserved.</p>
+            <p>&copy; <span id="year"></span> TEXIM ONE. <span data-i18n="footer.rights">All rights reserved.</span></p>
         </div>
     </footer>
 
+    <!-- Language modal (shown on first visit) -->
+    <div class="lang-modal" id="langModal" aria-hidden="true">
+        <div class="lang-modal-box">
+            <button class="lang-close" aria-label="Close">&times;</button>
+            <div class="lang-flags">🇬🇧 🇧🇬</div>
+            <h2 class="lang-title" data-i18n="lang.title">Choose your language</h2>
+            <p class="lang-sub" data-i18n="lang.sub">Изберете вашия език</p>
+            <div class="lang-options">
+                <button class="lang-option" data-lang="en">
+                    <span class="lang-flag">🇬🇧</span><span class="lang-name">English</span>
+                </button>
+                <button class="lang-option" data-lang="bg">
+                    <span class="lang-flag">🇧🇬</span><span class="lang-name">Български</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/convoy.js"></script>
 </body>

@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Build calendar subscription links dynamically from the current domain
     const origin = window.location.origin;
     const webcalUrl = 'webcal://' + origin.replace(/^https?:\/\//, '') + '/api/calendar.ics';
-    const icsHttp = origin + '/api/calendar.ics';
 
     const googleCalBtn = document.getElementById('googleCalBtn');
     if (googleCalBtn) {
@@ -29,13 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const events = json.events || [];
 
             if (events.length === 0) {
-                list.innerHTML = '<div class="events-empty">No upcoming convoys right now. Check back soon!</div>';
+                list.innerHTML = '<div class="events-empty">' + window.t('convoy.none') + '</div>';
                 return;
             }
 
             list.innerHTML = events.map(eventHTML).join('');
         } catch (err) {
-            list.innerHTML = '<div class="events-empty">Unable to load convoys right now. Please try again later.</div>';
+            list.innerHTML = '<div class="events-empty">' + window.t('convoy.error') + '</div>';
         }
     }
 
@@ -64,9 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${e.server ? `<span class="event-tag">${escapeHTML(e.server)}</span>` : ''}
                     </div>
                     <p class="event-when">${dateStr} &middot; ${timeStr}</p>
-                    ${location ? `<p class="event-where"><strong>Meet:</strong> ${escapeHTML(location)}</p>` : ''}
+                    ${location ? `<p class="event-where"><strong>${window.t('convoy.meet')}:</strong> ${escapeHTML(location)}</p>` : ''}
                     ${e.confirmed ? `<p class="event-count">${e.confirmed} confirmed</p>` : ''}
-                    ${e.url ? `<a href="${escapeHTML(e.url)}" class="btn btn-outline btn-sm" target="_blank" rel="noopener">View Event</a>` : ''}
+                    ${e.url ? `<a href="${escapeHTML(e.url)}" class="btn btn-outline btn-sm" target="_blank" rel="noopener">${window.t('convoy.view')}</a>` : ''}
                 </div>
             </div>
         `;
@@ -82,4 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     load();
+
+    // Re-render when the language changes
+    document.addEventListener('texim:langchange', load);
 });

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="https://files.catbox.moe/2844g8.png" type="image/png">
 </head>
 <body>
     <div class="preloader">
@@ -18,21 +18,19 @@
 
     <header class="header">
         <div class="container header-container">
-            <a href="/" class="logo">TEXIM<span class="logo-accent">ONE</span></a>
-            <nav class="nav" id="nav">
-                <div class="nav-close" id="navClose">&#10005;</div>
+            <a href="/" class="logo">TEXIM <span class="logo-accent">ONE</span></a>
+            <nav class="nav">
                 <ul class="nav-list">
-                    <li><a href="/" class="nav-link active">Home</a></li>
-                    <li><a href="/about.html" class="nav-link">About</a></li>
-                    <li><a href="/convoy.html" class="nav-link">Convoy</a></li>
-                    <li><a href="/contact.html" class="nav-link">Join Us</a></li>
+                    <li><a href="/" class="nav-link active" data-i18n="nav.home">Home</a></li>
+                    <li><a href="/about.html" class="nav-link" data-i18n="nav.about">About</a></li>
+                    <li><a href="/convoy.html" class="nav-link" data-i18n="nav.convoy">Convoy</a></li>
+                    <li><a href="/contact.html" class="nav-link" data-i18n="nav.join">Join Us</a></li>
                 </ul>
             </nav>
-            <div class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <select id="langSwitcher" class="lang-switcher" aria-label="Language">
+                <option value="en">EN</option>
+                <option value="bg">BG</option>
+            </select>
         </div>
     </header>
 
@@ -42,12 +40,12 @@
         <div class="container">
             <div class="hero-content">
                 <img src="https://static.truckersmp.com/images/vtc/logo/74050.1778907216.png" alt="TEXIM ONE Logo" class="hero-logo">
-                <h1 class="hero-title">TEXIM<span class="hero-accent">ONE</span></h1>
-                <p class="hero-subtitle">Professional Virtual Trucking Logistics</p>
-                <p class="hero-text">Винаги 1 на ум, зад TEXIM! Achieve your Roadhog dreams and enjoy the most flexible driving experience — no limits, no obligations, just the open road and a great community.</p>
+                <h1 class="hero-title">TEXIM <span class="hero-accent">ONE</span></h1>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">Professional Virtual Trucking Logistics</p>
+                <p class="hero-text" data-i18n="hero.text">Винаги 1 на ум, зад TEXIM! Achieve your Roadhog dreams and enjoy the most flexible driving experience — no limits, no obligations, just the open road and a great community.</p>
                 <div class="hero-btns">
-                    <a href="/contact.html" class="btn btn-primary">Invite Us to Your Convoy</a>
-                    <a href="/about.html" class="btn btn-outline">Learn More</a>
+                    <a href="/contact.html" class="btn btn-primary" data-i18n="hero.btn1">Invite Us to Your Convoy</a>
+                    <a href="/about.html" class="btn btn-outline" data-i18n="hero.btn2">Learn More</a>
                 </div>
             </div>
         </div>
@@ -58,19 +56,19 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-number">11</div>
-                    <div class="stat-label">Active Members</div>
+                    <div class="stat-label" data-i18n="stat.drivers">Active Members</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">2019</div>
-                    <div class="stat-label">Founded</div>
+                    <div class="stat-label" data-i18n="stat.founded">Founded</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">2</div>
-                    <div class="stat-label">Supported Games</div>
+                    <div class="stat-label" data-i18n="stat.games">Supported Games</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">0</div>
-                    <div class="stat-label">Required DLCs</div>
+                    <div class="stat-label" data-i18n="stat.dlcs">Required DLCs</div>
                 </div>
             </div>
         </div>
@@ -78,28 +76,28 @@
 
     <section class="section section--light">
         <div class="container">
-            <h2 class="section-title">Why TEXIM ONE?</h2>
-            <p class="section-subtitle">A premium virtual trucking experience built around accessibility and community.</p>
+            <h2 class="section-title" data-i18n="features.title">Why TEXIM ONE?</h2>
+            <p class="section-subtitle" data-i18n="features.sub">A premium virtual trucking experience built around accessibility and community.</p>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">No Limits, No Pressure</h3>
-                    <p class="feature-text">No monthly km limits, no required convoy attendance, no age or hours requirements, no test period. Drive on your own terms.</p>
+                    <h3 class="feature-title" data-i18n="features.f1.title">No Limits, No Pressure</h3>
+                    <p class="feature-text" data-i18n="features.f1.text">No monthly km limits, no required convoy attendance, no age or hours requirements, no test period. Drive on your own terms.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🏷️</div>
-                    <h3 class="feature-title">Distinct Corporate Identity</h3>
-                    <p class="feature-text">Recognizable through our TMP tag, exclusive avatar, and signature truck + trailer composition that sets us apart on the road.</p>
+                    <h3 class="feature-title" data-i18n="features.f2.title">Distinct Corporate Identity</h3>
+                    <p class="feature-text" data-i18n="features.f2.text">Recognizable through our TMP tag, exclusive avatar, and signature truck + trailer composition that sets us apart on the road.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📋</div>
-                    <h3 class="feature-title">Selective Recruitment</h3>
-                    <p class="feature-text">Applications are reviewed individually via our application form. We value quality and commitment over numbers.</p>
+                    <h3 class="feature-title" data-i18n="features.f3.title">Selective Recruitment</h3>
+                    <p class="feature-text" data-i18n="features.f3.text">Applications are reviewed individually via our application form. We value quality and commitment over numbers.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🎮</div>
-                    <h3 class="feature-title">ETS2 &amp; ATS Support</h3>
-                    <p class="feature-text">Play Euro Truck Simulator 2 and American Truck Simulator with no required DLCs, no minimum account age, and full speed limiter.</p>
+                    <h3 class="feature-title" data-i18n="features.f4.title">ETS2 &amp; ATS Support</h3>
+                    <p class="feature-text" data-i18n="features.f4.text">Play Euro Truck Simulator 2 and American Truck Simulator with no required DLCs, no minimum account age, and full speed limiter.</p>
                 </div>
             </div>
         </div>
@@ -107,8 +105,8 @@
 
     <section class="section section--light">
         <div class="container">
-            <h2 class="section-title">On The Road</h2>
-            <p class="section-subtitle">Convoys and events TEXIM ONE is part of — photos straight from the road.</p>
+            <h2 class="section-title" data-i18n="gallery.title">On The Road</h2>
+            <p class="section-subtitle" data-i18n="gallery.sub">Convoys and events TEXIM ONE is part of — photos straight from the road.</p>
             <div class="gallery-grid">
                 <a href="https://truckersmp.com/events/33929" class="gallery-item" target="_blank" rel="noopener">
                     <img src="https://static.truckersmp.com/images/event/cover/33929.1771332348.png" alt="8yrs on the road with BVAR Trucking" loading="lazy">
@@ -140,10 +138,10 @@
 
     <section class="section">
         <div class="container">
-            <h2 class="section-title">Join Our Community</h2>
+            <h2 class="section-title" data-i18n="join.title">Join Our Community</h2>
             <div class="join-cta">
-                <p class="join-text">Ready to hit the road? Join our Discord community today and start your journey with TEXIM ONE.</p>
-                <a href="https://discord.com/invite/2sSKVKXUtn" class="btn btn-primary">Join Our Discord</a>
+                <p class="join-text" data-i18n="join.text">Ready to hit the road? Join our Discord community today and start your journey with TEXIM ONE.</p>
+                <a href="https://discord.com/invite/2sSKVKXUtn" class="btn btn-primary" data-i18n="join.btn">Join Our Discord</a>
             </div>
         </div>
     </section>
@@ -151,8 +149,8 @@
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-brand">
-                <a href="/" class="logo">TEXIM<span class="logo-accent">ONE</span></a>
-                <p class="footer-text">Professional virtual trucking logistics since 2019.</p>
+                <a href="/" class="logo">TEXIM <span class="logo-accent">ONE</span></a>
+                <p class="footer-text" data-i18n="footer.about">Professional virtual trucking logistics since 2019.</p>
                 <div class="social-links">
                     <a href="https://discord.com/invite/2sSKVKXUtn" class="social-link" aria-label="Discord">Discord</a>
                     <a href="https://truckersmp.com/vtc/74050" class="social-link" aria-label="TruckersMP">TruckersMP</a>
@@ -161,26 +159,46 @@
                 </div>
             </div>
             <div class="footer-col">
-                <h4>Company</h4>
+                <h4 data-i18n="footer.company">Company</h4>
                 <ul class="footer-links">
-                    <li><a href="/about.html">About</a></li>
-                    <li><a href="/convoy.html">Convoy</a></li>
-                    <li><a href="/contact.html">Contact</a></li>
+                    <li><a href="/about.html" data-i18n="nav.about">About</a></li>
+                    <li><a href="/convoy.html" data-i18n="nav.convoy">Convoy</a></li>
+                    <li><a href="/contact.html" data-i18n="nav.join">Join Us</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Support</h4>
+                <h4 data-i18n="footer.support">Support</h4>
                 <ul class="footer-links">
                     <li><a href="https://discord.com/invite/2sSKVKXUtn">Discord</a></li>
-                    <!-- Add support links -->
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; <span id="year"></span> TEXIM ONE. All rights reserved.</p>
+            <p>&copy; <span id="year"></span> TEXIM ONE. <span data-i18n="footer.rights">All rights reserved.</span></p>
         </div>
     </footer>
 
+    <!-- Language modal (shown on first visit) -->
+    <div class="lang-modal" id="langModal" aria-hidden="true">
+        <div class="lang-modal-box">
+            <button class="lang-close" aria-label="Close">&times;</button>
+            <div class="lang-flags">🇬🇧 🇧🇬</div>
+            <h2 class="lang-title" data-i18n="lang.title">Choose your language</h2>
+            <p class="lang-sub" data-i18n="lang.sub">Изберете вашия език</p>
+            <div class="lang-options">
+                <button class="lang-option" data-lang="en">
+                    <span class="lang-flag">🇬🇧</span>
+                    <span class="lang-name">English</span>
+                </button>
+                <button class="lang-option" data-lang="bg">
+                    <span class="lang-flag">🇧🇬</span>
+                    <span class="lang-name">Български</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>
