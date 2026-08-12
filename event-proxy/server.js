@@ -135,12 +135,12 @@ const server = http.createServer(async (req, res) => {
     const challenged = !html || /just a moment/i.test(html) || /cf-chl/i.test(html) || /attention required/i.test(html);
     if (challenged) {
       res.writeHead(502);
-      return res.end(JSON.stringify({ error: 'TruckersMP blocked the page fetch (Cloudflare challenge)', htmlLen: html ? html.length : 0, sample: html ? html.slice(0, 200) : null }));
+      return res.end(JSON.stringify({ error: 'TruckersMP blocked the page fetch (Cloudflare challenge)' }));
     }
     const data = parseEvent(html, id);
     if (!data.name) {
       res.writeHead(502);
-      return res.end(JSON.stringify({ error: 'could not parse event page', htmlLen: html ? html.length : 0, sample: html ? html.slice(0, 300) : null }));
+      return res.end(JSON.stringify({ error: 'could not parse event page' }));
     }
     res.writeHead(200);
     return res.end(JSON.stringify({ success: true, ...data }));
