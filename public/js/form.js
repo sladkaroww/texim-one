@@ -12,59 +12,79 @@ document.addEventListener('DOMContentLoaded', () => {
     const eventLink = document.getElementById('event-link');
     const eventHint = document.getElementById('eventLinkHint');
 
+    // External proxy URL (set via <meta name="event-proxy">). When present,
+    // it is tried first so ANY public event auto-fills; we fall back to the
+    // Cloudflare function (TEXIM ONE events only) if it's unset or fails.
+    const proxyMeta = document.querySelector('meta[name="event-proxy"]');
+    const EXTERNAL_PROXY = (proxyMeta && proxyMeta.getAttribute('content') || '').trim();
+
     function extractEventId(value) {
         if (!value) return null;
         const match = value.match(/truckersmp\.com\/events\/(\d+)/i);
         return match ? match[1] : null;
     }
 
+    function setHint(kind) {
+        if (!eventHint) return;
+        const map = {
+            reset: window.t ? window.t('contact.eventLinkHint') : 'Paste a TruckersMP event link and the form fills in automatically.',
+            loading: window.t ? window.t('contact.loadingEvent') : 'Loading event details...',
+            loaded: window.t ? window.t('contact.eventLoaded') : 'Event details loaded — you can add extra info below.',
+            manual: window.t ? window.t('contact.eventManual') : 'Could not auto-fill this event — please enter the details manually below.'
+        };
+        eventHint.textContent = map[kind] || map.reset;
+    }
+
+    function applyData(data) {
+        if (data.name) form.querySelector('#convoy-name').value = data.name;
+        if (data.date) form.querySelector('#date').value = data.date;
+        if (data.time) form.querySelector('#time').value = data.time;
+        if (data.details) form.querySelector('#details').value = data.details;
+        const cn = form.querySelector('#convoy-name');
+        if (cn) cn.placeholder = cn.dataset.originalPlaceholder || cn.placeholder;
+    }
+
     async function fillFromEvent(value) {
         const id = extractEventId(value);
         if (!id) {
-            if (eventHint) eventHint.textContent = window.t ? window.t('contact.eventLinkHint') : 'Paste a TruckersMP event link and the form fills in automatically.';
+            setHint('reset');
             return;
         }
-        if (eventHint) eventHint.textContent = window.t ? window.t('contact.loadingEvent') : 'Loading event details...';
+        setHint('loading');
 
-        try {
-            const res = await fetch(`/api/event?id=${id}`);
-            const text = await res.text();
-            let data;
+        const endpoints = [];
+        if (EXTERNAL_PROXY) {
+            const base = EXTERNAL_PROXY.replace(/\/+$/, '');
+            endpoints.push(`${base}/api/event?link=${encodeURIComponent(value)}`);
+        }
+        endpoints.push(`/api/event?id=${id}`);
+
+        for (const ep of endpoints) {
             try {
-                data = JSON.parse(text);
+                const res = await fetch(ep);
+                const text = await res.text();
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch {
+                    continue; // not JSON (e.g. HTML error page) — try next endpoint
+                }
+                if (data && data.success) {
+                    applyData(data);
+                    setHint('loaded');
+                    return;
+                }
             } catch {
-                throw new Error('Could not read event data. Try again shortly.');
+                // network error on this endpoint — try the next one
             }
-            if (!data.success) throw new Error(data.message || 'Event not found');
+        }
 
-            if (data.name) form.querySelector('#convoy-name').value = data.name;
-            if (data.date) form.querySelector('#date').value = data.date;
-            if (data.time) form.querySelector('#time').value = data.time;
-            if (data.details) {
-                const details = form.querySelector('#details');
-                details.value = data.details;
-            }
-            if (eventHint) eventHint.textContent = window.t ? window.t('contact.eventLoaded') : 'Event details loaded — you can add extra info below.';
-            // Reset any manual-entry hint from a previous failed lookup
-            const cn = form.querySelector('#convoy-name');
-            if (cn) cn.placeholder = cn.dataset.originalPlaceholder || cn.placeholder;
-        } catch (err) {
-            // External event blocked by TruckersMP / not in TEXIM ONE's list:
-            // unlock manual entry and guide the user clearly.
-            if (eventHint) {
-                eventHint.textContent = window.t
-                    ? window.t('contact.eventManual')
-                    : 'Could not auto-fill this event — please enter the details manually below.';
-            }
-            const cn = form.querySelector('#convoy-name');
-            if (cn) {
-                if (!cn.dataset.originalPlaceholder) cn.dataset.originalPlaceholder = cn.placeholder;
-                cn.placeholder = window.t ? window.t('contact.manualPlaceholder') : 'Enter Convoy Name Manually...';
-            }
-            ['#date', '#time'].forEach((sel) => {
-                const f = form.querySelector(sel);
-                if (f) f.readOnly = false;
-            });
+        // All endpoints failed: unlock clear manual entry.
+        setHint('manual');
+        const cn = form.querySelector('#convoy-name');
+        if (cn) {
+            if (!cn.dataset.originalPlaceholder) cn.dataset.originalPlaceholder = cn.placeholder;
+            cn.placeholder = window.t ? window.t('contact.manualPlaceholder') : 'Enter Convoy Name Manually...';
         }
     }
 
