@@ -8,6 +8,7 @@ const SITE_STRINGS = {
     'nav.about': 'About',
     'nav.convoy': 'Convoy',
     'nav.join': 'Join Us',
+    'nav.invite': 'Invite Us to Your Convoy',
 
     'hero.subtitle': 'Professional Virtual Trucking Logistics',
     'hero.text': 'Винаги 1 на ум, зад TEXIM! Achieve your Roadhog dreams and enjoy the most flexible driving experience — no limits, no obligations, just the open road and a great community.',
@@ -111,6 +112,7 @@ const SITE_STRINGS = {
     'nav.about': 'За нас',
     'nav.convoy': 'Конвой',
     'nav.join': 'Присъедини се',
+    'nav.invite': 'Покани ни на твоя конвой',
 
     'hero.subtitle': 'Професионална виртуална транспортна логистика',
     'hero.text': 'Винаги 1 на ум, зад TEXIM! Постигни мечтите си за шофьор и се наслади на най-гъвкавото шофиране — без лимити, без задължения, само открит път и страхотна общност.',
