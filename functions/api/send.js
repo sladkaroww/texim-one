@@ -71,6 +71,7 @@ export async function onRequest(context) {
 
     const eventName = (data.eventName || '').trim();
     const eventDate = (data.eventDate || '').trim();
+    const eventTime = (data.eventTime || '').trim();
     const discord = (data.discord || '').trim();
     const email = (data.email || '').trim();
     const eventLink = (data.eventLink || '').trim();
@@ -84,6 +85,7 @@ export async function onRequest(context) {
     const fields = [
         { name: 'Convoy Name', value: eventName || 'N/A', inline: false },
         { name: 'Date', value: eventDate || 'N/A', inline: true },
+        { name: 'Start Time (UTC)', value: eventTime || 'N/A', inline: true },
         { name: 'Invited by (Discord)', value: discord || 'N/A', inline: true },
         { name: 'Email', value: email || 'N/A', inline: false },
     ];
