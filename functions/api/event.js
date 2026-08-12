@@ -1,73 +1,62 @@
 // Cloudflare Pages Function: GET /api/event?id=XXXX
-// Fetches a single TruckersMP event and returns simplified fields so the
-// invite form can auto-fill date, time, name and details.
+// Returns simplified fields for a single TruckersMP event so the invite form
+// can auto-fill date, time, name and details.
 //
-// Note: TruckersMP's single-event *API* endpoint (api.truckersmp.com/v2/events/{id})
-// blocks requests originating from Cloudflare's network, so we fall back to
-// scraping the public event HTML page, which is reachable.
+// Implementation note: TruckersMP's single-event *API* endpoint
+// (api.truckersmp.com/v2/events/{id}) and the public event HTML page both
+// block requests from Cloudflare's network. The only reliably reachable source
+// is TEXIM ONE's own convoy lists (/vtc/74050/events + /events/attending),
+// which cover events the VTC organises or is invited to / attending. That is
+// exactly the "invite us to your convoy" use case.
 
+const VTC_ID = '74050';
 const USER_AGENT = 'TEXIM-ONE-Site/1.0 (official website; via Cloudflare Pages)';
 const TIMEOUT_MS = 8000;
 
-const MONTHS = {
-    Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
-    Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
-};
-
-async function fetchText(url) {
+async function tmFetch(path) {
+    const url = `https://api.truckersmp.com/v2/vtc/${VTC_ID}${path}`;
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
     try {
         const res = await fetch(url, {
-            headers: { 'User-Agent': USER_AGENT, 'Accept': 'text/html,application/json' },
+            headers: { 'User-Agent': USER_AGENT },
             signal: controller.signal
         });
-        if (!res.ok) throw new Error(`Upstream error ${res.status}`);
-        return await res.text();
+        if (!res.ok) throw new Error(`TruckersMP API error ${res.status}`);
+        const json = await res.json();
+        if (json.error) throw new Error('TruckersMP API returned an error');
+        return json.response || [];
     } finally {
         clearTimeout(timer);
     }
 }
 
-function parseHtml(html, id) {
-    const pick = (re) => {
-        const m = html.match(re);
-        return m ? m[1].replace(/\s+/g, ' ').trim() : '';
-    };
+function toDate(dateStr) {
+    return new Date(dateStr.replace(' ', 'T') + 'Z');
+}
 
-    const name = pick(/<meta property="og:title" content="([^"]+?) - Events - TruckersMP"/);
-    const og = pick(/<meta property="og:description" content="([^"]*?)"/);
-    const meetup = pick(/Meetup Time<\/th>\s*<td[^>]*>([^<]+)<\/td>/);
-    const location = pick(/<th[^>]*>Location<\/th>\s*<td[^>]*>([^<]+)<\/td>/);
-    const destination = pick(/<th[^>]*>Destination<\/th>\s*<td[^>]*>([^<]+)<\/td>/);
-    const server = pick(/Server:\s*([^<\n]+)/i);
+function normalize(item) {
+    const start = toDate(item.start_at);
+    const meetup = item.meetup_at ? toDate(item.meetup_at) : start;
+    const departure = item.departure ? `${item.departure.city || ''}${item.departure.location ? ' (' + item.departure.location + ')' : ''}`.trim() : '';
+    const arrive = item.arrive ? `${item.arrive.city || ''}${item.arrive.location ? ' (' + item.arrive.location + ')' : ''}`.trim() : '';
+    const route = [departure, arrive].filter(Boolean).join(' → ');
 
-    // Start time is in the og:description, e.g. "on Sat, Oct 3, 2026 17:00"
-    const dm = og.match(/on [A-Za-z]{3}, ([A-Za-z]{3}) (\d{1,2}), (\d{4}) (\d{1,2}):(\d{2})/);
-    let date = '';
-    let time = '';
-    if (dm) {
-        const mon = MONTHS[dm[1]] || '01';
-        date = `${dm[3]}-${mon}-${dm[2].padStart(2, '0')}`;
-        time = `${dm[4].padStart(2, '0')}:${dm[5]}`;
-    }
-
-    const route = [location, destination].filter(Boolean).join(' → ');
     const detailsParts = [];
-    if (server) detailsParts.push(`Server: ${server}`);
+    if (item.game) detailsParts.push(`Game: ${item.game}`);
+    if (item.server && item.server.name) detailsParts.push(`Server: ${item.server.name}`);
     if (route) detailsParts.push(`Route: ${route}`);
-    if (meetup) detailsParts.push(`Meetup: ${meetup}`);
-    detailsParts.push(`Link: https://truckersmp.com/events/${id}`);
+    detailsParts.push(`Meetup: ${item.meetup_at || item.start_at} UTC`);
+    detailsParts.push(`Start: ${item.start_at} UTC`);
 
     return {
-        success: true,
-        id: Number(id),
-        name,
-        date,
-        time,
-        meetup: meetup.replace(/^[A-Za-z]{3}, /, '').replace(/ \d{4}.*$/, '') || '',
-        server: server || '',
-        game: '',
+        id: item.id,
+        name: item.name || '',
+        date: start.toISOString().slice(0, 10),
+        time: start.toISOString().slice(11, 16),
+        meetup: meetup.toISOString().slice(11, 16),
+        server: item.server && item.server.name ? item.server.name : '',
+        game: item.game || '',
         route,
         details: detailsParts.join('\n')
     };
@@ -84,61 +73,36 @@ export async function onRequest(context) {
         });
     }
 
+    const wanted = Number(id);
+
     try {
-        // Prefer the API; fall back to the public HTML page (API blocks
-        // Cloudflare's network for single-event lookups).
-        let html = null;
-        try {
-            const apiUrl = `https://api.truckersmp.com/v2/events/${id}`;
-            const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
-            const apiRes = await fetch(apiUrl, {
-                headers: { 'User-Agent': USER_AGENT },
-                signal: controller.signal
+        const results = await Promise.allSettled([
+            tmFetch('/events'),
+            tmFetch('/events/attending')
+        ]);
+
+        const seen = new Set();
+        let match = null;
+        results.forEach((result) => {
+            if (result.status !== 'fulfilled' || match) return;
+            (result.value || []).forEach((item) => {
+                if (seen.has(item.id)) return;
+                seen.add(item.id);
+                if (item.id === wanted) match = normalize(item);
             });
-            clearTimeout(timer);
-            if (apiRes.ok) {
-                const ev = await apiRes.json();
-                if (ev && !ev.error && ev.response) {
-                    const e = ev.response;
-                    const start = e.start_at ? new Date(e.start_at.replace(' ', 'T') + 'Z') : null;
-                    const meet = e.meetup_at ? new Date(e.meetup_at.replace(' ', 'T') + 'Z') : null;
-                    const dep = e.departure ? `${e.departure.city || ''}${e.departure.location ? ' (' + e.departure.location + ')' : ''}`.trim() : '';
-                    const arr = e.arrive ? `${e.arrive.city || ''}${e.arrive.location ? ' (' + e.arrive.location + ')' : ''}`.trim() : '';
-                    const route = [dep, arr].filter(Boolean).join(' → ');
-                    const desc = (e.description || '').replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[#*_>`~-]/g, '').replace(/\n{2,}/g, '\n').trim();
-                    const detailsParts = [];
-                    if (e.game) detailsParts.push(`Game: ${e.game}`);
-                    if (e.server && e.server.name) detailsParts.push(`Server: ${e.server.name}`);
-                    if (route) detailsParts.push(`Route: ${route}`);
-                    if (meet) detailsParts.push(`Meetup: ${e.meetup_at} UTC`);
-                    if (start) detailsParts.push(`Start: ${e.start_at} UTC`);
-                    if (desc) detailsParts.push(`\n${desc}`);
-                    return new Response(JSON.stringify({
-                        success: true,
-                        id: e.id,
-                        name: e.name || '',
-                        date: start ? start.toISOString().slice(0, 10) : '',
-                        time: start ? start.toISOString().slice(11, 16) : '',
-                        meetup: meet ? meet.toISOString().slice(11, 16) : '',
-                        server: e.server && e.server.name ? e.server.name : '',
-                        game: e.game || '',
-                        route,
-                        details: detailsParts.join('\n')
-                    }), {
-                        status: 200,
-                        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300' }
-                    });
-                }
-            }
-        } catch {
-            // fall through to HTML scraping
+        });
+
+        if (!match) {
+            return new Response(JSON.stringify({
+                success: false,
+                message: 'This event is not in TEXIM ONE\'s convoy list yet. Please add the details manually, or make sure your VTC has invited TEXIM ONE to attend.'
+            }), {
+                status: 404,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
-        html = await fetchText(`https://truckersmp.com/events/${id}`);
-        const data = parseHtml(html, id);
-
-        return new Response(JSON.stringify(data), {
+        return new Response(JSON.stringify({ success: true, ...match }), {
             status: 200,
             headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300' }
         });
