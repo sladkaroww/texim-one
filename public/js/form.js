@@ -45,8 +45,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 details.value = data.details;
             }
             if (eventHint) eventHint.textContent = window.t ? window.t('contact.eventLoaded') : 'Event details loaded — you can add extra info below.';
+            // Reset any manual-entry hint from a previous failed lookup
+            const cn = form.querySelector('#convoy-name');
+            if (cn) cn.placeholder = cn.dataset.originalPlaceholder || cn.placeholder;
         } catch (err) {
-            if (eventHint) eventHint.textContent = err.message || 'Could not load event. Fill the fields manually.';
+            // External event blocked by TruckersMP / not in TEXIM ONE's list:
+            // unlock manual entry and guide the user clearly.
+            if (eventHint) {
+                eventHint.textContent = window.t
+                    ? window.t('contact.eventManual')
+                    : 'Could not auto-fill this event — please enter the details manually below.';
+            }
+            const cn = form.querySelector('#convoy-name');
+            if (cn) {
+                if (!cn.dataset.originalPlaceholder) cn.dataset.originalPlaceholder = cn.placeholder;
+                cn.placeholder = window.t ? window.t('contact.manualPlaceholder') : 'Enter Convoy Name Manually...';
+            }
+            ['#date', '#time'].forEach((sel) => {
+                const f = form.querySelector(sel);
+                if (f) f.readOnly = false;
+            });
         }
     }
 
