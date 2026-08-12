@@ -21,7 +21,7 @@ const FALLBACK_EVENTS = [
     { id: 34097, name: 'NorthStar Group | Opening Convoy', type: 'Convoy', game: 'ETS2', server: 'To be determined', startAt: '2026-10-03T17:00:00.000Z', departure: null, confirmed: 124 }
 ];
 
-function tmFetch(path) {
+async function tmFetch(path) {
     const url = `https://api.truckersmp.com/v2${path}`;
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
