@@ -305,12 +305,11 @@ button { cursor: pointer; border: none; background: none; }
 }
 .about-text p { margin-bottom: 1rem; color: #9ca3af; }
 .about-image {
-    background: #1a1a2e;
+    background-color: #1a1a2e;
+    background-size: cover;
+    background-position: center;
     border-radius: 8px;
     min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 .about-logo {
     width: 220px;
