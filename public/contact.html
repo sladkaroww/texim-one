@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invite Us to Your Convoy | TEXIM ONE</title>
+    <meta name="description" content="Fill out our form to invite TEXIM ONE to your virtual trucking convoy event.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="/" class="logo">TEXIM<span class="logo-accent">ONE</span></a>
+            <nav class="nav" id="nav">
+                <div class="nav-close" id="navClose">&#10005;</div>
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/about.html" class="nav-link">About</a></li>
+                    <li><a href="/convoy.html" class="nav-link">Convoy</a></li>
+                    <li><a href="/contact.html" class="nav-link active">Join Us</a></li>
+                </ul>
+            </nav>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title">Invite Us to Your Convoy</h1>
+            <p class="page-subtitle">Fill out the form below and we'll send your invite to our Discord channel.</p>
+        </div>
+    </section>
+
+    <section class="section section--light">
+        <div class="container">
+            <div class="form-wrapper">
+                <form class="invite-form" id="inviteForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Your name">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="discord">Discord Tag *</label>
+                            <input type="text" id="discord" name="discord" required placeholder="username#1234">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="you@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="convoy-name">Convoy Name / Event *</label>
+                        <input type="text" id="convoy-name" name="convoyName" required placeholder="e.g., EuroConvoy Weekly Event">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Preferred Date *</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Preferred Time (UTC) *</label>
+                            <input type="time" id="time" name="time" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="details">Additional Details</label>
+                        <textarea id="details" name="details" rows="4" placeholder="Any special instructions, cargo preferences, or other notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <span id="btnText">Send Invite</span>
+                        <span id="btnLoading" class="loading-dots">Sending<span>.</span><span>.</span><span>.</span></span>
+                    </button>
+                    <p class="form-note">* Required fields. Your information will be sent directly to our Discord team.</p>
+                </div>
+
+                <div class="form-success" id="formSuccess">
+                    <div class="success-icon">✓</div>
+                    <h3>Invite Sent Successfully!</h3>
+                    <p>Your convoy invite has been sent to our team on Discord. We'll review it and respond soon.</p>
+                    <button class="btn btn-outline" id="closeSuccess">Send Another</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="logo">TEXIM<span class="logo-accent">ONE</span></a>
+                <p class="footer-text">Professional virtual trucking logistics since 2021.</p>
+                <div class="social-links">
+                    <a href="https://discord.gg/YOUR_INVITE" class="social-link">Discord</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/convoy.html">Convoy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> TEXIM ONE. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    <script src="/js/form.js"></script>
+</body>
+</html>
