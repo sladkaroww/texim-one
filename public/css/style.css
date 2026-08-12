@@ -402,6 +402,16 @@ button { cursor: pointer; border: none; background: none; }
     margin: 0;
 }
 
+.form-hint.highlight {
+    margin-top: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #ff0000;
+    border-radius: 6px;
+    background: rgba(255, 0, 0, 0.08);
+    color: #ff6b6b;
+    font-weight: 500;
+}
+
 /* Footer */
 .footer {
     background: #050508;

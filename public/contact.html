@@ -46,25 +46,25 @@
             <div class="form-wrapper">
                 <form class="invite-form" id="inviteForm">
                     <div class="form-group">
-                        <label for="event-link" data-i18n="contact.eventLink">Your TruckersMP Convoy Link</label>
-                        <input type="url" id="event-link" name="eventLink" placeholder="https://truckersmp.com/events/34097-northstar-group-opening-convoy" data-i18n-placeholder="contact.placeholder.eventLink" autocomplete="off">
-                        <p class="form-hint" id="eventLinkHint" data-i18n="contact.eventLinkHint">Paste a link to the convoy you'd like to invite us to and we'll pick up the name automatically.</p>
-                        <input type="hidden" id="event-id" name="eventId">
-                        <input type="hidden" id="event-name" name="eventName">
+                        <label for="eventLink" data-i18n="contact.eventLink">Convoy Link (TruckersMP)</label>
+                        <input type="url" id="eventLink" name="eventLink" placeholder="https://truckersmp.com/events/34097-..." data-i18n-placeholder="contact.placeholder.eventLink" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label for="name" data-i18n="contact.name">Full Name *</label>
-                        <input type="text" id="name" name="name" required data-i18n-placeholder="contact.placeholder.name">
+                        <label for="eventName" data-i18n="contact.eventName">Convoy Name *</label>
+                        <input type="text" id="eventName" name="eventName" required data-i18n-placeholder="contact.placeholder.eventName">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="discord" data-i18n="contact.discord">Discord Tag *</label>
-                            <input type="text" id="discord" name="discord" required placeholder="username#1234">
-                        </div>
-                        <div class="form-group">
-                            <label for="email" data-i18n="contact.email">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="you@example.com">
-                        </div>
+                    <div class="form-group">
+                        <label for="eventDate" data-i18n="contact.eventDate">Convoy Date *</label>
+                        <input type="date" id="eventDate" name="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="discord" data-i18n="contact.discord">Discord User</label>
+                        <input type="text" id="discord" name="discord" placeholder="username" data-i18n-placeholder="contact.placeholder.discord">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-i18n="contact.email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="you@example.com">
+                        <p class="form-hint highlight" id="emailNote" data-i18n="contact.emailNote">We confirm attendance by email. If we can't reach you on Discord, we'll use this email to accept or decline your invite.</p>
                     </div>
                     <div class="form-group">
                         <label for="details" data-i18n="contact.details">Additional Details</label>
@@ -74,13 +74,13 @@
                         <span id="btnText" data-i18n="contact.submit">Send Invite</span>
                         <span id="btnLoading" class="loading-dots">Sending<span>.</span><span>.</span><span>.</span></span>
                     </button>
-                    <p class="form-note" data-i18n="contact.note">* Required fields. Your information will be sent directly to our Discord team.</p>
+                    <p class="form-note" data-i18n="contact.note">* Required fields. We check our calendar and automatically decline if we already have a convoy on that date.</p>
                 </form>
 
                 <div class="form-success" id="formSuccess">
                     <div class="success-icon">✓</div>
-                    <h3 data-i18n="contact.sent">Invite Sent Successfully!</h3>
-                    <p data-i18n="contact.sentText">Your convoy invite has been sent to our team on Discord. We'll review it and respond soon.</p>
+                    <h3 id="successTitle" data-i18n="contact.sent">Invite Sent!</h3>
+                    <p id="successText" data-i18n="contact.sentText">Your convoy invite has been sent to our team on Discord. We'll confirm by email.</p>
                     <button class="btn btn-outline" id="closeSuccess" data-i18n="contact.again">Send Another</button>
                 </div>
             </div>
