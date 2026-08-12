@@ -660,3 +660,19 @@ button { cursor: pointer; border: none; background: none; }
     }
 }
 
+
+/* Calendar embed */
+.calendar-embed {
+    margin: 2rem 0;
+    border: 1px solid #1a1a2e;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0a0a0f;
+}
+.calendar-frame {
+    width: 100%;
+    min-height: 600px;
+    border: none;
+    display: block;
+}
+
