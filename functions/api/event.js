@@ -35,7 +35,8 @@ function stripHtmlAndMarkdown(text) {
 }
 
 export async function onRequest(context) {
-    const id = context.request.query.get('id');
+    const url = new URL(context.request.url);
+    const id = url.searchParams.get('id');
     if (!id || !/^\d+$/.test(id)) {
         return new Response(JSON.stringify({ success: false, message: 'Invalid event id' }), {
             status: 400,

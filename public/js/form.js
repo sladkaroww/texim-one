@@ -28,7 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const res = await fetch(`/api/event?id=${id}`);
-            const data = await res.json();
+            const text = await res.text();
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch {
+                throw new Error('Could not read event data. Try again shortly.');
+            }
             if (!data.success) throw new Error(data.message || 'Event not found');
 
             if (data.name) form.querySelector('#convoy-name').value = data.name;
