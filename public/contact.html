@@ -46,9 +46,10 @@
             <div class="form-wrapper">
                 <form class="invite-form" id="inviteForm">
                     <div class="form-group">
-                        <label for="event-link" data-i18n="contact.eventLink">...or Paste a TruckersMP Event Link</label>
-                        <input type="url" id="event-link" name="eventLink" placeholder="https://truckersmp.com/events/34097" data-i18n-placeholder="contact.placeholder.eventLink" autocomplete="off">
-                        <p class="form-hint" id="eventLinkHint" data-i18n="contact.eventLinkHint">Pick a convoy from the list above, or paste a link to one of our events to auto-fill.</p>
+                        <label for="event-link" data-i18n="contact.eventLink">Your TruckersMP Convoy Link</label>
+                        <input type="url" id="event-link" name="eventLink" placeholder="https://truckersmp.com/events/34097-northstar-group-opening-convoy" data-i18n-placeholder="contact.placeholder.eventLink" autocomplete="off">
+                        <p class="form-hint" id="eventLinkHint" data-i18n="contact.eventLinkHint">Paste a link to the convoy you'd like to invite us to and we'll pick up the name automatically.</p>
+                        <input type="hidden" id="event-id" name="eventId">
                     </div>
                     <div class="form-group">
                         <label for="name" data-i18n="contact.name">Full Name *</label>
@@ -63,12 +64,6 @@
                             <label for="email" data-i18n="contact.email">Email Address</label>
                             <input type="email" id="email" name="email" placeholder="you@example.com">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="convoy-select" data-i18n="contact.pickConvoyLabel">Select One of Our Convoy Lists</label>
-                        <select id="convoy-select" name="convoySelect">
-                            <option value="">— Select a convoy —</option>
-                        </select>
                     </div>
                     <div class="form-group">
                         <label for="convoy-name" data-i18n="contact.convoyName">Convoy Name / Event *</label>

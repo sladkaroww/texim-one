@@ -8,122 +8,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!form) return;
 
-    // --- Auto-fill from TEXIM ONE's convoy list (reachable from Cloudflare) ---
+    // --- Auto-fill the convoy name from a pasted TruckersMP link ---
+    // Full auto-fill via the TruckersMP API is blocked from our host by
+    // Cloudflare's bot challenge, so we parse the event name out of the URL
+    // slug (e.g. .../events/34097-northstar-group-opening-convoy). No network
+    // request, so it can never be blocked. Date/time/details stay manual.
     const eventLink = document.getElementById('event-link');
     const eventHint = document.getElementById('eventLinkHint');
-    const convoySelect = document.getElementById('convoy-select');
-
-    let convoyList = [];
-    const convoyById = new Map();
+    const convoyName = form.querySelector('#convoy-name');
+    const eventIdInput = form.querySelector('#event-id');
 
     function t(key, fallback) {
         return (window.t && typeof window.t === 'function') ? window.t(key) : fallback;
     }
 
-    function setHint(kind) {
-        if (!eventHint) return;
-        const map = {
-            reset: t('contact.eventLinkHint', 'Pick a convoy from the list above, or paste a link to one of our events to auto-fill.'),
-            loaded: t('contact.eventLoaded', 'Event details loaded — you can add extra info below.')
-        };
-        eventHint.textContent = map[kind] || map.reset;
+    function titleCase(str) {
+        return str.replace(/\b\w/g, (c) => c.toUpperCase());
     }
 
-    function fillForm(c) {
-        if (!c || !c.startAt) return;
-        const start = new Date(c.startAt);
-        const date = start.toISOString().slice(0, 10);
-        const time = start.toISOString().slice(11, 16);
-        const dep = c.departure ? `${c.departure.city || ''}${c.departure.location ? ' (' + c.departure.location + ')' : ''}`.trim() : '';
-        const arr = c.arrive ? `${c.arrive.city || ''}${c.arrive.location ? ' (' + c.arrive.location + ')' : ''}`.trim() : '';
-        const route = [dep, arr].filter(Boolean).join(' → ');
-        const details = [
-            c.game ? `Game: ${c.game}` : '',
-            c.server ? `Server: ${c.server}` : '',
-            route ? `Route: ${route}` : '',
-            `Start: ${c.startAt.replace('T', ' ').replace('.000Z', '')} UTC`
-        ].filter(Boolean).join('\n');
+    function applyLink(value) {
+        if (!value) return;
+        const idMatch = value.match(/truckersmp\.com\/events\/(\d+)/i);
+        const id = idMatch ? idMatch[1] : null;
+        if (eventIdInput) eventIdInput.value = id || '';
 
-        form.querySelector('#convoy-name').value = c.name || '';
-        form.querySelector('#date').value = date;
-        form.querySelector('#time').value = time;
-        form.querySelector('#details').value = details;
-    }
-
-    function extractEventId(value) {
-        if (!value) return null;
-        const match = value.match(/truckersmp\.com\/events\/(\d+)/i);
-        return match ? match[1] : null;
-    }
-
-    function buildOptions() {
-        if (!convoySelect) return;
-        convoySelect.innerHTML = '<option value="">— ' + t('contact.pickConvoy', 'Select a convoy') + ' —</option>';
-        convoyList.forEach((c) => {
-            const d = new Date(c.startAt);
-            const opt = document.createElement('option');
-            opt.value = String(c.id);
-            opt.textContent = `${d.toLocaleDateString()} — ${c.name}`;
-            convoySelect.appendChild(opt);
-        });
-    }
-
-    async function loadConvoyList() {
-        try {
-            const res = await fetch('/api/events');
-            const json = await res.json();
-            convoyList = (json.events || []).filter((e) => e.startAt);
-            convoyList.forEach((c) => convoyById.set(String(c.id), c));
-            buildOptions();
-        } catch {
-            // leave the dropdown empty; manual entry still works
+        const slugMatch = value.match(/truckersmp\.com\/events\/\d+-([^/?#]+)/i);
+        if (slugMatch && convoyName && !convoyName.value.trim()) {
+            convoyName.value = titleCase(slugMatch[1].replace(/[-_|]+/g, ' ').trim());
         }
-    }
 
-    if (convoySelect) {
-        convoySelect.addEventListener('change', (e) => {
-            const c = convoyById.get(e.target.value);
-            if (c) {
-                fillForm(c);
-                setHint('loaded');
-            } else {
-                setHint('reset');
-            }
-        });
+        if (eventHint) {
+            eventHint.textContent = id
+                ? t('contact.eventLinkHint', 'We picked up the convoy name from your link. Add the date, time and any details below.')
+                : t('contact.eventLinkHint', 'Paste a TruckersMP convoy link (e.g. https://truckersmp.com/events/34097) so we can pick up the name.');
+        }
     }
 
     if (eventLink) {
-        eventLink.addEventListener('input', (e) => {
-            const id = extractEventId(e.target.value);
-            if (id && convoyById.get(id)) {
-                convoySelect.value = id;
-                fillForm(convoyById.get(id));
-                setHint('loaded');
-            } else {
-                setHint('reset');
-            }
-        });
-        eventLink.addEventListener('blur', (e) => {
-            const id = extractEventId(e.target.value);
-            if (id && convoyById.get(id)) {
-                convoySelect.value = id;
-                fillForm(convoyById.get(id));
-                setHint('loaded');
-            } else if (e.target.value.trim()) {
-                setHint('reset');
-            }
-        });
+        eventLink.addEventListener('input', (e) => applyLink(e.target.value));
+        eventLink.addEventListener('blur', (e) => applyLink(e.target.value));
     }
 
-    loadConvoyList();
-
-    // Rebuild options / refresh hint when the language changes
     document.addEventListener('texim:langchange', () => {
-        if (convoyList.length) buildOptions();
-        if (eventHint && eventLink && eventLink.value.trim()) {
-            const id = extractEventId(eventLink.value);
-            if (id && convoyById.get(id)) eventHint.textContent = window.t('contact.eventLoaded');
-        }
+        if (eventHint && eventLink && eventLink.value.trim()) applyLink(eventLink.value);
     });
 
     form.addEventListener('submit', async (e) => {
