@@ -7,12 +7,16 @@ const VTC_ID = '74050';
 const USER_AGENT = 'TEXIM-ONE-Site/1.0 (official website; via Cloudflare Pages)';
 
 async function tmFetch(path) {
-    const url = `https://api.truckersmp.com/v2/vtc/${VTC_ID}${path}`;
-    const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
-    if (!res.ok) return [];
-    const json = await res.json().catch(() => null);
-    if (!json || json.error) return [];
-    return json.response || [];
+    try {
+        const url = `https://api.truckersmp.com/v2/vtc/${VTC_ID}${path}`;
+        const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
+        if (!res.ok) return [];
+        const json = await res.json().catch(() => null);
+        if (!json || json.error) return [];
+        return json.response || [];
+    } catch {
+        return [];
+    }
 }
 
 function toDate(str) {
