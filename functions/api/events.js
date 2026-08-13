@@ -31,7 +31,37 @@ function normalize(e) {
     };
 }
 
-export async function onRequest() {
+// Pull convoys an admin saved from invite webhooks (stored in KV).
+async function getKvConvoys(env, seen) {
+    if (!env || !env.TEXIM_CALENDAR) return [];
+    try {
+        const list = await env.TEXIM_CALENDAR.list();
+        const out = [];
+        for (const k of list.keys) {
+            const v = await env.TEXIM_CALENDAR.get(k.name, { type: 'json' });
+            if (!v) continue;
+            if (seen.has(v.id)) continue;
+            seen.add(v.id);
+            out.push({
+                id: v.id,
+                name: v.name,
+                type: 'Invited Convoy',
+                game: '',
+                server: 'Invited',
+                startAt: `${v.date}T${(v.time || '00:00')}:00.000Z`,
+                departure: null,
+                confirmed: 0,
+                url: v.link || '',
+            });
+        }
+        return out;
+    } catch {
+        return [];
+    }
+}
+
+export async function onRequest(context) {
+    const { env } = context;
     try {
         const headers = { 'User-Agent': 'TEXIM-ONE-Site/1.0' };
         const [orgRes, attRes] = await Promise.all([
@@ -53,10 +83,14 @@ export async function onRequest() {
         }
         if (events.length === 0) throw new Error('No live events');
 
+        events.push(...(await getKvConvoys(env, seen)));
         events.sort((a, b) => new Date(a.startAt) - new Date(b.startAt));
         return json({ success: true, live: true, events });
     } catch {
-        const events = [...FALLBACK_EVENTS].sort((a, b) => new Date(a.startAt) - new Date(b.startAt));
+        const events = [...FALLBACK_EVENTS];
+        const seen = new Set(events.map((e) => e.id));
+        events.push(...(await getKvConvoys(env, seen)));
+        events.sort((a, b) => new Date(a.startAt) - new Date(b.startAt));
         return json({ success: true, live: false, events });
     }
 }

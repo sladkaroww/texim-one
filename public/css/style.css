@@ -427,6 +427,46 @@ button { cursor: pointer; border: none; background: none; }
     color: #ff9d9d;
 }
 
+.invite-summary {
+    margin-bottom: 1.75rem;
+    border: 1px solid #1a1a2e;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #1a1a2e;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-row span {
+    color: #9ca3af;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.summary-row b,
+.summary-row a {
+    color: #ffffff;
+    text-align: right;
+    word-break: break-word;
+}
+
+.summary-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 /* Footer */
 .footer {
     background: #050508;

@@ -31,7 +31,33 @@ function icalDate(d) {
     return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 }
 
-export async function onRequest() {
+// Pull convoys an admin saved from invite webhooks (stored in KV).
+async function getKvConvoys(env) {
+    if (!env || !env.TEXIM_CALENDAR) return [];
+    try {
+        const list = await env.TEXIM_CALENDAR.list();
+        const out = [];
+        for (const k of list.keys) {
+            const v = await env.TEXIM_CALENDAR.get(k.name, { type: 'json' });
+            if (!v) continue;
+            out.push({
+                id: v.id,
+                name: v.name,
+                start_at: `${v.date}T${(v.time || '00:00')}:00.000Z`,
+                game: '',
+                server: { name: 'Invited' },
+                event_type: { name: 'Convoy' },
+                departure: null,
+            });
+        }
+        return out;
+    } catch {
+        return [];
+    }
+}
+
+export async function onRequest(context) {
+    const { env } = context;
     try {
         const [organized, attending] = await Promise.all([
             tmFetch('/events'),
@@ -49,6 +75,11 @@ export async function onRequest() {
             { id: 34097, name: 'NorthStar Group | Opening Convoy', start_at: '2026-10-03T17:00:00', game: 'ETS2', server: { name: 'To be determined' }, event_type: { name: 'Convoy' }, departure: null },
         ];
         const source = (organized.length === 0 && attending.length === 0) ? FALLBACK : [...organized, ...attending];
+
+        if (env && env.TEXIM_CALENDAR) {
+            const kv = await getKvConvoys(env);
+            if (kv.length) source.push(...kv);
+        }
 
         const now = new Date();
         const seen = new Set();
@@ -69,7 +100,8 @@ export async function onRequest() {
 
             const details = `https://truckersmp.com/events/${e.id}`;
             const type = e.event_type ? e.event_type.name : 'Convoy';
-            const desc = `Type: ${type}\\nGame: ${e.game}\\nServer: ${e.server}\\nDetails: ${details}`;
+            const serverName = e.server && typeof e.server === 'object' ? e.server.name : e.server;
+            const desc = `Type: ${type}\\nGame: ${e.game}\\nServer: ${serverName}\\nDetails: ${details}`;
 
             events.push({ id: e.id, name: e.name, start, end, location, desc });
         });

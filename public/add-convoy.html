@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Convoy to Calendar | TEXIM ONE</title>
+    <meta name="description" content="Review a convoy invite and add it to the TEXIM ONE calendar.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="/" class="logo">TEXIM <span class="logo-accent">ONE</span></a>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link" data-i18n="nav.home">Home</a></li>
+                    <li><a href="/about.html" class="nav-link" data-i18n="nav.about">About</a></li>
+                    <li><a href="/convoy.html" class="nav-link" data-i18n="nav.convoy">Convoy</a></li>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeyx-HbluqrkCGu2glXe6W-r3Zr8519cuP3tPalZvu-k9HnXA/viewform" class="nav-link" target="_blank" rel="noopener" data-i18n="nav.join">Join Us</a></li>
+                    <li><a href="/contact.html" class="nav-link" data-i18n="nav.invite">Invite Us to Your Convoy</a></li>
+                </ul>
+            </nav>
+            <select id="langSwitcher" class="lang-switcher" aria-label="Language">
+                <option value="en">EN</option>
+                <option value="bg">BG</option>
+            </select>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1 class="page-title" data-i18n="addconvoy.title">Add Convoy to Calendar</h1>
+            <p class="page-subtitle" data-i18n="addconvoy.sub">Review the invite and confirm to add it to the TEXIM ONE calendar.</p>
+        </div>
+    </section>
+
+    <section class="section section--light">
+        <div class="container">
+            <div class="form-wrapper">
+                <div class="invite-summary" id="summary">
+                    <div class="summary-row"><span data-i18n="addconvoy.name">Convoy Name</span><b id="f-name">-</b></div>
+                    <div class="summary-row"><span data-i18n="addconvoy.date">Date</span><b id="f-date">-</b></div>
+                    <div class="summary-row"><span data-i18n="addconvoy.time">Start Time (UTC)</span><b id="f-time">-</b></div>
+                    <div class="summary-row"><span data-i18n="addconvoy.discord">Invited by (Discord)</span><b id="f-discord">-</b></div>
+                    <div class="summary-row"><span data-i18n="addconvoy.link">Link</span><a id="f-link" href="#" target="_blank" rel="noopener">-</a></div>
+                    <div class="summary-row"><span data-i18n="addconvoy.details">Details</span><b id="f-details">-</b></div>
+                </div>
+                <div class="summary-actions">
+                    <button id="confirmBtn" class="btn btn-primary" data-i18n="addconvoy.confirm">Add to Calendar</button>
+                    <a href="/convoy.html" class="btn btn-outline" data-i18n="addconvoy.cancel">Cancel</a>
+                </div>
+                <p class="form-note" id="status"></p>
+            </div>
+
+            <div class="form-success" id="success" style="display:none">
+                <div class="success-icon">✓</div>
+                <h3 data-i18n="addconvoy.successTitle">Added to Calendar!</h3>
+                <p data-i18n="addconvoy.successText">This convoy is now on the TEXIM ONE calendar.</p>
+                <a href="/convoy.html" class="btn btn-outline" data-i18n="addconvoy.viewCalendar">View Calendar</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="logo">TEXIM <span class="logo-accent">ONE</span></a>
+                <p class="footer-text" data-i18n="footer.about">Professional virtual trucking logistics since 2019.</p>
+                <div class="social-links">
+                    <a href="https://discord.com/invite/2sSKVKXUtn" class="social-link">Discord</a>
+                    <a href="https://truckersmp.com/vtc/74050" class="social-link">TruckersMP</a>
+                    <a href="https://linktr.ee/tex1m" class="social-link">Linktree</a>
+                    <a href="https://www.twitch.tv/team/tex1m" class="social-link">Twitch</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.company">Company</h4>
+                <ul class="footer-links">
+                    <li><a href="/" data-i18n="nav.home">Home</a></li>
+                    <li><a href="/about.html" data-i18n="nav.about">About</a></li>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeyx-HbluqrkCGu2glXe6W-r3Zr8519cuP3tPalZvu-k9HnXA/viewform" target="_blank" rel="noopener" data-i18n="nav.join">Join Us</a></li>
+                    <li><a href="/contact.html" data-i18n="nav.invite">Invite Us to Your Convoy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> TEXIM ONE. <span data-i18n="footer.rights">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const p = new URLSearchParams(window.location.search);
+            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val || '-'; };
+            set('f-name', p.get('name'));
+            set('f-date', p.get('date'));
+            set('f-time', p.get('time'));
+            set('f-discord', p.get('discord'));
+            set('f-details', p.get('details'));
+            const link = p.get('link');
+            const linkEl = document.getElementById('f-link');
+            if (linkEl) { linkEl.href = link || '#'; linkEl.textContent = link || '-'; }
+
+            const data = {
+                name: p.get('name'),
+                date: p.get('date'),
+                time: p.get('time'),
+                link: link,
+                discord: p.get('discord'),
+                details: p.get('details'),
+            };
+
+            const btn = document.getElementById('confirmBtn');
+            const status = document.getElementById('status');
+            const summary = document.getElementById('summary');
+            const actions = document.querySelector('.summary-actions');
+            const success = document.getElementById('success');
+
+            if (btn) {
+                btn.addEventListener('click', async () => {
+                    btn.disabled = true;
+                    const original = btn.textContent;
+                    btn.textContent = 'Adding...';
+                    try {
+                        const res = await fetch('/api/add-convoy', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+                        const json = await res.json();
+                        if (!json.success) throw new Error(json.message || 'Failed to add.');
+                        if (summary) summary.style.display = 'none';
+                        if (actions) actions.style.display = 'none';
+                        if (success) success.style.display = 'block';
+                    } catch (e) {
+                        if (status) status.textContent = e.message;
+                        btn.disabled = false;
+                        btn.textContent = original;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

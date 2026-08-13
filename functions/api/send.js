@@ -115,11 +115,36 @@ export async function onRequest(context) {
         footer: { text: 'TEXIM ONE - Convoy Invites (calendar-checked, DM via Discord)' },
     };
 
+    // "Add to Calendar" link button — opens our site's confirmation page where
+    // an admin reviews and saves the convoy into the website calendar (KV).
+    const addParams = new URLSearchParams({
+        name: eventName,
+        date: eventDate,
+        time: eventTime,
+        link: eventLink,
+        discord: discord,
+        details: details,
+    });
+    const addUrl = `${new URL(request.url).origin}/add-convoy?${addParams.toString()}`;
+    const components = [
+        {
+            type: 1,
+            components: [
+                {
+                    type: 2,
+                    style: 5,
+                    label: 'Add to Calendar',
+                    url: addUrl,
+                },
+            ],
+        },
+    ];
+
     try {
         const discordResponse = await fetch(webhookUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: 'TEXIM ONE Bot', embeds: [embed] }),
+            body: JSON.stringify({ username: 'TEXIM ONE Bot', embeds: [embed], components }),
         });
 
         if (!discordResponse.ok) {

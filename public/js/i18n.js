@@ -110,6 +110,21 @@ const SITE_STRINGS = {
     'contact.declinedText': 'We already have a TEXIM ONE convoy on that date, so this invite was automatically declined. We will DM you on Discord to confirm.',
     'contact.again': 'Send Another',
 
+    // Add-to-calendar page
+    'addconvoy.title': 'Add Convoy to Calendar',
+    'addconvoy.sub': 'Review the invite and confirm to add it to the TEXIM ONE calendar.',
+    'addconvoy.name': 'Convoy Name',
+    'addconvoy.date': 'Date',
+    'addconvoy.time': 'Start Time (UTC)',
+    'addconvoy.discord': 'Invited by (Discord)',
+    'addconvoy.link': 'Link',
+    'addconvoy.details': 'Details',
+    'addconvoy.confirm': 'Add to Calendar',
+    'addconvoy.cancel': 'Cancel',
+    'addconvoy.successTitle': 'Added to Calendar!',
+    'addconvoy.successText': 'This convoy is now on the TEXIM ONE calendar.',
+    'addconvoy.viewCalendar': 'View Calendar',
+
     // Language modal
     'lang.title': 'Choose your language',
     'lang.sub': 'Изберете вашия език',
@@ -221,6 +236,21 @@ const SITE_STRINGS = {
     'contact.declinedTitle': 'Автоматично отказана — конфликт в датата',
     'contact.declinedText': 'Вече имаме конвой на TEXIM ONE на тази дата, затова поканата е автоматично отказана. Ще ти пишем в Discord за потвърждение.',
     'contact.again': 'Изпрати друга',
+
+    // Add-to-calendar page
+    'addconvoy.title': 'Добави конвой в календара',
+    'addconvoy.sub': 'Прегледай поканата и потвърди, за да я добавиш в календара на TEXIM ONE.',
+    'addconvoy.name': 'Име на конвоя',
+    'addconvoy.date': 'Дата',
+    'addconvoy.time': 'Начален час (UTC)',
+    'addconvoy.discord': 'Поканен от (Discord)',
+    'addconvoy.link': 'Линк',
+    'addconvoy.details': 'Подробности',
+    'addconvoy.confirm': 'Добави в календара',
+    'addconvoy.cancel': 'Отказ',
+    'addconvoy.successTitle': 'Добавено в календара!',
+    'addconvoy.successText': 'Този конвой вече е в календара на TEXIM ONE.',
+    'addconvoy.viewCalendar': 'Виж календара',
 
     // Language modal
     'lang.title': 'Изберете вашия език',
