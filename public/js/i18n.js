@@ -11,7 +11,7 @@ const SITE_STRINGS = {
     'nav.invite': 'Invite Us to Your Convoy',
 
     'hero.subtitle': 'Professional Virtual Trucking Logistics',
-    'hero.text': 'Винаги 1 на ум, зад TEXIM! Achieve your Roadhog dreams and enjoy the most flexible driving experience — no limits, no obligations, just the open road and a great community.',
+    'hero.text': 'TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along — no pressure, no obligations, just great company on the open road.',
     'hero.btn1': 'Invite Us to Your Convoy',
     'hero.btn2': 'Learn More',
 
@@ -49,7 +49,7 @@ const SITE_STRINGS = {
 
     // About page
     'about.title': 'About TEXIM ONE',
-    'about.sub': 'Винаги 1 на ум, зад TEXIM! — Always number one in mind, behind TEXIM!',
+    'about.sub': 'Always number one in mind, behind TEXIM!',
     'about.who': 'Who We Are',
     'about.who.p1': 'TEXIM ONE (TMP VTC #74050) is a Bulgarian-based virtual trucking company founded in 2019. We are an official TruckersMP-recognized VTC supporting both Euro Truck Simulator 2 and American Truck Simulator with zero required DLCs.',
     'about.who.p2': 'Our philosophy is simple: accessibility. We don\'t require monthly km limits, convoy attendance, a minimum age, hours in-game, or a test period. Whether you\'re a beginner or a veteran, you\'re welcome to drive on your own terms.',
