@@ -20,7 +20,8 @@ async function tmFetch(path) {
 }
 
 function toDate(str) {
-    return new Date(str.replace(' ', 'T') + 'Z');
+    const s = String(str).trim();
+    return new Date(/z$/i.test(s) ? s : s + 'Z');
 }
 
 function esc(text) {
@@ -146,7 +147,7 @@ export async function onRequest(context) {
         });
     } catch (error) {
         return new Response(
-            'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//TEXIM ONE//Convoys//EN\r\nX-ERR:' + (error && error.message ? error.message : String(error)) + '\r\nEND:VCALENDAR\r\n',
+            'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//TEXIM ONE//Convoys//EN\r\nEND:VCALENDAR\r\n',
             { status: 200, headers: { 'Content-Type': 'text/calendar; charset=utf-8' } }
         );
     }
