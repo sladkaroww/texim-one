@@ -61,6 +61,13 @@ button { cursor: pointer; border: none; background: none; }
     font-weight: 700;
 }
 .logo-accent { color: #ff0000; }
+.logo-img {
+    height: 34px;
+    width: auto;
+    margin-right: 0.6rem;
+    border-radius: 4px;
+    vertical-align: middle;
+}
 .nav {
     display: flex;
     align-items: center;
@@ -292,6 +299,18 @@ button { cursor: pointer; border: none; background: none; }
     margin-top: 2.5rem;
 }
 .foreign-cta .join-text { margin-bottom: 1.5rem; }
+.certificate-wrap {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+.certificate-img {
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    border: 1px solid #1a1a2e;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(255, 0, 0, 0.12);
+}
 
 /* Team */
 .team-grid {

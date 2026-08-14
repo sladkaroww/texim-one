@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (result.success) {
                 if (result.status === 'declined') {
-                    successTitle.textContent = t('contact.declinedTitle', 'Auto-Declined — Date Conflict');
+                    successTitle.textContent = t('contact.declinedTitle', 'Auto-Declined: Date Conflict');
                     successText.textContent = t('contact.declinedText', "We already have a TEXIM ONE convoy on that date, so this invite was automatically declined. We'll email you to confirm.");
                 } else {
                     successTitle.textContent = t('contact.sent', 'Invite Sent!');

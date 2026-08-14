@@ -11,7 +11,7 @@ const SITE_STRINGS = {
     'nav.invite': 'Invite Us to Your Convoy',
 
     'hero.subtitle': 'Professional Virtual Trucking Logistics',
-    'hero.text': 'TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along — no pressure, no obligations, just great company on the open road.',
+    'hero.text': 'TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along, no pressure, no obligations, just great company on the open road.',
     'hero.btn1': 'Invite Us to Your Convoy',
     'hero.btn2': 'Learn More',
 
@@ -21,6 +21,7 @@ const SITE_STRINGS = {
     'stat.dlcs': 'Required DLCs',
     'stat.members': 'Members',
     'stat.recruitment': 'Recruitment',
+    'stat.km': 'Million km',
 
     'features.title': 'Why TEXIM ONE?',
     'features.sub': 'A premium virtual trucking experience built around accessibility and community.',
@@ -34,7 +35,7 @@ const SITE_STRINGS = {
     'features.f4.text': 'Play Euro Truck Simulator 2 and American Truck Simulator with no required DLCs, no minimum account age, and full speed limiter.',
 
     'gallery.title': 'On The Road',
-    'gallery.sub': 'Convoys and events TEXIM ONE is part of — photos straight from the road.',
+    'gallery.sub': 'Convoys and events TEXIM ONE is part of, photos straight from the road.',
 
     'join.title': 'Join Our Community',
     'join.text': 'Ready to hit the road? Join our Discord community today and start your journey with TEXIM ONE.',
@@ -44,7 +45,6 @@ const SITE_STRINGS = {
     'footer.about': 'Professional virtual trucking logistics since 2019.',
     'footer.company': 'Company',
     'footer.support': 'Support',
-    'footer.rights': 'All rights reserved.',
     'footer.language': 'Language',
 
     // About page
@@ -54,14 +54,15 @@ const SITE_STRINGS = {
     'about.who.p1': 'TEXIM ONE (TMP VTC #74050) is a Bulgarian-based virtual trucking company founded in 2019. We are an official TruckersMP-recognized VTC supporting both Euro Truck Simulator 2 and American Truck Simulator with zero required DLCs.',
     'about.who.p2': 'Our philosophy is simple: accessibility. We don\'t require monthly km limits, convoy attendance, a minimum age, hours in-game, or a test period. Whether you\'re a beginner or a veteran, you\'re welcome to drive on your own terms.',
     'about.diff': 'What Makes Us Different',
-    'about.diff.p1': 'You\'ll recognize us on the road by our distinct corporate identity — our TEXIM ONE tag, exclusive avatar, and signature truck + trailer composition.',
+    'about.diff.p1': 'You\'ll recognize us on the road by our distinct corporate identity, our TEXIM ONE tag, exclusive avatar, and signature truck + trailer composition.',
     'about.diff.p2': 'Our recruitment is selective. Every application is reviewed individually, and we value quality and commitment over sheer numbers. Most of our drivers complete World of Trucks deliveries under the speed limiter and without road assistance, keeping the experience realistic and fair.',
     'about.recruit': 'Recruitment & Community',
-    'about.recruit.p1': 'Applications are handled through our official Google Form — each one reviewed personally. Beyond the road, we run a Twitch team and an official merch line through TEXIM ONE Ltd, making us a well-developed and growing community.',
-    'about.recruit.p2': 'Find us on TruckersMP, join our Discord, and follow our Linktree for everything TEXIM ONE.',
+    'about.recruit.p1': 'Applications are handled through our official Google Form, each one reviewed personally. Beyond the road, we run a Twitch team and an official merch line through TEXIM ONE Ltd, making us a well-developed and growing community.',
+    'about.recruit.p2': 'Find us on TruckersMP and join our Discord for everything TEXIM ONE.',
     'about.facts': 'Company Facts',
     'about.facts.sub': 'Key details about TEXIM ONE from our official TruckersMP profile.',
     'about.view': 'View on TruckersMP',
+    'about.view.sub': 'View our full company profile and members on TruckersMP.',
     'about.team': 'Our Leadership',
     'about.team.sub': 'Meet the people steering TEXIM ONE.',
     'about.members': 'View All Members',
@@ -106,7 +107,7 @@ const SITE_STRINGS = {
     'contact.required': 'Please fill in all required fields (Convoy Name, Date, Discord User).',
     'contact.sent': 'Invite Sent!',
     'contact.sentText': 'Your convoy invite has been sent. We will DM you on Discord with our decision.',
-    'contact.declinedTitle': 'Auto-Declined — Date Conflict',
+    'contact.declinedTitle': 'Auto-Declined: Date Conflict',
     'contact.declinedText': 'We already have a TEXIM ONE convoy on that date, so this invite was automatically declined. We will DM you on Discord to confirm.',
     'contact.again': 'Send Another',
 
@@ -138,7 +139,7 @@ const SITE_STRINGS = {
     'nav.invite': 'Покани ни на твоя конвой',
 
     'hero.subtitle': 'Професионална виртуална транспортна логистика',
-    'hero.text': 'Винаги 1 на ум, зад TEXIM! Постигни мечтите си за шофьор и се наслади на най-гъвкавото шофиране — без лимити, без задължения, само открит път и страхотна общност.',
+    'hero.text': 'Винаги 1 на ум, зад TEXIM! Постигни мечтите си за шофьор и се наслади на най-гъвкавото шофиране, без лимити, без задължения, само открит път и страхотна общност.',
     'hero.btn1': 'Покани ни на твоя Конвой',
     'hero.btn2': 'Научи повече',
 
@@ -148,6 +149,7 @@ const SITE_STRINGS = {
     'stat.dlcs': 'Изисквани DLC',
     'stat.members': 'Членове',
     'stat.recruitment': 'Набиране',
+    'stat.km': 'Милиона км',
 
     'features.title': 'Защо TEXIM ONE?',
     'features.sub': 'Премиум виртуално шофиране, изградено около достъпността и общността.',
@@ -161,7 +163,7 @@ const SITE_STRINGS = {
     'features.f4.text': 'Играй Euro Truck Simulator 2 и American Truck Simulator без изисквани DLC, без минимална възраст и с ограничител на скоростта.',
 
     'gallery.title': 'На пътя',
-    'gallery.sub': 'Конвои и събития, в които TEXIM ONE участва — снимки направо от пътя.',
+    'gallery.sub': 'Конвои и събития, в които TEXIM ONE участва, снимки направо от пътя.',
 
     'join.title': 'Присъедини се към нашата общност',
     'join.text': 'Готов ли си да тръгнеш? Присъедини се към нашата Discord общност и започни своето пътешествие с TEXIM ONE.',
@@ -171,7 +173,6 @@ const SITE_STRINGS = {
     'footer.about': 'Професионална виртуална транспортна логистика от 2019 г.',
     'footer.company': 'Компания',
     'footer.support': 'Поддръжка',
-    'footer.rights': 'Всички права запазени.',
     'footer.language': 'Език',
 
     // About page
@@ -181,16 +182,17 @@ const SITE_STRINGS = {
     'about.who.p1': 'TEXIM ONE (TMP VTC #74050) е българска виртуална транспортна компания, основана през 2019 г. Официален TruckersMP VTC, поддържащ Euro Truck Simulator 2 и American Truck Simulator без изисквани DLC.',
     'about.who.p2': 'Нашата философия е проста: достъпност. Не изискваме месечни километри, участие в конвои, минимална възраст, часове в игра или тестов период. Независимо дали си начинаещ или ветеран, си добре дошъл да караш по свои правила.',
     'about.diff': 'Какво ни отличава',
-    'about.diff.p1': 'Ще ни разпознаеш на пътя по нашата отличителна фирмена идентичност — TEXIM ONE таг, ексклузивен аватар и характерна композиция влекач + ремарке.',
+    'about.diff.p1': 'Ще ни разпознаеш на пътя по нашата отличителна фирмена идентичност, TEXIM ONE таг, ексклузивен аватар и характерна композиция влекач + ремарке.',
     'about.diff.p2': 'Набирането ни е селективно. Всяка кандидатура се разглежда индивидуално, като ценим качеството и ангажираността пред количеството. Повечето ни шофьори изпълняват World of Trucks доставки с ограничител на скоростта и без пътна помощ.',
     'about.recruit': 'Набиране и общност',
-    'about.recruit.p1': 'Кандидатстването се извършва чрез официалната ни Google форма — всяка заявка се разглежда лично. Освен на пътя, имаме Twitch екип и официална линия продукти чрез TEXIM ONE Ltd, което ни прави добре развита и растяща общност.',
-    'about.recruit.p2': 'Намери ни в TruckersMP, присъедини се към наш Discord и следвай Linktree за всичко за TEXIM ONE.',
+    'about.recruit.p1': 'Кандидатстването се извършва чрез официалната ни Google форма, всяка заявка се разглежда лично. Освен на пътя, имаме Twitch екип и официална линия продукти чрез TEXIM ONE Ltd, което ни прави добре развита и растяща общност.',
+    'about.recruit.p2': 'Намери ни в TruckersMP и се присъедини към наш Discord за всичко за TEXIM ONE.',
     'about.facts': 'Факти за компанията',
     'about.facts.sub': 'Основни данни за TEXIM ONE от официалния ни профил в TruckersMP.',
     'about.view': 'Виж в TruckersMP',
-    'about.team': 'Нашето ръководство',
-    'about.team.sub': 'Запознай се с хората, които водят TEXIM ONE.',
+    'about.view.sub': 'Вижте пълния ни профил и членовете в TruckersMP.',
+    'about.team': 'Нашите служители',
+    'about.team.sub': 'Запознайте се с екипа на TEXIM ONE.',
     'about.members': 'Виж всички членове',
 
     // Convoy page
@@ -233,7 +235,7 @@ const SITE_STRINGS = {
     'contact.required': 'Моля, попълни всички задължителни полета (Име на конвоя, Дата, Discord потребител).',
     'contact.sent': 'Поканата е изпратена!',
     'contact.sentText': 'Поканата ти за конвой е изпратена. Ще ти пишем в Discord с нашето решение.',
-    'contact.declinedTitle': 'Автоматично отказана — конфликт в датата',
+    'contact.declinedTitle': 'Автоматично отказана: конфликт в датата',
     'contact.declinedText': 'Вече имаме конвой на TEXIM ONE на тази дата, затова поканата е автоматично отказана. Ще ти пишем в Discord за потвърждение.',
     'contact.again': 'Изпрати друга',
 
