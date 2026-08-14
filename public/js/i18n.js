@@ -15,13 +15,13 @@ const SITE_STRINGS = {
     'hero.btn1': 'Our Convoys',
     'hero.btn2': 'Media',
 
-    'stat.drivers': 'Active Members',
-    'stat.founded': 'Years Active',
+    'stat.drivers': 'Active Employees',
+    'stat.founded': 'Years of Experience',
     'stat.games': 'Supported Games',
     'stat.dlcs': 'Required DLCs',
     'stat.members': 'Members',
     'stat.recruitment': 'Recruitment',
-    'stat.km': 'Million km',
+    'stat.km': 'Million WoTr km',
 
     'features.title': 'Why?',
     'features.sub': 'A virtual trucking experience built around accessibility and community.',
@@ -164,13 +164,13 @@ const SITE_STRINGS = {
     'hero.btn1': 'Нашите конвои',
     'hero.btn2': 'Медия',
 
-    'stat.drivers': 'Активни членове',
-    'stat.founded': 'Години активност',
+    'stat.drivers': 'Активни служители',
+    'stat.founded': 'години опит',
     'stat.games': 'Поддържани игри',
     'stat.dlcs': 'Изисквани DLC',
     'stat.members': 'Членове',
     'stat.recruitment': 'Набиране',
-    'stat.km': 'Милиона км',
+    'stat.km': 'млн WoTr км',
 
     'features.title': 'Защо?',
     'features.sub': 'Виртуално шофиране, изградено около достъпността и общността.',
