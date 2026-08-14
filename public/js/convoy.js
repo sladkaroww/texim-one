@@ -1,20 +1,7 @@
 // Convoy page - load live upcoming convoys from /api/events
 document.addEventListener('DOMContentLoaded', () => {
-    const list = document.getElementById('eventsList');
+    const list = document.getElementById('calendar');
     if (!list) return;
-
-    // Build calendar subscription links dynamically from the current domain
-    const origin = window.location.origin;
-    const webcalUrl = 'webcal://' + origin.replace(/^https?:\/\//, '') + '/api/calendar.ics';
-
-    const googleCalBtn = document.getElementById('googleCalBtn');
-    if (googleCalBtn) {
-        googleCalBtn.href = 'https://www.google.com/calendar/render?cid=' + encodeURIComponent(webcalUrl);
-    }
-    const webcalBtn = document.getElementById('webcalBtn');
-    if (webcalBtn) {
-        webcalBtn.href = webcalUrl;
-    }
 
     async function load() {
         try {
@@ -28,25 +15,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const events = json.events || [];
 
             if (events.length === 0) {
-                list.innerHTML = '<div class="events-empty">' + window.t('convoy.none') + '</div>';
+                list.innerHTML = '<div class="calendar-empty">' + window.t('convoy.none') + '</div>';
                 return;
             }
 
             list.innerHTML = events.map(eventHTML).join('');
         } catch (err) {
-            list.innerHTML = '<div class="events-empty">' + window.t('convoy.error') + '</div>';
+            list.innerHTML = '<div class="calendar-empty">' + window.t('convoy.error') + '</div>';
         }
     }
 
     function eventHTML(e) {
         const start = new Date(e.startAt);
-        const options = { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' };
-        const dateStr = start.toLocaleDateString(undefined, options);
+        const dateStr = start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
         const timeStr = start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
         const location = e.departure
             ? [e.departure.location, e.departure.city].filter(Boolean).join(', ')
-            : 'Location TBA';
+            : null;
 
         return `
             <div class="event-card">
@@ -82,6 +68,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     load();
 
-    // Re-render when the language changes
     document.addEventListener('texim:langchange', load);
 });

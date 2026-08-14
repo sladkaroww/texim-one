@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="nav.convoy">Convoy</title>
-    <meta name="description" content="TEXIM ONE convoy calendar and invite requests.">
+    <title data-i18n="nav.media">Media</title>
+    <meta name="description" content="TEXIM ONE media, achievements, gallery and TruckersMP news.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
@@ -22,8 +22,8 @@
             <nav class="nav">
                 <ul class="nav-list">
                     <li><a href="/" class="nav-link" data-i18n="nav.home">Home</a></li>
-                    <li><a href="/convoy.html" class="nav-link active" data-i18n="nav.convoy">Convoy</a></li>
-                    <li><a href="/media.html" class="nav-link" data-i18n="nav.media">Media</a></li>
+                    <li><a href="/convoy.html" class="nav-link" data-i18n="nav.convoy">Convoy</a></li>
+                    <li><a href="/media.html" class="nav-link active" data-i18n="nav.media">Media</a></li>
                 </ul>
             </nav>
             <select id="langSwitcher" class="lang-switcher" aria-label="Language">
@@ -38,66 +38,55 @@
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title" data-i18n="nav.convoy">Convoy</h1>
-                <p class="hero-subtitle" data-i18n="convoy.sub">Our calendar and how to invite us along.</p>
+                <h1 class="hero-title" data-i18n="media.title">Media</h1>
+                <p class="hero-subtitle" data-i18n="media.sub">Our story, our moments, our community.</p>
             </div>
         </div>
     </section>
 
     <section class="section">
+        <div class="container section--narrow">
+            <h2 class="section-title" data-i18n="media.achievements">Our Achievements</h2>
+            <p class="section-text" data-i18n="media.achievements.text">We are proud of the achievements that set us apart as innovators in the Bulgarian community, thanks to our unconventional and out-of-the-box thinking. As a result, we can proudly say we were the first and only validated Bulgarian company in TruckersMP at the time, the first and only Bulgarian company with a Twitch Team, and the first and only Bulgarian company with official Merch.</p>
+        </div>
+    </section>
+
+    <section class="section section--light">
         <div class="container">
-            <div class="section-head">
-                <h2 class="section-title" data-i18n="convoy.calendar.title">Convoy Calendar</h2>
-                <a href="/add-convoy.html" class="btn btn-primary" data-i18n="convoy.calendar.add">Add Your Convoy</a>
-            </div>
-            <div id="calendar" class="calendar-grid">
-                <div class="calendar-loading" data-i18n="convoy.calendar.loading">Loading convoys...</div>
+            <h2 class="section-title" data-i18n="gallery.title">Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://files.catbox.moe/2844g8.png" alt="TEXIM ONE" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://files.catbox.moe/g9j45t.jpg" alt="TEXIM ONE convoy" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/G4q2g6gK/viber-image-2026-08-13-11-54-50-656.png" alt="TEXIM ONE" loading="lazy"></div>
+                <div class="gallery-item"><img src="https://i.ibb.co/G3FMtvmR/CERTIFICATE-ALL-TIME.png" alt="TEXIM ONE certificate" loading="lazy"></div>
             </div>
         </div>
     </section>
 
-    <section class="section section--light" id="invite">
+    <section class="section">
         <div class="container section--narrow">
-            <div class="invite-head">
-                <h2 class="section-title" data-i18n="convoy.inviteTitle">Invite Us to Your Convoy</h2>
-                <p class="section-subtitle" data-i18n="convoy.inviteSub">Fill out the form below and we will send your invite to our Discord channel.</p>
+            <h2 class="section-title" data-i18n="media.twitch">Twitch Team</h2>
+            <p class="section-text" data-i18n="media.twitch.text">We run an official TruckersMP Twitch Team where we stream our convoys and community moments live.</p>
+            <div class="hero-btns justify-center">
+                <a href="https://www.twitch.tv/team/tex1m" class="btn btn-primary" data-i18n="media.twitch.btn">Watch on Twitch</a>
             </div>
-            <form id="inviteForm" class="invite-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="eventName" data-i18n="contact.eventName">Event Name *</label>
-                        <input type="text" id="eventName" name="eventName" required>
+        </div>
+    </section>
+
+    <section class="section section--light">
+        <div class="container">
+            <h2 class="section-title" data-i18n="media.news">TruckersMP News</h2>
+            <p class="section-subtitle" data-i18n="media.news.text">Publications and updates we share on our official TruckersMP profile.</p>
+            <div class="news-grid">
+                <article class="news-card">
+                    <img src="https://i.ibb.co/23XQzq2W/DALL-E-2026-08-13-18-39-29.webp" alt="Reputation System" class="news-image" loading="lazy">
+                    <div class="news-body">
+                        <h3 class="news-title" data-i18n="media.news.rsTitle">Reputation System</h3>
+                        <p class="news-text" data-i18n="media.news.rsText">Our official recognition and authority system that ranks every driver, rewarding activity with titles from Newbie to Champion.</p>
+                        <a href="https://truckersmp.com/vtc/74050/news/65805" class="btn btn-outline btn-sm" target="_blank" rel="noopener" data-i18n="media.news.read">Read on TruckersMP</a>
                     </div>
-                    <div class="form-group">
-                        <label for="eventDate" data-i18n="contact.eventDate">Event Date *</label>
-                        <input type="date" id="eventDate" name="eventDate" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="eventTime" data-i18n="contact.eventTime">Event Time</label>
-                        <input type="time" id="eventTime" name="eventTime">
-                    </div>
-                    <div class="form-group">
-                        <label for="discord" data-i18n="contact.discord">Your Discord *</label>
-                        <input type="text" id="discord" name="discord" placeholder="name#0000 or @user" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="eventLink" data-i18n="contact.eventLink">Event Link</label>
-                    <input type="url" id="eventLink" name="eventLink" placeholder="https://...">
-                </div>
-                <div class="form-group">
-                    <label for="email" data-i18n="contact.email">Email</label>
-                    <input type="email" id="email" name="email">
-                </div>
-                <div class="form-group">
-                    <label for="details" data-i18n="contact.details">Additional Details</label>
-                    <textarea id="details" name="details" rows="4"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" data-i18n="contact.submit">Send Invite</button>
-                <div id="formMessage" class="form-message"></div>
-            </form>
+                </article>
+            </div>
         </div>
     </section>
 
@@ -130,8 +119,6 @@
     </footer>
 
     <script src="/js/i18n.js"></script>
-    <script src="/js/convoy.js"></script>
-    <script src="/js/form.js"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>
