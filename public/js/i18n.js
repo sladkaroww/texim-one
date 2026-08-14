@@ -11,9 +11,13 @@ const SITE_STRINGS = {
     'nav.invite': 'Invite',
 
     'hero.subtitle': 'Professional Virtual Trucking Logistics',
-    'hero.text': 'TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along, no pressure, no obligations, just great company on the open road.',
+    'hero.text': 'TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along, no pressure, no obligations, just great com[...]
     'hero.btn1': 'Our Convoys',
     'hero.btn2': 'Media',
+    // New hero buttons
+    'hero.invite': 'Invite us to your convoy',
+    'hero.discord': 'Discord',
+    'hero.join': 'Join Us',
 
     'stat.drivers': 'Active Employees',
     'stat.founded': 'Years of Experience',
@@ -56,7 +60,7 @@ const SITE_STRINGS = {
     'about.diff.p1': 'You can recognize us by our corporate identity, which sets us apart through our TruckersMP TAG, Avatar, and truck + trailer composition.',
     'about.diff.p2': 'Without forcing our drivers, most of them mainly complete World of Trucks deliveries, which sets us apart with a speed limiter and no road assistance.',
     'about.recruit': 'Recruitment & Community',
-    'about.recruit.p1': 'Our application process stands apart from the rest, who almost beg you to join. Applications are submitted through a Google Form, and every application is reviewed individually.',
+    'about.recruit.p1': 'Our application process stands apart from the rest, who almost beg you to join. Applications are submitted through a Google Form, and every application is reviewed individ[...]
     'about.recruit.p2': 'We at TEXIM ONE VTC have a Twitch Team, and thanks to TEXIM ONE Ltd we now also have official Merch, which sets us apart as a well-developed community.',
     'about.facts': 'Facts',
     'about.facts.sub': 'Key details about TEXIM ONE from our official TruckersMP profile.',
@@ -135,7 +139,7 @@ const SITE_STRINGS = {
     'hero.btn2': 'Media',
     'media.title': 'Media',
     'about.achievements': 'Our Achievements',
-    'about.achievements.text': 'We are proud of the achievements that set us apart as innovators in the Bulgarian community, thanks to our unconventional and out-of-the-box thinking. As a result, we can proudly say we were the first and only validated Bulgarian company in TruckersMP at the time, the first and only Bulgarian company with a Twitch Team, and the first and only Bulgarian company with official Merch.',
+    'about.achievements.text': 'We are proud of the achievements that set us apart as innovators in the Bulgarian community, thanks to our unconventional and out-of-the-box thinking. As a result,[...]
     'media.twitch': 'Twitch Team',
     'media.twitch.text': 'We run an official TruckersMP Twitch Team where we stream our convoys and community moments live.',
     'media.news': 'TruckersMP News',
@@ -145,21 +149,21 @@ const SITE_STRINGS = {
     'media.news.69383.title': 'TEXIM ONE Nova Group | Public Convoy #3',
     'media.news.69383.text': 'On 25 July 2026 we joined Nova Group | Public Convoy #3 — roughly 900 km from Oslo to Kristiansand in Norway on Simulation 2.',
     'media.news.68663.title': 'TEXIM ONE Vtc x TEXIM ONE Ltd MERCH!',
-    'media.news.68663.text': 'Our official merch collaboration with TEXIM ONE Ltd — heavyweight 100% combed cotton (230 g/m²), oversize fits in White, Black, Bone and Midnight Navy, with an embroidered T1 logo. Orders open via Discord ticket.',
+    'media.news.68663.text': 'Our official merch collaboration with TEXIM ONE Ltd — heavyweight 100% combed cotton (230 g/m²), oversize fits in White, Black, Bone and Midnight Navy, with an em[...]
     'media.news.68060.title': 'TEXIM ONE 57. Monthly RSL-Event | May',
     'media.news.68060.text': 'On 27 May 2026 we took part in the 57th Monthly RSL-Event with United Convoys — around 1000 km from Calarasi to Cluj-Napoca in Romania on the Event Server.',
     'media.news.67722.title': 'Weekly Activity - Friday Community Convoy',
-    'media.news.67722.text': 'Every Friday we gather for a relaxed public convoy on Simulation 1 — no fixed route, no minimum participants, and every gathering awards 10 000 RP through our Reputation System.',
+    'media.news.67722.text': 'Every Friday we gather for a relaxed public convoy on Simulation 1 — no fixed route, no minimum participants, and every gathering awards 10 000 RP through our Repu[...]
     'media.news.67670.title': 'Reputation System (RS) Update',
-    'media.news.67670.text': 'The Reputation System gets a democratic upgrade: every company decision is now settled by weighted voting, where 1 Level = 1 vote. Your influence depends purely on your activity.',
-    'media.news.67599.title': 'Eurovision 2026 - Bangaranga 🇧🇬',
-    'media.news.67599.text': 'A tribute to Dara and her historic Eurovision 2026 victory for Bulgaria — turning doubt into fuel and bringing the trophy home for the first time.',
+    'media.news.67670.text': 'The Reputation System gets a democratic upgrade: every company decision is now settled by weighted voting, where 1 Level = 1 vote. Your influence depends purely on y[...]
+    'media.news.67599.title': 'TEXIM ONE THE ORIGINAL™ MONTHLY CONVOY #6',
+    'media.news.67599.text': 'On 8 August 2026 we took part in THE ORIGINAL Monthly Convoy #6 — around 600 km from Szeged (Hungary) to Banska Bystrica (Slovakia) on the Event Server.',
     'media.news.67582.title': 'TEXIM ONE Pink Ribbon VTC – 4th Anniversary',
-    'media.news.67582.text': 'On 15 May 2026 we joined the Pink Ribbon VTC 4th Anniversary convoy with United Convoys — about 1200 km from the TruckersMP HQ in Poland to Hamburg in Germany.',
+    'media.news.67582.text': 'On 15 May 2026 we joined the Pink Ribbon VTC 4th Anniversary convoy with United Convoys — roughly 1200 km from the TruckersMP HQ in Poland to Hamburg in Germany on the Event Server.',
     'media.news.67539.title': 'Corporate Identity Update',
-    'media.news.67539.text': 'A fresh look for version 1.59: the new VNL 2025 in ATS, updated FH6 Aero with Kässbohrer K.SCX X+ in ETS2, a T1-focused logo, white TMP tag, and no more mandatory [BG] in nicknames.',
+    'media.news.67539.text': 'A fresh look for version 1.59: the new VNL 2025 in ATS, updated FH6 Aero with Kässbohrer K.SCX X+ in ETS2, a T1-focused logo, white TMP tag, and no more mandatory [[...]
     'media.news.67529.title': 'TrucksBook Bulgaria - Certificates',
-    'media.news.67529.text': 'TrucksBook Bulgaria recognized our community with thirteen certificates — five company awards for 2019-2025 and eight personal ones — and Marvinito was promoted to Manager.',
+    'media.news.67529.text': 'TrucksBook Bulgaria recognized our community with thirteen certificates — five company awards for 2019-2025 and eight personal ones — and Marvinito was promoted [...]
     'media.news.67416.title': 'Happy May 9th!',
     'media.news.67416.text': 'Marking Europe Day and the triumph over Nazi Germany — a reflection on history, sovereignty and the place of Bulgaria in the European family.',
     'media.news.65805.title': 'Reputation System (RS)',
@@ -167,7 +171,7 @@ const SITE_STRINGS = {
     'media.news.65704.title': 'TEXIM ONE Pink Ribbon VTC – March Convoy',
     'media.news.65704.text': 'On 13 March 2026 we took part in the Pink Ribbon VTC March Convoy with United Convoys — around 800 km from Naples to Florence in Italy on the Event Server.',
     'media.news.58783.title': 'Corporate Identity',
-    'media.news.58783.text': 'The complete guide to our corporate identity — the signature Volvo + Kässbohrer composition, TruckersMP tag, avatar and naming rules that make TEXIM ONE recognizable on the road.',
+    'media.news.58783.text': 'The complete guide to our corporate identity — the signature Volvo + Kässbohrer composition, TruckersMP tag, avatar and naming rules that make TEXIM ONE recogniza[...]
     'media.news.read': 'Read on TruckersMP',
     'media.sub': 'Our story, our moments, our community.',
     'media.twitch.btn': 'Watch on Twitch',
@@ -186,9 +190,13 @@ const SITE_STRINGS = {
     'nav.invite': 'Покани',
 
     'hero.subtitle': 'Професионална виртуална транспортна логистика',
-    'hero.text': 'Винаги 1 на ум, зад TEXIM! Постигни мечтите си за шофьор и се наслади на най-гъвкавото шофиране, без лимити, без задължения, само открит път и страхотна общност.',
+    'hero.text': 'Винаги 1 на ум, зад TEXIM! Постигни мечтите си за шофьор и се наслади на най-гъвкавото шофиране, без л�[...]
     'hero.btn1': 'Нашите конвои',
     'hero.btn2': 'Медия',
+    // New hero buttons
+    'hero.invite': 'Покани ни на твой конвой',
+    'hero.discord': 'Discord',
+    'hero.join': 'Присъедини се',
 
     'stat.drivers': 'Активни служители',
     'stat.founded': 'Години опит',
@@ -201,13 +209,13 @@ const SITE_STRINGS = {
     'features.title': 'Защо?',
     'features.sub': 'Виртуално шофиране, изградено около достъпността и общността.',
     'features.f1.title': 'Без лимити, без натиск',
-    'features.f1.text': 'Без месечни километри, задължително участие в конвои, възраст или работни часове, без тестов период. Карай по свои правила.',
+    'features.f1.text': 'Без месечни километри, задължително участие в конвои, възраст или работни часове, без тестов [...]
     'features.f2.title': 'Отличителна фирмена идентичност',
     'features.f2.text': 'Разпознаваеми по нашия TMP таг, ексклузивен аватар и характерна композиция влекач + ремарке.',
     'features.f3.title': 'Селективно набиране',
-    'features.f3.text': 'Кандидатурите се разглеждат индивидуално чрез нашата форма. Ценим качеството и ангажираността пред количеството.',
+    'features.f3.text': 'Кандидатурите се разглеждат индивидуално чрез нашата форма. Ценим качеството и ангажиранос�[...]
     'features.f4.title': 'Рангове',
-    'features.f4.text': 'Нашата Reputation System (RS) ранжира всеки шофьор по принос: Newbie, Enthusiast, Worker, Professional, Master, Instructor, Elite, King, Legend и Champion.',
+    'features.f4.text': 'Нашата Reputation System (RS) ранжира всеки шофьор по принос: Newbie, Enthusiast, Worker, Professional, Master, Instructor, Elite, King, L[...]
 
     'gallery.title': 'Галерия',
     'gallery.sub': 'Конвои и събития, в които TEXIM ONE участва, снимки направо от пътя.',
@@ -226,13 +234,13 @@ const SITE_STRINGS = {
     'about.title': 'За нас',
     'about.sub': 'Винаги 1 на ум, зад TEXIM!',
     'about.who': 'Кои сме ние',
-    'about.who.p1': 'Концепцията за достъпност ни отличава, затова не изискваме месечен лимит километри, участие в конвои, определена възраст, часове в игра, DLC-та или тестов период.',
+    'about.who.p1': 'Концепцията за достъпност ни отличава, затова не изискваме месечен лимит километри, участие в �[...]
     'about.diff': 'Какво ни отличава',
-    'about.diff.p1': 'Може да ни разпознаете по нашата фирмена идентичност, която ни отличава чрез TruckersMP TAG, Аватар и Композиция от влекач и ремарке.',
-    'about.diff.p2': 'Без да задължаваме нашите шофьори, повечето от тях изпълняват основно World of Trucks доставки, което ни отличава с ограничител на скоростта и без пътна помощ.',
+    'about.diff.p1': 'Може да ни разпознаете по нашата фирмена идентичност, която ни отличава чрез нашия TruckersMP TAG, Аватар и [...]',
+    'about.diff.p2': 'Без да задължаваме нашите шофьори, повечето от тях изпълняват основно World of Trucks доставки, което[...]
     'about.recruit': 'Набиране и общност',
-    'about.recruit.p1': 'Процесът по кандидатстване се отличава от останалите, които почти ви се молят да се присъедините. Кандидатстването се извършва чрез Google Form, като всяка кандидатура се разглежда индивидуално.',
-    'about.recruit.p2': 'Ние от TEXIM ONE Vtc разполагаме с Twitch Team, а благодарение на TEXIM ONE Ltd вече и с официален Merch, което ни отличава като добре развита общност.',
+    'about.recruit.p1': 'Процесът по кандидатстване се отличава от останалите, които почти ви молят да се присъеди�[...]
+    'about.recruit.p2': 'Ние от TEXIM ONE Vtc разполагаме с Twitch Team, а благодарение на TEXIM ONE Ltd вече и с официален Merch, което ни �[...]
     'about.facts': 'Факти',
     'about.facts.sub': 'Основни данни за TEXIM ONE от официалния ни профил в TruckersMP.',
     'about.view': 'Виж в TruckersMP',
@@ -245,7 +253,7 @@ const SITE_STRINGS = {
     'convoy.title': 'Конвои',
     'convoy.sub': 'Всички предстоящи конвои автоматично импортирани от TruckersMP.',
     'convoy.subscribe': 'Абонирай се за нашия календар',
-    'convoy.subscribe.sub': 'Импортирай всички предстоящи конвои на TEXIM ONE директно в календара си. Емисията се обновява автоматично при добавяне на нови събития.',
+    'convoy.subscribe.sub': 'Импортирай всички предстоящи конвои на TEXIM ONE директно в календара си. Емисията се обновява[...]
     'convoy.download': 'Изтегли .ics файл',
     'convoy.google': 'Добави в Google Календар',
     'convoy.webcal': 'Абонирай се (webcal)',
@@ -275,17 +283,17 @@ const SITE_STRINGS = {
     'contact.placeholder.eventTime': 'напр. 17:30',
     'contact.discord': 'Discord потребител *',
     'contact.placeholder.discord': 'потребител',
-    'contact.discordNote': 'Важно: присъедини се към нашия Discord, за да ти пишем лично съобщение при приемане или отказ (имейлът е по избор).',
+    'contact.discordNote': 'Важно: присъедини се към нашия Discord, за да ти пишем лично съобщение при приемане или отказ (и�[...]
     'contact.email': 'Имейл адрес (по избор)',
     'contact.details': 'Допълнителни подробности',
     'contact.placeholder.details': 'Специални инструкции, предпочитания за товар или други бележки...',
     'contact.submit': 'Изпрати покана',
-    'contact.note': '* Задължителни полета. Проверяваме календара си и автоматично отказваме, ако вече имаме конвой на тази дата.',
+    'contact.note': '* Задължителни полета. Проверяваме календара си и автоматично отказваме, ако вече имаме конвой [...]
     'contact.required': 'Моля, попълни всички задължителни полета (Име на конвоя, Дата, Discord потребител).',
     'contact.sent': 'Поканата е изпратена!',
     'contact.sentText': 'Поканата ти за конвой е изпратена. Ще ти пишем в Discord с нашето решение.',
     'contact.declinedTitle': 'Автоматично отказана: конфликт в датата',
-    'contact.declinedText': 'Вече имаме конвой на TEXIM ONE на тази дата, затова поканата е автоматично отказана. Ще ти пишем в Discord за потвърждение.',
+    'contact.declinedText': 'Вече имаме конвой на TEXIM ONE на тази дата, затова поканата е автоматично отказана. Ще ти пишем[...]
     'contact.again': 'Изпрати друга',
 
     // Add-to-calendar page
@@ -308,39 +316,39 @@ const SITE_STRINGS = {
     'stat.discord': 'Членове в Discord',
     'media.title': 'Медия',
     'about.achievements': 'Нашите постижения',
-    'about.achievements.text': 'Ние се гордеем с постиженията, които ни отличават като иноватори в българската общност, благодарение на нашето нестандартно и разчупено мислене. В резултат на това можем да се похвалим като първата и единствена валидирана българска фирма в TruckersMP за онова време, първата и единствена българска фирма с Twitch Team, както и първата и единствена българска фирма с официален Merch.',
+    'about.achievements.text': 'Ние се гордеем с постиженията, които ни отличават като иноватори в българската общност, б[...]
     'media.twitch': 'Twitch отбор',
-    'media.twitch.text': 'Разполагаме с официален TruckersMP Twitch отбор, където излъчваме нашите конвои и моменти от общността на живо.',
+    'media.twitch.text': 'Разполагаме с официален TruckersMP Twitch отбор, където излъчваме нашите конвои и моменти от общнос�[...]
     'media.news': 'Новини от TruckersMP',
     'media.news.text': 'Публикации и новини, които споделяме в нашия официален профил в TruckersMP.',
     'media.news.69793.title': 'TEXIM ONE THE ORIGINAL™ MONTHLY CONVOY #6',
-    'media.news.69793.text': 'На 8 август 2026 г. участвахме в THE ORIGINAL Monthly Convoy #6 — около 600 км от Сегед (Унгария) до Банска Бистрица (Словакия) в Event Server.',
+    'media.news.69793.text': 'На 8 август 2026 г. участвахме в THE ORIGINAL Monthly Convoy #6 — около 600 км от Сегед (Унгария) до Банска Бис[...]
     'media.news.69383.title': 'TEXIM ONE Nova Group | Public Convoy #3',
-    'media.news.69383.text': 'На 25 юли 2026 г. се включихме в Nova Group | Public Convoy #3 — около 900 км от Осло до Кристиансанд (Норвегия) в Simulation 2.',
+    'media.news.69383.text': 'На 25 юли 2026 г. се включихме в Nova Group | Public Convoy #3 — около 900 км от Осло до Кристиансанд (Норвеги�[...]
     'media.news.68663.title': 'MERCH от TEXIM ONE Vtc x TEXIM ONE Ltd!',
-    'media.news.68663.text': 'Официалната ни merch колаборация с TEXIM ONE Ltd — плътен 100% пениран памук (230 g/m²), Oversize кройки в бяло, черно, Bone и Midnight Navy, с бродирано T1 лого. Поръчките стават чрез тикет в Discord.',
+    'media.news.68663.text': 'Официалната ни merch колаборация с TEXIM ONE Ltd — плътен 100% пениран памук (230 g/m²), Oversize кройки в бя�[...]
     'media.news.68060.title': 'TEXIM ONE 57. Monthly RSL-Event | May',
-    'media.news.68060.text': 'На 27 май 2026 г. участвахме в 57-ото Monthly RSL-Event с United Convoys — около 1000 км от Кълъраш до Клуж-Напока (Румъния) в Event Server.',
+    'media.news.68060.text': 'На 27 май 2026 г. участвахме в 57-ото Monthly RSL-Event с United Convoys — около 1000 км от Кълъраш до Клуж-Напока[...]
     'media.news.67722.title': 'Седмична активност - петъчен обществен конвой',
-    'media.news.67722.text': 'Всеки петък се събираме за свободен обществен конвой в Simulation 1 — без фиксиран маршрут и минимален брой участници, а всяко събиране носи 10 000 RP чрез Reputation System.',
+    'media.news.67722.text': 'Всеки петък се събираме за свободен обществен конвой в Simulation 1 — без фиксиран маршрут и ми�[...]
     'media.news.67670.title': 'Обновление на Reputation System (RS)',
-    'media.news.67670.text': 'Reputation System получава демократично обновление: всяко фирмено решение вече се решава чрез претеглен вот, където 1 ниво = 1 глас. Влиянието зависи изцяло от активността ти.',
+    'media.news.67670.text': 'Reputation System получава демократично обновление: всяко фирмено решение вече се решава чрез пре[...]
     'media.news.67599.title': 'Евровизия 2026 - Bangaranga 🇧🇬',
-    'media.news.67599.text': 'Обръщение към историческата победа на Дара на Евровизия 2026 — съмнението, превърнато в гориво, и първият трофей за България.',
+    'media.news.67599.text': 'Обръщение към историческата победа на Дара на Евровизия 2026 — съмнението, превърнато в гор[...]
     'media.news.67582.title': 'TEXIM ONE Pink Ribbon VTC – 4-та годишнина',
-    'media.news.67582.text': 'На 15 май 2026 г. участвахме в конвоя за 4-тата годишнина на Pink Ribbon VTC с United Convoys — около 1200 км от TruckersMP HQ (Полша) до Хамбург (Германия).',
+    'media.news.67582.text': 'На 15 май 2026 г. участвахме в конвоя за 4-тата годишнина на Pink Ribbon VTC с United Convoys — около 1200 км от [...]
     'media.news.67539.title': 'Обновление на фирмената идентичност',
-    'media.news.67539.text': 'Нов облик за версия 1.59: VNL 2025 в ATS, обновеният FH6 Aero с Kässbohrer K.SCX X+ в ETS2, лого с фокус върху T1, бял TMP таг и без задължително [BG] в псевдонимите.',
+    'media.news.67539.text': 'Нов облик за версия 1.59: VNL 2025 в ATS, обновеният FH6 Aero с Kässbohrer K.SCX X+ в ETS2, лого с фокус върху T1, бя�[...]
     'media.news.67529.title': 'TrucksBook Bulgaria - сертификати',
-    'media.news.67529.text': 'TrucksBook Bulgaria отличи общността ни с тринадесет сертификата — пет фирмени за 2019–2025 г. и осем лични, а Marvinito беше повишен в Мениджър.',
+    'media.news.67529.text': 'TrucksBook Bulgaria отличи общността ни с тринадесет сертификата — пет фирмени за 2019–2025 г. и осем л[...]
     'media.news.67416.title': 'Честит 9 май!',
-    'media.news.67416.text': 'Отбелязваме Деня на Европа и триумфа над нацистка Германия — размисъл за историята, суверенитета и мястото на България в европейското семейство.',
+    'media.news.67416.text': 'Отбелязваме Деня на Европа и триумфа над нацистка Германия — размисъл за историята, сувер[...]
     'media.news.65805.title': 'Система за репутация (RS)',
-    'media.news.65805.text': 'Нашата официална система за признание и авторитет, която ранжира всеки шофьор и награждава активността с рангове от Newbie до Champion.',
+    'media.news.65805.text': 'Нашата официална система за признание и авторитет, която ранжира всеки шофьор и награждав[...]
     'media.news.65704.title': 'TEXIM ONE Pink Ribbon VTC – мартенски конвой',
-    'media.news.65704.text': 'На 13 март 2026 г. участвахме в мартенския конвой на Pink Ribbon VTC с United Convoys — около 800 км от Неапол до Флоренция (Италия) в Event Server.',
+    'media.news.65704.text': 'На 13 март 2026 г. участвахме в мартенския конвой на Pink Ribbon VTC с United Convoys — около 800 км от Неапол [...]
     'media.news.58783.title': 'Фирмена идентичност',
-    'media.news.58783.text': 'Пълното ръководство за фирмената ни идентичност — характерната композиция Volvo + Kässbohrer, TruckersMP тагът, аватарът и правилата за имена, които ни правят разпознаваеми на пътя.',
+    'media.news.58783.text': 'Пълното ръководство за фирмената ни идентичност — характерната композиция Volvo + Kässbohrer, Truc[...]
     'media.news.read': 'Прочети в TruckersMP',
     'media.sub': 'Нашата история, нашите моменти, нашата общност.',
     'media.twitch.btn': 'Гледай в Twitch',
