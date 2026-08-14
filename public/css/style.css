@@ -67,8 +67,8 @@ button { cursor: pointer; border: none; background: none; }
     height: 34px;
     width: auto;
     margin-right: 0.6rem;
-    border-radius: 4px;
     vertical-align: middle;
+    mix-blend-mode: multiply;
 }
 .nav {
     display: flex;
@@ -134,8 +134,7 @@ button { cursor: pointer; border: none; background: none; }
     width: 110px;
     height: auto;
     margin-bottom: 1rem;
-    border-radius: 4px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    mix-blend-mode: multiply;
 }
 .hero-accent { color: #111111; }
 .hero-subtitle {
