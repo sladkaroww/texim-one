@@ -237,6 +237,7 @@ button { cursor: pointer; border: none; background: none; }
     color: #111111;
 }
 .feature-text { color: #c8c8c8; font-size: 0.9rem; }
+.feature-card--wide { grid-column: 1 / -1; }
 
 /* Activity */
 .activity-grid {

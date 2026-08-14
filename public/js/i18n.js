@@ -42,7 +42,7 @@ const SITE_STRINGS = {
     'join.btn': 'Join Our Discord',
     'apply.btn': 'Apply to Join',
 
-    'footer.about': 'Professional virtual trucking logistics since 2019.',
+    'footer.about': 'Virtual trucking logistics since 2019.',
     'footer.company': 'Company',
     'footer.support': 'Support',
     'footer.language': 'Language',
@@ -191,12 +191,12 @@ const SITE_STRINGS = {
     'hero.btn2': 'Медия',
 
     'stat.drivers': 'Активни служители',
-    'stat.founded': 'години опит',
+    'stat.founded': 'Години опит',
     'stat.games': 'Поддържани игри',
     'stat.dlcs': 'Изисквани DLC',
     'stat.members': 'Членове',
     'stat.recruitment': 'Набиране',
-    'stat.km': 'млн WoTr км',
+    'stat.km': 'Млн WoTr км',
 
     'features.title': 'Защо?',
     'features.sub': 'Виртуално шофиране, изградено около достъпността и общността.',
@@ -217,7 +217,7 @@ const SITE_STRINGS = {
     'join.btn': 'Присъедини се към Discord',
     'apply.btn': 'Кандидатствай',
 
-    'footer.about': 'Професионална виртуална транспортна логистика от 2019 г.',
+    'footer.about': 'Виртуална транспортна логистика от 2019 г.',
     'footer.company': 'Компания',
     'footer.support': 'Поддръжка',
     'footer.language': 'Език',
