@@ -155,7 +155,7 @@ const SITE_STRINGS = {
   bg: {
     'nav.home': 'Начало',
     'nav.about': 'За нас',
-    'nav.convoy': 'Конвой',
+    'nav.convoy': 'Конвои',
     'nav.join': 'Присъедини се',
     'nav.invite': 'Покани',
 
@@ -216,7 +216,7 @@ const SITE_STRINGS = {
     'about.members': 'Виж всички членове',
 
     // Convoy page
-    'convoy.title': 'Конвой',
+    'convoy.title': 'Конвои',
     'convoy.sub': 'Всички предстоящи конвои автоматично импортирани от TruckersMP.',
     'convoy.subscribe': 'Абонирай се за нашия календар',
     'convoy.subscribe.sub': 'Импортирай всички предстоящи конвои на TEXIM ONE директно в календара си. Емисията се обновява автоматично при добавяне на нови събития.',
@@ -361,6 +361,13 @@ function initI18n() {
 }
 
 function bindLangModal() {
+  // Always bind the switcher so language can change on every page,
+  // even on pages that don't include the first-visit language modal.
+  const switcher = document.getElementById('langSwitcher');
+  if (switcher) {
+    switcher.addEventListener('change', (e) => setLang(e.target.value));
+  }
+
   const modal = document.getElementById('langModal');
   if (!modal) return;
 
@@ -369,7 +376,6 @@ function bindLangModal() {
       const lang = btn.getAttribute('data-lang');
       setLang(lang);
       modal.classList.remove('open');
-      const switcher = document.getElementById('langSwitcher');
       if (switcher) switcher.value = lang;
     });
   });
@@ -382,11 +388,6 @@ function bindLangModal() {
   modal.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.remove('open');
   });
-
-  const switcher = document.getElementById('langSwitcher');
-  if (switcher) {
-    switcher.addEventListener('change', (e) => setLang(e.target.value));
-  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
