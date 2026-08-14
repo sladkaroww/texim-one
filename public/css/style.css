@@ -3,8 +3,8 @@
 html { scroll-behavior: smooth; }
 body {
     font-family: 'Inter', sans-serif;
-    background: #0a0a0f;
-    color: #e0e0e0;
+    background: #ffffff;
+    color: #1a1a1a;
     line-height: 1.6;
 }
 img { max-width: 100%; display: block; }
@@ -20,18 +20,18 @@ button { cursor: pointer; border: none; background: none; }
 .section {
     padding: 5rem 0;
 }
-.section--light { background: #111118; }
+.section--light { background: #f5f5f7; }
 .section-title {
     text-align: center;
     font-family: 'Orbitron', sans-serif;
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: #ffffff;
+    color: #111111;
 }
 .section-subtitle {
     text-align: center;
-    color: #9ca3af;
+    color: #6b7280;
     margin-bottom: 3rem;
     max-width: 700px;
     margin-left: auto;
@@ -44,9 +44,9 @@ button { cursor: pointer; border: none; background: none; }
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(10, 10, 15, 0.9);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid #1a1a2e;
+    border-bottom: 1px solid #e3e3e8;
     z-index: 1000;
 }
 .header-container {
@@ -62,7 +62,7 @@ button { cursor: pointer; border: none; background: none; }
     display: flex;
     align-items: center;
 }
-.logo-accent { color: #ff0000; }
+.logo-accent { color: #111111; }
 .logo-img {
     height: 34px;
     width: auto;
@@ -85,10 +85,10 @@ button { cursor: pointer; border: none; background: none; }
 .nav-link {
     font-family: 'Orbitron', sans-serif;
     font-size: 0.95rem;
-    color: #e0e0e0;
+    color: #555555;
     transition: color 0.2s;
 }
-.nav-link:hover, .nav-link.active { color: #ff0000; }
+.nav-link:hover, .nav-link.active { color: #111111; font-weight: 600; }
 .nav-toggle { display: none !important; }
 
 /* Hero */
@@ -116,7 +116,7 @@ button { cursor: pointer; border: none; background: none; }
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(10, 10, 15, 0.92) 0%, rgba(10, 10, 15, 0.75) 50%, rgba(10, 10, 15, 0.5) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.78) 50%, rgba(255, 255, 255, 0.6) 100%);
 }
 .hero-content {
     position: relative;
@@ -127,7 +127,7 @@ button { cursor: pointer; border: none; background: none; }
     font-family: 'Orbitron', sans-serif;
     font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 800;
-    color: #ffffff;
+    color: #111111;
     margin-bottom: 0.5rem;
 }
 .hero-logo {
@@ -135,18 +135,18 @@ button { cursor: pointer; border: none; background: none; }
     height: auto;
     margin-bottom: 1rem;
     border-radius: 4px;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-.hero-accent { color: #ff0000; }
+.hero-accent { color: #111111; }
 .hero-subtitle {
     font-size: 1.25rem;
-    color: #ff0000;
-    font-weight: 500;
+    color: #111111;
+    font-weight: 600;
     margin-bottom: 1.5rem;
 }
 .hero-text {
     font-size: 1.1rem;
-    color: #9ca3af;
+    color: #444444;
     margin-bottom: 2rem;
 }
 .hero-btns {
@@ -168,23 +168,23 @@ button { cursor: pointer; border: none; background: none; }
     border: 2px solid transparent;
 }
 .btn-primary {
-    background: #ff0000;
-    color: #0a0a0f;
+    background: #111111;
+    color: #ffffff;
 }
 .btn-primary:hover {
-    background: transparent;
-    color: #ff0000;
-    border-color: #ff0000;
+    background: #ffffff;
+    color: #111111;
+    border-color: #111111;
     transform: translateY(-2px);
 }
 .btn-outline {
     background: transparent;
-    color: #ff0000;
-    border-color: #ff0000;
+    color: #111111;
+    border-color: #111111;
 }
 .btn-outline:hover {
-    background: #ff0000;
-    color: #0a0a0f;
+    background: #111111;
+    color: #ffffff;
     transform: translateY(-2px);
 }
 .btn-block { width: 100%; }
@@ -198,8 +198,8 @@ button { cursor: pointer; border: none; background: none; }
     margin-top: 3rem;
 }
 .stat-card {
-    background: #111118;
-    border: 1px solid #1a1a2e;
+    background: #f5f5f7;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
     padding: 2rem;
     text-align: center;
@@ -208,9 +208,9 @@ button { cursor: pointer; border: none; background: none; }
     font-family: 'Orbitron', sans-serif;
     font-size: 2.5rem;
     font-weight: 700;
-    color: #ff0000;
+    color: #111111;
 }
-.stat-label { color: #9ca3af; font-size: 0.9rem; }
+.stat-label { color: #6b7280; font-size: 0.9rem; }
 
 /* Features */
 .features-grid {
@@ -219,22 +219,25 @@ button { cursor: pointer; border: none; background: none; }
     gap: 2rem;
 }
 .feature-card {
-    background: #0a0a0f;
-    border: 1px solid #1a1a2e;
+    background: #ffffff;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
     padding: 2rem;
     text-align: center;
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
-.feature-card:hover { transform: translateY(-5px); }
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
 .feature-icon { font-size: 2.5rem; margin-bottom: 1rem; }
 .feature-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.1rem;
     margin-bottom: 1rem;
-    color: #ffffff;
+    color: #111111;
 }
-.feature-text { color: #9ca3af; font-size: 0.9rem; }
+.feature-text { color: #6b7280; font-size: 0.9rem; }
 
 /* Activity */
 .activity-grid {
@@ -243,17 +246,17 @@ button { cursor: pointer; border: none; background: none; }
     gap: 2rem;
 }
 .activity-card {
-    background: #111118;
-    border: 1px solid #1a1a2e;
+    background: #f5f5f7;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
     overflow: hidden;
 }
 .activity-img {
     height: 180px;
-    background: #1a1a2e;
+    background: #e3e3e8;
 }
 .activity-content { padding: 1.5rem; }
-.activity-date { color: #ff0000; font-size: 0.8rem; margin-top: 0.5rem; }
+.activity-date { color: #111111; font-size: 0.8rem; margin-top: 0.5rem; }
 
 /* Page Hero */
 .page-hero {
@@ -261,28 +264,28 @@ button { cursor: pointer; border: none; background: none; }
     display: flex;
     align-items: center;
     margin-top: 70px;
-    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
-    border-bottom: 1px solid #1a1a2e;
+    background: linear-gradient(135deg, #ffffff 0%, #ececed 100%);
+    border-bottom: 1px solid #e3e3e8;
 }
 .page-title {
     font-family: 'Orbitron', sans-serif;
     font-size: clamp(2rem, 6vw, 3.5rem);
     font-weight: 800;
-    color: #ffffff;
+    color: #111111;
     margin-bottom: 0.5rem;
 }
-.page-subtitle { color: #9ca3af; font-size: 1.1rem; }
+.page-subtitle { color: #6b7280; font-size: 1.1rem; }
 
 /* About */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
 .about-text h2 {
     font-family: 'Orbitron', sans-serif;
-    color: #ffffff;
+    color: #111111;
     margin-bottom: 1rem;
 }
-.about-text p { margin-bottom: 1rem; color: #9ca3af; }
+.about-text p { margin-bottom: 1rem; color: #444444; }
 .about-image {
-    background-color: #1a1a2e;
+    background-color: #e3e3e8;
     background-size: cover;
     background-position: center;
     border-radius: 8px;
@@ -292,7 +295,7 @@ button { cursor: pointer; border: none; background: none; }
     width: 220px;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.12);
 }
 
 /* Foreign CTA */
@@ -311,9 +314,9 @@ button { cursor: pointer; border: none; background: none; }
     max-width: 360px;
     width: 100%;
     height: auto;
-    border: 1px solid #1a1a2e;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
-    box-shadow: 0 8px 30px rgba(255, 0, 0, 0.12);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 
 /* Team */
@@ -323,8 +326,8 @@ button { cursor: pointer; border: none; background: none; }
     gap: 2rem;
 }
 .team-card {
-    background: #111118;
-    border: 1px solid #1a1a2e;
+    background: #f5f5f7;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
     padding: 2rem;
     text-align: center;
@@ -332,7 +335,7 @@ button { cursor: pointer; border: none; background: none; }
 .team-avatar {
     width: 80px;
     height: 80px;
-    background: #1a1a2e;
+    background: #e3e3e8;
     border-radius: 50%;
     margin: 0 auto 1rem;
     overflow: hidden;
@@ -346,24 +349,24 @@ button { cursor: pointer; border: none; background: none; }
     object-fit: cover;
     border-radius: 50%;
 }
-.team-role { color: #ff0000; margin-bottom: 0.5rem; }
+.team-role { color: #111111; margin-bottom: 0.5rem; font-weight: 600; }
 
 /* Convoy List */
 .convoy-list { display: flex; flex-direction: column; gap: 1.5rem; }
 .convoy-card {
-    background: #111118;
-    border: 1px solid #1a1a2e;
+    background: #f5f5f7;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
     padding: 2rem;
 }
-.convoy-date { color: #ff0000; font-weight: 600; margin-bottom: 0.5rem; }
-.convoy-card h3 { color: #ffffff; margin-bottom: 0.5rem; }
-.convoy-route { color: #ff0000; font-weight: 500; margin-bottom: 0.5rem; }
-.convoy-time { color: #9ca3af; }
+.convoy-date { color: #111111; font-weight: 600; margin-bottom: 0.5rem; }
+.convoy-card h3 { color: #111111; margin-bottom: 0.5rem; }
+.convoy-route { color: #111111; font-weight: 500; margin-bottom: 0.5rem; }
+.convoy-time { color: #6b7280; }
 
 /* Join CTA */
 .join-cta { text-align: center; }
-.join-text { font-size: 1.2rem; margin-bottom: 2rem; }
+.join-text { font-size: 1.2rem; margin-bottom: 2rem; color: #1a1a1a; }
 
 /* Form */
 .form-wrapper {
@@ -378,7 +381,7 @@ button { cursor: pointer; border: none; background: none; }
 }
 .success-icon {
     font-size: 4rem;
-    color: #ff0000;
+    color: #111111;
     margin-bottom: 1rem;
 }
 .invite-form {
@@ -393,16 +396,16 @@ button { cursor: pointer; border: none; background: none; }
 .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
 .form-group label {
     font-weight: 500;
-    color: #e0e0e0;
+    color: #1a1a1a;
 }
 .form-group input,
 .form-group textarea,
 .form-group select {
     padding: 0.8rem 1rem;
-    background: #0a0a0f;
-    border: 1px solid #1a1a2e;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #1a1a1a;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     transition: border-color 0.3s;
@@ -410,7 +413,7 @@ button { cursor: pointer; border: none; background: none; }
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #ff0000;
+    border-color: #111111;
 }
 .form-group textarea { resize: vertical; }
 .form-note {
@@ -421,17 +424,17 @@ button { cursor: pointer; border: none; background: none; }
 
 .form-hint {
     font-size: 0.8rem;
-    color: #9ca3af;
+    color: #6b7280;
     margin: 0;
 }
 
 .form-hint.highlight {
     margin-top: 0.5rem;
     padding: 0.65rem 0.85rem;
-    border: 1px solid #ff0000;
+    border: 1px solid #111111;
     border-radius: 6px;
-    background: rgba(255, 0, 0, 0.08);
-    color: #ffe2e2;
+    background: rgba(17, 17, 17, 0.05);
+    color: #1a1a1a;
     font-weight: 500;
 }
 
@@ -440,22 +443,22 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 .form-hint.discord-invite a {
-    color: #ff6b6b;
+    color: #111111;
     text-decoration: underline;
     font-weight: 600;
     word-break: break-all;
 }
 
 .form-hint.discord-invite a:hover {
-    color: #ff9d9d;
+    color: #444444;
 }
 
 .invite-summary {
     margin-bottom: 1.75rem;
-    border: 1px solid #1a1a2e;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
     padding: 0.5rem 1rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.02);
 }
 
 .summary-row {
@@ -464,7 +467,7 @@ button { cursor: pointer; border: none; background: none; }
     align-items: flex-start;
     gap: 1rem;
     padding: 0.7rem 0;
-    border-bottom: 1px solid #1a1a2e;
+    border-bottom: 1px solid #e3e3e8;
 }
 
 .summary-row:last-child {
@@ -472,14 +475,14 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 .summary-row span {
-    color: #9ca3af;
+    color: #6b7280;
     font-size: 0.85rem;
     flex-shrink: 0;
 }
 
 .summary-row b,
 .summary-row a {
-    color: #ffffff;
+    color: #111111;
     text-align: right;
     word-break: break-word;
 }
@@ -492,8 +495,8 @@ button { cursor: pointer; border: none; background: none; }
 
 /* Footer */
 .footer {
-    background: #050508;
-    border-top: 1px solid #1a1a2e;
+    background: #f5f5f7;
+    border-top: 1px solid #e3e3e8;
     padding: 3rem 0 1rem;
 }
 .footer-grid {
@@ -503,7 +506,7 @@ button { cursor: pointer; border: none; background: none; }
     margin-bottom: 2rem;
 }
 .footer-brand .logo { font-size: 1.3rem; }
-.footer-text { color: #9ca3af; margin: 1rem 0; }
+.footer-text { color: #6b7280; margin: 1rem 0; }
 .social-links {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -513,25 +516,26 @@ button { cursor: pointer; border: none; background: none; }
 .social-link {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: #111118;
-    border: 1px solid #1a1a2e;
+    background: #ffffff;
+    border: 1px solid #e3e3e8;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #1a1a1a;
     font-size: 0.9rem;
+    transition: color 0.2s, border-color 0.2s;
 }
-.social-link:hover { color: #ff0000; border-color: #ff0000; }
+.social-link:hover { color: #111111; border-color: #111111; }
 .footer-col h4 {
-    color: #ffffff;
+    color: #111111;
     margin-bottom: 1rem;
     font-family: 'Orbitron', sans-serif;
 }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-.footer-links a { color: #9ca3af; transition: color 0.2s; }
-.footer-links a:hover { color: #ff0000; }
+.footer-links a { color: #6b7280; transition: color 0.2s; }
+.footer-links a:hover { color: #111111; }
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    border-top: 1px solid #1a1a2e;
+    border-top: 1px solid #e3e3e8;
     color: #6b7280;
     font-size: 0.9rem;
 }
@@ -543,7 +547,7 @@ button { cursor: pointer; border: none; background: none; }
     left: 0;
     width: 100%;
     height: 100%;
-    background: #0a0a0f;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -552,8 +556,8 @@ button { cursor: pointer; border: none; background: none; }
 .spinner {
     width: 50px;
     height: 50px;
-    border: 3px solid #1a1a2e;
-    border-top-color: #ff0000;
+    border: 3px solid #e3e3e8;
+    border-top-color: #111111;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -592,21 +596,21 @@ button { cursor: pointer; border: none; background: none; }
 .event-card {
     display: flex;
     gap: 1.5rem;
-    background: #111118;
-    border: 1px solid #1a1a2e;
+    background: #f5f5f7;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
     padding: 1.5rem;
     transition: border-color 0.3s, transform 0.3s;
 }
 .event-card:hover {
-    border-color: #ff0000;
+    border-color: #111111;
     transform: translateY(-3px);
 }
 .event-date {
     text-align: center;
     min-width: 70px;
-    background: #0a0a0f;
-    border: 1px solid #1a1a2e;
+    background: #ffffff;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
     padding: 0.5rem;
     height: fit-content;
@@ -615,15 +619,15 @@ button { cursor: pointer; border: none; background: none; }
     font-family: 'Orbitron', sans-serif;
     font-size: 1.8rem;
     font-weight: 700;
-    color: #ff0000;
+    color: #111111;
 }
 .event-month {
-    color: #ffffff;
+    color: #111111;
     font-weight: 600;
     text-transform: uppercase;
 }
 .event-year {
-    color: #9ca3af;
+    color: #6b7280;
     font-size: 0.8rem;
 }
 .event-body {
@@ -632,7 +636,7 @@ button { cursor: pointer; border: none; background: none; }
 .event-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.2rem;
-    color: #ffffff;
+    color: #111111;
     margin-bottom: 0.5rem;
 }
 .event-meta {
@@ -642,23 +646,23 @@ button { cursor: pointer; border: none; background: none; }
     margin-bottom: 0.75rem;
 }
 .event-tag {
-    background: #0a0a0f;
-    border: 1px solid #1a1a2e;
-    color: #ff0000;
+    background: #ffffff;
+    border: 1px solid #e3e3e8;
+    color: #111111;
     border-radius: 4px;
     padding: 0.2rem 0.6rem;
     font-size: 0.8rem;
 }
 .event-when {
-    color: #e0e0e0;
+    color: #1a1a1a;
     margin-bottom: 0.25rem;
 }
 .event-where {
-    color: #9ca3af;
+    color: #6b7280;
     margin-bottom: 0.25rem;
 }
 .event-count {
-    color: #9ca3af;
+    color: #6b7280;
     font-size: 0.85rem;
     margin-bottom: 0.5rem;
 }
@@ -668,7 +672,7 @@ button { cursor: pointer; border: none; background: none; }
 }
 .events-empty {
     text-align: center;
-    color: #9ca3af;
+    color: #6b7280;
     padding: 2rem;
 }
 @media (max-width: 480px) {
@@ -689,13 +693,13 @@ button { cursor: pointer; border: none; background: none; }
     display: block;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #1a1a2e;
+    border: 1px solid #e3e3e8;
     aspect-ratio: 16 / 10;
     transition: transform 0.3s, border-color 0.3s;
 }
 .gallery-item:hover {
     transform: translateY(-4px);
-    border-color: #ff0000;
+    border-color: #111111;
 }
 .gallery-item img {
     width: 100%;
@@ -712,8 +716,8 @@ button { cursor: pointer; border: none; background: none; }
     right: 0;
     bottom: 0;
     padding: 1rem;
-    background: linear-gradient(to top, rgba(10,10,15,0.9), transparent);
-    color: #ffffff;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.95), transparent);
+    color: #111111;
     font-family: 'Orbitron', sans-serif;
     font-size: 0.9rem;
 }
@@ -732,10 +736,10 @@ button { cursor: pointer; border: none; background: none; }
 /* Calendar embed */
 .calendar-embed {
     margin: 2rem 0;
-    border: 1px solid #1a1a2e;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
     overflow: hidden;
-    background: #0a0a0f;
+    background: #ffffff;
 }
 .calendar-frame {
     width: 100%;
@@ -747,10 +751,10 @@ button { cursor: pointer; border: none; background: none; }
 
 /* Language switcher */
 .lang-switcher {
-    background: #0a0a0f;
-    border: 1px solid #1a1a2e;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #1a1a1a;
     font-family: 'Orbitron', sans-serif;
     font-size: 0.85rem;
     padding: 0.4rem 0.6rem;
@@ -758,7 +762,7 @@ button { cursor: pointer; border: none; background: none; }
 }
 .lang-switcher:focus {
     outline: none;
-    border-color: #ff0000;
+    border-color: #111111;
 }
 
 /* Language modal */
@@ -768,7 +772,7 @@ button { cursor: pointer; border: none; background: none; }
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0, 0, 0, 0.55);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -782,8 +786,8 @@ button { cursor: pointer; border: none; background: none; }
     pointer-events: auto;
 }
 .lang-modal-box {
-    background: #111118;
-    border: 1px solid #1a1a2e;
+    background: #ffffff;
+    border: 1px solid #e3e3e8;
     border-radius: 12px;
     padding: 2.5rem;
     max-width: 420px;
@@ -798,11 +802,11 @@ button { cursor: pointer; border: none; background: none; }
 .lang-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.4rem;
-    color: #ffffff;
+    color: #111111;
     margin-bottom: 0.5rem;
 }
 .lang-sub {
-    color: #9ca3af;
+    color: #6b7280;
     margin-bottom: 2rem;
 }
 .lang-options {
@@ -815,17 +819,17 @@ button { cursor: pointer; border: none; background: none; }
     align-items: center;
     gap: 1rem;
     padding: 1rem 1.25rem;
-    background: #0a0a0f;
-    border: 1px solid #1a1a2e;
+    background: #f5f5f7;
+    border: 1px solid #e3e3e8;
     border-radius: 8px;
-    color: #ffffff;
+    color: #111111;
     font-family: 'Orbitron', sans-serif;
     font-size: 1.1rem;
     cursor: pointer;
     transition: border-color 0.3s, transform 0.3s;
 }
 .lang-option:hover {
-    border-color: #ff0000;
+    border-color: #111111;
     transform: translateY(-2px);
 }
 .lang-flag {
@@ -836,11 +840,10 @@ button { cursor: pointer; border: none; background: none; }
     top: 1rem;
     right: 1.25rem;
     font-size: 1.5rem;
-    color: #9ca3af;
+    color: #6b7280;
     background: none;
     cursor: pointer;
 }
 .lang-close:hover {
-    color: #ff0000;
+    color: #111111;
 }
-
