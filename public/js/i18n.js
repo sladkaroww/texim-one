@@ -11,7 +11,7 @@ const SITE_STRINGS = {
     'nav.join': 'Join Us',
     'nav.invite': 'Invite',
 
-    'hero.subtitle': 'Professional Virtual Trucking Logistics',
+    'hero.subtitle': 'Virtual Trucking Logistics',
     'hero.text': 'TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along; no pressure, no obligations.',
     'hero.btn1': 'Our Convoys',
     'hero.btn2': 'Media',
@@ -33,7 +33,7 @@ const SITE_STRINGS = {
     'features.f3.title': 'Selective Recruitment',
     'features.f3.text': 'Applications are reviewed individually via our application form.',
     'features.f4.title': 'Ranks',
-    'features.f4.text': 'Our Reputation System ranks every driver by contribution.',
+    'features.f4.text': 'Our Reputation System ranks every driver by contribution: Newbie, Enthusiast, Worker, Master, Instructor.',
 
     'join.title': 'Join',
     'join.text': 'Join our Discord community and start your journey with TEXIM ONE.',
@@ -91,6 +91,7 @@ const SITE_STRINGS = {
     'convoy.sub': 'All upcoming convoys imported from TruckersMP.',
     'convoy.inviteTitle': 'Invite Us to Your Convoy',
     'convoy.inviteSub': 'Fill out the form and we will send your invite to our Discord channel.',
+    'convoy.view': 'View',
 
     // Add-to-calendar page
     'addconvoy.title': 'Add Convoy to Calendar',
@@ -110,8 +111,8 @@ const SITE_STRINGS = {
     'nav.join': 'Присъедини се',
     'nav.invite': 'Покани',
 
-    'hero.subtitle': 'Професионална виртуална транспортна логистика',
-    'hero.text': 'TEXIM ONE е виртуална транспортна компания, която участва в конвои в общността TruckersMP. Поканете ни без напрежение и задължения.',
+    'hero.subtitle': 'Виртуална транспортна логистика',
+    'hero.text': 'TEXIM ONE е виртуална транспортна компания, която участва в конвои в общността TruckersMP. Поканете ни без[...]',
     'hero.btn1': 'Нашите конвои',
     'hero.btn2': 'Медия',
     'hero.invite': 'Покани ни на твой конвой',
@@ -126,13 +127,13 @@ const SITE_STRINGS = {
     'features.title': 'Защо?',
     'features.sub': 'Виртуално шофиране, изградено около достъпността и общността.',
     'features.f1.title': 'Без лимити, без натиск',
-    'features.f1.text': 'Без месечни километри, без задължително участие в конвои, без изисквания за възраст или часове.',
+    'features.f1.text': 'Без месечни километри, без задължително участие в конвои, без изисквания за възраст или часо�[...]',
     'features.f2.title': 'Отличителна фирмена идентичност',
     'features.f2.text': 'Разпознаваеми по нашия TMP таг, аватар и характерна композиция влекач + ремарке.',
     'features.f3.title': 'Селективно набиране',
     'features.f3.text': 'Кандидатурите се разглеждат индивидуално чрез нашата форма.',
     'features.f4.title': 'Рангове',
-    'features.f4.text': 'Нашата система за репутация ранжира всеки шофьор по принос.',
+    'features.f4.text': 'Нашата система за репутация ранжира всеки шофьор по принос: Новак, Ентусиаст, Работник, Мастер, Инструктор.',
 
     'join.title': 'Присъедини се',
     'join.text': 'Присъедини се към нашата Discord общност и започни своето пътешествие с TEXIM ONE.',
@@ -148,7 +149,7 @@ const SITE_STRINGS = {
     'media.title': 'Медия',
     'media.sub': 'Нашата история, нашите моменти, нашата общност.',
     'media.twitch': 'Twitch отбор',
-    'media.twitch.text': 'Разполагаме с официален TruckersMP Twitch отбор, където излъчваме нашите конвои и моменти от общността.',
+    'media.twitch.text': 'Разполагаме с официален TruckersMP Twitch отбор, където излъчваме нашите конвои и моменти от общнос�[...]',
     'media.twitch.btn': 'Гледай в Twitch',
     'gallery.title': 'Галерия',
     'media.news': 'Новини',
@@ -166,7 +167,7 @@ const SITE_STRINGS = {
     'media.news.67722.title': 'Седмична активност - петъчен обществен конвой',
     'media.news.67722.text': 'Всеки петък се събираме за свободен обществен конвой.',
     'media.news.67670.title': 'Обновление на Reputation System (RS)',
-    'media.news.67670.text': 'Reputation System получава демократично обновление.',
+    'media.news.67670.text': 'Reputation System получ��ва демократично обновление.',
     'media.news.67599.title': 'Евровизия 2026 - Bangaranga 🇧🇬',
     'media.news.67599.text': 'Обръщение към историческата победа на Дара на Евровизия 2026.',
     'media.news.67582.title': 'TEXIM ONE Pink Ribbon VTC – 4-та годишнина',
@@ -189,6 +190,7 @@ const SITE_STRINGS = {
     'convoy.sub': 'Всички предстоящи конвои от TruckersMP.',
     'convoy.inviteTitle': 'Покани ни на твой конвой',
     'convoy.inviteSub': 'Попълнете формата и ще изпратим поканата до нашия Discord.',
+    'convoy.view': 'Виж',
 
     // Add-to-calendar page
     'addconvoy.title': 'Добави конвой в календара',
