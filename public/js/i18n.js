@@ -52,9 +52,9 @@ const SITE_STRINGS = {
     'media.twitch.text': 'We run an official TruckersMP Twitch Team where we stream our convoys and community moments live.',
     'media.twitch.btn': 'Watch on Twitch',
     'gallery.title': 'Gallery',
-    'media.news': 'TruckersMP News',
-    'media.news.text': 'Publications and updates we share on our official TruckersMP profile.',
-    'media.news.read': 'Read on TruckersMP',
+    'media.news': 'News',
+    'media.news.text': 'Latest publications and updates from TEXIM ONE.',
+    'media.news.read': 'Read more',
 
     // Some recent news titles (shortened)
     'media.news.69793.title': 'TEXIM ONE THE ORIGINAL™ MONTHLY CONVOY #6',
@@ -151,9 +151,9 @@ const SITE_STRINGS = {
     'media.twitch.text': 'Разполагаме с официален TruckersMP Twitch отбор, където излъчваме нашите конвои и моменти от общността.',
     'media.twitch.btn': 'Гледай в Twitch',
     'gallery.title': 'Галерия',
-    'media.news': 'Новини от TruckersMP',
-    'media.news.text': 'Публикации и новини, които споделяме в нашия официален профил в TruckersMP.',
-    'media.news.read': 'Прочети в TruckersMP',
+    'media.news': 'Новини',
+    'media.news.text': 'Последни публикации и актуализации от TEXIM ONE.',
+    'media.news.read': 'Прочети',
 
     'media.news.69793.title': 'TEXIM ONE THE ORIGINAL™ MONTHLY CONVOY #6',
     'media.news.69793.text': 'На 8 август 2026 г. участвахме в THE ORIGINAL Monthly Convoy #6.',
