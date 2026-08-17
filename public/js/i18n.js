@@ -127,7 +127,7 @@ const SITE_STRINGS = {
     'features.title': 'Защо?',
     'features.sub': 'Виртуално шофиране, изградено около достъпността и общността.',
     'features.f1.title': 'Без лимити, без натиск',
-    'features.f1.text': 'Без месечни километри, без задължително участие в конвои, без изисквания за възраст или часо[[...]
+    'features.f1.text': 'Без месечни километри, без задължително участие в конвои, без изисквания за възраст или часо[...]',
     'features.f2.title': 'Отличителна фирмена идентичност',
     'features.f2.text': 'Разпознаваеми по нашия TMP таг, аватар и характерна композиция влекач + ремарке.',
     'features.f3.title': 'Селективно набиране',
@@ -149,7 +149,7 @@ const SITE_STRINGS = {
     'media.title': 'Медия',
     'media.sub': 'Нашата история, нашите моменти, нашата общност.',
     'media.twitch': 'Twitch отбор',
-    'media.twitch.text': 'Разполагаме с официален TruckersMP Twitch отбор, където излъчваме нашите конвои и моменти от общнос[[...]
+    'media.twitch.text': 'Разполагаме с официален TruckersMP Twitch отбор, където излъчваме нашите конвои и моменти от общнос[...]',
     'media.twitch.btn': 'Гледай в Twitch',
     'gallery.title': 'Галерия',
     'media.news': 'Новини',
@@ -176,130 +176,4 @@ const SITE_STRINGS = {
     'media.news.67539.text': 'Нов облик за версия 1.59: обновление на фирмената идентичност.',
     'media.news.67529.title': 'TrucksBook Bulgaria - сертификати',
     'media.news.67529.text': 'TrucksBook Bulgaria отличи общността ни с сертификати.',
-    'media.news.67416.title': 'Честит 9 май!',
-    'media.news.67416.text': 'Отбелязваме Деня на Европа и свързани събития.',
-    'media.news.65805.title': 'Reputation System (RS)',
-    'media.news.65805.text': 'Нашата система за признание и авторитет, която ранжира всеки шофьор.',
-    'media.news.65704.title': 'TEXIM ONE Pink Ribbon VTC – мартенски конвой',
-    'media.news.65704.text': 'Участвахме в мартенския конвой с United Convoys.',
-    'media.news.58783.title': 'Фирмена идентичност',
-    'media.news.58783.text': 'Пълно ръководство за нашата фирмена идентичност.',
 
-    // Convoy / contact
-    'convoy.title': 'Конвои',
-    'convoy.sub': 'Всички предстоящи конвои от TruckersMP.',
-    'convoy.inviteTitle': 'Покани ни на конвой',
-    'convoy.inviteSub': 'Попълнете формата и ще изпратим поканата до нашия Discord.',
-    'convoy.view': 'Виж',
-
-    // Add-to-calendar page
-    'addconvoy.title': 'Добави конвой в календара',
-    'addconvoy.confirm': 'Добави в календара',
-    'addconvoy.cancel': 'Отказ',
-
-    'lang.title': 'Изберете вашия език',
-    'lang.sub': 'Изберете език',
-    'lang.close': 'Затвори'
-  }
-};
-
-const I18N_KEY = 'texim_lang';
-
-function getCurrentLang() {
-  return localStorage.getItem(I18N_KEY) || 'en';
-}
-
-function setLang(lang) {
-  localStorage.setItem(I18N_KEY, lang === 'bg' ? 'bg' : 'en');
-  applyLang(lang === 'bg' ? 'bg' : 'en');
-}
-
-function applyLang(lang) {
-  const dict = SITE_STRINGS[lang] || SITE_STRINGS.en;
-
-  // Swap all elements with a data-i18n attribute
-  document.querySelectorAll('[data-i18n]').forEach((el) => {
-    const key = el.getAttribute('data-i18n');
-    if (dict[key] != null) {
-      el.textContent = dict[key];
-    }
-  });
-
-  // Swap placeholders
-  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
-    const key = el.getAttribute('data-i18n-placeholder');
-    if (dict[key] != null) {
-      el.setAttribute('placeholder', dict[key]);
-    }
-  });
-
-  // Update <html lang>
-  document.documentElement.setAttribute('lang', lang);
-
-  document.dispatchEvent(new CustomEvent('texim:langchange', { detail: { lang } }));
-}
-
-function showLangModal() {
-  const modal = document.getElementById('langModal');
-  if (!modal) return;
-  modal.classList.add('open');
-}
-
-function initI18n() {
-  const stored = localStorage.getItem(I18N_KEY);
-
-  // Update the language switcher to reflect current choice
-  const switcher = document.getElementById('langSwitcher');
-  if (switcher) {
-    switcher.value = getCurrentLang();
-  }
-
-  applyLang(getCurrentLang());
-
-  // Show the modal on first visit (no stored choice yet)
-  if (!stored) {
-    setTimeout(showLangModal, 600);
-  }
-}
-
-function bindLangModal() {
-  // Always bind the switcher so language can change on every page,
-  // even on pages that don't include the first-visit language modal.
-  const switcher = document.getElementById('langSwitcher');
-  if (switcher) {
-    switcher.addEventListener('change', (e) => setLang(e.target.value));
-  }
-
-  const modal = document.getElementById('langModal');
-  if (!modal) return;
-
-  document.querySelectorAll('.lang-option[data-lang]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const lang = btn.getAttribute('data-lang');
-      setLang(lang);
-      modal.classList.remove('open');
-      if (switcher) switcher.value = lang;
-    });
-  });
-
-  const closeBtn = modal.querySelector('.lang-close');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => modal.classList.remove('open'));
-  }
-  // Click outside to close
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('open');
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    bindLangModal();
-    initI18n();
-});
-
-// Public helper for other scripts to fetch localized strings by key.
-window.t = function t(key) {
-    const lang = getCurrentLang();
-    const dict = SITE_STRINGS[lang] || SITE_STRINGS.en;
-    return dict[key] != null ? dict[key] : key;
-};
