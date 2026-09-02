@@ -36,23 +36,26 @@
     <section class="hero">
         <div class="hero-bg" style="background-image:url('https://files.catbox.moe/g9j45t.jpg');"></div>
         <div class="hero-overlay"></div>
-        <!-- Hero row: keep container layout; truck will be positioned to the right over the background -->
-        <div class="container hero-row">
-            <div class="hero-content">
-                <img src="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" alt="TEXIM ONE Logo" class="hero-logo">
-                <h1 class="hero-title">TEXIM <span class="hero-accent">ONE</span></h1>
-                <p class="hero-subtitle" data-i18n="hero.subtitle">Professional Virtual Trucking Logistics</p>
-                <p class="hero-text" data-i18n="hero.text">TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along, no pressure, no obligations.</p>
-                <div class="hero-btns">
-                    <a href="/convoy.html" class="btn btn-primary" data-i18n="hero.invite" target="_blank" rel="noopener">Invite us to a convoy</a>
-                    <a href="https://discord.com/invite/2sSKVKXUtn" class="btn btn-outline" data-i18n="hero.discord" target="_blank" rel="noopener">Discord</a>
-                    <a href="https://forms.gle/sCU2T9U1KyCEUaT29" class="btn btn-primary" data-i18n="hero.join" target="_blank" rel="noopener">Join Us</a>
-                </div>
-            </div>
 
-            <!-- Small truck image placed to the right of the hero (CSS will position it in the circled area) -->
-            <div class="hero-truck" aria-hidden="true">
-                <img src="https://files.catbox.moe/kf8238.png" alt="TEXIM ONE Truck" class="hero-truck-img">
+        <!-- HERO: text on the left, small truck image right of the text inside the content row -->
+        <div class="container">
+            <div class="hero-row">
+                <div class="hero-content">
+                    <img src="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" alt="TEXIM ONE Logo" class="hero-logo">
+                    <h1 class="hero-title">TEXIM <span class="hero-accent">ONE</span></h1>
+                    <p class="hero-subtitle" data-i18n="hero.subtitle">Professional Virtual Trucking Logistics</p>
+                    <p class="hero-text" data-i18n="hero.text">TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along, no pressure, no obligations.</p>
+                    <div class="hero-btns">
+                        <a href="/convoy.html" class="btn btn-primary" data-i18n="hero.invite" target="_blank" rel="noopener">Invite us to a convoy</a>
+                        <a href="https://discord.com/invite/2sSKVKXUtn" class="btn btn-outline" data-i18n="hero.discord" target="_blank" rel="noopener">Discord</a>
+                        <a href="https://forms.gle/sCU2T9U1KyCEUaT29" class="btn btn-primary" data-i18n="hero.join" target="_blank" rel="noopener">Join Us</a>
+                    </div>
+                </div>
+
+                <!-- Truck placed to the right of the text inside the same row (not absolute) -->
+                <div class="hero-truck" aria-hidden="true">
+                    <img src="https://files.catbox.moe/kf8238.png" alt="TEXIM ONE Truck" class="hero-truck-img">
+                </div>
             </div>
         </div>
     </section>
