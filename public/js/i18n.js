@@ -15,159 +15,145 @@
     en: {
       // Navigation
       'nav.home': 'Home',
-      'nav.about': 'About',
-      'nav.convoy': 'Convoy',
+      'nav.convoy': 'Events',
       'nav.media': 'Media',
-      'nav.join': 'Join Us',
-      'nav.invite': 'Invite',
+      'nav.join': 'Apply',
+      'nav.partnerships': 'Partnerships',
 
-      // Hero section
-      'hero.subtitle': 'Virtual Trucking Logistics',
-      'hero.text': 'TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along; no pressure, no obligations.',
-      'hero.btn1': 'Our Convoys',
-      'hero.btn2': 'Media',
-      'hero.invite': 'Invite us to a convoy',
+      // Home - Hero section
+      'hero.tagline': 'Always 1 in mind, behind TEXIM!',
+      'hero.subtitle': 'Virtual Trucking Company',
+      'hero.text': 'TEXIM ONE started on January 1, 2026 as a natural continuation of TEXIM, founded on March 10, 2019.',
       'hero.discord': 'Discord',
-      'hero.join': 'Join Us',
 
-      // Stats section
-      'stat.drivers': 'Active Members',
-      'stat.founded': 'Years Active',
-      'stat.km': 'Million km',
-      'stat.discord': 'Discord Members',
+      // Home - Stats
+      'stat.drivers': '10+ Employees',
+      'stat.founded': '7+ Years Experience',
+      'stat.km': '9+ Million WoTr km',
+      'stat.discord': '80+ Discord Members',
 
-      // Features section
-      'features.title': 'Why?',
-      'features.sub': 'A virtual trucking experience built around accessibility and community.',
-      'features.f1.title': 'No Limits, No Pressure',
-      'features.f1.text': 'No monthly km limits, no required convoy attendance, no age or hours requirements.',
-      'features.f2.title': 'Distinct Corporate Identity',
-      'features.f2.text': 'Recognizable through our TMP tag, avatar, and signature truck + trailer composition.',
-      'features.f3.title': 'Selective Recruitment',
-      'features.f3.text': 'Applications are reviewed individually via our application form.',
-      'features.f4.title': 'Ranks',
-      'features.f4.text': 'Our Reputation System ranks every driver by contribution: Newbie, Enthusiast, Worker, Master, Instructor.',
+      // Home - Section titles
+      'home.staff': 'The People Behind the Wheel',
+      'home.staffDesc': 'Integration with members from TruckersMP',
+      'home.panels': 'Our Values',
 
-      // Footer
-      'footer.about': 'Virtual trucking logistics since 2019.',
-      'footer.company': 'Company',
+      // Home - Panel titles
+      'panel.accessibility': 'Accessibility',
+      'panel.accessibilityDesc': 'No monthly km limits, mandatory convoy attendance, age requirements, game hours, DLCs, or trial period.',
+      'panel.identity': 'Corporate Identity',
+      'panel.identityDesc': 'Recognizable branding: truck, trailer, bus, avatar, and tag.',
+      'panel.hierarchy': 'Hierarchy',
+      'panel.hierarchyDesc': 'Our reputation system rewards active members with more weight in decision-making.',
+      'panel.prestige': 'Prestige',
+      'panel.prestigeDesc': 'Own Twitch Team and Merch - exclusive to only the largest communities.',
 
-      // Convoy page
-      'convoy.inviteTitle': 'Invite Us to a Convoy',
-      'convoy.inviteSub': 'Fill out the form and we will send your invite to our Discord channel.',
-      'convoy.formTitle': 'Convoy Invitation Form',
-      'convoy.calendar': 'Calendar',
+      // Events page
+      'events.title': 'Events',
+      'events.allEvents': 'All events we are invited to.',
+      'events.invite': 'Invite Us',
+      'events.inviteText': 'Fill out the form and we will share the invitation with our Discord members.',
+      'events.calendar': 'Calendar',
+      'events.calendarText': 'All upcoming events.',
 
       // Media page
       'media.title': 'Media',
       'media.sub': 'Our story, our moments, our community.',
       'media.twitch': 'Twitch Team',
-      'media.twitch.text': 'Watch our official TruckersMP Twitch Team streaming convoys and community moments live.',
+      'media.twitchText': 'Follow our Twitch Team where we stream live for the community!',
+      'media.watch': 'Watch',
       'media.gallery': 'Gallery',
-      'media.gallery.sub': 'Best moments from our convoys - 9 latest photos',
+      'media.galleryText': 'Top 9 frames with colleagues. (photos with at least 4 team members)',
       'media.news': 'News',
-      'media.news.text': 'Latest publications and updates from TEXIM ONE.',
+      'media.newsText': 'TEXIM ONE on TruckersMP.',
 
-      // Join/Apply page
-      'join.title': 'Join TEXIM ONE',
-      'join.subtitle': 'Start Your Journey With Us',
-      'join.form': 'Application Form',
-      'join.formText': 'Fill out our application form to join the team.',
-      'join.discord': 'Join Our Discord',
-      'join.discordText': 'Connect with our community on Discord.',
+      // Apply page
+      'apply.title': 'Apply to TEXIM ONE',
+      'apply.form': 'Application Form',
 
       // Partnerships page
       'partnerships.title': 'Partnerships',
-      'partnerships.sub': 'Our collaborations and integrations.',
-      'partnerships.screenshots': 'Screenshots & Collection',
-      'partnerships.designs': 'Designs & Concepts',
-      'partnerships.social': 'Social Links',
+      'partnerships.texim': 'TEXIM ONE Vtc & TEXIM ONE Ltd',
+      'partnerships.merchDesc': 'The iconic T1 logo is presented as an embroidered patch measuring 5-6 cm, placed on the classic position on the left chest.',
+      'partnerships.colorDesc': 'For individual personalization, we offer 420 thread colors for perfect combination with your clothes, ranging from 5 to 11 colors depending on the model.',
+      'partnerships.materialDesc': 'We chose an American brand with heavyweight material and oversized fit. The collection includes t-shirts, hoodies, and sweatshirts in sizes XS to 2XL.',
+      'partnerships.button': 'Shop Merch',
+      'partnerships.contact': 'If you want to partner with us for creating custom merch, joining our Twitch Team, or other collaborative initiatives, you can contact us on our Discord server.',
 
-      // Footer sections
-      'footer.hotspots': 'Hot Spots on the Site',
-      'footer.logo': 'Logo',
-      'footer.pages': 'Pages',
-      'footer.language': 'Language',
-      'footer.links': 'Links',
+      // Footer
+      'footer.about': 'Virtual trucking logistics since 2019.',
+      'footer.company': 'Company',
       'footer.credit': 'Made with ❤️ by sladkaroww'
     },
     bg: {
       // Navigation
       'nav.home': 'Начало',
-      'nav.about': 'За нас',
-      'nav.convoy': 'Конвои',
+      'nav.convoy': 'События',
       'nav.media': 'Медия',
-      'nav.join': 'Присъедини се',
-      'nav.invite': 'Покани',
+      'nav.join': 'Кандидатствай',
+      'nav.partnerships': 'Партньорства',
 
-      // Hero section
-      'hero.subtitle': 'Виртуална транспортна логистика',
-      'hero.text': 'TEXIM ONE е виртуална транспортна компания, която участва в конвои в общността TruckersMP. Поканете ни без натиск и задължения.',
-      'hero.btn1': 'Нашите конвои',
-      'hero.btn2': 'Медия',
-      'hero.invite': 'Покани ни на конвой',
+      // Home - Hero section
+      'hero.tagline': 'Винаги 1 на ум, зад TEXIM!',
+      'hero.subtitle': 'Виртуална транспортна компания',
+      'hero.text': 'TEXIM ONE стартира на 1 януари 2026 г. като естествено продължение на TEXIM, основана на 10 март 2019 г.',
       'hero.discord': 'Discord',
-      'hero.join': 'Присъедини се',
 
-      // Stats section
-      'stat.drivers': 'Активни членове',
-      'stat.founded': 'Години активност',
-      'stat.km': 'Млн км',
-      'stat.discord': 'Членове в Discord',
+      // Home - Stats
+      'stat.drivers': '10+ Служители',
+      'stat.founded': '7+ Години опит',
+      'stat.km': '9+ Млн WoTr км',
+      'stat.discord': '80+ Discord членове',
 
-      // Features section
-      'features.title': 'Защо?',
-      'features.sub': 'Виртуално шофиране, изградено около достъпността и общността.',
-      'features.f1.title': 'Без лимити, без натиск',
-      'features.f1.text': 'Без месечни километри, без задължително участие в конвои, без изисквания за възраст или часове.',
-      'features.f2.title': 'Отличителна фирмена идентичност',
-      'features.f2.text': 'Разпознаваеми по нашия TMP таг, аватар и характерна композиция влекач + ремарке.',
-      'features.f3.title': 'Селективно набиране',
-      'features.f3.text': 'Кандидатурите се разглеждат индивидуално чрез нашата форма.',
-      'features.f4.title': 'Рангове',
-      'features.f4.text': 'Нашата система за репутация ранжира всеки шофьор по принос: Новак, Ентусиаст, Работник, Майстор, Инструктор.',
+      // Home - Section titles
+      'home.staff': 'Хората зад волана',
+      'home.staffDesc': 'Интеграция със служителите от TruckersMP',
+      'home.panels': 'Нашите ценности',
 
-      // Footer
-      'footer.about': 'Виртуална транспортна логистика от 2019 г.',
-      'footer.company': 'Компания',
+      // Home - Panel titles
+      'panel.accessibility': 'Достъпност',
+      'panel.accessibilityDesc': 'Не изискваме месечен лимит от километри, задължително участие в конвои, определена възраст, часове в играта, DLC-та или тестов период.',
+      'panel.identity': 'Идентичност',
+      'panel.identityDesc': 'Разпознаваем фирмен брандинг: влекач, ремарке, автобус, аватар и таг.',
+      'panel.hierarchy': 'Йерархия',
+      'panel.hierarchyDesc': 'Нашата система за репутация възнаграждава по-активните във фирмата с повече тежест при вземането на решения.',
+      'panel.prestige': 'Престиж',
+      'panel.prestigeDesc': 'Собствен Twitch Team и Merch - само за малка част от най-големите общности.',
 
-      // Convoy page
-      'convoy.inviteTitle': 'Покани ни на конвой',
-      'convoy.inviteSub': 'Попълнете формата и ще изпратим поканата до нашия Discord канал.',
-      'convoy.formTitle': 'Формуляр за поканване на конвой',
-      'convoy.calendar': 'Календар',
+      // Events page
+      'events.title': 'События',
+      'events.allEvents': 'Всички събития, на които сме поканени.',
+      'events.invite': 'Покани ни',
+      'events.inviteText': 'Попълнете формуляра и ще споделим поканата с членовете в нашия Discord сървър.',
+      'events.calendar': 'Календар',
+      'events.calendarText': 'Всички предстоящи събития.',
 
       // Media page
       'media.title': 'Медия',
       'media.sub': 'Нашата история, нашите моменти, нашата общност.',
       'media.twitch': 'Twitch отбор',
-      'media.twitch.text': 'Гледайте нашия официален TMP Twitch отбор, където излъчваме конвои и моменти от общността.',
+      'media.twitchText': 'Следете нашия Twitch отбор, с който стриймваме на живо за общността!',
+      'media.watch': 'Гледай',
       'media.gallery': 'Галерия',
-      'media.gallery.sub': 'Най-добрите моменти от нашите конвои - 9 последни снимки',
+      'media.galleryText': 'Топ 9 кадри с колегите. (снимки с поне 4-ма от фирмата)',
       'media.news': 'Новини',
-      'media.news.text': 'Последни публикации и актуализации от TEXIM ONE.',
+      'media.newsText': 'TEXIM ONE в TruckersMP.',
 
-      // Join/Apply page
-      'join.title': 'Присъедини се към TEXIM ONE',
-      'join.subtitle': 'Започни своето пътешествие с нас',
-      'join.form': 'Формуляр за кандидатстване',
-      'join.formText': 'Попълнете нашия формуляр за кандидатстване, за да се присъедините към екипа.',
-      'join.discord': 'Присъедини се към Discord',
-      'join.discordText': 'Свържете се с нашата общност в Discord.',
+      // Apply page
+      'apply.title': 'Кандидатствай за TEXIM ONE',
+      'apply.form': 'Формуляр за кандидатстване',
 
       // Partnerships page
       'partnerships.title': 'Партньорства',
-      'partnerships.sub': 'Нашите сътрудничества и интеграции.',
-      'partnerships.screenshots': 'Снимки и колекция',
-      'partnerships.designs': 'Дизайни и концепции',
-      'partnerships.social': 'Социални връзки',
+      'partnerships.texim': 'TEXIM ONE Vtc & TEXIM ONE Ltd',
+      'partnerships.merchDesc': 'Познатото лого T1 е представено под формата на бродерия с размер 5–6 см, разположено на класическото място отпред отляво на гърдите.',
+      'partnerships.colorDesc': 'За индивидуална персонализация предлагаме 420 цвята конци с цел перфектна комбинация с дрехите, които варират от 5 до 11 цвята в зависимост от модела.',
+      'partnerships.materialDesc': 'Заложихме на американски бранд с Heavyweight материя и Oversized кройка. Колекцията включва тениски, суитшърти и худита, в размери от XS до 2XL.',
+      'partnerships.button': 'Магазин Merch',
+      'partnerships.contact': 'Ако искате да си партнираме за създаване на собствен Merch, присъединяване към нашия Twitch Team или други съвместни инициативи, можете да се свържете с нас в нашия Discord сървър.',
 
-      // Footer sections
-      'footer.hotspots': 'Горещи точки на сайта',
-      'footer.logo': 'Лого',
-      'footer.pages': 'Страници',
-      'footer.language': 'Език',
-      'footer.links': 'Връзки',
+      // Footer
+      'footer.about': 'Виртуална транспортна логистика от 2019 г.',
+      'footer.company': 'Компания',
       'footer.credit': 'Направено с ❤️ от sladkaroww'
     }
   };
