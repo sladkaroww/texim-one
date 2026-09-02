@@ -36,9 +36,9 @@
     <section class="hero">
         <div class="hero-bg" style="background-image:url('https://files.catbox.moe/g9j45t.jpg');"></div>
         <div class="hero-overlay"></div>
-        <!-- Using the hero layout from the previous commit and placing a smaller truck image to the right -->
-        <div class="container" style="display:flex;align-items:center;gap:1.5rem;">
-            <div class="hero-content" style="flex:1;">
+        <!-- Hero row: keep container layout; truck will be positioned to the right over the background -->
+        <div class="container hero-row">
+            <div class="hero-content">
                 <img src="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" alt="TEXIM ONE Logo" class="hero-logo">
                 <h1 class="hero-title">TEXIM <span class="hero-accent">ONE</span></h1>
                 <p class="hero-subtitle" data-i18n="hero.subtitle">Professional Virtual Trucking Logistics</p>
@@ -50,9 +50,9 @@
                 </div>
             </div>
 
-            <!-- Small truck image placed to the right of the hero text (explicitly using the provided URL) -->
-            <div class="hero-truck" style="flex:0 0 auto;">
-                <img src="https://files.catbox.moe/kf8238.png" alt="TEXIM ONE Truck" style="max-width:140px;height:auto;display:block;">
+            <!-- Small truck image placed to the right of the hero (CSS will position it in the circled area) -->
+            <div class="hero-truck" aria-hidden="true">
+                <img src="https://files.catbox.moe/kf8238.png" alt="TEXIM ONE Truck" class="hero-truck-img">
             </div>
         </div>
     </section>
