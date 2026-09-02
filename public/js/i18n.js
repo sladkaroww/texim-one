@@ -28,7 +28,26 @@
       'hero.discord': 'Discord',
       'hero.join': 'Join Us',
 
-      'convoy.inviteTitle': 'Invite Us to Your Convoy',
+      'stat.drivers': 'Active Members',
+      'stat.founded': 'Years Active',
+      'stat.km': 'Million km',
+      'stat.discord': 'Discord Members',
+
+      'features.title': 'Why?',
+      'features.sub': 'A virtual trucking experience built around accessibility and community.',
+      'features.f1.title': 'No Limits, No Pressure',
+      'features.f1.text': 'No monthly km limits, no required convoy attendance, no age or hours requirements.',
+      'features.f2.title': 'Distinct Corporate Identity',
+      'features.f2.text': 'Recognizable through our TMP tag, avatar, and signature truck + trailer composition.',
+      'features.f3.title': 'Selective Recruitment',
+      'features.f3.text': 'Applications are reviewed individually via our application form.',
+      'features.f4.title': 'Ranks',
+      'features.f4.text': 'Our Reputation System ranks every driver by contribution: Newbie, Enthusiast, Worker, Master, Instructor.',
+
+      'footer.about': 'Virtual trucking logistics since 2019.',
+      'footer.company': 'Company',
+
+      'convoy.inviteTitle': 'Invite Us to a convoy',
       'convoy.inviteSub': 'Fill out the form and we will send your invite to our Discord channel.'
     },
     bg: {
@@ -36,19 +55,38 @@
       'nav.about': 'За нас',
       'nav.convoy': 'Конвои',
       'nav.media': 'Медия',
-      'nav.join': 'Кандидатствайте',
+      'nav.join': 'Присъедини се',
       'nav.invite': 'Покани',
 
       'hero.subtitle': 'Виртуална транспортна логистика',
-      'hero.text': 'TEXIM ONE е виртуална транспортна компания, която участва в конвои в общността TruckersMP. Поканете ни без натиск.',
+      'hero.text': 'TEXIM ONE е виртуална транспортна компания, която участва в конвои в общността TruckersMP. Поканете ни без натиск и задължения.',
       'hero.btn1': 'Нашите конвои',
       'hero.btn2': 'Медия',
       'hero.invite': 'Покани ни на конвой',
       'hero.discord': 'Discord',
-      'hero.join': 'Кандидатствайте',
+      'hero.join': 'Присъедини се',
+
+      'stat.drivers': 'Активни членове',
+      'stat.founded': 'Години активност',
+      'stat.km': 'Млн км',
+      'stat.discord': 'Членове в Discord',
+
+      'features.title': 'Защо?',
+      'features.sub': 'Виртуално шофиране, изградено около достъпността и общността.',
+      'features.f1.title': 'Без лимити, без натиск',
+      'features.f1.text': 'Без месечни километри, без задължително участие в конвои, без изисквания за възраст или часове.',
+      'features.f2.title': 'Отличителна фирмена идентичност',
+      'features.f2.text': 'Разпознаваеми по нашия TMP таг, аватар и характерна композиция влекач + ремарке.',
+      'features.f3.title': 'Селективно набиране',
+      'features.f3.text': 'Кандидатурите се разглеждат индивидуално чрез нашата форма.',
+      'features.f4.title': 'Рангове',
+      'features.f4.text': 'Нашата система за репутация ранжира всеки шофьор по принос: Новак, Ентусиаст, Работник, Майстор, Инструктор.',
+
+      'footer.about': 'Виртуална транспортна логистика от 2019 г.',
+      'footer.company': 'Компания',
 
       'convoy.inviteTitle': 'Покани ни на конвой',
-      'convoy.inviteSub': 'Попълнете формата и ще изпратим поканата до нашия Discord.'
+      'convoy.inviteSub': 'Попълнете формата и ще изпратим поканата до нашия Discord канал.'
     }
   };
 
