@@ -10,18 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="icon" href="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" type="image/png">
-    <style>
-    /* Minimal modal styles for language picker */
-    #langModal { position: fixed; inset: 0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.6); visibility: hidden; opacity: 0; transition: opacity .18s ease; z-index:9999; }
-    #langModal.open { visibility: visible; opacity: 1; }
-    #langModal .lang-modal-content { background: #fff; padding: 20px; border-radius: 8px; max-width: 360px; width: 92%; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-    #langModal h3 { margin: 0 0 8px; }
-    #langModal p { margin: 0 0 16px; color: #444; }
-    .lang-actions { display:flex; gap: 8px; justify-content:center; margin-bottom: 8px; }
-    .lang-option { padding:8px 12px; border-radius:6px; border:1px solid #ddd; background:#f7f7f7; cursor:pointer; }
-    .lang-option[data-lang="bg"] { background: #0b5cff; color: #fff; border-color: #0b5cff; }
-    .lang-close { margin-top:8px; background:transparent; border:0; color:#666; cursor:pointer; }
-    </style>
 </head>
 <body>
     <div class="preloader">
@@ -147,19 +135,6 @@
             <p>Made with &#10084;&#65039; by sladkaroww</p>
         </div>
     </footer>
-
-    <!-- Language selection modal (shown to new visitors) -->
-    <div id="langModal" aria-hidden="true">
-      <div class="lang-modal-content" role="dialog" aria-modal="true" aria-labelledby="langModalTitle">
-        <h3 id="langModalTitle">Choose your language</h3>
-        <p>Select your preferred language</p>
-        <div class="lang-actions">
-          <button class="lang-option" data-lang="en">English</button>
-          <button class="lang-option" data-lang="bg">Български</button>
-        </div>
-        <button class="lang-close">Close</button>
-      </div>
-    </div>
 
     <script src="/js/i18n.js"></script>
     <script src="/js/main.js"></script>
