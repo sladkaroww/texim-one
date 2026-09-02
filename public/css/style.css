@@ -314,7 +314,7 @@ button { cursor: pointer; border: none; background: none; }
     max-width: 360px;
     width: 100%;
     height: auto;
-    border: 1px solid #e3e3e8;
+    border: 1px solid #e3e8e8;
     border-radius: 8px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
@@ -327,7 +327,7 @@ button { cursor: pointer; border: none; background: none; }
 }
 .team-card {
     background: #f5f5f7;
-    border: 1px solid #e3e3e8;
+    border: 1px solid #e3e8e8;
     border-radius: 8px;
     padding: 2rem;
     text-align: center;
@@ -335,7 +335,7 @@ button { cursor: pointer; border: none; background: none; }
 .team-avatar {
     width: 80px;
     height: 80px;
-    background: #e3e3e8;
+    background: #e3e8e8;
     border-radius: 50%;
     margin: 0 auto 1rem;
     overflow: hidden;
@@ -564,7 +564,7 @@ button { cursor: pointer; border: none; background: none; }
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    border-top: 1px solid #e3e3e8;
+    border-top: 1px solid #e3e8e8;
     color: #c8c8c8;
     font-size: 0.9rem;
 }
@@ -974,7 +974,7 @@ button { cursor: pointer; border: none; background: none; }
     color: #111111;
 }
 
-/* --- Added: Inline truck next to hero text (small & transparent) --- */
+/* --- Added: Inline truck next to hero text (bigger & transparent) --- */
 .hero-row {
     display: flex;
     align-items: center;
@@ -990,11 +990,11 @@ button { cursor: pointer; border: none; background: none; }
     position: static !important; /* ensure not absolute */
 }
 .hero-truck-img {
-    max-width: 140px;
+    max-width: 180px; /* increased size as requested */
     width: 100%;
     height: auto;
     display: block;
-    opacity: 0.9; /* slightly transparent */
+    opacity: 0.95; /* slightly transparent */
 }
 @media (max-width: 900px) {
     .hero-row { flex-direction: column; align-items: flex-start; }
