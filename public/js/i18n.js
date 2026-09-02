@@ -13,6 +13,7 @@
   // Minimal dictionary. Keep in sync with server-side HTML fallbacks.
   const SITE_STRINGS = {
     en: {
+      // Navigation
       'nav.home': 'Home',
       'nav.about': 'About',
       'nav.convoy': 'Convoy',
@@ -20,6 +21,7 @@
       'nav.join': 'Join Us',
       'nav.invite': 'Invite',
 
+      // Hero section
       'hero.subtitle': 'Virtual Trucking Logistics',
       'hero.text': 'TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along; no pressure, no obligations.',
       'hero.btn1': 'Our Convoys',
@@ -28,11 +30,13 @@
       'hero.discord': 'Discord',
       'hero.join': 'Join Us',
 
+      // Stats section
       'stat.drivers': 'Active Members',
       'stat.founded': 'Years Active',
       'stat.km': 'Million km',
       'stat.discord': 'Discord Members',
 
+      // Features section
       'features.title': 'Why?',
       'features.sub': 'A virtual trucking experience built around accessibility and community.',
       'features.f1.title': 'No Limits, No Pressure',
@@ -44,13 +48,51 @@
       'features.f4.title': 'Ranks',
       'features.f4.text': 'Our Reputation System ranks every driver by contribution: Newbie, Enthusiast, Worker, Master, Instructor.',
 
+      // Footer
       'footer.about': 'Virtual trucking logistics since 2019.',
       'footer.company': 'Company',
 
-      'convoy.inviteTitle': 'Invite Us to a convoy',
-      'convoy.inviteSub': 'Fill out the form and we will send your invite to our Discord channel.'
+      // Convoy page
+      'convoy.inviteTitle': 'Invite Us to a Convoy',
+      'convoy.inviteSub': 'Fill out the form and we will send your invite to our Discord channel.',
+      'convoy.formTitle': 'Convoy Invitation Form',
+      'convoy.calendar': 'Calendar',
+
+      // Media page
+      'media.title': 'Media',
+      'media.sub': 'Our story, our moments, our community.',
+      'media.twitch': 'Twitch Team',
+      'media.twitch.text': 'Watch our official TruckersMP Twitch Team streaming convoys and community moments live.',
+      'media.gallery': 'Gallery',
+      'media.gallery.sub': 'Best moments from our convoys - 9 latest photos',
+      'media.news': 'News',
+      'media.news.text': 'Latest publications and updates from TEXIM ONE.',
+
+      // Join/Apply page
+      'join.title': 'Join TEXIM ONE',
+      'join.subtitle': 'Start Your Journey With Us',
+      'join.form': 'Application Form',
+      'join.formText': 'Fill out our application form to join the team.',
+      'join.discord': 'Join Our Discord',
+      'join.discordText': 'Connect with our community on Discord.',
+
+      // Partnerships page
+      'partnerships.title': 'Partnerships',
+      'partnerships.sub': 'Our collaborations and integrations.',
+      'partnerships.screenshots': 'Screenshots & Collection',
+      'partnerships.designs': 'Designs & Concepts',
+      'partnerships.social': 'Social Links',
+
+      // Footer sections
+      'footer.hotspots': 'Hot Spots on the Site',
+      'footer.logo': 'Logo',
+      'footer.pages': 'Pages',
+      'footer.language': 'Language',
+      'footer.links': 'Links',
+      'footer.credit': 'Made with ❤️ by sladkaroww'
     },
     bg: {
+      // Navigation
       'nav.home': 'Начало',
       'nav.about': 'За нас',
       'nav.convoy': 'Конвои',
@@ -58,6 +100,7 @@
       'nav.join': 'Присъедини се',
       'nav.invite': 'Покани',
 
+      // Hero section
       'hero.subtitle': 'Виртуална транспортна логистика',
       'hero.text': 'TEXIM ONE е виртуална транспортна компания, която участва в конвои в общността TruckersMP. Поканете ни без натиск и задължения.',
       'hero.btn1': 'Нашите конвои',
@@ -66,11 +109,13 @@
       'hero.discord': 'Discord',
       'hero.join': 'Присъедини се',
 
+      // Stats section
       'stat.drivers': 'Активни членове',
       'stat.founded': 'Години активност',
       'stat.km': 'Млн км',
       'stat.discord': 'Членове в Discord',
 
+      // Features section
       'features.title': 'Защо?',
       'features.sub': 'Виртуално шофиране, изградено около достъпността и общността.',
       'features.f1.title': 'Без лимити, без натиск',
@@ -82,11 +127,48 @@
       'features.f4.title': 'Рангове',
       'features.f4.text': 'Нашата система за репутация ранжира всеки шофьор по принос: Новак, Ентусиаст, Работник, Майстор, Инструктор.',
 
+      // Footer
       'footer.about': 'Виртуална транспортна логистика от 2019 г.',
       'footer.company': 'Компания',
 
+      // Convoy page
       'convoy.inviteTitle': 'Покани ни на конвой',
-      'convoy.inviteSub': 'Попълнете формата и ще изпратим поканата до нашия Discord канал.'
+      'convoy.inviteSub': 'Попълнете формата и ще изпратим поканата до нашия Discord канал.',
+      'convoy.formTitle': 'Формуляр за поканване на конвой',
+      'convoy.calendar': 'Календар',
+
+      // Media page
+      'media.title': 'Медия',
+      'media.sub': 'Нашата история, нашите моменти, нашата общност.',
+      'media.twitch': 'Twitch отбор',
+      'media.twitch.text': 'Гледайте нашия официален TMP Twitch отбор, където излъчваме конвои и моменти от общността.',
+      'media.gallery': 'Галерия',
+      'media.gallery.sub': 'Най-добрите моменти от нашите конвои - 9 последни снимки',
+      'media.news': 'Новини',
+      'media.news.text': 'Последни публикации и актуализации от TEXIM ONE.',
+
+      // Join/Apply page
+      'join.title': 'Присъедини се към TEXIM ONE',
+      'join.subtitle': 'Започни своето пътешествие с нас',
+      'join.form': 'Формуляр за кандидатстване',
+      'join.formText': 'Попълнете нашия формуляр за кандидатстване, за да се присъедините към екипа.',
+      'join.discord': 'Присъедини се към Discord',
+      'join.discordText': 'Свържете се с нашата общност в Discord.',
+
+      // Partnerships page
+      'partnerships.title': 'Партньорства',
+      'partnerships.sub': 'Нашите сътрудничества и интеграции.',
+      'partnerships.screenshots': 'Снимки и колекция',
+      'partnerships.designs': 'Дизайни и концепции',
+      'partnerships.social': 'Социални връзки',
+
+      // Footer sections
+      'footer.hotspots': 'Горещи точки на сайта',
+      'footer.logo': 'Лого',
+      'footer.pages': 'Страници',
+      'footer.language': 'Език',
+      'footer.links': 'Връзки',
+      'footer.credit': 'Направено с ❤️ от sladkaroww'
     }
   };
 
