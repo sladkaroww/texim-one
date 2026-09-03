@@ -1,0 +1,38 @@
+/* Footer */
+.footer {
+    background: #f5f5f7;
+    border-top: 1px solid #e3e8e8;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+/* Social links in footer centered */
+.footer-social {
+    justify-content: center;
+    max-width: none;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: #ffffff;
+    border: 1px solid #e3e8e8;
+    border-radius: 4px;
+    color: #1a1a1a;
+    font-size: 0.9rem;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.social-link img {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.social-link:hover { 
+    color: #111111; 
+    border-color: #111111; 
+}
