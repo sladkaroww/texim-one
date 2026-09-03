@@ -9,10 +9,6 @@ const VTC_ID = '74050';
 // Static fallback (kept in sync with our known schedule). Used whenever the
 // live TruckersMP API is unreachable from our host.
 const FALLBACK_EVENTS = [
-    { id: 33929, name: '8yrs on the road with BVAR Trucking', type: 'Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-08-22T18:00:00.000Z', departure: { location: 'Slots', city: 'Tirana' }, confirmed: 144, url: 'https://truckersmp.com/events/33929' },
-    { id: 34193, name: 'Truck Club | 4th Anniversary', type: 'Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-08-27T19:00:00.000Z', departure: { location: 'Slots', city: 'TruckersMP HQ' }, confirmed: 152, url: 'https://truckersmp.com/events/34193' },
-    { id: 33621, name: 'EGY-TRUCKERS | AUGUST 2026', type: 'Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-08-28T18:00:00.000Z', departure: null, confirmed: 186, url: 'https://truckersmp.com/events/33621' },
-    { id: 34536, name: 'Borry Logistics | 2 YEAR ANNIVERSARY', type: 'Truckfest And Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-08-31T18:00:00.000Z', departure: null, confirmed: 120, url: 'https://truckersmp.com/events/34536' },
     { id: 34976, name: 'Krone Liner | 3 Year Anniversary', type: 'Convoy', game: 'ETS2', server: 'Event Server', startAt: '2026-09-06T18:00:00.000Z', departure: null, confirmed: 118, url: 'https://truckersmp.com/events/34976' },
     { id: 34097, name: 'NorthStar Group | Opening Convoy', type: 'Convoy', game: 'ETS2', server: 'To be determined', startAt: '2026-10-03T17:00:00.000Z', departure: null, confirmed: 124, url: 'https://truckersmp.com/events/34097' },
 ];

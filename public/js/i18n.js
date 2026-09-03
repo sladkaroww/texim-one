@@ -54,6 +54,11 @@
       'events.inviteText': 'Fill out the form and we will share the invitation with our Discord members.',
       'events.calendar': 'Calendar',
       'events.calendarText': 'All upcoming events.',
+      // Convoy page specific translations
+      'convoy.none': 'No upcoming events',
+      'convoy.error': 'Failed to load events',
+      'convoy.meet': 'Meeting point',
+      'convoy.view': 'View event'
 
       // Media page
       'media.title': 'Media',
@@ -126,6 +131,11 @@
       'events.inviteText': 'Попълнете формуляра и ще споделим поканата с членовете в нашия Discord сървър.',
       'events.calendar': 'Календар',
       'events.calendarText': 'Всички предстоящи събития.',
+      // Convoy page specific translations
+      'convoy.none': 'Няма предстоящи събития',
+      'convoy.error': 'Неуспешно зареждане на събития',
+      'convoy.meet': 'Среща',
+      'convoy.view': 'Преглед на събитие'
 
       // Media page
       'media.title': 'Медия',
