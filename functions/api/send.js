@@ -22,49 +22,31 @@ async function getOurSchedule(request) {
         return mapped.length ? mapped : FALLBACK_SCHEDULE;
     } catch { return FALLBACK_SCHEDULE; }
 }
-
-function json(body, status = 200) {
-    return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
-}
-
-function randomToken() {
-    const bytes = new Uint8Array(32);
-    crypto.getRandomValues(bytes);
-    return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
-}
+function json(body, status = 200) { return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } }); }
+function randomToken() { const bytes = new Uint8Array(32); crypto.getRandomValues(bytes); return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join(''); }
 
 export async function onRequest(context) {
     const { request, env } = context;
     if (request.method !== 'POST') return json({ success: false, message: 'Method not allowed' }, 405);
-
     const webhookUrl = env.DISCORD_WEBHOOK_URL;
     if (!webhookUrl) return json({ success: false, message: 'Discord webhook is not configured.' }, 500);
-
     let data;
     try { data = await request.json(); } catch { return json({ success: false, message: 'Invalid JSON payload.' }, 400); }
 
-    const eventName = (data.eventName || '').trim();
-    const eventDate = (data.eventDate || '').trim();
-    const eventTime = (data.eventTime || '').trim();
-    const discord = (data.discord || '').trim();
-    const email = (data.email || '').trim();
-    const eventLink = (data.eventLink || '').trim();
-    const details = (data.details || '').trim();
+    const eventName = (data.eventName || '').trim(), eventDate = (data.eventDate || '').trim(), eventTime = (data.eventTime || '').trim();
+    const discord = (data.discord || '').trim(), email = (data.email || '').trim(), eventLink = (data.eventLink || '').trim(), details = (data.details || '').trim();
     if (!eventName || !eventDate || !discord) return json({ success: false, message: 'Please provide the convoy name, date and Discord.' }, 400);
 
     const schedule = await getOurSchedule(request);
     const conflict = schedule.find((e) => e.date === eventDate) || null;
     const status = conflict ? 'declined' : 'received';
     const fields = [
-        { name: 'Convoy Name', value: eventName, inline: false },
-        { name: 'Date', value: eventDate, inline: true },
-        { name: 'Start Time (UTC)', value: eventTime || 'N/A', inline: true },
-        { name: 'Invited by (Discord)', value: discord, inline: true },
+        { name: 'Convoy Name', value: eventName, inline: false }, { name: 'Date', value: eventDate, inline: true },
+        { name: 'Start Time (UTC)', value: eventTime || 'N/A', inline: true }, { name: 'Invited by (Discord)', value: discord, inline: true },
         { name: 'Email', value: email || 'N/A', inline: false },
+        conflict ? { name: 'Auto-Decision', value: `DECLINED — we already have a TEXIM ONE convoy on this date:\n**${conflict.name}** (${conflict.date}).`, inline: false }
+            : { name: 'Auto-Decision', value: 'RECEIVED — no calendar conflict. Pending review; use the review button to approve it.', inline: false },
     ];
-    fields.push(conflict
-        ? { name: 'Auto-Decision', value: `DECLINED — we already have a TEXIM ONE convoy on this date:\n**${conflict.name}** (${conflict.date}).`, inline: false }
-        : { name: 'Auto-Decision', value: 'RECEIVED — no calendar conflict. Pending review; we will DM you on Discord with our decision.', inline: false });
     if (eventLink) fields.push({ name: 'Convoy Link', value: eventLink, inline: false });
     if (details) fields.push({ name: 'Additional Details', value: details.slice(0, 1000), inline: false });
 
@@ -74,28 +56,16 @@ export async function onRequest(context) {
     if (lookedUp?.game) fields.push({ name: 'Game / Server', value: `${lookedUp.game}${lookedUp.server ? ' / ' + lookedUp.server : ''}`, inline: true });
     if (lookedUp?.vtc) fields.push({ name: 'Hosted by VTC', value: lookedUp.vtc, inline: true });
 
-    const embed = {
-        title: conflict ? 'Convoy Invitation — AUTO-DECLINED' : 'New Convoy Invitation',
-        color: conflict ? 0xff0000 : 0x1f6feb,
-        timestamp: new Date().toISOString(), fields,
-        footer: { text: 'TEXIM ONE - Convoy Invites (calendar-checked)' },
-        ...(lookedUp?.banner ? { image: { url: lookedUp.banner } } : {}),
-    };
-
+    const embed = { title: conflict ? 'Convoy Invitation — AUTO-DECLINED' : 'New Convoy Invitation', color: conflict ? 0xff0000 : 0x1f6feb, timestamp: new Date().toISOString(), fields, footer: { text: 'TEXIM ONE - Convoy Invites (calendar-checked)' }, ...(lookedUp?.banner ? { image: { url: lookedUp.banner } } : {}) };
     const components = [];
-    // Only give the calendar capability to Discord when KV is configured.
-    if (!conflict && env.TEXIM_INVITES) {
+    if (!conflict && env.TEXIM_CALENDAR) {
         const token = randomToken();
-        await env.TEXIM_INVITES.put(`invite-${token}`, JSON.stringify({ eventName, eventDate, eventTime, eventLink, discord, details }), { expirationTtl: 86400 });
-        const addUrl = `${new URL(request.url).origin}/add-convoy?token=${token}`;
-        components.push({ type: 1, components: [{ type: 2, style: 5, label: 'Review & Add to Calendar', url: addUrl }] });
+        await env.TEXIM_CALENDAR.put(`invite-${token}`, JSON.stringify({ eventName, eventDate, eventTime, eventLink, discord, details }), { expirationTtl: 86400 });
+        components.push({ type: 1, components: [{ type: 2, style: 5, label: 'Review & Add to Calendar', url: `${new URL(request.url).origin}/add-convoy?token=${token}` }] });
     }
 
     try {
-        const response = await fetch(webhookUrl, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: 'TEXIM ONE Bot', embeds: [embed], ...(components.length ? { components } : {}) }),
-        });
+        const response = await fetch(webhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: 'TEXIM ONE Bot', embeds: [embed], ...(components.length ? { components } : {}) }) });
         if (!response.ok) return json({ success: false, message: 'Discord webhook error.' }, 502);
         return json({ success: true, status, message: conflict ? 'Automatically declined: we already have a convoy on that date.' : 'Invite received! We will DM you on Discord with our decision.' });
     } catch (error) { return json({ success: false, message: 'Internal server error.', error: error.message }, 500); }
