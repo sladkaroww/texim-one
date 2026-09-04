@@ -515,7 +515,7 @@ button { cursor: pointer; border: none; background: none; }
 .footer {
     background: #f5f5f7;
     border-top: 1px solid #e3e8e8;
-    padding: 2.5rem 0;
+    padding: 0.8rem 0; /* Променено от 2.5rem на 0.8rem (намалява разстоянието отгоре и отдолу) */
     text-align: center;
 }
 
@@ -541,8 +541,8 @@ button { cursor: pointer; border: none; background: none; }
 }
 
 .social-link img {
-    width: 32px;
-    height: 32px;
+    width: 30px; /* Променено от 32px на 30px */
+    height: 30px; /* Променено от 32px на 30px */
     display: block;
 }
 
@@ -558,7 +558,7 @@ button { cursor: pointer; border: none; background: none; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: 10px; /* Променено от 15px на 10px (намалява разстоянието между иконите и текста) */
     text-align: center;
     color: #000000;
     font-size: 0.95rem;
