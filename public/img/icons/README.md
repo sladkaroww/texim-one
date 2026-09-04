@@ -7,7 +7,6 @@ Upload your SVG files here with these recommended names:
 - TRUCKERSMP.png
 - TRUCKSBOOK.png
 - STEAM.png
-- INSTAGRAM.png
 - TWITCH.png
 
 Once you upload the icons, I'll update the footer links to use them and commit the changes to main. If you prefer different names, tell me and I'll adapt.
