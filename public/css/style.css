@@ -64,7 +64,7 @@ button { cursor: pointer; border: none; background: none; }
 }
 .logo-accent { color: #111111; }
 .logo-img {
-    height: 40px;
+    height: 35px;
     width: auto;
     margin-right: 0;
     vertical-align: middle;
