@@ -992,7 +992,7 @@ button { cursor: pointer; border: none; background: none; }
     position: static !important;
 }
 .hero-truck-img {
-    max-width: 360px;
+    max-width: 400px;
     width: 100%;
     height: auto;
     display: block;
