@@ -1,438 +1,204 @@
-﻿/* Robust i18n for TEXIM ONE
+/* Robust i18n for TEXIM ONE
    - Non-blocking, defensive, small footprint
    - Reads/writes localStorage texim_lang
    - Applies data-i18n and data-i18n-placeholder
+   - Preserves nested child elements (e.g. inline "Read more" links)
    - Exposes window.t(key) and window.setLang(lang)
    - Safe to run multiple times
 */
 (function () {
   'use strict';
 
-  const I18N_KEY = 'texim_lang';
+  var I18N_KEY = 'texim_lang';
 
-  // Minimal dictionary. Keep in sync with server-side HTML fallbacks.
-  const SITE_STRINGS = {
+  var SITE_STRINGS = {
     en: {
       // Navigation
       'nav.home': 'Home',
-      'nav.convoy': 'Events',
+      'nav.convoy': 'Convoy',
       'nav.media': 'Media',
-      'nav.join': 'Apply',
-      'nav.partnerships': 'Partnerships',
 
-      // Home - Hero section
-      'hero.tagline': 'Always 1 in mind, behind TEXIM!',
-      'hero.subtitle': 'Virtual Trucking Company',
-      'hero.text': 'TEXIM ONE started on January 1, 2026 as a natural continuation of TEXIM, founded on March 10, 2019.',
-      'hero.discord': 'Discord',
+      // Home - Hero
+      'hero.subtitle': 'Professional Virtual Trucking Logistics',
+      'hero.text': 'TEXIM ONE is a virtual trucking company that shows up for convoys across the TruckersMP community. Planning an event? Invite us along\u2026',
+      'hero.discord': 'Discord Server',
 
       // Home - Stats
-      'stat.drivers': '10+ Employees',
-      'stat.founded': '7+ Years Experience',
-      'stat.km': '9+ Million WoTr km',
-      'stat.discord': '80+ Discord Members',
+      'stat.drivers': 'Members',
+      'stat.founded': 'Years experience',
+      'stat.km': 'Mln WoTr Km',
+      'stat.discord': 'Discord Members',
 
-      // Home - Section titles
-      'home.staff': 'The People Behind the Wheel',
-      'home.staffDesc': 'Integration with members from TruckersMP',
-      'home.panels': 'Our Values',
-
-      // Home - Panel titles
-      'panel.accessibility': 'Accessibility',
-      'panel.accessibilityDesc': 'No monthly km limits, mandatory convoy attendance, age requirements, game hours, DLCs, or trial period.',
-      'panel.identity': 'Corporate Identity',
-      'panel.identityDesc': 'Recognizable branding: truck, trailer, bus, avatar, and tag.',
-      'panel.hierarchy': 'Hierarchy',
-      'panel.hierarchyDesc': 'Our reputation system rewards active members with more weight in decision-making.',
-      'panel.prestige': 'Prestige',
-      'panel.prestigeDesc': 'Own Twitch Team and Merch - exclusive to only the largest communities.',
-
-      // Events page
-      'events.title': 'Events',
-      'events.allEvents': 'All events we are invited to.',
-      'events.invite': 'Invite Us',
-      'events.inviteText': 'Fill out the form and we will share the invitation with our Discord members.',
-      'events.calendar': 'Calendar',
-      'events.calendarText': 'All upcoming events.',
-      // Convoy page specific translations
-      'convoy.none': 'No upcoming events',
-      'convoy.error': 'Failed to load events',
-      'convoy.meet': 'Meeting point',
-      'convoy.view': 'View event'
+      // Home - Features
+      'features.title': 'Why?',
+      'features.sub': 'A virtual trucking experience built around accessibility and community.',
+      'features.f1.title': 'No Pressure',
+      'features.f1.text': 'No monthly km limits, no required convoy attendance, no age or hours requirements, no test period. Drive on your own terms.',
+      'features.f2.title': 'Corporate Identity',
+      'features.f2.text': 'Recognizable through our TMP tag, exclusive avatar, and signature truck + trailer composition that sets us apart on the road\u2026',
+      'features.f3.title': 'Selective Recruitment',
+      'features.f3.text': 'Applications are reviewed individually via our application form. We value quality and commitment over numbers.',
+      'features.f4.title': 'Ranks',
+      'features.f4.text': 'Our Reputation System (RS) ranks every driver by contribution: Newbie, Enthusiast, Worker, Professional, Master, Instructor\u2026',
 
       // Media page
       'media.title': 'Media',
       'media.sub': 'Our story, our moments, our community.',
       'media.twitch': 'Twitch Team',
-      'media.twitchText': 'Follow our Twitch Team where we stream live for the community!',
-      'media.watch': 'Watch',
-      'media.gallery': 'Gallery',
-      'media.galleryText': 'Top 9 frames with colleagues. (photos with at least 4 team members)',
+      'media.twitch.text': 'We run an official TruckersMP Twitch Team where we stream our convoys and community moments live.',
+      'media.twitch.btn': 'Watch on Twitch',
+      'gallery.title': 'Gallery',
       'media.news': 'News',
-      'media.newsText': 'TEXIM ONE on TruckersMP.',
+      'media.news.text': 'Latest publications and updates from TEXIM ONE.',
+      'media.news.read': 'Read more',
+      'media.news.68663.title': 'TEXIM ONE Vtc x TEXIM ONE Ltd MERCH!',
+      'media.news.68663.text': 'Our official merch collaboration with TEXIM ONE Ltd \u2014 heavyweight 100% combed cotton (230 g/m\u00b2), oversize fits in\u2026',
+      'media.news.69383.title': 'TEXIM ONE Nova Group | Public Convoy #3',
+      'media.news.69383.text': 'On 25 July 2026 we joined Nova Group | Public Convoy #3 \u2014 roughly 900 km from Oslo to Kristiansand in Norway on Sim\u2026',
+      'media.news.69793.title': 'TEXIM ONE THE ORIGINAL\u2122 MONTHLY CONVOY #6',
+      'media.news.69793.text': 'On 8 August 2026 we took part in THE ORIGINAL Monthly Convoy #6 \u2014 around 600 km from Szeged (Hungary) to Banska Bystrica (Slovakia) on Sim\u2026',
 
-      // Apply page
-      'apply.title': 'Apply to TEXIM ONE',
-      'apply.form': 'Application Form',
-
-      // Partnerships page
-      'partnerships.title': 'Partnerships',
-      'partnerships.texim': 'TEXIM ONE Vtc & TEXIM ONE Ltd',
-      'partnerships.merchDesc': 'The iconic T1 logo is presented as an embroidered patch measuring 5-6 cm, placed on the classic position on the left chest.',
-      'partnerships.colorDesc': 'For individual personalization, we offer 420 thread colors for perfect combination with your clothes, ranging from 5 to 11 colors depending on the model.',
-      'partnerships.materialDesc': 'We chose an American brand with heavyweight material and oversized fit. The collection includes t-shirts, hoodies, and sweatshirts in sizes XS to 2XL.',
-      'partnerships.button': 'Shop Merch',
-      'partnerships.contact': 'If you want to partner with us for creating custom merch, joining our Twitch Team, or other collaborative initiatives, you can contact us on our Discord server.',
-
-      // Language Modal
-      "modal.title": "Choose Language",
-      "modal.sub": "Select your preferred language",
-      // Footer
-      'footer.about': 'Virtual trucking logistics since 2019.',
-      'footer.company': 'Company',
-      'footer.credit': 'Made with â¤ï¸ by sladkaroww'
-    },
-    bg: {
-      // Navigation
-      "nav.home": "Начало",
-      "nav.convoy": "Събития",
-      "nav.media": "Медиа",
-      "nav.join": "Заяви се",
-      "nav.partnerships": "Партньорства",
-
-      // Home - Hero section
-      "hero.tagline": "Винаги 1 на ум, зад TEXIM!",
-      "hero.subtitle": "Виртуална транспортна компания",
-      "hero.text": "TEXIM ONE е основана на 1 януари 2026 г. като естествено продължение на TEXIM, основан на 10 март 2019 г.",
-      "hero.discord": "Discord",
-
-      // Home - Stats
-      "stat.drivers": "10+ служители",
-      "stat.founded": "7+ години опит",
-      "stat.km": "9+ млн WoTr км",
-      "stat.discord": "80+ Discord членове",
-
-      // Home - Section titles
-      "home.staff": "Хората зад волана",
-      "home.staffDesc": "Интеграция с членове от TruckersMP",
-      "home.panels": "Нашите стойности",
-
-      // Home - Panel titles
-      "panel.accessibility": "Достъпност",
-      "panel.accessibilityDesc": "Нямаме месечни километражни лимити, задължително участие в конвои, изисквания за възраст, часове в играта, DLC-и или опитителен период.",
-      "panel.identity": "Корпоративна идентичност",
-      "panel.identityDesc": "Разпознаваем брандинг: типичен камион, связан, аватар и етикет.",
-      "panel.hierarchy": "Иерархия",
-      "panel.hierarchyDesc": "Нашата репутационна система récompense активните членове с по-голямо влияние в процеса на приемане на решения.",
-      "panel.prestige": "Престиж",
-      "panel.prestigeDesc": "Собствен Twitch екип и марч - excluзивни за най-големите общности.",
-
-      // Events page
-      "events.title": "Събития",
-      "events.allEvents": "Всички събития, на които сме поканени",
-      "events.invite": "Покани нас",
-      "events.inviteText": "Попълнете формуляра и ще споделим поканата с нашите Discord членове.",
-      "events.calendar": "Календар",
-      "events.calendarText": "Всички предстоящи събития",
-
-      // Convoy page specific translations
-      "convoy.none": "Няма предстоящи събития",
-      "convoy.error": "Грешка при зареждане на събития",
-      "convoy.meet": "Срещане",
-      "convoy.view": "Преглед на събитие",
-
-      // Media page
-      "media.title": "Медиа",
-      "media.sub": "Нашата история, нашите моменти, нашата общност",
-      "media.twitch": "Twitch екип",
-      "media.twitchText": "Следете нашия Twitch екип, който стриймира жив за общността!",
-      "media.watch": "Гледни",
-      "media.gallery": "Галерия",
-      "media.galleryText": "Топ 9 кадри с колегите (снимки с поне 4 от екипа)",
-      "media.news": "Новини",
-      "media.newsText": "TEXIM ONE в TruckersMP",
-
-      // Apply page
-      "apply.title": "Заявка за присъединяване към TEXIM ONE",
-      "apply.form": "Формулара за candidatura",
-
-      // Partnerships page
-      "partnerships.title": "Партньорства",
-      "partnerships.texim": "TEXIM ONE Vtc & TEXIM ONE Ltd",
-      "partnerships.merchDesc": "Иконичното лого T1 е представено като белка с размер 5-6 см, поставена на класическото положение наляво на гърдите.",
-      "partnerships.colorDesc": "За персонализиране предлагаме 420 нитки за идеална комбинация с дрехите, вариращи от 5 до 11 цветове в зависимост от моделa.",
-      "partnerships.materialDesc": "Избрали сме американски бренд с тежка tkanina и oversized кројка. Колекцията включва тисии, диваки и худи в размери XS до 2XL.",
-      "partnerships.button": "Марч магазин",
-      "partnerships.contact": "Ако желаете да стане партньор ни за创作 на custom merch, присъединяване към нашия Twitch екип или другие съвместни инициативи, можете да се свържете с нас чрез нашия Discord сървър.",
-
-      // Footer
-      "footer.about": "Виртуална транспортна логистика от 2019 г.",
-      "footer.company": "Компания",
-      "footer.credit": "Направено със ❤️ от sladkaroww",
-
-      // Language Modal
-      "modal.title": "Избери език",
-      "modal.sub": "Избери предпочитания си език"
-    },* Robust i18n for TEXIM ONE
-   - Non-blocking, defensive, small footprint
-   - Reads/writes localStorage texim_lang
-   - Applies data-i18n and data-i18n-placeholder
-   - Exposes window.t(key) and window.setLang(lang)
-   - Safe to run multiple times
-*/
-(function () {
-  'use strict';
-
-  const I18N_KEY = 'texim_lang';
-
-  // Minimal dictionary. Keep in sync with server-side HTML fallbacks.
-  const SITE_STRINGS = {
-    en: {
-      // Navigation
-      'nav.home': 'Home',
-      'nav.convoy': 'Events',
-      'nav.media': 'Media',
-      'nav.join': 'Apply',
-      'nav.partnerships': 'Partnerships',
-
-      // Home - Hero section
-      'hero.tagline': 'Always 1 in mind, behind TEXIM!',
-      'hero.subtitle': 'Virtual Trucking Company',
-      'hero.text': 'TEXIM ONE started on January 1, 2026 as a natural continuation of TEXIM, founded on March 10, 2019.',
-      'hero.discord': 'Discord',
-
-      // Home - Stats
-      'stat.drivers': '10+ Employees',
-      'stat.founded': '7+ Years Experience',
-      'stat.km': '9+ Million WoTr km',
-      'stat.discord': '80+ Discord Members',
-
-      // Home - Section titles
-      'home.staff': 'The People Behind the Wheel',
-      'home.staffDesc': 'Integration with members from TruckersMP',
-      'home.panels': 'Our Values',
-
-      // Home - Panel titles
-      'panel.accessibility': 'Accessibility',
-      'panel.accessibilityDesc': 'No monthly km limits, mandatory convoy attendance, age requirements, game hours, DLCs, or trial period.',
-      'panel.identity': 'Corporate Identity',
-      'panel.identityDesc': 'Recognizable branding: truck, trailer, bus, avatar, and tag.',
-      'panel.hierarchy': 'Hierarchy',
-      'panel.hierarchyDesc': 'Our reputation system rewards active members with more weight in decision-making.',
-      'panel.prestige': 'Prestige',
-      'panel.prestigeDesc': 'Own Twitch Team and Merch - exclusive to only the largest communities.',
-
-      // Events page
-      'events.title': 'Events',
-      'events.allEvents': 'All events we are invited to.',
-      'events.invite': 'Invite Us',
-      'events.inviteText': 'Fill out the form and we will share the invitation with our Discord members.',
-      'events.calendar': 'Calendar',
-      'events.calendarText': 'All upcoming events.',
-      // Convoy page specific translations
+      // Convoy page
+      'convoy.sub': 'Here are all convoys we are invited to.',
+      'convoy.inviteTitle': 'Invite Us to a convoy',
+      'convoy.inviteSub': 'Fill out the form below and we will send your invite to our Discord channel.',
+      'convoy.calendar.title': 'Convoy Calendar',
+      'convoy.calendar.loading': 'Loading convoys...',
       'convoy.none': 'No upcoming events',
       'convoy.error': 'Failed to load events',
       'convoy.meet': 'Meeting point',
-      'convoy.view': 'View event'
+      'convoy.view': 'View event',
 
-      // Media page
-      'media.title': 'Media',
-      'media.sub': 'Our story, our moments, our community.',
-      'media.twitch': 'Twitch Team',
-      'media.twitchText': 'Follow our Twitch Team where we stream live for the community!',
-      'media.watch': 'Watch',
-      'media.gallery': 'Gallery',
-      'media.galleryText': 'Top 9 frames with colleagues. (photos with at least 4 team members)',
-      'media.news': 'News',
-      'media.newsText': 'TEXIM ONE on TruckersMP.',
+      // Contact form
+      'contact.eventName': 'Event Name *',
+      'contact.eventDate': 'Event Date *',
+      'contact.eventTime': 'Event Time',
+      'contact.discord': 'Your Discord *',
+      'contact.eventLink': 'Event Link',
+      'contact.email': 'Email',
+      'contact.details': 'Additional Details',
+      'contact.submit': 'Send Invite',
 
-      // Apply page
-      'apply.title': 'Apply to TEXIM ONE',
-      'apply.form': 'Application Form',
+      // Add convoy page
+      'addconvoy.title': 'Add Convoy to Calendar',
+      'addconvoy.sub': 'Review the invite and confirm to add it to the TEXIM ONE calendar.',
+      'addconvoy.name': 'Convoy Name',
+      'addconvoy.date': 'Date',
+      'addconvoy.time': 'Start Time (UTC)',
+      'addconvoy.discord': 'Invited by (Discord)',
+      'addconvoy.link': 'Link',
+      'addconvoy.details': 'Details',
+      'addconvoy.confirm': 'Add to Calendar',
+      'addconvoy.cancel': 'Cancel',
+      'addconvoy.successTitle': 'Added to Calendar!',
+      'addconvoy.successText': 'This convoy is now on the TEXIM ONE calendar.',
+      'addconvoy.viewCalendar': 'View Calendar',
 
-      // Partnerships page
-      'partnerships.title': 'Partnerships',
-      'partnerships.texim': 'TEXIM ONE Vtc & TEXIM ONE Ltd',
-      'partnerships.merchDesc': 'The iconic T1 logo is presented as an embroidered patch measuring 5-6 cm, placed on the classic position on the left chest.',
-      'partnerships.colorDesc': 'For individual personalization, we offer 420 thread colors for perfect combination with your clothes, ranging from 5 to 11 colors depending on the model.',
-      'partnerships.materialDesc': 'We chose an American brand with heavyweight material and oversized fit. The collection includes t-shirts, hoodies, and sweatshirts in sizes XS to 2XL.',
-      'partnerships.button': 'Shop Merch',
-      'partnerships.contact': 'If you want to partner with us for creating custom merch, joining our Twitch Team, or other collaborative initiatives, you can contact us on our Discord server.',
+      // Form
+      'form.success': 'Invite sent successfully!',
 
-      // Footer
-      'footer.about': 'Virtual trucking logistics since 2019.',
-      'footer.company': 'Company',
-      'footer.credit': 'Made with â¤ï¸ by sladkaroww'
+      // Language modal
+      'modal.title': 'Choose Language',
+      'modal.sub': 'Select your preferred language'
     },
+
     bg: {
       // Navigation
-      'nav.home': 'ÐÐ°Ñ‡Ð°Ð»Ð¾',
-      'nav.convoy': 'Ð¡Ð¾Ð±Ñ‹Ñ‚Ð¸Ñ',
-      'nav.media': 'ÐœÐµÐ´Ð¸Ñ',
-      'nav.join': 'ÐšÐ°Ð½Ð´Ð¸Ð´Ð°Ñ‚ÑÑ‚Ð²Ð°Ð¹',
-      'nav.partnerships': 'ÐŸÐ°Ñ€Ñ‚Ð½ÑŒÐ¾Ñ€ÑÑ‚Ð²Ð°',
+      'nav.home': '\u041d\u0430\u0447\u0430\u043b\u043e',
+      'nav.convoy': '\u041a\u043e\u043d\u0432\u043e\u0439',
+      'nav.media': '\u041c\u0435\u0434\u0438\u044f',
 
-      // Home - Hero section
-      'hero.tagline': 'Ð’Ð¸Ð½Ð°Ð³Ð¸ 1 Ð½Ð° ÑƒÐ¼, Ð·Ð°Ð´ TEXIM!',
-      'hero.subtitle': 'Ð’Ð¸Ñ€Ñ‚ÑƒÐ°Ð»Ð½Ð° Ñ‚Ñ€Ð°Ð½ÑÐ¿Ð¾Ñ€Ñ‚Ð½Ð° ÐºÐ¾Ð¼Ð¿Ð°Ð½Ð¸Ñ',
-      'hero.text': 'TEXIM ONE ÑÑ‚Ð°Ñ€Ñ‚Ð¸Ñ€Ð° Ð½Ð° 1 ÑÐ½ÑƒÐ°Ñ€Ð¸ 2026 Ð³. ÐºÐ°Ñ‚Ð¾ ÐµÑÑ‚ÐµÑÑ‚Ð²ÐµÐ½Ð¾ Ð¿Ñ€Ð¾Ð´ÑŠÐ»Ð¶ÐµÐ½Ð¸Ðµ Ð½Ð° TEXIM, Ð¾ÑÐ½Ð¾Ð²Ð°Ð½Ð° Ð½Ð° 10 Ð¼Ð°Ñ€Ñ‚ 2019 Ð³.',
-      'hero.discord': 'Discord',
+      // Home - Hero
+      'hero.subtitle': '\u041f\u0440\u043e\u0444\u0435\u0441\u0438\u043e\u043d\u0430\u043b\u043d\u0430 \u0432\u0438\u0440\u0442\u0443\u0430\u043b\u043d\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u043d\u0430 \u043b\u043e\u0433\u0438\u0441\u0442\u0438\u043a\u0430',
+      'hero.text': 'TEXIM ONE \u0435 \u0432\u0438\u0440\u0442\u0443\u0430\u043b\u043d\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u043d\u0430 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u044f, \u043a\u043e\u044f\u0442\u043e \u0441\u0435 \u0432\u043a\u043b\u044e\u0447\u0432\u0430 \u0432 \u043a\u043e\u043d\u0432\u043e\u0438 \u0438\u0437 \u0446\u044f\u043b\u0430\u0442\u0430 \u043e\u0431\u0449\u043d\u043e\u0441\u0442 \u043d\u0430 TruckersMP. \u041f\u043b\u0430\u043d\u0438\u0440\u0430\u0442\u0435 \u0441\u044a\u0431\u0438\u0442\u0438\u0435? \u041f\u043e\u043a\u0430\u043d\u0435\u0442\u0435 \u043d\u0438 \u0434\u0430 \u0443\u0447\u0430\u0441\u0442\u0432\u0430\u043c\u0435\u2026',
+      'hero.discord': 'Discord \u0441\u044a\u0440\u0432\u044a\u0440',
 
       // Home - Stats
-      'stat.drivers': '10+ Ð¡Ð»ÑƒÐ¶Ð¸Ñ‚ÐµÐ»Ð¸',
-      'stat.founded': '7+ Ð“Ð¾Ð´Ð¸Ð½Ð¸ Ð¾Ð¿Ð¸Ñ‚',
-      'stat.km': '9+ ÐœÐ»Ð½ WoTr ÐºÐ¼',
-      'stat.discord': '80+ Discord Ñ‡Ð»ÐµÐ½Ð¾Ð²Ðµ',
+      'stat.drivers': '\u0427\u043b\u0435\u043d\u043e\u0432\u0435',
+      'stat.founded': '\u0413\u043e\u0434\u0438\u043d\u0438 \u043e\u043f\u0438\u0442',
+      'stat.km': '\u041c\u043b\u043d. WoTr \u043a\u043c',
+      'stat.discord': 'Discord \u0447\u043b\u0435\u043d\u043e\u0432\u0435',
 
-      // Home - Section titles
-      'home.staff': 'Ð¥Ð¾Ñ€Ð°Ñ‚Ð° Ð·Ð°Ð´ Ð²Ð¾Ð»Ð°Ð½Ð°',
-      'home.staffDesc': 'Ð˜Ð½Ñ‚ÐµÐ³Ñ€Ð°Ñ†Ð¸Ñ ÑÑŠÑ ÑÐ»ÑƒÐ¶Ð¸Ñ‚ÐµÐ»Ð¸Ñ‚Ðµ Ð¾Ñ‚ TruckersMP',
-      'home.panels': 'ÐÐ°ÑˆÐ¸Ñ‚Ðµ Ñ†ÐµÐ½Ð½Ð¾ÑÑ‚Ð¸',
-
-      // Home - Panel titles
-      'panel.accessibility': 'Ð”Ð¾ÑÑ‚ÑŠÐ¿Ð½Ð¾ÑÑ‚',
-      'panel.accessibilityDesc': 'ÐÐµ Ð¸Ð·Ð¸ÑÐºÐ²Ð°Ð¼Ðµ Ð¼ÐµÑÐµÑ‡ÐµÐ½ Ð»Ð¸Ð¼Ð¸Ñ‚ Ð¾Ñ‚ ÐºÐ¸Ð»Ð¾Ð¼ÐµÑ‚Ñ€Ð¸, Ð·Ð°Ð´ÑŠÐ»Ð¶Ð¸Ñ‚ÐµÐ»Ð½Ð¾ ÑƒÑ‡Ð°ÑÑ‚Ð¸Ðµ Ð² ÐºÐ¾Ð½Ð²Ð¾Ð¸, Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð° Ð²ÑŠÐ·Ñ€Ð°ÑÑ‚, Ñ‡Ð°ÑÐ¾Ð²Ðµ Ð² Ð¸Ð³Ñ€Ð°Ñ‚Ð°, DLC-Ñ‚Ð° Ð¸Ð»Ð¸ Ñ‚ÐµÑÑ‚Ð¾Ð² Ð¿ÐµÑ€Ð¸Ð¾Ð´.',
-      'panel.identity': 'Ð˜Ð´ÐµÐ½Ñ‚Ð¸Ñ‡Ð½Ð¾ÑÑ‚',
-      'panel.identityDesc': 'Ð Ð°Ð·Ð¿Ð¾Ð·Ð½Ð°Ð²Ð°ÐµÐ¼ Ñ„Ð¸Ñ€Ð¼ÐµÐ½ Ð±Ñ€Ð°Ð½Ð´Ð¸Ð½Ð³: Ð²Ð»ÐµÐºÐ°Ñ‡, Ñ€ÐµÐ¼Ð°Ñ€ÐºÐµ, Ð°Ð²Ñ‚Ð¾Ð±ÑƒÑ, Ð°Ð²Ð°Ñ‚Ð°Ñ€ Ð¸ Ñ‚Ð°Ð³.',
-      'panel.hierarchy': 'Ð™ÐµÑ€Ð°Ñ€Ñ…Ð¸Ñ',
-      'panel.hierarchyDesc': 'ÐÐ°ÑˆÐ°Ñ‚Ð° ÑÐ¸ÑÑ‚ÐµÐ¼Ð° Ð·Ð° Ñ€ÐµÐ¿ÑƒÑ‚Ð°Ñ†Ð¸Ñ Ð²ÑŠÐ·Ð½Ð°Ð³Ñ€Ð°Ð¶Ð´Ð°Ð²Ð° Ð¿Ð¾-Ð°ÐºÑ‚Ð¸Ð²Ð½Ð¸Ñ‚Ðµ Ð²ÑŠÐ² Ñ„Ð¸Ñ€Ð¼Ð°Ñ‚Ð° Ñ Ð¿Ð¾Ð²ÐµÑ‡Ðµ Ñ‚ÐµÐ¶ÐµÑÑ‚ Ð¿Ñ€Ð¸ Ð²Ð·ÐµÐ¼Ð°Ð½ÐµÑ‚Ð¾ Ð½Ð° Ñ€ÐµÑˆÐµÐ½Ð¸Ñ.',
-      'panel.prestige': 'ÐŸÑ€ÐµÑÑ‚Ð¸Ð¶',
-      'panel.prestigeDesc': 'Ð¡Ð¾Ð±ÑÑ‚Ð²ÐµÐ½ Twitch Team Ð¸ Merch - ÑÐ°Ð¼Ð¾ Ð·Ð° Ð¼Ð°Ð»ÐºÐ° Ñ‡Ð°ÑÑ‚ Ð¾Ñ‚ Ð½Ð°Ð¹-Ð³Ð¾Ð»ÐµÐ¼Ð¸Ñ‚Ðµ Ð¾Ð±Ñ‰Ð½Ð¾ÑÑ‚Ð¸.',
-
-      // Events page
-      'events.title': 'Ð¡Ð¾Ð±Ñ‹Ñ‚Ð¸Ñ',
-      'events.allEvents': 'Ð’ÑÐ¸Ñ‡ÐºÐ¸ ÑÑŠÐ±Ð¸Ñ‚Ð¸Ñ, Ð½Ð° ÐºÐ¾Ð¸Ñ‚Ð¾ ÑÐ¼Ðµ Ð¿Ð¾ÐºÐ°Ð½ÐµÐ½Ð¸.',
-      'events.invite': 'ÐŸÐ¾ÐºÐ°Ð½Ð¸ Ð½Ð¸',
-      'events.inviteText': 'ÐŸÐ¾Ð¿ÑŠÐ»Ð½ÐµÑ‚Ðµ Ñ„Ð¾Ñ€Ð¼ÑƒÐ»ÑÑ€Ð° Ð¸ Ñ‰Ðµ ÑÐ¿Ð¾Ð´ÐµÐ»Ð¸Ð¼ Ð¿Ð¾ÐºÐ°Ð½Ð°Ñ‚Ð° Ñ Ñ‡Ð»ÐµÐ½Ð¾Ð²ÐµÑ‚Ðµ Ð² Ð½Ð°ÑˆÐ¸Ñ Discord ÑÑŠÑ€Ð²ÑŠÑ€.',
-      'events.calendar': 'ÐšÐ°Ð»ÐµÐ½Ð´Ð°Ñ€',
-      'events.calendarText': 'Ð’ÑÐ¸Ñ‡ÐºÐ¸ Ð¿Ñ€ÐµÐ´ÑÑ‚Ð¾ÑÑ‰Ð¸ ÑÑŠÐ±Ð¸Ñ‚Ð¸Ñ.',
-      // Convoy page specific translations
-      'convoy.none': 'ÐÑÐ¼Ð° Ð¿Ñ€ÐµÐ´ÑÑ‚Ð¾ÑÑ‰Ð¸ ÑÑŠÐ±Ð¸Ñ‚Ð¸Ñ',
-      'convoy.error': 'ÐÐµÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð·Ð°Ñ€ÐµÐ¶Ð´Ð°Ð½Ðµ Ð½Ð° ÑÑŠÐ±Ð¸Ñ‚Ð¸Ñ',
-      'convoy.meet': 'Ð¡Ñ€ÐµÑ‰Ð°',
-      'convoy.view': 'ÐŸÑ€ÐµÐ³Ð»ÐµÐ´ Ð½Ð° ÑÑŠÐ±Ð¸Ñ‚Ð¸Ðµ'
+      // Home - Features
+      'features.title': '\u0417\u0430\u0449\u043e?',
+      'features.sub': '\u0412\u0438\u0440\u0442\u0443\u0430\u043b\u043d\u043e \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u043d\u043e \u0438\u0437\u0436\u0438\u0432\u044f\u0432\u0430\u043d\u0435, \u0438\u0437\u0433\u0440\u0430\u0434\u0435\u043d\u043e \u043e\u043a\u043e\u043b\u043e \u0434\u043e\u0441\u0442\u044a\u043f\u043d\u043e\u0441\u0442\u0442\u0430 \u0438 \u043e\u0431\u0449\u043d\u043e\u0441\u0442\u0442\u0430.',
+      'features.f1.title': '\u0411\u0435\u0437 \u043d\u0430\u043f\u0440\u0435\u0436\u0435\u043d\u0438\u0435',
+      'features.f1.text': '\u0411\u0435\u0437 \u043c\u0435\u0441\u0435\u0447\u043d\u0438 \u043a\u0438\u043b\u043e\u043c\u0435\u0442\u0440\u0438\u0447\u043d\u0438 \u043b\u0438\u043c\u0438\u0442\u0438, \u0431\u0435\u0437 \u0437\u0430\u0434\u044a\u043b\u0436\u0438\u0442\u0435\u043b\u043d\u043e \u0443\u0447\u0430\u0441\u0442\u0438\u0435 \u0432 \u043a\u043e\u043d\u0432\u043e\u0438, \u0431\u0435\u0437 \u0438\u0437\u0438\u0441\u043a\u0432\u0430\u043d\u0438\u044f \u0437\u0430 \u0432\u044a\u0437\u0440\u0430\u0441\u0442 \u0438\u043b\u0438 \u0438\u0437\u0438\u0433\u0440\u0430\u043d\u0438 \u0447\u0430\u0441\u043e\u0432\u0435, \u0431\u0435\u0437 \u0438\u0437\u043f\u0438\u0442\u0430\u0442\u0435\u043b\u0435\u043d \u043f\u0435\u0440\u0438\u043e\u0434. \u0428\u043e\u0444\u0438\u0440\u0430\u0439\u0442\u0435 \u043d\u0430 \u0441\u0432\u043e\u0438 \u0443\u0441\u043b\u043e\u0432\u0438\u044f.',
+      'features.f2.title': '\u041a\u043e\u0440\u043f\u043e\u0440\u0430\u0442\u0438\u0432\u043d\u0430 \u0438\u0434\u0435\u043d\u0442\u0438\u0447\u043d\u043e\u0441\u0442',
+      'features.f2.text': '\u0420\u0430\u0437\u043f\u043e\u0437\u043d\u0430\u0432\u0430\u0435\u043c\u0438 \u0447\u0440\u0435\u0437 \u043d\u0430\u0448\u0438\u044f TMP \u0442\u0430\u0433, \u0435\u043a\u0441\u043a\u043b\u044e\u0437\u0438\u0432\u0435\u043d \u0430\u0432\u0430\u0442\u0430\u0440 \u0438 \u0444\u0438\u0440\u043c\u0435\u043d\u0430\u0442\u0430 \u043a\u043e\u043c\u0431\u0438\u043d\u0430\u0446\u0438\u044f \u043e\u0442 \u043a\u0430\u043c\u0438\u043e\u043d + \u0440\u0435\u043c\u0430\u0440\u043a\u0435, \u043a\u043e\u044f\u0442\u043e \u043d\u0438 \u043e\u0442\u043b\u0438\u0447\u0430\u0432\u0430 \u043d\u0430 \u043f\u044a\u0442\u044f\u2026',
+      'features.f3.title': '\u0421\u0435\u043b\u0435\u043a\u0442\u0438\u0432\u043d\u043e \u043d\u0430\u0431\u0438\u0440\u0430\u043d\u0435',
+      'features.f3.text': '\u041a\u0430\u043d\u0434\u0438\u0434\u0430\u0442\u0443\u0440\u0438\u0442\u0435 \u0441\u0435 \u0440\u0430\u0437\u0433\u043b\u0435\u0436\u0434\u0430\u0442 \u0438\u043d\u0434\u0438\u0432\u0438\u0434\u0443\u0430\u043b\u043d\u043e \u0447\u0440\u0435\u0437 \u043d\u0430\u0448\u0430\u0442\u0430 \u0444\u043e\u0440\u043c\u0430 \u0437\u0430 \u043a\u0430\u043d\u0434\u0438\u0434\u0430\u0442\u0441\u0442\u0432\u0430\u043d\u0435. \u0426\u0435\u043d\u0438\u043c \u043a\u0430\u0447\u0435\u0441\u0442\u0432\u043e\u0442\u043e \u0438 \u0430\u043d\u0433\u0430\u0436\u0438\u0440\u0430\u043d\u043e\u0441\u0442\u0442\u0430 \u043f\u043e\u0432\u0435\u0447\u0435 \u043e\u0442 \u043a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u0430\u0442\u0430.',
+      'features.f4.title': '\u0420\u0430\u043d\u0433\u043e\u0432\u0435',
+      'features.f4.text': '\u041d\u0430\u0448\u0430\u0442\u0430 \u0441\u0438\u0441\u0442\u0435\u043c\u0430 \u0437\u0430 \u0440\u0435\u043f\u0443\u0442\u0430\u0446\u0438\u044f (RS) \u043a\u043b\u0430\u0441\u0438\u0440\u0430 \u0432\u0441\u0435\u043a\u0438 \u0448\u043e\u0444\u044c\u043e\u0440 \u0441\u043f\u043e\u0440\u0435\u0434 \u043f\u0440\u0438\u043d\u043e\u0441\u0430: \u041d\u043e\u0432\u0430\u043a, \u0415\u043d\u0442\u0443\u0437\u0438\u0430\u0441\u0442, \u0420\u0430\u0431\u043e\u0442\u043d\u0438\u043a, \u041f\u0440\u043e\u0444\u0435\u0441\u0438\u043e\u043d\u0430\u043b\u0438\u0441\u0442, \u041c\u0430\u0439\u0441\u0442\u043e\u0440, \u0418\u043d\u0441\u0442\u0440\u0443\u043a\u0442\u043e\u0440\u2026',
 
       // Media page
-      'media.title': 'ÐœÐµÐ´Ð¸Ñ',
-      'media.sub': 'ÐÐ°ÑˆÐ°Ñ‚Ð° Ð¸ÑÑ‚Ð¾Ñ€Ð¸Ñ, Ð½Ð°ÑˆÐ¸Ñ‚Ðµ Ð¼Ð¾Ð¼ÐµÐ½Ñ‚Ð¸, Ð½Ð°ÑˆÐ°Ñ‚Ð° Ð¾Ð±Ñ‰Ð½Ð¾ÑÑ‚.',
-      'media.twitch': 'Twitch Ð¾Ñ‚Ð±Ð¾Ñ€',
-      'media.twitchText': 'Ð¡Ð»ÐµÐ´ÐµÑ‚Ðµ Ð½Ð°ÑˆÐ¸Ñ Twitch Ð¾Ñ‚Ð±Ð¾Ñ€, Ñ ÐºÐ¾Ð¹Ñ‚Ð¾ ÑÑ‚Ñ€Ð¸Ð¹Ð¼Ð²Ð°Ð¼Ðµ Ð½Ð° Ð¶Ð¸Ð²Ð¾ Ð·Ð° Ð¾Ð±Ñ‰Ð½Ð¾ÑÑ‚Ñ‚Ð°!',
-      'media.watch': 'Ð“Ð»ÐµÐ´Ð°Ð¹',
-      'media.gallery': 'Ð“Ð°Ð»ÐµÑ€Ð¸Ñ',
-      'media.galleryText': 'Ð¢Ð¾Ð¿ 9 ÐºÐ°Ð´Ñ€Ð¸ Ñ ÐºÐ¾Ð»ÐµÐ³Ð¸Ñ‚Ðµ. (ÑÐ½Ð¸Ð¼ÐºÐ¸ Ñ Ð¿Ð¾Ð½Ðµ 4-Ð¼Ð° Ð¾Ñ‚ Ñ„Ð¸Ñ€Ð¼Ð°Ñ‚Ð°)',
-      'media.news': 'ÐÐ¾Ð²Ð¸Ð½Ð¸',
-      'media.newsText': 'TEXIM ONE Ð² TruckersMP.',
+      'media.title': '\u041c\u0435\u0434\u0438\u044f',
+      'media.sub': '\u041d\u0430\u0448\u0430\u0442\u0430 \u0438\u0441\u0442\u043e\u0440\u0438\u044f, \u043d\u0430\u0448\u0438\u0442\u0435 \u043c\u043e\u043c\u0435\u043d\u0442\u0438, \u043d\u0430\u0448\u0430\u0442\u0430 \u043e\u0431\u0449\u043d\u043e\u0441\u0442.',
+      'media.twitch': 'Twitch \u043e\u0442\u0431\u043e\u0440',
+      'media.twitch.text': '\u041f\u043e\u0434\u0434\u044a\u0440\u0436\u0430\u043c\u0435 \u043e\u0444\u0438\u0446\u0438\u0430\u043b\u0435\u043d Twitch \u043e\u0442\u0431\u043e\u0440 \u0432 TruckersMP, \u043a\u044a\u0434\u0435\u0442\u043e \u0441\u0442\u0440\u0438\u0439\u043c\u0432\u0430\u043c\u0435 \u043d\u0430\u0448\u0438\u0442\u0435 \u043a\u043e\u043d\u0432\u043e\u0438 \u0438 \u043e\u0431\u0449\u043d\u043e\u0441\u0442\u043d\u0438 \u043c\u043e\u043c\u0435\u043d\u0442\u0438 \u043d\u0430 \u0436\u0438\u0432\u043e.',
+      'media.twitch.btn': '\u0413\u043b\u0435\u0434\u0430\u0439 \u0432 Twitch',
+      'gallery.title': '\u0413\u0430\u043b\u0435\u0440\u0438\u044f',
+      'media.news': '\u041d\u043e\u0432\u0438\u043d\u0438',
+      'media.news.text': '\u041d\u0430\u0439-\u043d\u043e\u0432\u0438\u0442\u0435 \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0438 \u0438 \u0430\u043a\u0442\u0443\u0430\u043b\u0438\u0437\u0430\u0446\u0438\u0438 \u043e\u0442 TEXIM ONE.',
+      'media.news.read': '\u0412\u0438\u0436 \u043f\u043e\u0432\u0435\u0447\u0435',
+      'media.news.68663.title': 'TEXIM ONE Vtc x TEXIM ONE Ltd \u041c\u0415\u0420\u0427!',
+      'media.news.68663.text': '\u041d\u0430\u0448\u0430\u0442\u0430 \u043e\u0444\u0438\u0446\u0438\u0430\u043b\u043d\u0430 \u043a\u043e\u043b\u0430\u0431\u043e\u0440\u0430\u0446\u0438\u044f \u0437\u0430 \u043c\u0435\u0440\u0447 \u0441 TEXIM ONE Ltd \u2014 \u0442\u0435\u0436\u044a\u043a 100% \u0440\u0430\u0437\u0440\u0435\u0441\u0435\u043d \u043f\u0430\u043c\u0443\u043a (230 g/m\u00b2), oversize \u043a\u0440\u043e\u0439\u043a\u0438 \u0432\u2026',
+      'media.news.69383.title': 'TEXIM ONE Nova Group | \u041f\u0443\u0431\u043b\u0438\u0447\u0435\u043d \u043a\u043e\u043d\u0432\u043e\u0439 #3',
+      'media.news.69383.text': '\u041d\u0430 25 \u044e\u043b\u0438 2026 \u0433. \u0441\u0435 \u043f\u0440\u0438\u0441\u044a\u0435\u0434\u0438\u043d\u0438\u0445\u043c\u0435 \u043a\u044a\u043c Nova Group | \u041f\u0443\u0431\u043b\u0438\u0447\u0435\u043d \u043a\u043e\u043d\u0432\u043e\u0439 #3 \u2014 \u043e\u043a\u043e\u043b\u043e 900 \u043a\u043c \u043e\u0442 \u041e\u0441\u043b\u043e \u0434\u043e \u041a\u0440\u0438\u0441\u0442\u0438\u0430\u043d\u0441\u0430\u043d\u0434 \u0432 \u041d\u043e\u0440\u0432\u0435\u0433\u0438\u044f \u043d\u0430 \u0441\u0438\u043c\u0443\u043b\u0430\u0442\u043e\u0440\u0430\u2026',
+      'media.news.69793.title': 'TEXIM ONE THE ORIGINAL\u2122 \u041c\u0415\u0421\u0415\u0427\u0415\u041d \u041a\u041e\u041d\u0412\u041e\u0419 #6',
+      'media.news.69793.text': '\u041d\u0430 8 \u0430\u0432\u0433\u0443\u0441\u0442 2026 \u0433. \u0443\u0447\u0430\u0441\u0442\u0432\u0430\u0445\u043c\u0435 \u0432 THE ORIGINAL Monthly Convoy #6 \u2014 \u043e\u043a\u043e\u043b\u043e 600 \u043a\u043c \u043e\u0442 \u0421\u0435\u0433\u0435\u0434 (\u0423\u043d\u0433\u0430\u0440\u0438\u044f) \u0434\u043e \u0411\u0430\u043d\u0441\u043a\u0430 \u0411\u0438\u0441\u0442\u0440\u0438\u0446\u0430 (\u0421\u043b\u043e\u0432\u0430\u043a\u0438\u044f) \u043d\u0430 \u0441\u0438\u043c\u0443\u043b\u0430\u0442\u043e\u0440\u0430\u2026',
 
-      // Apply page
-      'apply.title': 'ÐšÐ°Ð½Ð´Ð¸Ð´Ð°Ñ‚ÑÑ‚Ð²Ð°Ð¹ Ð·Ð° TEXIM ONE',
-      'apply.form': 'Ð¤Ð¾Ñ€Ð¼ÑƒÐ»ÑÑ€ Ð·Ð° ÐºÐ°Ð½Ð´Ð¸Ð´Ð°Ñ‚ÑÑ‚Ð²Ð°Ð½Ðµ',
+      // Convoy page
+      'convoy.sub': '\u0415\u0442\u043e \u0432\u0441\u0438\u0447\u043a\u0438 \u043a\u043e\u043d\u0432\u043e\u0438, \u043a\u044a\u043c \u043a\u043e\u0438\u0442\u043e \u0441\u043c\u0435 \u043f\u043e\u043a\u0430\u043d\u0435\u043d\u0438.',
+      'convoy.inviteTitle': '\u041f\u043e\u043a\u0430\u043d\u0435\u0442\u0435 \u043d\u0438 \u043d\u0430 \u043a\u043e\u043d\u0432\u043e\u0439',
+      'convoy.inviteSub': '\u041f\u043e\u043f\u044a\u043b\u043d\u0435\u0442\u0435 \u0444\u043e\u0440\u043c\u0443\u043b\u044f\u0440\u0430 \u043f\u043e-\u0434\u043e\u043b\u0443 \u0438 \u0449\u0435 \u0438\u0437\u043f\u0440\u0430\u0442\u0438\u043c\u0435 \u0432\u0430\u0448\u0430\u0442\u0430 \u043f\u043e\u043a\u0430\u043d\u0430 \u0432 \u043d\u0430\u0448\u0438\u044f Discord \u043a\u0430\u043d\u0430\u043b.',
+      'convoy.calendar.title': '\u041a\u0430\u043b\u0435\u043d\u0434\u0430\u0440 \u043d\u0430 \u043a\u043e\u043d\u0432\u043e\u0438\u0442\u0435',
+      'convoy.calendar.loading': '\u0417\u0430\u0440\u0435\u0436\u0434\u0430\u043d\u0435 \u043d\u0430 \u043a\u043e\u043d\u0432\u043e\u0438\u0442\u0435...',
+      'convoy.none': '\u041d\u044f\u043c\u0430 \u043f\u0440\u0435\u0434\u0441\u0442\u043e\u044f\u0449\u0438 \u0441\u044a\u0431\u0438\u0442\u0438\u044f',
+      'convoy.error': '\u0413\u0440\u0435\u0448\u043a\u0430 \u043f\u0440\u0438 \u0437\u0430\u0440\u0435\u0436\u0434\u0430\u043d\u0435 \u043d\u0430 \u0441\u044a\u0431\u0438\u0442\u0438\u044f\u0442\u0430',
+      'convoy.meet': '\u041c\u044f\u0441\u0442\u043e \u043d\u0430 \u0441\u0440\u0435\u0449\u0430',
+      'convoy.view': '\u0412\u0438\u0436 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e',
 
-      // Partnerships page
-      'partnerships.title': 'ÐŸÐ°Ñ€Ñ‚Ð½ÑŒÐ¾Ñ€ÑÑ‚Ð²Ð°',
-      'partnerships.texim': 'TEXIM ONE Vtc & TEXIM ONE Ltd',
-      'partnerships.merchDesc': 'ÐŸÐ¾Ð·Ð½Ð°Ñ‚Ð¾Ñ‚Ð¾ Ð»Ð¾Ð³Ð¾ T1 Ðµ Ð¿Ñ€ÐµÐ´ÑÑ‚Ð°Ð²ÐµÐ½Ð¾ Ð¿Ð¾Ð´ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð° Ð½Ð° Ð±Ñ€Ð¾Ð´ÐµÑ€Ð¸Ñ Ñ Ñ€Ð°Ð·Ð¼ÐµÑ€ 5â€“6 ÑÐ¼, Ñ€Ð°Ð·Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¾ Ð½Ð° ÐºÐ»Ð°ÑÐ¸Ñ‡ÐµÑÐºÐ¾Ñ‚Ð¾ Ð¼ÑÑÑ‚Ð¾ Ð¾Ñ‚Ð¿Ñ€ÐµÐ´ Ð¾Ñ‚Ð»ÑÐ²Ð¾ Ð½Ð° Ð³ÑŠÑ€Ð´Ð¸Ñ‚Ðµ.',
-      'partnerships.colorDesc': 'Ð—Ð° Ð¸Ð½Ð´Ð¸Ð²Ð¸Ð´ÑƒÐ°Ð»Ð½Ð° Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð¿Ñ€ÐµÐ´Ð»Ð°Ð³Ð°Ð¼Ðµ 420 Ñ†Ð²ÑÑ‚Ð° ÐºÐ¾Ð½Ñ†Ð¸ Ñ Ñ†ÐµÐ» Ð¿ÐµÑ€Ñ„ÐµÐºÑ‚Ð½Ð° ÐºÐ¾Ð¼Ð±Ð¸Ð½Ð°Ñ†Ð¸Ñ Ñ Ð´Ñ€ÐµÑ…Ð¸Ñ‚Ðµ, ÐºÐ¾Ð¸Ñ‚Ð¾ Ð²Ð°Ñ€Ð¸Ñ€Ð°Ñ‚ Ð¾Ñ‚ 5 Ð´Ð¾ 11 Ñ†Ð²ÑÑ‚Ð° Ð² Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚ Ð¾Ñ‚ Ð¼Ð¾Ð´ÐµÐ»Ð°.',
-      'partnerships.materialDesc': 'Ð—Ð°Ð»Ð¾Ð¶Ð¸Ñ…Ð¼Ðµ Ð½Ð° Ð°Ð¼ÐµÑ€Ð¸ÐºÐ°Ð½ÑÐºÐ¸ Ð±Ñ€Ð°Ð½Ð´ Ñ Heavyweight Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ñ Ð¸ Oversized ÐºÑ€Ð¾Ð¹ÐºÐ°. ÐšÐ¾Ð»ÐµÐºÑ†Ð¸ÑÑ‚Ð° Ð²ÐºÐ»ÑŽÑ‡Ð²Ð° Ñ‚ÐµÐ½Ð¸ÑÐºÐ¸, ÑÑƒÐ¸Ñ‚ÑˆÑŠÑ€Ñ‚Ð¸ Ð¸ Ñ…ÑƒÐ´Ð¸Ñ‚Ð°, Ð² Ñ€Ð°Ð·Ð¼ÐµÑ€Ð¸ Ð¾Ñ‚ XS Ð´Ð¾ 2XL.',
-      'partnerships.button': 'ÐœÐ°Ð³Ð°Ð·Ð¸Ð½ Merch',
-      'partnerships.contact': 'ÐÐºÐ¾ Ð¸ÑÐºÐ°Ñ‚Ðµ Ð´Ð° ÑÐ¸ Ð¿Ð°Ñ€Ñ‚Ð½Ð¸Ñ€Ð°Ð¼Ðµ Ð·Ð° ÑÑŠÐ·Ð´Ð°Ð²Ð°Ð½Ðµ Ð½Ð° ÑÐ¾Ð±ÑÑ‚Ð²ÐµÐ½ Merch, Ð¿Ñ€Ð¸ÑÑŠÐµÐ´Ð¸Ð½ÑÐ²Ð°Ð½Ðµ ÐºÑŠÐ¼ Ð½Ð°ÑˆÐ¸Ñ Twitch Team Ð¸Ð»Ð¸ Ð´Ñ€ÑƒÐ³Ð¸ ÑÑŠÐ²Ð¼ÐµÑÑ‚Ð½Ð¸ Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ñ‚Ð¸Ð²Ð¸, Ð¼Ð¾Ð¶ÐµÑ‚Ðµ Ð´Ð° ÑÐµ ÑÐ²ÑŠÑ€Ð¶ÐµÑ‚Ðµ Ñ Ð½Ð°Ñ Ð² Ð½Ð°ÑˆÐ¸Ñ Discord ÑÑŠÑ€Ð²ÑŠÑ€.',
+      // Contact form
+      'contact.eventName': '\u0418\u043c\u0435 \u043d\u0430 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e *',
+      'contact.eventDate': '\u0414\u0430\u0442\u0430 \u043d\u0430 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e *',
+      'contact.eventTime': '\u0427\u0430\u0441 \u043d\u0430 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e',
+      'contact.discord': '\u0412\u0430\u0448\u0438\u044f\u0442 Discord *',
+      'contact.eventLink': '\u041b\u0438\u043d\u043a \u043d\u0430 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e',
+      'contact.email': '\u0418\u043c\u0435\u0439\u043b',
+      'contact.details': '\u0414\u043e\u043f\u044a\u043b\u043d\u0438\u0442\u0435\u043b\u043d\u0438 \u0434\u0435\u0442\u0430\u0439\u043b\u0438',
+      'contact.submit': '\u0418\u0437\u043f\u0440\u0430\u0442\u0438 \u043f\u043e\u043a\u0430\u043d\u0430',
 
-      // Footer
-      'footer.about': 'Ð’Ð¸Ñ€Ñ‚ÑƒÐ°Ð»Ð½Ð° Ñ‚Ñ€Ð°Ð½ÑÐ¿Ð¾Ñ€Ñ‚Ð½Ð° Ð»Ð¾Ð³Ð¸ÑÑ‚Ð¸ÐºÐ° Ð¾Ñ‚ 2019 Ð³.',
-      'footer.company': 'ÐšÐ¾Ð¼Ð¿Ð°Ð½Ð¸Ñ',
-      'footer.credit': 'ÐÐ°Ð¿Ñ€Ð°Ð²ÐµÐ½Ð¾ Ñ â¤ï¸ Ð¾Ñ‚ sladkaroww'
+      // Add convoy page
+      'addconvoy.title': '\u0414\u043e\u0431\u0430\u0432\u0438 \u043a\u043e\u043d\u0432\u043e\u0439 \u043a\u044a\u043c \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0430',
+      'addconvoy.sub': '\u041f\u0440\u0435\u0433\u043b\u0435\u0434\u0430\u0439\u0442\u0435 \u043f\u043e\u043a\u0430\u043d\u0430\u0442\u0430 \u0438 \u043f\u043e\u0442\u0432\u044a\u0440\u0434\u0435\u0442\u0435, \u0437\u0430 \u0434\u0430 \u044f \u0434\u043e\u0431\u0430\u0432\u0438\u0442\u0435 \u043a\u044a\u043c \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0430 \u043d\u0430 TEXIM ONE.',
+      'addconvoy.name': '\u0418\u043c\u0435 \u043d\u0430 \u043a\u043e\u043d\u0432\u043e\u044f',
+      'addconvoy.date': '\u0414\u0430\u0442\u0430',
+      'addconvoy.time': '\u041d\u0430\u0447\u0430\u043b\u0435\u043d \u0447\u0430\u0441 (UTC)',
+      'addconvoy.discord': '\u041f\u043e\u043a\u0430\u043d\u0435\u043d \u043e\u0442 (Discord)',
+      'addconvoy.link': '\u041b\u0438\u043d\u043a',
+      'addconvoy.details': '\u0414\u0435\u0442\u0430\u0439\u043b\u0438',
+      'addconvoy.confirm': '\u0414\u043e\u0431\u0430\u0432\u0438 \u043a\u044a\u043c \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0430',
+      'addconvoy.cancel': '\u041e\u0442\u043a\u0430\u0437',
+      'addconvoy.successTitle': '\u0414\u043e\u0431\u0430\u0432\u0435\u043d\u043e \u043a\u044a\u043c \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0430!',
+      'addconvoy.successText': '\u0422\u043e\u0437\u0438 \u043a\u043e\u043d\u0432\u043e\u0439 \u0432\u0435\u0447\u0435 \u0435 \u0432 \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0430 \u043d\u0430 TEXIM ONE.',
+      'addconvoy.viewCalendar': '\u0412\u0438\u0436 \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0430',
+
+      // Form
+      'form.success': '\u041f\u043e\u043a\u0430\u043d\u0430\u0442\u0430 \u0435 \u0438\u0437\u043f\u0440\u0430\u0442\u0435\u043d\u0430 \u0443\u0441\u043f\u0435\u0448\u043d\u043e!',
+
+      // Language modal
+      'modal.title': '\u0418\u0437\u0431\u0435\u0440\u0435\u0442\u0435 \u0435\u0437\u0438\u043a',
+      'modal.sub': '\u0418\u0437\u0431\u0435\u0440\u0435\u0442\u0435 \u043f\u0440\u0435\u0434\u043f\u043e\u0447\u0438\u0442\u0430\u043d\u0438\u044f \u043e\u0442 \u0432\u0430\u0441 \u0435\u0437\u0438\u043a'
     }
-  
-     
-    bg: {
-      // Navigation
-      "nav.home": "Начало",
-      "nav.convoy": "Събития",
-      "nav.media": "Медиа",
-      "nav.join": "Заяви се",
-      "nav.partnerships": "Партньорства",
-
-      // Home - Hero section
-      "hero.tagline": "Винаги 1 на ум, зад TEXIM!",
-      "hero.subtitle": "Виртуална транспортна компания",
-      "hero.text": "TEXIM ONE е основана на 1 януари 2026 г. като естествено продължение на TEXIM, основан на 10 март 2019 г.",
-      "hero.discord": "Discord",
-
-      // Home - Stats
-      "stat.drivers": "10+ служители",
-      "stat.founded": "7+ години опит",
-      "stat.km": "9+ млн WoTr км",
-      "stat.discord": "80+ Discord членове",
-
-      // Home - Section titles
-      "home.staff": "Хората зад волана",
-      "home.staffDesc": "Интеграция с членове от TruckersMP",
-      "home.panels": "Нашите стойности",
-
-      // Home - Panel titles
-      "panel.accessibility": "Достъпност",
-      "panel.accessibilityDesc": "Нямаме месечни километражни лимити, задължително участие в конвои, изисквания за възраст, часове в играта, DLC-и или опитителен период.",
-      "panel.identity": "Корпоративна идентичност",
-      "panel.identityDesc": "Разпознаваем брандинг: типичен камион, связан, аватар и етикет.",
-      "panel.hierarchy": "Иерархия",
-      "panel.hierarchyDesc": "Нашата репутационна система récompense активните членове с по-голямо влияние в процеса на приемане на решения.",
-      "panel.prestige": "Престиж",
-      "panel.prestigeDesc": "Собствен Twitch екип и марч - excluзивни за най-големите общности.",
-
-      // Events page
-      "events.title": "Събития",
-      "events.allEvents": "Всички събития, на които сме поканени",
-      "events.invite": "Покани нас",
-      "events.inviteText": "Попълнете формуляра и ще споделим поканата с нашите Discord членове.",
-      "events.calendar": "Календар",
-      "events.calendarText": "Всички предстоящи събития",
-
-      // Convoy page specific translations
-      "convoy.none": "Няма предстоящи събития",
-      "convoy.error": "Грешка при зареждане на събития",
-      "convoy.meet": "Срещане",
-      "convoy.view": "Преглед на събитие",
-
-      // Media page
-      "media.title": "Медиа",
-      "media.sub": "Нашата история, нашите моменти, нашата общност",
-      "media.twitch": "Twitch екип",
-      "media.twitchText": "Следете нашия Twitch екип, който стриймира жив за общността!",
-      "media.watch": "Гледни",
-      "media.gallery": "Галерия",
-      "media.galleryText": "Топ 9 кадри с колегите (снимки с поне 4 от екипа)",
-      "media.news": "Новини",
-      "media.newsText": "TEXIM ONE в TruckersMP",
-
-      // Apply page
-      "apply.title": "Заявка за присъединяване към TEXIM ONE",
-      "apply.form": "Формулара за candidatura",
-
-      // Partnerships page
-      "partnerships.title": "Партньорства",
-      "partnerships.texim": "TEXIM ONE Vtc & TEXIM ONE Ltd",
-      "partnerships.merchDesc": "Иконичното лого T1 е представено като белка с размер 5-6 см, поставена на класическото положение наляво на гърдите.",
-      "partnerships.colorDesc": "За персонализиране предлагаме 420 нитки за идеална комбинация с дрехите, вариращи от 5 до 11 цветове в зависимост от моделa.",
-      "partnerships.materialDesc": "Избрали сме американски бренд с тежка tkanina и oversized кројка. Колекцията включва тисии, диваки и худи в размери XS до 2XL.",
-      "partnerships.button": "Марч магазин",
-      "partnerships.contact": "Ако желаете да стане партньор ни за创作 на custom merch, присъединяване към нашия Twitch екип или други съвместни инициативи, можете да се свържете с нас чрез нашия Discord сървър.",
-
-      // Footer
-      "footer.about": "Виртуална транспортна логистика от 2019 г.",
-      "footer.company": "Компания",
-      "footer.credit": "Направено със ❤️ от sladkaroww",
-
-      // Language Modal
-      "modal.title": "Избери език",
-      "modal.sub": "Избери предпочитания си език"
-    }};
+  };
 
   function safeGetStoredLang() {
     try {
-      const v = localStorage.getItem(I18N_KEY);
+      var v = localStorage.getItem(I18N_KEY);
       if (v === 'bg') return 'bg';
       return 'en';
     } catch (err) {
-      // localStorage may be disabled
       console.warn('i18n: localStorage not available', err);
       return 'en';
     }
@@ -452,57 +218,61 @@
 
   // Public setter used by UI
   function setLang(lang) {
-    const normalized = (lang === 'bg') ? 'bg' : 'en';
+    var normalized = (lang === 'bg') ? 'bg' : 'en';
     setStoredLang(normalized);
     applyLang(normalized);
   }
 
   // Apply translations to the DOM. Defensive: do not throw.
+  // Preserves nested child elements (e.g. an inline "Read more" link inside a <p>).
   function applyLang(lang) {
     try {
-      const dict = SITE_STRINGS[lang] || SITE_STRINGS.en;
+      var dict = SITE_STRINGS[lang] || SITE_STRINGS.en;
 
-      // data-i18n text nodes
-      const nodes = document.querySelectorAll('[data-i18n]');
-      nodes.forEach((el) => {
+      var nodes = document.querySelectorAll('[data-i18n]');
+      Array.prototype.forEach.call(nodes, function (el) {
         try {
-          const key = el.getAttribute('data-i18n');
+          var key = el.getAttribute('data-i18n');
           if (!key) return;
-          const val = dict[key];
-          if (val != null) {
-            // preserve inner HTML for links/buttons that intentionally contain markup?
-            // Use textContent to keep things simple and safe.
+          var val = dict[key];
+          if (val == null) return;
+
+          if (el.childNodes.length > 1) {
+            // Has child nodes besides a single text node -> update only the leading text node
+            var first = el.firstChild;
+            if (first && first.nodeType === 3) {
+              first.nodeValue = val;
+            } else {
+              el.insertBefore(document.createTextNode(val), first || null);
+            }
+          } else {
             el.textContent = val;
           }
         } catch (er) {
-          // ignore element-level failures
           console.debug('i18n: element update failed', el, er);
         }
       });
 
-      // data-i18n-placeholder attributes
-      const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
-      placeholders.forEach((el) => {
+      var placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+      Array.prototype.forEach.call(placeholders, function (el) {
         try {
-          const key = el.getAttribute('data-i18n-placeholder');
+          var key = el.getAttribute('data-i18n-placeholder');
           if (!key) return;
-          const val = dict[key];
+          var val = dict[key];
           if (val != null) el.setAttribute('placeholder', val);
         } catch (er) {
           console.debug('i18n: placeholder update failed', el, er);
         }
       });
 
-      // Update html lang attribute
       try {
         document.documentElement.setAttribute('lang', lang);
       } catch (er) {
         // ignore
       }
 
-      // Notify listeners
       try {
-        document.dispatchEvent(new CustomEvent('texim:langchange', { detail: { lang } }));
+        document.dispatchEvent(new CustomEvent('texim:langchange', { detail: { lang: lang } }));
       } catch (er) {
         // ignore
       }
@@ -514,29 +284,43 @@
     }
   }
 
-  // Bind UI controls (langSwitcher select and any .lang-option buttons)
+  // Bind UI controls (langSwitcher select, .lang-option buttons, modal close)
   function bindControls() {
     try {
-      const switcher = document.getElementById('langSwitcher');
+      var switcher = document.getElementById('langSwitcher');
       if (switcher) {
-        // set current value defensively
         try { switcher.value = getCurrentLang(); } catch (e) { /* ignore */ }
         switcher.addEventListener('change', function (e) {
           setLang(e.target.value);
         });
       }
 
-      document.querySelectorAll('.lang-option[data-lang]').forEach((btn) => {
+      var optionButtons = document.querySelectorAll('.lang-option[data-lang]');
+      Array.prototype.forEach.call(optionButtons, function (btn) {
         try {
           btn.addEventListener('click', function () {
-            const lang = btn.getAttribute('data-lang');
+            var lang = btn.getAttribute('data-lang');
             setLang(lang);
-            const modal = document.getElementById('langModal');
+            var modal = document.getElementById('langModal');
             if (modal) modal.classList.remove('open');
             if (switcher) try { switcher.value = getCurrentLang(); } catch (e) {}
           });
         } catch (er) { /* ignore per-button errors */ }
       });
+
+      // Close button + click-outside for the language modal
+      var modal = document.getElementById('langModal');
+      if (modal) {
+        var closeBtn = modal.querySelector('.lang-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function () {
+            modal.classList.remove('open');
+          });
+        }
+        modal.addEventListener('click', function (e) {
+          if (e.target === modal) modal.classList.remove('open');
+        });
+      }
     } catch (err) {
       console.debug('i18n: bindControls failed', err);
     }
@@ -545,10 +329,9 @@
   // Public accessor for other scripts
   function t(key) {
     try {
-      const lang = getCurrentLang();
-      const dict = SITE_STRINGS[lang] || SITE_STRINGS.en;
+      var lang = getCurrentLang();
+      var dict = SITE_STRINGS[lang] || SITE_STRINGS.en;
       if (dict[key] != null) return dict[key];
-      // fallback to english if missing
       if (SITE_STRINGS.en[key] != null) return SITE_STRINGS.en[key];
       return key;
     } catch (err) {
@@ -570,12 +353,12 @@
     bindControls();
     applyLang(getCurrentLang());
 
-    // show modal on first visit if desired
+    // show modal on first visit
     try {
-      const stored = localStorage.getItem(I18N_KEY);
+      var stored = localStorage.getItem(I18N_KEY);
       if (!stored) {
-        const modal = document.getElementById('langModal');
-        if (modal) setTimeout(() => modal.classList.add('open'), 600);
+        var modal = document.getElementById('langModal');
+        if (modal) setTimeout(function () { modal.classList.add('open'); }, 600);
       }
     } catch (err) {
       // ignore
@@ -585,13 +368,7 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initOnce);
   } else {
-    // already ready
     setTimeout(initOnce, 0);
   }
 
 })();
-
-
-
-
-
