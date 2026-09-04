@@ -1,71 +1,51 @@
 // Cloudflare Pages Function: POST /api/add-convoy
-// Stores a convoy invite (confirmed by a TEXIM ONE admin via the confirmation
-// page) into the TEXIM_CALENDAR KV namespace, so it appears on the website
-// calendar and in the .ics feed. Requires the TEXIM_CALENDAR KV binding.
+// Consumes a one-time invitation token and stores the approved convoy in KV.
 
 function keyFor(d) {
     const m = (d.link || '').match(/truckersmp\.com\/events\/(\d+)/i);
     if (m) return 'convoy-' + m[1];
-    const slug = (d.name || 'convoy')
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '');
+    const slug = (d.name || 'convoy').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     return 'convoy-' + (d.date || '0000') + '-' + slug;
+}
+function json(body, status = 200) {
+    return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 }
 
 export async function onRequest(context) {
     const { request, env } = context;
-
-    if (request.method !== 'POST') {
-        return new Response(JSON.stringify({ success: false, message: 'Method not allowed' }), {
-            status: 405,
-            headers: { 'Content-Type': 'application/json' },
-        });
-    }
+    if (request.method !== 'POST') return json({ success: false, message: 'Method not allowed' }, 405);
+    if (!env.TEXIM_CALENDAR || !env.TEXIM_INVITES) return json({ success: false, message: 'Calendar storage is not configured.' }, 500);
 
     let data;
-    try {
-        data = await request.json();
-    } catch {
-        return new Response(JSON.stringify({ success: false, message: 'Invalid JSON payload.' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-        });
-    }
+    try { data = await request.json(); } catch { return json({ success: false, message: 'Invalid JSON payload.' }, 400); }
+    const token = String(data.token || '').trim();
+    if (!/^[a-f0-9]{64}$/i.test(token)) return json({ success: false, message: 'Invalid or expired invitation token.' }, 403);
 
-    const name = (data.name || '').trim();
-    const date = (data.date || '').trim();
-    if (!name || !date) {
-        return new Response(JSON.stringify({ success: false, message: 'Missing convoy name or date.' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-        });
-    }
+    const key = `invite-${token}`;
+    const invite = await env.TEXIM_INVITES.get(key, { type: 'json' });
+    if (!invite) return json({ success: false, message: 'This invitation has expired or was already used.' }, 410);
 
-    if (!env.TEXIM_CALENDAR) {
-        return new Response(
-            JSON.stringify({ success: false, message: 'Calendar storage is not configured (TEXIM_CALENDAR KV missing).' }),
-            { status: 500, headers: { 'Content-Type': 'application/json' } }
-        );
-    }
+    const name = String(invite.eventName || '').trim();
+    const date = String(invite.eventDate || '').trim();
+    if (!name || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return json({ success: false, message: 'Invalid invitation data.' }, 400);
 
-    const m = (data.link || '').match(/truckersmp\.com\/events\/(\d+)/i);
-    const id = m ? m[1] : keyFor(data).replace('convoy-', '');
+    const conflict = await env.TEXIM_CALENDAR.get(`date-lock-${date}`);
+    if (conflict) return json({ success: false, message: 'A TEXIM ONE convoy is already saved for this date.' }, 409);
+
     const record = {
-        id,
+        id: ((invite.eventLink || '').match(/truckersmp\.com\/events\/(\d+)/i) || [null, null])[1] || `${date}-${name}`,
         name,
         date,
-        time: (data.time || '').trim(),
-        link: (data.link || '').trim(),
-        discord: (data.discord || '').trim(),
-        details: (data.details || '').trim(),
+        time: String(invite.eventTime || '').trim(),
+        link: String(invite.eventLink || '').trim(),
+        discord: String(invite.discord || '').trim(),
+        details: String(invite.details || '').trim(),
         addedAt: new Date().toISOString(),
     };
 
-    await env.TEXIM_CALENDAR.put(keyFor(data), JSON.stringify(record));
+    await env.TEXIM_CALENDAR.put(keyFor(record), JSON.stringify(record));
+    await env.TEXIM_CALENDAR.put(`date-lock-${date}`, JSON.stringify({ key: keyFor(record), addedAt: record.addedAt }));
+    await env.TEXIM_INVITES.delete(key);
 
-    return new Response(JSON.stringify({ success: true, message: 'Added to calendar.' }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-    });
+    return json({ success: true, message: 'Added to calendar.' });
 }
