@@ -514,7 +514,7 @@ button { cursor: pointer; border: none; background: none; }
 
 /* Footer */
 .footer {
-    background: #f5f5f7;
+    background: #ffffff; /* Бял цвят за фона */
     border-top: 1px solid #e3e8e8;
     padding: 0.8rem 0; /* Коригирано за симетрично отстояние отгоре и отдолу */
     text-align: center;
