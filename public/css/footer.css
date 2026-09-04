@@ -1,66 +1,38 @@
-/* Footer Clean Overrides */
+/* Footer */
 .footer {
-    background: #f5f5f7 !important;
-    border-top: 1px solid #e3e8e8 !important;
-    padding: 2.5rem 0 !important;
-    text-align: center !important;
+    background: #f5f5f7;
+    border-top: 1px solid #e3e8e8;
+    padding: 2rem 0;
+    text-align: center;
 }
 
-/* Центриране на съдържанието */
-.footer-bottom,
-.footer-brand {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 15px !important;
-    text-align: center !important;
-    width: 100% !important;
-}
-
-/* Черен цвят за текста */
-.footer p,
-.footer-bottom p {
-    color: #000000 !important;
-    font-size: 0.95rem !important;
-    margin: 0 !important;
-}
-
-/* Подреждане и центриране на иконите */
-.social-links,
+/* Social links in footer centered */
 .footer-social {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 15px !important;
-    max-width: none !important;
-    margin: 0 auto !important;
+    justify-content: center;
+    max-width: none;
 }
 
-/* Премахване на белите правоъгълници и рамките */
 .social-link {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    transition: transform 0.2s ease, opacity 0.2s ease !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: #ffffff;
+    border: 1px solid #e3e8e8;
+    border-radius: 4px;
+    color: #1a1a1a;
+    font-size: 0.9rem;
+    transition: color 0.2s, border-color 0.2s;
 }
 
-/* Големина на логата */
 .social-link img {
-    width: 32px !important;
-    height: 32px !important;
-    display: block !important;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
-.social-link:hover {
-    opacity: 0.7 !important;
-    transform: translateY(-2px) !important;
-    background: transparent !important;
-    border: none !important;
+.social-link:hover { 
+    color: #111111; 
+    border-color: #111111; 
 }
