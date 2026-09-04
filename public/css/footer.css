@@ -6,33 +6,42 @@
     text-align: center;
 }
 
-/* Social links in footer centered */
-.footer-social {
-    justify-content: center;
-    max-width: none;
+/* Центриране на съдържанието във футъра */
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
+/* Социални връзки в една линия */
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Социални икони - без бели правоъгълници и без рамка */
 .social-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.8rem;
-    background: #ffffff;
-    border: 1px solid #e3e8e8;
-    border-radius: 4px;
-    color: #1a1a1a;
-    font-size: 0.9rem;
-    transition: color 0.2s, border-color 0.2s;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .social-link img {
-    width: 18px;
-    height: 18px;
-    display: inline-block;
-    vertical-align: middle;
+    width: 22px;
+    height: 22px;
+    display: block;
 }
 
+/* Ефект при посочване с мишката */
 .social-link:hover { 
-    color: #111111; 
-    border-color: #111111; 
+    opacity: 0.7;
+    transform: translateY(-2px);
 }
