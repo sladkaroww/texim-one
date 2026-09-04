@@ -2,37 +2,45 @@
 .footer {
     background: #f5f5f7;
     border-top: 1px solid #e3e8e8;
-    padding: 2rem 0;
-    text-align: center;
+    padding: 2.5rem 0;
 }
 
-/* Social links in footer centered */
-.footer-social {
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    max-width: none;
+    gap: 15px; /* Разстояние между иконите и текста */
+    text-align: center;
+    color: #000000; /* Черен цвят за текста Made with... */
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Разстояние 15px между иконите */
 }
 
 .social-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.8rem;
-    background: #ffffff;
-    border: 1px solid #e3e8e8;
-    border-radius: 4px;
-    color: #1a1a1a;
-    font-size: 0.9rem;
-    transition: color 0.2s, border-color 0.2s;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .social-link img {
-    width: 18px;
-    height: 18px;
-    display: inline-block;
-    vertical-align: middle;
+    width: 28px;  /* Размер на иконите */
+    height: 28px;
+    display: block;
 }
 
-.social-link:hover { 
-    color: #111111; 
-    border-color: #111111; 
+.social-link:hover {
+    opacity: 0.7;
+    transform: translateY(-2px);
 }
