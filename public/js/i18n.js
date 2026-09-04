@@ -96,6 +96,10 @@
 
       // Form
       'form.success': 'Invite sent successfully!',
+      // TruckersMP auto-fill preview
+      'invite.fetching': 'Loading event details...',
+      'invite.lookupError': "Couldn't load this event. Check the link or fill in the fields manually.",
+      'invite.bannerAlt': 'Event banner',
 
       // Language modal
       'modal.title': 'Choose Language',
@@ -186,6 +190,10 @@
 
       // Form
       'form.success': '\u041f\u043e\u043a\u0430\u043d\u0430\u0442\u0430 \u0435 \u0438\u0437\u043f\u0440\u0430\u0442\u0435\u043d\u0430 \u0443\u0441\u043f\u0435\u0448\u043d\u043e!',
+      // TruckersMP auto-fill preview
+      'invite.fetching': '\u0417\u0430\u0440\u0435\u0436\u0434\u0430\u043d\u0435 \u043d\u0430 \u0434\u0435\u0442\u0430\u0439\u043b\u0438\u0442\u0435 \u0437\u0430 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e...',
+      'invite.lookupError': '\u0421\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e \u043d\u0435 \u043c\u043e\u0436\u0430 \u0434\u0430 \u0441\u0435 \u0437\u0430\u0440\u0435\u0434\u0438. \u041f\u0440\u043e\u0432\u0435\u0440\u0435\u0442\u0435 \u043b\u0438\u043d\u043a\u0430 \u0438\u043b\u0438 \u043f\u043e\u043f\u044a\u043b\u043d\u0435\u0442\u0435 \u043f\u043e\u043b\u0435\u0442\u0430 \u0440\u044a\u0447\u043d\u043e.',
+      'invite.bannerAlt': '\u0411\u0430\u043d\u0435\u0440 \u043d\u0430 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e',
 
       // Language modal
       'modal.title': '\u0418\u0437\u0431\u0435\u0440\u0435\u0442\u0435 \u0435\u0437\u0438\u043a',

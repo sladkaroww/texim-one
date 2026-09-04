@@ -107,12 +107,30 @@ export async function onRequest(context) {
     if (eventLink) fields.push({ name: 'Convoy Link', value: eventLink, inline: false });
     if (details) fields.push({ name: 'Additional Details', value: details, inline: false });
 
+    // Enrich the embed with data fetched from the TruckersMP API on the form
+    // (banner image + route), if the inviter pasted a truckersmp.com link.
+    let lookedUp = null;
+    try {
+        lookedUp = data.eventData ? JSON.parse(data.eventData) : null;
+    } catch {
+        lookedUp = null;
+    }
+    if (lookedUp && lookedUp.route) {
+        fields.push({ name: 'Route', value: lookedUp.route, inline: false });
+    }
+    if (lookedUp && lookedUp.game) {
+        fields.push({ name: 'Game / Server', value: `${lookedUp.game}${lookedUp.server ? ' / ' + lookedUp.server : ''}`, inline: true });
+    }
+    if (lookedUp && lookedUp.vtc) {
+        fields.push({ name: 'Hosted by VTC', value: lookedUp.vtc, inline: true });
+    }
     const embed = {
-        title: conflict ? 'Convoy Invitation — AUTO-DECLINED' : 'New Convoy Invitation',
+        title: conflict ? 'Convoy Invitation \u2014 AUTO-DECLINED' : 'New Convoy Invitation',
         color: conflict ? 0xff0000 : 0x1f6feb,
         timestamp: new Date().toISOString(),
         fields,
         footer: { text: 'TEXIM ONE - Convoy Invites (calendar-checked, DM via Discord)' },
+        image: lookedUp && lookedUp.banner ? { url: lookedUp.banner } : undefined,
     };
 
     // "Add to Calendar" link button — opens our site's confirmation page where

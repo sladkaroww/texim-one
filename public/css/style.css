@@ -1102,3 +1102,53 @@ button { cursor: pointer; border: none; background: none; }
     .hero-row { flex-direction: column; align-items: flex-start; }
     .hero-truck { display: none; }
 }
+
+/* Event auto-fill preview card */
+.event-preview {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+    padding: 10px;
+    margin: 4px 0 18px;
+    background: var(--surface, #13131a);
+    border: 1px solid var(--border, #25252f);
+    border-radius: 12px;
+    overflow: hidden;
+    animation: preview-in 0.28s ease;
+}
+@keyframes preview-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.event-preview-banner {
+    width: 96px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background: #0c0c10;
+}
+.event-preview-banner[hidden] { display: none; }
+.event-preview-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+}
+.event-preview-name {
+    font-size: 0.98rem;
+    color: var(--text, #e8e8ea);
+    line-height: 1.25;
+    word-break: break-word;
+}
+.event-preview-status {
+    font-size: 0.82rem;
+    color: var(--muted, #9a9aa2);
+}
+.event-preview-status--error {
+    color: #ff7a7a;
+}
+@media (max-width: 480px) {
+    .event-preview-banner { width: 80px; height: 45px; }
+}
