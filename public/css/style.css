@@ -99,7 +99,7 @@ button { cursor: pointer; border: none; background: none; }
     min-height: 600px;
     display: flex;
     align-items: center;
-    margin-top: 70px;
+    margin-top: 60px; /* Променено от 70px на 60px */
     overflow: hidden;
 }
 .hero-bg {
