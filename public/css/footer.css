@@ -1,46 +1,66 @@
-/* Footer */
+/* Footer Clean Overrides */
 .footer {
-    background: #f5f5f7;
-    border-top: 1px solid #e3e8e8;
-    padding: 2.5rem 0;
+    background: #f5f5f7 !important;
+    border-top: 1px solid #e3e8e8 !important;
+    padding: 2.5rem 0 !important;
+    text-align: center !important;
 }
 
-.footer-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 15px; /* Разстояние между иконите и текста */
-    text-align: center;
-    color: #000000; /* Черен цвят за текста Made with... */
-    font-size: 0.9rem;
+/* Центриране на съдържанието */
+.footer-bottom,
+.footer-brand {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 15px !important;
+    text-align: center !important;
+    width: 100% !important;
 }
 
-.social-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px; /* Разстояние 15px между иконите */
+/* Черен цвят за текста */
+.footer p,
+.footer-bottom p {
+    color: #000000 !important;
+    font-size: 0.95rem !important;
+    margin: 0 !important;
 }
 
+/* Подреждане и центриране на иконите */
+.social-links,
+.footer-social {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px !important;
+    max-width: none !important;
+    margin: 0 auto !important;
+}
+
+/* Премахване на белите правоъгълници и рамките */
 .social-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transition: transform 0.2s ease, opacity 0.2s ease !important;
 }
 
+/* Големина на логата */
 .social-link img {
-    width: 28px;  /* Размер на иконите */
-    height: 28px;
-    display: block;
+    width: 32px !important;
+    height: 32px !important;
+    display: block !important;
 }
 
 .social-link:hover {
-    opacity: 0.7;
-    transform: translateY(-2px);
+    opacity: 0.7 !important;
+    transform: translateY(-2px) !important;
+    background: transparent !important;
+    border: none !important;
 }
