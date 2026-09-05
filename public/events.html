@@ -46,68 +46,68 @@
         </div>
     </section>
 
-    <section class="section section--light" id="invite">
-        <div class="container section--narrow">
-            <div class="invite-head">
-                <h2 class="section-title" data-i18n="events.inviteTitle">Invite Us</h2>
-            </div>
-            <form id="inviteForm" class="invite-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="eventName" data-i18n="contact.eventName">Event Name *</label>
-                        <input type="text" id="eventName" name="eventName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="eventDate" data-i18n="contact.eventDate">Event Date *</label>
-                        <input type="date" id="eventDate" name="eventDate" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="eventTime" data-i18n="contact.eventTime">Event Time</label>
-                        <input type="time" id="eventTime" name="eventTime">
-                    </div>
-                    <div class="form-group">
-                        <label for="discord" data-i18n="contact.discord">Your Discord *</label>
-                        <input type="text" id="discord" name="discord" placeholder="name#0000 or @user" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="eventLink" data-i18n="contact.eventLink">Event Link</label>
-                    <input type="url" id="eventLink" name="eventLink" placeholder="https://truckersmp.com/events/...">
-                    <input type="hidden" name="eventData" id="eventData">
-                </div>
-                <div class="event-preview" id="eventPreview" hidden>
-                    <img class="event-preview-banner" id="eventPreviewBanner" alt="">
-                    <div class="event-preview-body">
-                        <strong class="event-preview-name" id="eventPreviewName"></strong>
-                        <span class="event-preview-status" id="eventPreviewStatus"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email" data-i18n="contact.email">Email</label>
-                    <input type="email" id="email" name="email">
-                </div>
-                <div class="form-group">
-                    <label for="details" data-i18n="contact.details">Additional Details</label>
-                    <textarea id="details" name="details" rows="4"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" data-i18n="contact.submit">Send Invite</button>
-                <div id="formMessage" class="form-message"></div>
-            </form>
+<section class="section" id="invite" style="background-color: #ffffff;">
+    <div class="container section--narrow">
+        <div class="invite-head">
+            <h2 class="section-title" data-i18n="events.inviteTitle">Invite Us</h2>
         </div>
-    </section>
+        <form id="inviteForm" class="invite-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="eventName" data-i18n="contact.eventName">Event Name *</label>
+                    <input type="text" id="eventName" name="eventName" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventDate" data-i18n="contact.eventDate">Event Date *</label>
+                    <input type="date" id="eventDate" name="eventDate" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="eventTime" data-i18n="contact.eventTime">Event Time</label>
+                    <input type="time" id="eventTime" name="eventTime">
+                </div>
+                <div class="form-group">
+                    <label for="discord" data-i18n="contact.discord">Your Discord *</label>
+                    <input type="text" id="discord" name="discord" placeholder="name#0000 or @user" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="eventLink" data-i18n="contact.eventLink">Event Link</label>
+                <input type="url" id="eventLink" name="eventLink" placeholder="https://truckersmp.com/events/...">
+                <input type="hidden" name="eventData" id="eventData">
+            </div>
+            <div class="event-preview" id="eventPreview" hidden>
+                <img class="event-preview-banner" id="eventPreviewBanner" alt="">
+                <div class="event-preview-body">
+                    <strong class="event-preview-name" id="eventPreviewName"></strong>
+                    <span class="event-preview-status" id="eventPreviewStatus"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" data-i18n="contact.email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="details" data-i18n="contact.details">Additional Details</label>
+                <textarea id="details" name="details" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" data-i18n="contact.submit">Send Invite</button>
+            <div id="formMessage" class="form-message"></div>
+        </form>
+    </div>
+</section>
 
-    <section class="section">
-        <div class="container">
-            <div class="section-head">
-                <h2 class="section-title" data-i18n="events.calendar.title">Calendar</h2>
-            </div>
-            <div id="calendar" class="calendar-grid">
-                <div class="calendar-loading" data-i18n="events.calendar.loading">Loading events...</div>
-            </div>
+<section class="section section--light">
+    <div class="container">
+        <div class="section-head">
+            <h2 class="section-title" data-i18n="events.calendar.title">Calendar</h2>
         </div>
-    </section>
+        <div id="calendar" class="calendar-grid">
+            <div class="calendar-loading" data-i18n="events.calendar.loading">Loading events...</div>
+        </div>
+    </div>
+</section>
 
 <footer class="footer">
     <div class="footer-bottom">
