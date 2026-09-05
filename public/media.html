@@ -58,22 +58,24 @@
     </div>
 </section>
 
-    <section class="section section--light" id="truckersmp-news">
-        <div class="container">
-            <div class="news-heading">
-                <div>
-                    <span class="news-eyebrow">TRUCKERSMP</span>
-                    <h2 class="section-title" data-i18n="media.news">News</h2>
-                </div>
-                <a href="https://truckersmp.com/vtc/74050" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">View our VTC</a>
-            </div>
-            <div id="newsGrid" class="news-grid" aria-live="polite"></div>
-            <p id="newsStatus" class="news-status" aria-live="polite"></p>
-            <div class="news-more-wrap">
-                <button id="newsMore" class="btn btn-outline" type="button" hidden>Load more</button>
-            </div>
+<section class="section section--light" id="truckersmp-news">
+    <div class="container">
+        
+        <!-- Заглавие с бутон, центрирани чисто -->
+        <div class="news-heading" style="text-align: center; margin-bottom: 2rem;">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Latest News</h2>
+            <a href="https://truckersmp.com/vtc/74050" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">View our VTC</a>
         </div>
-    </section>
+
+        <div id="newsGrid" class="news-grid" aria-live="polite"></div>
+        <p id="newsStatus" class="news-status" aria-live="polite" style="display: none;"></p>
+        
+        <div class="news-more-wrap">
+            <button id="newsMore" class="btn btn-outline" type="button" hidden>Load more</button>
+        </div>
+
+    </div>
+</section>
 
     <footer class="footer">
         <div class="footer-bottom">
