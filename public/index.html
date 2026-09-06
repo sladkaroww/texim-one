@@ -126,83 +126,209 @@
     </div>
 </section>
 
+<!-- EMPLOYEES SECTION -->
+<section class="section section--light" style="padding: 3rem 0;">
+    <div class="container">
+        <h2 class="section-title" style="margin: 0 0 2rem 0; text-align: center;">Employees</h2>
+
+        <div id="employees-loading" style="text-align: center; font-weight: 500; padding: 2rem 0; color: #666;">
+            Loading drivers list...
+        </div>
+
+        <div id="employees-grid" class="employees-grid" style="display: none;"></div>
+    </div>
+</section>
+
+<!-- CSS STYLES -->
+<style>
+.employees-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 0;
+}
+
+@media (max-width: 1024px) {
+    .employees-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 600px) {
+    .employees-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.employee-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.employee-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.employee-header {
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.employee-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.25rem 0;
+    word-break: break-word;
+}
+
+.employee-role {
+    display: inline-block;
+    background: #e0e7ff;
+    color: #3730a3;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.employee-details {
+    font-size: 0.85rem;
+    color: #4b5563;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.employee-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.employee-detail-label {
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+.employee-links {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+.employee-link-btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-tmp {
+    background: #101827;
+    color: #ffffff !important;
+}
+.btn-tmp:hover {
+    background: #1f2937;
+}
+
+.btn-steam {
+    background: #171a21;
+    color: #ffffff !important;
+}
+.btn-steam:hover {
+    background: #2a475e;
+}
+</style>
+
+<!-- JAVASCRIPT -->
 <script>
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
     const vtcId = 74050;
+    const loadingEl = document.getElementById('employees-loading');
+    const gridEl = document.getElementById('employees-grid');
 
-    // Глобална функция, която TruckersMP API извиква автоматично с данните
-    window.handleTMPResponse = function(result) {
-        const loadingEl = document.getElementById('employees-loading');
-        const gridEl = document.getElementById('employees-grid');
+    if (!loadingEl || !gridEl) return;
 
-        if (!loadingEl || !gridEl) return;
+    // Използваме стабилен proxy сървър
+    const targetUrl = 'https://api.truckersmp.com/v2/vtc/' + vtcId + '/members';
+    const proxyUrl = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(targetUrl);
 
-        if (!result || result.error || !result.response || !result.response.members) {
-            loadingEl.innerText = 'Failed to load employees list.';
-            return;
-        }
+    fetch(proxyUrl)
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            if (!data || data.error || !data.response || !data.response.members) {
+                loadingEl.innerText = 'Failed to load employees list.';
+                return;
+            }
 
-        const members = result.response.members;
-        let cardsHtml = '';
+            const members = data.response.members;
+            let cardsHtml = '';
 
-        members.forEach(function(member) {
-            const joinDate = member.join_date ? new Date(member.join_date).toLocaleDateString('bg-BG') : 'N/A';
-            const steamLink = member.steam_id64 ? '<a href="https://steamcommunity.com/profiles/' + member.steam_id64 + '" target="_blank" rel="noopener" class="employee-link-btn btn-steam">Steam</a>' : '';
-            const inGameIdHtml = member.in_game_id ? '<div class="employee-detail-item"><span class="employee-detail-label">In-Game ID:</span><span>' + member.in_game_id + '</span></div>' : '';
+            members.forEach(member => {
+                const joinDate = member.join_date ? new Date(member.join_date).toLocaleDateString('bg-BG') : 'N/A';
+                const steamBtn = member.steam_id64 ? `<a href="https://steamcommunity.com/profiles/${member.steam_id64}" target="_blank" rel="noopener" class="employee-link-btn btn-steam">Steam</a>` : '';
+                const inGameIdRow = member.in_game_id ? `<div class="employee-detail-item"><span class="employee-detail-label">In-Game ID:</span><span>${member.in_game_id}</span></div>` : '';
 
-            cardsHtml += `
-                <div class="employee-card">
-                    <div>
-                        <div class="employee-header">
-                            <h3 class="employee-name">${member.username}</h3>
-                            <span class="employee-role">${member.role || 'Driver'}</span>
+                cardsHtml += `
+                    <div class="employee-card">
+                        <div>
+                            <div class="employee-header">
+                                <h3 class="employee-name">${member.username}</h3>
+                                <span class="employee-role">${member.role || 'Driver'}</span>
+                            </div>
+                            <div class="employee-details">
+                                <div class="employee-detail-item">
+                                    <span class="employee-detail-label">Joined:</span>
+                                    <span>${joinDate}</span>
+                                </div>
+                                <div class="employee-detail-item">
+                                    <span class="employee-detail-label">TMP ID:</span>
+                                    <span>#${member.id}</span>
+                                </div>
+                                <div class="employee-detail-item">
+                                    <span class="employee-detail-label">Steam ID64:</span>
+                                    <span>${member.steam_id64 || 'N/A'}</span>
+                                </div>
+                                ${inGameIdRow}
+                            </div>
                         </div>
-                        <div class="employee-details">
-                            <div class="employee-detail-item">
-                                <span class="employee-detail-label">Joined:</span>
-                                <span>${joinDate}</span>
-                            </div>
-                            <div class="employee-detail-item">
-                                <span class="employee-detail-label">TMP ID:</span>
-                                <span>#${member.id}</span>
-                            </div>
-                            <div class="employee-detail-item">
-                                <span class="employee-detail-label">Steam ID64:</span>
-                                <span>${member.steam_id64 || 'N/A'}</span>
-                            </div>
-                            ${inGameIdHtml}
+                        <div class="employee-links">
+                            <a href="https://truckersmp.com/user/${member.id}" target="_blank" rel="noopener" class="employee-link-btn btn-tmp">TMP Profile</a>
+                            ${steamBtn}
                         </div>
                     </div>
-                    <div class="employee-links">
-                        <a href="https://truckersmp.com/user/${member.id}" target="_blank" rel="noopener" class="employee-link-btn btn-tmp">TMP Profile</a>
-                        ${steamLink}
-                    </div>
-                </div>
-            `;
+                `;
+            });
+
+            gridEl.innerHTML = cardsHtml;
+            loadingEl.style.display = 'none';
+            gridEl.style.display = 'grid';
+        })
+        .catch(err => {
+            console.error('Error fetching data:', err);
+            loadingEl.innerText = 'Error loading data. Please try again later.';
         });
-
-        gridEl.innerHTML = cardsHtml;
-        loadingEl.style.display = 'none';
-        gridEl.style.display = 'grid';
-    };
-
-    // Зареждане чрез динамичен script таг (байпасва CORS изцяло)
-    function fetchEmployees() {
-        const script = document.createElement('script');
-        script.src = 'https://api.truckersmp.com/v2/vtc/' + vtcId + '/members?callback=handleTMPResponse';
-        script.onerror = function() {
-            const loadingEl = document.getElementById('employees-loading');
-            if (loadingEl) loadingEl.innerText = 'Error loading data. Please try again later.';
-        };
-        document.body.appendChild(script);
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', fetchEmployees);
-    } else {
-        fetchEmployees();
-    }
-})();
+});
 </script>
     
 <footer class="footer">
