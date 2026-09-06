@@ -1,7 +1,10 @@
 // Cloudflare Pages Function: GET /api/event-lookup
-// Reads a TruckersMP event directly from the official TruckersMP Web API v2.
+// Reads a TruckersMP event from the official API, with a web-host fallback.
 
-const API_BASE = 'https://api.truckersmp.com/v2';
+const API_ENDPOINTS = [
+    'https://api.truckersmp.com/v2/events',
+    'https://truckersmp.com/api/v2/events',
+];
 
 function json(body, status = 200) {
     return new Response(JSON.stringify(body), {
@@ -22,7 +25,6 @@ function extractId(input) {
     const value = String(input).trim();
     if (/^\d+$/.test(value)) return value;
 
-    // TruckersMP event URLs can contain a slug after the numeric ID.
     const match = value.match(/(?:https?:\/\/)?(?:www\.)?truckersmp\.com\/events?\/(\d+)(?:[-/?#].*)?$/i);
     return match ? match[1] : null;
 }
@@ -101,47 +103,73 @@ function normalizeEvent(event, requestedId) {
     };
 }
 
+async function requestEvent(endpoint, id, signal) {
+    const response = await fetch(`${endpoint}/${encodeURIComponent(id)}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'User-Agent': 'TEXIM-ONE-Event-Importer/1.0',
+        },
+        signal,
+    });
+
+    const rawText = await response.text();
+    let data = null;
+    try {
+        data = rawText ? JSON.parse(rawText) : null;
+    } catch {
+        data = null;
+    }
+
+    const apiMessage = clean(
+        data?.descriptor ||
+        (typeof data?.response === 'string' ? data.response : '')
+    );
+
+    if (!response.ok) {
+        const error = new Error(apiMessage || `TruckersMP API returned HTTP ${response.status}`);
+        error.status = response.status;
+        throw error;
+    }
+
+    if (!data || data.error === true) {
+        const error = new Error(apiMessage || 'TruckersMP API reported an error.');
+        error.status = response.status || 502;
+        throw error;
+    }
+
+    return normalizeEvent(data.response, id);
+}
+
 async function fetchOfficialEvent(id) {
-    const endpoint = `${API_BASE}/events/${encodeURIComponent(id)}`;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000);
+    const errors = [];
 
     try {
-        // The official OpenAPI specification exposes this endpoint without an
-        // API-key requirement. Keep the request minimal so Cloudflare's
-        // Workers fetch runtime does not have to emulate a browser.
-        const response = await fetch(endpoint, {
-            method: 'GET',
-            headers: { Accept: 'application/json' },
-            signal: controller.signal,
-        });
+        for (const endpoint of API_ENDPOINTS) {
+            try {
+                const event = await requestEvent(endpoint, id, controller.signal);
+                if (event) {
+                    return {
+                        event,
+                        source: endpoint.startsWith('https://api.')
+                            ? 'truckersmp-api-v2'
+                            : 'truckersmp-web-api-v2',
+                    };
+                }
+            } catch (error) {
+                if (error?.name === 'AbortError') throw error;
+                errors.push(error);
 
-        const rawText = await response.text();
-        let data = null;
-        try {
-            data = rawText ? JSON.parse(rawText) : null;
-        } catch {
-            data = null;
+                // A missing event is definitive; do not hide it behind the fallback.
+                if (Number(error?.status) === 404) throw error;
+            }
         }
 
-        const apiMessage = clean(
-            data?.descriptor ||
-            (typeof data?.response === 'string' ? data.response : '')
-        );
-
-        if (!response.ok) {
-            const error = new Error(apiMessage || `TruckersMP API returned HTTP ${response.status}`);
-            error.status = response.status;
-            throw error;
-        }
-
-        if (!data || data.error === true) {
-            const error = new Error(apiMessage || 'TruckersMP API reported an error.');
-            error.status = response.status || 502;
-            throw error;
-        }
-
-        return normalizeEvent(data.response, id);
+        const lastError = errors.at(-1) || new Error('TruckersMP API request failed.');
+        lastError.attempts = errors.map((error) => error?.message || 'Unknown error');
+        throw lastError;
     } finally {
         clearTimeout(timeout);
     }
@@ -165,7 +193,8 @@ export async function onRequest(context) {
     }
 
     try {
-        const event = await fetchOfficialEvent(id);
+        const result = await fetchOfficialEvent(id);
+        const event = result.event;
 
         if (!event || !event.name || !event.date) {
             return json({
@@ -176,7 +205,7 @@ export async function onRequest(context) {
 
         return json({
             success: true,
-            source: 'truckersmp-api-v2',
+            source: result.source,
             event,
         });
     } catch (error) {
@@ -196,6 +225,7 @@ export async function onRequest(context) {
                 ? 'This TruckersMP event could not be found.'
                 : 'Could not read this TruckersMP event right now. Please try again in a moment.',
             ...(error?.message ? { details: error.message } : {}),
+            ...(error?.attempts ? { attempts: error.attempts } : {}),
         }, status);
     }
 }
