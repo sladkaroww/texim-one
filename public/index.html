@@ -126,24 +126,155 @@
     </div>
 </section>
 
+<!-- EMPLOYEES SECTION -->
+<section class="section section--light" style="padding: 3rem 0;">
+    <div class="container">
+        <h2 class="section-title" data-i18n="employees.title" style="margin: 0 0 2rem 0;">Employees</h2>
+
+        <div id="employees-loading" style="text-align: center; font-weight: 500; padding: 2rem 0; color: #666;">
+            Loading drivers list...
+        </div>
+
+        <div id="employees-grid" class="employees-grid" style="display: none;"></div>
+    </div>
+</section>
+
+<!-- CSS СТИЛОВЕ -->
+<style>
+.employees-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 0;
+}
+
+@media (max-width: 1024px) {
+    .employees-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 600px) {
+    .employees-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.employee-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.employee-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.employee-header {
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.employee-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.25rem 0;
+    word-break: break-word;
+}
+
+.employee-role {
+    display: inline-block;
+    background: #e0e7ff;
+    color: #3730a3;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.employee-details {
+    font-size: 0.85rem;
+    color: #4b5563;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.employee-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.employee-detail-label {
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+.employee-links {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+.employee-link-btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.btn-tmp {
+    background: #101827;
+    color: #ffffff !important;
+}
+.btn-tmp:hover {
+    background: #1f2937;
+}
+
+.btn-steam {
+    background: #171a21;
+    color: #ffffff !important;
+}
+.btn-steam:hover {
+    background: #2a475e;
+}
+</style>
+
+<!-- JAVASCRIPT -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
     const vtcId = 74050;
-    const loadingEl = document.getElementById('employees-loading');
-    const gridEl = document.getElementById('employees-grid');
 
     async function fetchEmployees() {
-        // Използваме CORS proxy, за да заобиколим блокажа на браузъра
-        const apiUrl = `https://api.truckersmp.com/v2/vtc/${vtcId}/members`;
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
+        const loadingEl = document.getElementById('employees-loading');
+        const gridEl = document.getElementById('employees-grid');
+
+        if (!loadingEl || !gridEl) return;
+
+        const targetUrl = 'https://api.truckersmp.com/v2/vtc/' + vtcId + '/members';
+        const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(targetUrl);
 
         try {
             const response = await fetch(proxyUrl);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const result = await response.json();
+            const data = await response.json();
+            const result = JSON.parse(data.contents);
 
             if (result.error || !result.response || !result.response.members) {
                 loadingEl.innerText = 'Failed to load employees list.';
@@ -151,19 +282,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const members = result.response.members;
-            gridEl.innerHTML = '';
+            let cardsHtml = '';
 
-            members.forEach(member => {
+            members.forEach(function(member) {
                 const joinDate = member.join_date ? new Date(member.join_date).toLocaleDateString('bg-BG') : 'N/A';
+                const steamLink = member.steam_id64 ? '<a href="https://steamcommunity.com/profiles/' + member.steam_id64 + '" target="_blank" rel="noopener" class="employee-link-btn btn-steam">Steam</a>' : '';
+                const inGameIdHtml = member.in_game_id ? '<div class="employee-detail-item"><span class="employee-detail-label">In-Game ID:</span><span>' + member.in_game_id + '</span></div>' : '';
 
-                const cardHtml = `
+                cardsHtml += `
                     <div class="employee-card">
                         <div>
                             <div class="employee-header">
                                 <h3 class="employee-name">${member.username}</h3>
                                 <span class="employee-role">${member.role || 'Driver'}</span>
                             </div>
-                            
                             <div class="employee-details">
                                 <div class="employee-detail-item">
                                     <span class="employee-detail-label">Joined:</span>
@@ -177,35 +309,33 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <span class="employee-detail-label">Steam ID64:</span>
                                     <span>${member.steam_id64 || 'N/A'}</span>
                                 </div>
-                                ${member.in_game_id ? `
-                                <div class="employee-detail-item">
-                                    <span class="employee-detail-label">In-Game ID:</span>
-                                    <span>${member.in_game_id}</span>
-                                </div>` : ''}
+                                ${inGameIdHtml}
                             </div>
                         </div>
-
                         <div class="employee-links">
                             <a href="https://truckersmp.com/user/${member.id}" target="_blank" rel="noopener" class="employee-link-btn btn-tmp">TMP Profile</a>
-                            ${member.steam_id64 ? `<a href="https://steamcommunity.com/profiles/${member.steam_id64}" target="_blank" rel="noopener" class="employee-link-btn btn-steam">Steam</a>` : ''}
+                            ${steamLink}
                         </div>
                     </div>
                 `;
-
-                gridEl.innerHTML += cardHtml;
             });
 
+            gridEl.innerHTML = cardsHtml;
             loadingEl.style.display = 'none';
             gridEl.style.display = 'grid';
 
         } catch (err) {
-            console.error('Error loading TruckersMP API:', err);
+            console.error('Error loading API:', err);
             loadingEl.innerText = 'Error loading data. Please try again later.';
         }
     }
 
-    fetchEmployees();
-});
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fetchEmployees);
+    } else {
+        fetchEmployees();
+    }
+})();
 </script>
     
 <footer class="footer">
