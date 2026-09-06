@@ -26,6 +26,7 @@
   function renderPreview(event, loading = false) {
     if (!preview) return;
     preview.hidden = false;
+
     if (previewBanner) {
       if (event.banner) {
         previewBanner.src = event.banner;
@@ -36,21 +37,29 @@
         previewBanner.removeAttribute('src');
       }
     }
-    if (previewName) previewName.textContent = event.name || (loading ? 'Loading event…' : '');
+
+    if (previewName) {
+      previewName.textContent = event.name || (loading ? 'Reading TruckersMP event…' : '');
+    }
+
     if (previewMeta) {
       const parts = [];
-      if (event.date) parts.push(event.date);
-      if (event.time) parts.push(`${event.time} UTC`);
+      if (event.type) parts.push(event.type);
       if (event.game) parts.push(event.game);
       if (event.server) parts.push(event.server);
+      if (event.date) parts.push(event.date);
+      if (event.time) parts.push(`${event.time} UTC`);
+      if (event.meetupDate && event.meetupTime) parts.push(`Meetup ${event.meetupDate} ${event.meetupTime} UTC`);
       if (event.route) parts.push(event.route);
+      if (event.vtc) parts.push(`Hosted by ${event.vtc}`);
+      if (event.attendance?.confirmed != null) parts.push(`${event.attendance.confirmed} confirmed`);
       previewMeta.textContent = parts.join(' • ');
     }
   }
 
   function eventIdFromLink(rawLink) {
     const link = (rawLink || '').trim();
-    const match = link.match(/(?:https?:\/\/)?(?:www\.)?truckersmp\.com\/events\/(\d+)/i);
+    const match = link.match(/(?:https?:\/\/)?(?:www\.)?truckersmp\.com\/events?\/(\d+)/i);
     if (match) return match[1];
     if (/^\d+$/.test(link)) return link;
     return null;
@@ -95,7 +104,7 @@
       if (timeEl && event.time) timeEl.value = event.time;
 
       renderPreview(event);
-      showPreviewStatus(t('invite.loaded', 'Event loaded automatically.'), false);
+      showPreviewStatus(t('invite.loaded', 'Event loaded automatically from TruckersMP.'), false);
       if (eventDataInput) eventDataInput.value = JSON.stringify(event);
       lastId = id;
     } catch {
