@@ -74,6 +74,161 @@
     </div>
 </section>
 
+<!-- RECENT POSTS SECTION -->
+<section class="section section--light" style="padding: 3rem 0; background-color: #f9fafb;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+        <h2 class="section-title" style="margin: 0 0 2rem 0; text-align: center; font-size: 2rem; font-weight: 700; color: #111827;">Latest News</h2>
+
+        <div id="rss-loading" style="text-align: center; font-weight: 500; padding: 2rem 0; color: #6b7280;">
+            Loading latest posts...
+        </div>
+
+        <div id="rss-grid" class="rss-grid" style="display: none;"></div>
+    </div>
+</section>
+
+<!-- CSS STYLES -->
+<style>
+.rss-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 0;
+}
+
+@media (max-width: 768px) {
+    .rss-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.rss-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rss-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.rss-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.4;
+}
+
+.rss-date {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+}
+
+.rss-snippet {
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.rss-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+.btn-rss-read {
+    display: inline-block;
+    color: #2563eb;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.btn-rss-read:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+</style>
+
+<!-- JAVASCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ЗАМЕНЕТЕ ТОЗИ ЛИНК С ВАШИЯ RSS FEED URL:
+    const rssUrl = 'https://your-domain.com/feed'; 
+
+    const loadingEl = document.getElementById('rss-loading');
+    const gridEl = document.getElementById('rss-grid');
+
+    if (!loadingEl || !gridEl) return;
+
+    // Използваме api.rss2json.com, който конвертира RSS feed в чист JSON без CORS проблеми
+    const apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl);
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status !== 'ok' || !data.items || data.items.length === 0) {
+                loadingEl.innerText = 'No recent posts found.';
+                return;
+            }
+
+            // Вземаме само първите 6 публикации
+            const posts = data.items.slice(0, 6);
+            let cardsHtml = '';
+
+            posts.forEach(post => {
+                const pubDate = post.pubDate ? new Date(post.pubDate).toLocaleDateString('bg-BG', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }) : '';
+
+                // Премахваме HTML таговете от текста за краткото описание
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = post.description || post.content || '';
+                const cleanText = tempDiv.textContent || tempDiv.innerText || '';
+
+                cardsHtml += `
+                    <div class="rss-card">
+                        <div>
+                            <h3 class="rss-title">${post.title}</h3>
+                            ${pubDate ? `<div class="rss-date">${pubDate}</div>` : ''}
+                            <div class="rss-snippet">${cleanText}</div>
+                        </div>
+                        <div class="rss-footer">
+                            <a href="${post.link}" target="_blank" rel="noopener" class="btn-rss-read">Прочети повече &rarr;</a>
+                        </div>
+                    </div>
+                `;
+            });
+
+            gridEl.innerHTML = cardsHtml;
+            loadingEl.style.display = 'none';
+            gridEl.style.display = 'grid';
+        })
+        .catch(err => {
+            console.error('Error fetching RSS:', err);
+            loadingEl.innerText = 'Failed to load posts.';
+        });
+});
+</script>
+    
     <footer class="footer">
         <div class="footer-bottom">
             <div class="social-links">
