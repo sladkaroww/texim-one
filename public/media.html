@@ -65,18 +65,24 @@
         <h2 class="section-title" style="text-align: center; margin-top: 0; margin-bottom: 1.2rem;">Gallery</h2>
 
         <div class="gallery-grid">
-            <div class="gallery-item"><img src="<a href="https://ibb.co/ymnd8MfC"><img src="https://i.ibb.co/6cRr4pnS/ets2-20260813-171854-00.png" alt="ets2 20260813 171854 00" border="0"></a>" alt="Gallery Image 1"></div>
-            <div class="gallery-item"><img src="<a href="https://ibb.co/S42zxbYt"><img src="https://i.ibb.co/8LJHBqvr/ats-20250328-163417-00.png" alt="ats 20250328 163417 00" border="0"></a>" alt="Gallery Image 2"></div>
-            <div class="gallery-item"><img src="<a href="https://ibb.co/8LPmD9CP"><img src="https://i.ibb.co/YFfN7hCf/viber-2025-03-10-09-33-32-746.jpg" alt="viber изображение 2025 03 10 09 33 32 746" border="0"></a>" alt="Gallery Image 3"></div>
-            <div class="gallery-item"><img src="<a href="https://ibb.co/Q74hppXc"><img src="https://i.ibb.co/JW98mmCd/ats-20250422-192001-00.png" alt="ats 20250422 192001 00" border="0"></a>" alt="Gallery Image 4"></div>
-            <div class="gallery-item"><img src="<a href="https://ibb.co/BH9PtrrV"><img src="https://i.ibb.co/35ns7MMy/ets2-20250624-222944-00.png" alt="ets2 20250624 222944 00" border="0"></a>"></div>
-            <div class="gallery-item"><img src="<a href="https://ibb.co/pv4nbKZc"><img src="https://i.ibb.co/cc2xk8t0/ets2-20260430-202100-00.png" alt="ets2 20260430 202100 00" border="0"></a>"></div>
-            <div class="gallery-item"><img src="<a href="https://ibb.co/9HBkTgrC"><img src="https://i.ibb.co/hFrJW9mt/ets2-20260706-084304-00.png" alt="ets2 20260706 084304 00" border="0"></a>"></div>
-            <div class="gallery-item"><img src="<a href="https://ibb.co/zWQD3hbG"><img src="https://i.ibb.co/XfjMnZpS/2024-05-28-115051.png" alt="2024 05 28 115051" border="0"></a>"></div>
-            <div class="gallery-item"><img src="<a href="https://ibb.co/KccZBHX3"><img src="https://i.ibb.co/355XVH7L/ats-20250426-141931-00.png" alt="ats 20250426 141931 00" border="0"></a>" alt="Gallery Image 9"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/6cRr4pnS/ets2-20260813-171854-00.png" alt="ets2 20260813 171854 00"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/8LJHBqvr/ats-20250328-163417-00.png" alt="ats 20250328 163417 00"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/YFfN7hCf/viber-2025-03-10-09-33-32-746.jpg" alt="viber изображение 2025 03 10 09 33 32 746"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/JW98mmCd/ats-20250422-192001-00.png" alt="ats 20250422 192001 00"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/35ns7MMy/ets2-20250624-222944-00.png" alt="ets2 20250624 222944 00"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/cc2xk8t0/ets2-20260430-202100-00.png" alt="ets2 20260430 202100 00"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/hFrJW9mt/ets2-20260706-084304-00.png" alt="ets2 20260706 084304 00"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/XfjMnZpS/2024-05-28-115051.png" alt="2024 05 28 115051"></div>
+            <div class="gallery-item" onclick="openLightbox(this)"><img src="https://i.ibb.co/355XVH7L/ats-20250426-141931-00.png" alt="ats 20250426 141931 00"></div>
         </div>
     </div>
 </section>
+
+<!-- LIGHTBOX POPUP -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <span class="lightbox-close" onclick="forceCloseLightbox()">&times;</span>
+    <img id="lightbox-img" class="lightbox-content" src="" alt="Enlarged View">
+</div>
 
 <!-- CSS STYLES -->
 <style>
@@ -106,6 +112,7 @@
     border: 1px solid #e5e7eb;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     background-color: #f3f4f6;
+    cursor: pointer;
 }
 
 .gallery-item img {
@@ -119,7 +126,82 @@
 .gallery-item:hover img {
     transform: scale(1.05);
 }
+
+/* Lightbox Modal Styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.88);
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.lightbox-content {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #ffffff;
+    font-size: 45px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1;
+    z-index: 1000000;
+}
+
+.lightbox-close:hover {
+    color: #9ca3af;
+}
 </style>
+
+<!-- JAVASCRIPT -->
+<script>
+function openLightbox(element) {
+    const img = element.querySelector('img');
+    if (!img) return;
+    
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    
+    lightboxImg.src = img.src;
+    lightbox.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(event) {
+    if (event.target.id === 'lightbox' || event.target.classList.contains('lightbox-close')) {
+        forceCloseLightbox();
+    }
+}
+
+function forceCloseLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        forceCloseLightbox();
+    }
+});
+</script>
     
 <!-- Latest News Секция -->
 <section class="section section--light" id="truckersmp-news" style="padding-top: 1.5rem; padding-bottom: 3rem;">
