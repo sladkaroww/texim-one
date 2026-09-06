@@ -1,5 +1,5 @@
 // functions/api/convoy/resolve.js
-import fetch from 'node-fetch';
+// Cloudflare Pages Functions have global fetch(), no need to import anything.
 
 const TMP_BASE = 'https://api.truckersmp.com/v2';
 
