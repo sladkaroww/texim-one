@@ -1,17 +1,7 @@
 // Cloudflare Pages Function: GET /api/event-lookup
-// Reads a TruckersMP event directly from the official TruckersMP Web API.
+// Reads a TruckersMP event directly from the official TruckersMP Web API v2.
 
 const API_BASE = 'https://api.truckersmp.com/v2';
-const API_USER_AGENT = 'TruckersMP API Client (https://github.com/TruckersMP/API-Client)';
-
-function extractId(input) {
-    if (!input) return null;
-    const value = String(input).trim();
-    if (/^\d+$/.test(value)) return value;
-
-    const match = value.match(/(?:https?:\/\/)?(?:www\.)?truckersmp\.com\/events\/(\d+)/i);
-    return match ? match[1] : null;
-}
 
 function json(body, status = 200) {
     return new Response(JSON.stringify(body), {
@@ -25,6 +15,16 @@ function json(body, status = 200) {
 
 function clean(value) {
     return typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : '';
+}
+
+function extractId(input) {
+    if (!input) return null;
+    const value = String(input).trim();
+    if (/^\d+$/.test(value)) return value;
+
+    // TruckersMP event URLs can contain a slug after the numeric ID.
+    const match = value.match(/(?:https?:\/\/)?(?:www\.)?truckersmp\.com\/events?\/(\d+)(?:[-/?#].*)?$/i);
+    return match ? match[1] : null;
 }
 
 function dateAndTime(value) {
@@ -41,37 +41,41 @@ function dateAndTime(value) {
 function normalizeEvent(event, requestedId) {
     if (!event || typeof event !== 'object') return null;
 
-    const start = dateAndTime(event.start_at || event.startAt);
-    const meetup = dateAndTime(event.meetup_at || event.meetupAt);
+    const start = dateAndTime(event.start_at);
+    const meetup = dateAndTime(event.meetup_at);
     const departure = event.departure || {};
-    const arrival = event.arrive || event.arrival || {};
+    const arrival = event.arrive || {};
     const server = event.server || {};
     const vtc = event.vtc || {};
+    const user = event.user || {};
     const attendance = event.attendances || {};
 
     return {
         id: event.id ?? requestedId,
+        type: clean(event.event_type?.name || event.event_type?.key),
         name: clean(event.name),
         slug: clean(event.slug),
         game: clean(event.game),
-        server: clean(typeof server === 'string' ? server : server.name),
-        serverId: typeof server === 'object' ? (server.id ?? null) : null,
+        server: clean(server.name),
+        serverId: server.id ?? null,
         language: clean(event.language),
 
         date: start.date,
         time: start.time,
-        startAt: clean(event.start_at || event.startAt),
+        startAt: clean(event.start_at),
         meetupDate: meetup.date,
         meetupTime: meetup.time,
-        meetupAt: clean(event.meetup_at || event.meetupAt),
+        meetupAt: clean(event.meetup_at),
 
-        departure: clean(departure.city || departure.location || departure.name),
+        departure: clean(departure.city || departure.location),
         departureCity: clean(departure.city),
         departureLocation: clean(departure.location),
-        arrival: clean(arrival.city || arrival.location || arrival.name),
+        arrival: clean(arrival.city || arrival.location),
         arrivalCity: clean(arrival.city),
         arrivalLocation: clean(arrival.location),
-        route: [clean(departure.city || departure.location), clean(arrival.city || arrival.location)].filter(Boolean).join(' -> '),
+        route: [clean(departure.city || departure.location), clean(arrival.city || arrival.location)]
+            .filter(Boolean)
+            .join(' -> '),
 
         banner: clean(event.banner),
         map: clean(event.map),
@@ -82,8 +86,8 @@ function normalizeEvent(event, requestedId) {
 
         vtc: clean(vtc.name),
         vtcId: vtc.id ?? null,
-        creator: clean(event.user?.username || event.user?.name),
-        creatorId: event.user?.id ?? null,
+        creator: clean(user.username),
+        creatorId: user.id ?? null,
 
         attendance: {
             confirmed: attendance.confirmed ?? 0,
@@ -99,66 +103,75 @@ function normalizeEvent(event, requestedId) {
 
 async function fetchOfficialEvent(id) {
     const endpoint = `${API_BASE}/events/${encodeURIComponent(id)}`;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
 
-    // Match the headers used by TruckersMP's own official API Client as closely
-    // as possible. In particular, do not send browser-style Accept headers.
-    const response = await fetch(endpoint, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'User-Agent': API_USER_AGENT,
-        },
-        cf: {
-            cacheTtl: 0,
-            cacheEverything: false,
-        },
-    });
-
-    let data = null;
-    const rawText = await response.text();
     try {
-        data = rawText ? JSON.parse(rawText) : null;
-    } catch {
-        data = null;
-    }
+        // The official OpenAPI specification exposes this endpoint without an
+        // API-key requirement. Keep the request minimal so Cloudflare's
+        // Workers fetch runtime does not have to emulate a browser.
+        const response = await fetch(endpoint, {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+            signal: controller.signal,
+        });
 
-    if (!response.ok) {
-        const message = clean(data?.descriptor || (typeof data?.response === 'string' ? data.response : ''));
-        const error = new Error(message || `TruckersMP API returned HTTP ${response.status}`);
-        error.status = response.status;
-        throw error;
-    }
+        const rawText = await response.text();
+        let data = null;
+        try {
+            data = rawText ? JSON.parse(rawText) : null;
+        } catch {
+            data = null;
+        }
 
-    if (data?.error === true) {
-        const message = clean(data?.descriptor || (typeof data?.response === 'string' ? data.response : ''));
-        const error = new Error(message || 'TruckersMP API reported an error.');
-        error.status = 502;
-        throw error;
-    }
+        const apiMessage = clean(
+            data?.descriptor ||
+            (typeof data?.response === 'string' ? data.response : '')
+        );
 
-    return normalizeEvent(data?.response, id);
+        if (!response.ok) {
+            const error = new Error(apiMessage || `TruckersMP API returned HTTP ${response.status}`);
+            error.status = response.status;
+            throw error;
+        }
+
+        if (!data || data.error === true) {
+            const error = new Error(apiMessage || 'TruckersMP API reported an error.');
+            error.status = response.status || 502;
+            throw error;
+        }
+
+        return normalizeEvent(data.response, id);
+    } finally {
+        clearTimeout(timeout);
+    }
 }
 
 export async function onRequest(context) {
+    if (context.request.method !== 'GET') {
+        return json({ success: false, message: 'Method not allowed.' }, 405);
+    }
+
     const requestUrl = new URL(context.request.url);
-    const id = extractId(requestUrl.searchParams.get('id') || requestUrl.searchParams.get('url'));
+    const id = extractId(
+        requestUrl.searchParams.get('id') || requestUrl.searchParams.get('url')
+    );
 
     if (!id) {
         return json({
             success: false,
-            message: 'Invalid TruckersMP event link.',
+            message: 'Invalid TruckersMP event link. Use https://truckersmp.com/events/12345.',
         }, 400);
     }
 
     try {
         const event = await fetchOfficialEvent(id);
 
-        if (!event || !event.name) {
+        if (!event || !event.name || !event.date) {
             return json({
                 success: false,
-                message: 'TruckersMP returned no event data for this event ID.',
-            }, 404);
+                message: 'TruckersMP returned incomplete event data for this event.',
+            }, 502);
         }
 
         return json({
@@ -167,12 +180,22 @@ export async function onRequest(context) {
             event,
         });
     } catch (error) {
-        const status = Number(error?.status) === 404 ? 404 : 502;
+        if (error?.name === 'AbortError') {
+            return json({
+                success: false,
+                message: 'TruckersMP took too long to respond. Please try again.',
+            }, 504);
+        }
+
+        const upstreamStatus = Number(error?.status) || 502;
+        const status = upstreamStatus === 404 ? 404 : 502;
+
         return json({
             success: false,
             message: status === 404
                 ? 'This TruckersMP event could not be found.'
-                : 'Could not reach the official TruckersMP API from TEXIM ONE. Please try again in a moment.',
+                : 'Could not read this TruckersMP event right now. Please try again in a moment.',
+            ...(error?.message ? { details: error.message } : {}),
         }, status);
     }
 }
