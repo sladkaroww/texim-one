@@ -1,12 +1,15 @@
 // Cloudflare Pages Function: GET /api/event-lookup
-// Resolves a TruckersMP event URL/ID and returns normalized event details for the invite form.
+// Reads a TruckersMP event directly from the official TruckersMP Web API.
+
+const API_BASE = 'https://api.truckersmp.com/v2';
 
 function extractId(input) {
     if (!input) return null;
-    const s = String(input).trim();
-    if (/^\d+$/.test(s)) return s;
-    const m = s.match(/truckersmp\.com\/events\/(\d+)/i);
-    return m ? m[1] : null;
+    const value = String(input).trim();
+    if (/^\d+$/.test(value)) return value;
+
+    const match = value.match(/(?:https?:\/\/)?(?:www\.)?truckersmp\.com\/events\/(\d+)/i);
+    return match ? match[1] : null;
 }
 
 function json(body, status = 200) {
@@ -23,176 +26,147 @@ function clean(value) {
     return typeof value === 'string' ? value.replace(/\s+/g, ' ').trim() : '';
 }
 
-function htmlEntityDecode(value) {
-    return String(value || '')
-        .replace(/&amp;/gi, '&')
-        .replace(/&quot;/gi, '"')
-        .replace(/&#39;/gi, "'")
-        .replace(/&lt;/gi, '<')
-        .replace(/&gt;/gi, '>');
-}
+function dateAndTime(value) {
+    const raw = clean(value);
+    if (!raw) return { date: '', time: '' };
 
-function meta(html, property) {
-    const escaped = property.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const re1 = new RegExp(`<meta[^>]+(?:property|name)=["']${escaped}["'][^>]+content=["']([^"']*)["'][^>]*>`, 'i');
-    const re2 = new RegExp(`<meta[^>]+content=["']([^"']*)["'][^>]+(?:property|name)=["']${escaped}["'][^>]*>`, 'i');
-    const match = html.match(re1) || html.match(re2);
-    return match ? htmlEntityDecode(match[1]) : '';
-}
-
-function normalizeApiEvent(ev, id) {
-    if (!ev) return null;
-    const startRaw = clean(ev.start_at || ev.startAt || '');
-    const match = startRaw.match(/(\d{4}-\d{2}-\d{2})[ T]+(\d{2}:\d{2})/);
-    const departureCity = clean(ev.departure?.city || ev.departure?.location || '');
-    const arrivalCity = clean(ev.arrive?.city || ev.arrive?.location || '');
-
+    // TruckersMP documents event times as UTC. Keep the API's date/time
+    // rather than converting it to the visitor's local timezone.
+    const match = raw.match(/^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2})/);
     return {
-        id: ev.id || id,
-        name: clean(ev.name),
         date: match?.[1] || '',
         time: match?.[2] || '',
-        game: clean(ev.game),
-        server: clean(typeof ev.server === 'string' ? ev.server : ev.server?.name),
-        route: [departureCity, arrivalCity].filter(Boolean).join(' -> '),
-        departure: departureCity,
-        arrival: arrivalCity,
-        banner: clean(ev.banner),
-        vtc: clean(ev.vtc?.name || ev.vtc?.name_short),
-        url: `https://truckersmp.com/events/${ev.id || id}`,
     };
 }
 
-const REQUEST_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (compatible; TEXIM-ONE/1.0; +https://vtc.texim.one)',
-    'Accept': 'application/json,text/html;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en-US,en;q=0.9',
-};
+function normalizeEvent(event, requestedId) {
+    if (!event || typeof event !== 'object') return null;
 
-async function fetchApiEvent(id) {
-    const res = await fetch(`https://api.truckersmp.com/v2/events/${id}`, {
-        headers: REQUEST_HEADERS,
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return normalizeApiEvent(data?.response, id);
+    const start = dateAndTime(event.start_at);
+    const meetup = dateAndTime(event.meetup_at);
+    const departure = event.departure || {};
+    const arrival = event.arrive || {};
+    const server = event.server || {};
+    const vtc = event.vtc || {};
+    const attendance = event.attendances || {};
+
+    return {
+        id: event.id ?? requestedId,
+        name: clean(event.name),
+        slug: clean(event.slug),
+        game: clean(event.game),
+        server: clean(server.name),
+        serverId: server.id ?? null,
+        language: clean(event.language),
+
+        date: start.date,
+        time: start.time,
+        startAt: clean(event.start_at),
+        meetupDate: meetup.date,
+        meetupTime: meetup.time,
+        meetupAt: clean(event.meetup_at),
+
+        departure: clean(departure.city || departure.location),
+        departureCity: clean(departure.city),
+        departureLocation: clean(departure.location),
+        arrival: clean(arrival.city || arrival.location),
+        arrivalCity: clean(arrival.city),
+        arrivalLocation: clean(arrival.location),
+        route: [clean(departure.city), clean(arrival.city)].filter(Boolean).join(' -> '),
+
+        banner: clean(event.banner),
+        map: clean(event.map),
+        description: clean(event.description),
+        rule: clean(event.rule),
+        voiceLink: clean(event.voice_link),
+        externalLink: clean(event.external_link),
+
+        vtc: clean(vtc.name),
+        vtcId: vtc.id ?? null,
+        creator: clean(event.user?.username),
+        creatorId: event.user?.id ?? null,
+
+        attendance: {
+            confirmed: attendance.confirmed ?? 0,
+            unsure: attendance.unsure ?? 0,
+            vtcs: attendance.vtcs ?? 0,
+        },
+
+        url: clean(event.url) || `https://truckersmp.com/events/${event.id ?? requestedId}`,
+        createdAt: clean(event.created_at),
+        updatedAt: clean(event.updated_at),
+    };
 }
 
-async function fetchApiEventList(id) {
-    // Some event IDs can be missing from the individual endpoint while still
-    // appearing in the current/upcoming/featured event index. Try the index too.
-    const res = await fetch('https://api.truckersmp.com/v2/events', {
-        headers: REQUEST_HEADERS,
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    const groups = ['featured', 'today', 'now', 'upcoming'];
-    for (const group of groups) {
-        const events = Array.isArray(data?.response?.[group]) ? data.response[group] : [];
-        const found = events.find((event) => String(event?.id) === String(id));
-        if (found) {
-            // The index endpoint may contain enough data for the preview itself.
-            const normalized = normalizeApiEvent(found, id);
-            if (normalized?.name) return normalized;
-
-            try {
-                const detailed = await fetchApiEvent(id);
-                if (detailed) return detailed;
-            } catch { /* continue to page fallback */ }
-        }
-    }
-    return null;
-}
-
-async function fetchPageEvent(id) {
-    const url = `https://truckersmp.com/events/${id}`;
-    const res = await fetch(url, {
+async function fetchOfficialEvent(id) {
+    const response = await fetch(`${API_BASE}/events/${encodeURIComponent(id)}`, {
+        method: 'GET',
         headers: {
-            ...REQUEST_HEADERS,
-            'Accept': 'text/html,application/xhtml+xml',
-            'Referer': 'https://truckersmp.com/events',
+            Accept: 'application/json',
+            'User-Agent': 'TEXIM-ONE/1.0 (+https://vtc.texim.one)',
+        },
+        cf: {
+            cacheTtl: 0,
+            cacheEverything: false,
         },
     });
-    if (!res.ok) return null;
-    const html = await res.text();
 
-    const title = meta(html, 'og:title') || clean((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1]);
-    const description = meta(html, 'og:description') || meta(html, 'description');
-    const banner = meta(html, 'og:image');
-    const dateMatch = html.match(/\b(20\d{2}-\d{2}-\d{2})[ T]+(\d{2}:\d{2})/);
-    const name = clean(title.replace(/\s*[—|-]\s*Event\s*-\s*TruckersMP\s*$/i, ''));
-    if (!name && !dateMatch) return null;
+    let data = null;
+    try {
+        data = await response.json();
+    } catch {
+        data = null;
+    }
 
-    return {
-        id,
-        name,
-        date: dateMatch?.[1] || '',
-        time: dateMatch?.[2] || '',
-        game: '',
-        server: '',
-        route: '',
-        departure: '',
-        arrival: '',
-        banner,
-        vtc: '',
-        description,
-        url,
-    };
-}
+    if (!response.ok) {
+        const message = clean(data?.descriptor || data?.response);
+        const error = new Error(message || `TruckersMP API returned HTTP ${response.status}`);
+        error.status = response.status;
+        throw error;
+    }
 
-async function fetchViaReader(id) {
-    // Last-resort fallback for environments where Cloudflare cannot directly
-    // reach TruckersMP. The reader returns the public page as text/markdown.
-    const target = `https://truckersmp.com/events/${id}`;
-    const res = await fetch(`https://r.jina.ai/${target}`, {
-        headers: { 'User-Agent': 'TEXIM-ONE/1.0' },
-    });
-    if (!res.ok) return null;
-    const text = await res.text();
+    if (data?.error === true) {
+        const error = new Error(clean(data?.descriptor || data?.response) || 'TruckersMP API reported an error.');
+        error.status = 502;
+        throw error;
+    }
 
-    const title = clean((text.match(/^#\s+(.+)$/m) || [])[1] || '');
-    const dateMatch = text.match(/\b(20\d{2}-\d{2}-\d{2})[ T]+(\d{2}:\d{2})\b/);
-    const banner = (text.match(/https?:\/\/[^\s)]+\.(?:png|jpe?g|webp)/i) || [])[0] || '';
-    if (!title && !dateMatch) return null;
-
-    return {
-        id,
-        name: title.replace(/\s*[—|-]\s*Event\s*-\s*TruckersMP\s*$/i, '').trim(),
-        date: dateMatch?.[1] || '',
-        time: dateMatch?.[2] || '',
-        game: '',
-        server: '',
-        route: '',
-        departure: '',
-        arrival: '',
-        banner,
-        vtc: '',
-        url: target,
-    };
+    return normalizeEvent(data?.response, id);
 }
 
 export async function onRequest(context) {
-    const { request } = context;
-    const url = new URL(request.url);
-    const id = extractId(url.searchParams.get('id') || url.searchParams.get('url'));
+    const requestUrl = new URL(context.request.url);
+    const id = extractId(requestUrl.searchParams.get('id') || requestUrl.searchParams.get('url'));
 
-    if (!id) return json({ success: false, message: 'Invalid TruckersMP event link.' }, 400);
+    if (!id) {
+        return json({
+            success: false,
+            message: 'Invalid TruckersMP event link.',
+        }, 400);
+    }
 
     try {
-        let event = null;
-        try { event = await fetchApiEvent(id); } catch { /* try the index */ }
-        if (!event) {
-            try { event = await fetchApiEventList(id); } catch { /* try the page */ }
+        const event = await fetchOfficialEvent(id);
+
+        if (!event || !event.name) {
+            return json({
+                success: false,
+                message: 'TruckersMP returned no event data for this event ID.',
+            }, 404);
         }
-        if (!event) {
-            try { event = await fetchPageEvent(id); } catch { /* try the reader fallback */ }
-        }
-        if (!event) {
-            try { event = await fetchViaReader(id); } catch { /* handled below */ }
-        }
-        if (!event) return json({ success: false, message: 'Could not read this TruckersMP event. Check that the event exists and is public.' }, 404);
-        return json({ success: true, event });
-    } catch {
-        return json({ success: false, message: 'Failed to read the TruckersMP event.' }, 502);
+
+        return json({
+            success: true,
+            source: 'truckersmp-api-v2',
+            event,
+        });
+    } catch (error) {
+        const status = Number(error?.status) === 404 ? 404 : 502;
+        return json({
+            success: false,
+            message: status === 404
+                ? 'This TruckersMP event could not be found.'
+                : 'Could not reach the official TruckersMP API. Please try again in a moment.',
+        }, status);
     }
 }
