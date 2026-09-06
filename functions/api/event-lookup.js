@@ -2,6 +2,7 @@
 // Reads a TruckersMP event directly from the official TruckersMP Web API.
 
 const API_BASE = 'https://api.truckersmp.com/v2';
+const API_USER_AGENT = 'TruckersMP API Client (https://github.com/TruckersMP/API-Client)';
 
 function extractId(input) {
     if (!input) return null;
@@ -30,8 +31,6 @@ function dateAndTime(value) {
     const raw = clean(value);
     if (!raw) return { date: '', time: '' };
 
-    // TruckersMP documents event times as UTC. Keep the API's date/time
-    // rather than converting it to the visitor's local timezone.
     const match = raw.match(/^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2})/);
     return {
         date: match?.[1] || '',
@@ -42,10 +41,10 @@ function dateAndTime(value) {
 function normalizeEvent(event, requestedId) {
     if (!event || typeof event !== 'object') return null;
 
-    const start = dateAndTime(event.start_at);
-    const meetup = dateAndTime(event.meetup_at);
+    const start = dateAndTime(event.start_at || event.startAt);
+    const meetup = dateAndTime(event.meetup_at || event.meetupAt);
     const departure = event.departure || {};
-    const arrival = event.arrive || {};
+    const arrival = event.arrive || event.arrival || {};
     const server = event.server || {};
     const vtc = event.vtc || {};
     const attendance = event.attendances || {};
@@ -55,24 +54,24 @@ function normalizeEvent(event, requestedId) {
         name: clean(event.name),
         slug: clean(event.slug),
         game: clean(event.game),
-        server: clean(server.name),
-        serverId: server.id ?? null,
+        server: clean(typeof server === 'string' ? server : server.name),
+        serverId: typeof server === 'object' ? (server.id ?? null) : null,
         language: clean(event.language),
 
         date: start.date,
         time: start.time,
-        startAt: clean(event.start_at),
+        startAt: clean(event.start_at || event.startAt),
         meetupDate: meetup.date,
         meetupTime: meetup.time,
-        meetupAt: clean(event.meetup_at),
+        meetupAt: clean(event.meetup_at || event.meetupAt),
 
-        departure: clean(departure.city || departure.location),
+        departure: clean(departure.city || departure.location || departure.name),
         departureCity: clean(departure.city),
         departureLocation: clean(departure.location),
-        arrival: clean(arrival.city || arrival.location),
+        arrival: clean(arrival.city || arrival.location || arrival.name),
         arrivalCity: clean(arrival.city),
         arrivalLocation: clean(arrival.location),
-        route: [clean(departure.city), clean(arrival.city)].filter(Boolean).join(' -> '),
+        route: [clean(departure.city || departure.location), clean(arrival.city || arrival.location)].filter(Boolean).join(' -> '),
 
         banner: clean(event.banner),
         map: clean(event.map),
@@ -83,7 +82,7 @@ function normalizeEvent(event, requestedId) {
 
         vtc: clean(vtc.name),
         vtcId: vtc.id ?? null,
-        creator: clean(event.user?.username),
+        creator: clean(event.user?.username || event.user?.name),
         creatorId: event.user?.id ?? null,
 
         attendance: {
@@ -99,11 +98,16 @@ function normalizeEvent(event, requestedId) {
 }
 
 async function fetchOfficialEvent(id) {
-    const response = await fetch(`${API_BASE}/events/${encodeURIComponent(id)}`, {
+    const endpoint = `${API_BASE}/events/${encodeURIComponent(id)}`;
+
+    // Match the headers used by TruckersMP's own official API Client as closely
+    // as possible. In particular, do not send browser-style Accept headers.
+    const response = await fetch(endpoint, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
-            'User-Agent': 'TEXIM-ONE/1.0 (+https://vtc.texim.one)',
+            'Content-Type': 'application/json',
+            'User-Agent': API_USER_AGENT,
         },
         cf: {
             cacheTtl: 0,
@@ -112,21 +116,23 @@ async function fetchOfficialEvent(id) {
     });
 
     let data = null;
+    const rawText = await response.text();
     try {
-        data = await response.json();
+        data = rawText ? JSON.parse(rawText) : null;
     } catch {
         data = null;
     }
 
     if (!response.ok) {
-        const message = clean(data?.descriptor || data?.response);
+        const message = clean(data?.descriptor || (typeof data?.response === 'string' ? data.response : ''));
         const error = new Error(message || `TruckersMP API returned HTTP ${response.status}`);
         error.status = response.status;
         throw error;
     }
 
     if (data?.error === true) {
-        const error = new Error(clean(data?.descriptor || data?.response) || 'TruckersMP API reported an error.');
+        const message = clean(data?.descriptor || (typeof data?.response === 'string' ? data.response : ''));
+        const error = new Error(message || 'TruckersMP API reported an error.');
         error.status = 502;
         throw error;
     }
@@ -166,7 +172,7 @@ export async function onRequest(context) {
             success: false,
             message: status === 404
                 ? 'This TruckersMP event could not be found.'
-                : 'Could not reach the official TruckersMP API. Please try again in a moment.',
+                : 'Could not reach the official TruckersMP API from TEXIM ONE. Please try again in a moment.',
         }, status);
     }
 }
