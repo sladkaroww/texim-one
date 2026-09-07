@@ -1,0 +1,15 @@
+{
+  "name": "texim-one",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TEXIM ONE VTC website",
+  "scripts": {
+    "motion:add": "motion-primitives add"
+  },
+  "dependencies": {
+    "motion": "^11.12.0"
+  },
+  "devDependencies": {
+    "motion-primitives": "latest"
+  }
+}
