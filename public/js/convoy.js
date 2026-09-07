@@ -21,8 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Pink Ribbon VTC - February Convoy', url: 'https://truckersmp.com/events/37152', startAt: '2027-02-05T19:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' }
     ];
 
+    let expanded = false;
+
     function load() {
-        list.innerHTML = events.map(eventHTML).join('');
+        const visibleEvents = expanded ? events : events.slice(0, 3);
+        list.innerHTML = visibleEvents.map(eventHTML).join('') + `
+            ${events.length > 3 ? `
+                <div style="grid-column:1/-1;text-align:center;margin-top:1.5rem;">
+                    <button type="button" class="btn btn-primary" id="convoyToggle" style="padding:.5rem 1rem;font-size:.85rem;">
+                        ${expanded ? 'Show Less' : 'See More'}
+                    </button>
+                </div>
+            ` : ''}
+        `;
+
+        const toggle = document.getElementById('convoyToggle');
+        if (toggle) toggle.addEventListener('click', () => {
+            expanded = !expanded;
+            load();
+        });
     }
 
     function eventHTML(e) {
