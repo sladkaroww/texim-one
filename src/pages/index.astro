@@ -24,257 +24,398 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     </div>
   </section>
 
-<section class="fleet-slider-section">
+<section class="fleet-carousel-section">
   <div class="container text-center">
     <h2 class="section-title">Vehicle Fleet</h2>
-    <p class="section-subtitle">Required for formal events.</p>
 
-    <!-- Слайдър контейнер -->
-    <div class="fleet-slider-container">
-      <div class="fleet-slider-track" id="fleetTrack">
+    <!-- Карусел контейнер -->
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="carouselTrack">
         
         <!-- 1. VOLVO FH6 -->
-        <div class="fleet-card">
-          <div class="fleet-card-header">
-            <div>
-              <h3 class="truck-title">Volvo FH6</h3>
-              <p class="truck-subtitle">TEXIM ONE</p>
-            </div>
+        <div class="card-item">
+          <div class="card-header-info">
+            <h3 class="card-title">Volvo FH6</h3>
+            <span class="card-subtitle">TEXIM ONE</span>
           </div>
-          <div class="truck-image-box">
+          <div class="card-img-holder">
             <img src="https://i.ibb.co/BHP4VntG/ets2-20260907-165303-00-Photoroom.png" alt="Volvo FH6" />
           </div>
-          <div class="truck-specs-box">
-            <div class="spec-icon-wrap">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <div class="card-specs-row">
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+              </div>
+              <span class="spec-val">FH6 Aero</span>
+              <span class="spec-lbl">SERIES</span>
             </div>
-            <span class="spec-hp-value">780 HP</span>
-            <span class="spec-hp-label">ENGINE POWER</span>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <span class="spec-val">780 HP</span>
+              <span class="spec-lbl">ENGINE POWER</span>
+            </div>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+              </div>
+              <span class="spec-val">Vision</span>
+              <span class="spec-lbl">PAINT JOB</span>
+            </div>
           </div>
         </div>
 
         <!-- 2. MAN TGX -->
-        <div class="fleet-card">
-          <div class="fleet-card-header">
-            <div>
-              <h3 class="truck-title">MAN TGX</h3>
-              <p class="truck-subtitle">TEXIM ONE</p>
-            </div>
+        <div class="card-item">
+          <div class="card-header-info">
+            <h3 class="card-title">MAN TGX</h3>
+            <span class="card-subtitle">TEXIM ONE</span>
           </div>
-          <div class="truck-image-box">
+          <div class="card-img-holder">
             <img src="https://i.ibb.co/cGJCCsk/ets2-20260907-165324-00-Photoroom.png" alt="MAN TGX" />
           </div>
-          <div class="truck-specs-box">
-            <div class="spec-icon-wrap">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <div class="card-specs-row">
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+              </div>
+              <span class="spec-val">TGX GX</span>
+              <span class="spec-lbl">SERIES</span>
             </div>
-            <span class="spec-hp-value">640 HP</span>
-            <span class="spec-hp-label">ENGINE POWER</span>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <span class="spec-val">640 HP</span>
+              <span class="spec-lbl">ENGINE POWER</span>
+            </div>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+              </div>
+              <span class="spec-val">Vision</span>
+              <span class="spec-lbl">PAINT JOB</span>
+            </div>
           </div>
         </div>
 
         <!-- 3. MERCEDES NEW ACTROS -->
-        <div class="fleet-card">
-          <div class="fleet-card-header">
-            <div>
-              <h3 class="truck-title">Mercedes New Actros</h3>
-              <p class="truck-subtitle">TEXIM ONE</p>
-            </div>
+        <div class="card-item">
+          <div class="card-header-info">
+            <h3 class="card-title">Mercedes New Actros</h3>
+            <span class="card-subtitle">TEXIM ONE</span>
           </div>
-          <div class="truck-image-box">
+          <div class="card-img-holder">
             <img src="https://i.ibb.co/vxYg97VJ/ets2-20260907-163131-00-Photoroom.png" alt="Mercedes New Actros" />
           </div>
-          <div class="truck-specs-box">
-            <div class="spec-icon-wrap">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <div class="card-specs-row">
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+              </div>
+              <span class="spec-val">Actros</span>
+              <span class="spec-lbl">SERIES</span>
             </div>
-            <span class="spec-hp-value">625 HP</span>
-            <span class="spec-hp-label">ENGINE POWER</span>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <span class="spec-val">625 HP</span>
+              <span class="spec-lbl">ENGINE POWER</span>
+            </div>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+              </div>
+              <span class="spec-val">Vision</span>
+              <span class="spec-lbl">PAINT JOB</span>
+            </div>
           </div>
         </div>
 
         <!-- 4. SCANIA S -->
-        <div class="fleet-card">
-          <div class="fleet-card-header">
-            <div>
-              <h3 class="truck-title">Scania S</h3>
-              <p class="truck-subtitle">TEXIM ONE</p>
-            </div>
+        <div class="card-item">
+          <div class="card-header-info">
+            <h3 class="card-title">Scania S</h3>
+            <span class="card-subtitle">TEXIM ONE</span>
           </div>
-          <div class="truck-image-box">
+          <div class="card-img-holder">
             <img src="https://i.ibb.co/LdKywgSv/ets2-20260907-163114-00-Photoroom.png" alt="Scania S" />
           </div>
-          <div class="truck-specs-box">
-            <div class="spec-icon-wrap">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <div class="card-specs-row">
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+              </div>
+              <span class="spec-val">S High</span>
+              <span class="spec-lbl">SERIES</span>
             </div>
-            <span class="spec-hp-value">770 HP</span>
-            <span class="spec-hp-label">ENGINE POWER</span>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <span class="spec-val">770 HP</span>
+              <span class="spec-lbl">ENGINE POWER</span>
+            </div>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+              </div>
+              <span class="spec-val">Vision</span>
+              <span class="spec-lbl">PAINT JOB</span>
+            </div>
           </div>
         </div>
 
-        <!-- 5. KÄSSBOHRER TRAILER -->
-        <div class="fleet-card">
-          <div class="fleet-card-header">
-            <div>
-              <h3 class="truck-title">Kässbohrer K.SCS</h3>
-              <p class="truck-subtitle">TEXIM ONE</p>
-            </div>
+        <!-- 5. KÄSSBOHRER K.SCS -->
+        <div class="card-item">
+          <div class="card-header-info">
+            <h3 class="card-title">Kässbohrer K.SCS</h3>
+            <span class="card-subtitle">TEXIM ONE</span>
           </div>
-          <div class="truck-image-box">
+          <div class="card-img-holder">
             <img src="https://i.ibb.co/vxKYQh50/ets2-20260907-185901-00-Photoroom.png" alt="Kässbohrer Trailer" />
           </div>
-          <div class="truck-specs-box">
-            <div class="spec-icon-wrap">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="22" height="13" rx="2"/><line x1="1" y1="20" x2="23" y2="20"/></svg>
+          <div class="card-specs-row">
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="22" height="13" rx="2"/><line x1="1" y1="20" x2="23" y2="20"/></svg>
+              </div>
+              <span class="spec-val">K.SCS</span>
+              <span class="spec-lbl">SERIES</span>
             </div>
-            <span class="spec-hp-value">N/A</span>
-            <span class="spec-hp-label">TRAILER</span>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <span class="spec-val">N/A</span>
+              <span class="spec-lbl">ENGINE POWER</span>
+            </div>
+            <div class="spec-box">
+              <div class="spec-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+              </div>
+              <span class="spec-val">White Arrow</span>
+              <span class="spec-lbl">PAINT JOB</span>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
+
+    <!-- Индикатор за точките отдолу -->
+    <div class="carousel-dots" id="carouselDots">
+      <span class="dot active" onclick="goToSlide(0)"></span>
+      <span class="dot" onclick="goToSlide(1)"></span>
+      <span class="dot" onclick="goToSlide(2)"></span>
+      <span class="dot" onclick="goToSlide(3)"></span>
+      <span class="dot" onclick="goToSlide(4)"></span>
+    </div>
+
   </div>
 </section>
 
 <style>
-  /* Основен сектор */
-  .fleet-slider-section {
-    background-color: #f8f9fa;
-    padding: 60px 20px;
+  .fleet-carousel-section {
+    padding: 50px 0;
+    background-color: #ffffff;
+    overflow: hidden;
   }
 
-  .fleet-slider-container {
+  .carousel-wrapper {
+    position: relative;
     width: 100%;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    padding: 20px 0 30px 0;
-    -webkit-overflow-scrolling: touch;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 0;
   }
 
-  /* Скриване на стандартния scrollbar за по-чист вид */
-  .fleet-slider-container::-webkit-scrollbar {
-    height: 6px;
-  }
-  .fleet-slider-container::-webkit-scrollbar-track {
-    background: #e5e5e5;
-    border-radius: 10px;
-  }
-  .fleet-slider-container::-webkit-scrollbar-thumb {
-    background: #000000;
-    border-radius: 10px;
-  }
-
-  .fleet-slider-track {
+  .carousel-track {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 24px;
-    padding: 0 10px;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
-  /* Картите (Light Style) */
-  .fleet-card {
-    flex: 0 0 320px;
-    scroll-snap-align: center;
+  /* Дизайн на картата */
+  .card-item {
+    flex: 0 0 350px;
     background: #ffffff;
     border: 1px solid #e0e0e0;
-    border-radius: 16px;
+    border-radius: 20px;
     padding: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    box-sizing: border-box;
+    transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+    opacity: 0.5;
+    transform: scale(0.88);
   }
 
-  .fleet-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  .card-item.active {
+    opacity: 1;
+    transform: scale(1.05);
     border-color: #000000;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   }
 
-  /* Заглавна част */
-  .fleet-card-header {
+  .card-header-info {
     text-align: left;
     margin-bottom: 16px;
   }
 
-  .truck-title {
-    font-size: 1.25rem;
+  .card-title {
+    font-size: 1.35rem;
     font-weight: 700;
     color: #000000;
     margin: 0;
   }
 
-  .truck-subtitle {
+  .card-subtitle {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #888888;
-    text-transform: uppercase;
+    color: #999999;
     letter-spacing: 0.5px;
-    margin: 2px 0 0 0;
   }
 
-  /* Кутия със снимка */
-  .truck-image-box {
-    background: #f4f4f5;
-    border-radius: 12px;
-    height: 180px;
+  /* Кутия със снимката */
+  .card-img-holder {
+    background: #f4f4f6;
+    border-radius: 14px;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
+    padding: 16px;
     margin-bottom: 20px;
   }
 
-  .truck-image-box img {
+  .card-img-holder img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
   }
 
-  /* Панелче с конските сили отдолу */
-  .truck-specs-box {
+  /* 3-те квадратчета за спецификации */
+  .card-specs-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .spec-box {
     background: #f8f9fa;
     border: 1px solid #eeeeee;
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100px;
-    margin: 0 auto;
+    text-align: center;
   }
 
-  .spec-icon-wrap {
-    width: 28px;
-    height: 28px;
+  .spec-icon {
+    width: 26px;
+    height: 26px;
     background: #000000;
     color: #ffffff;
-    border-radius: 50%;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
 
-  .spec-hp-value {
-    font-size: 0.85rem;
+  .spec-val {
+    font-size: 0.75rem;
     font-weight: 700;
     color: #000000;
     line-height: 1.1;
+    margin-bottom: 2px;
   }
 
-  .spec-hp-label {
+  .spec-lbl {
     font-size: 0.55rem;
     font-weight: 600;
-    color: #777777;
-    text-transform: uppercase;
-    margin-top: 2px;
+    color: #888888;
+  }
+
+  /* Индикатор с точки */
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    background-color: #dddddd;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .dot.active {
+    background-color: #000000;
+    transform: scale(1.3);
   }
 </style>
+
+<script>
+  let currentIndex = 0;
+  const cards = document.querySelectorAll('.card-item');
+  const dots = document.querySelectorAll('.dot');
+  const track = document.getElementById('carouselTrack');
+  const totalSlides = cards.length;
+  let autoSlideInterval;
+
+  function updateCarousel() {
+    cards.forEach((card, index) => {
+      if (index === currentIndex) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentIndex);
+    });
+
+    // Изчисляване на отместването за центриране
+    const cardWidth = 350 + 24; // ширина + gap
+    const offset = -(currentIndex * cardWidth);
+    track.style.transform = `translateX(${offset}px)`;
+  }
+
+  function goToSlide(index) {
+    currentIndex = index;
+    updateCarousel();
+    resetAutoSlide();
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateCarousel();
+  }
+
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(nextSlide, 4000); // смяна на всеки 4 секунди
+  }
+
+  function resetAutoSlide() {
+    clearInterval(autoSlideInterval);
+    startAutoSlide();
+  }
+
+  // Инициализация
+  updateCarousel();
+  startAutoSlide();
+</script>
 
   <section class="section" style="padding-top:1.5rem;padding-bottom:1.5rem;">
     <div class="container">
