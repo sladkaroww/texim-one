@@ -155,6 +155,87 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
 </section>
 
 <style>
+  /* Фиксирана височина на изображението за абсолютно равен старт на значките TRUCK / TRAILER */
+  .fleet-img-wrap {
+    height: 150px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .fleet-img-wrap img {
+    max-height: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+  }
+
+  /* Кутия за съдържанието */
+  .fleet-card-content {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+  }
+
+  .fleet-type-badge {
+    align-self: flex-start !important;
+    margin-bottom: 12px !important;
+  }
+
+  .fleet-info-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: auto !important;
+    width: 100% !important;
+  }
+
+  /* Редове с вертикално центриране и равни padding-и над и под текста */
+  .fleet-info-row,
+  .fleet-info-row:last-child {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important; /* Вертикално центриране */
+    gap: 8px !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+    padding: 10px 0 !important; /* Равно разстояние отгоре и отдолу */
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  /* Динамични височини за блоковете с достатъчен толеранс */
+  .row-series {
+    min-height: 60px !important;
+  }
+
+  .row-engine {
+    min-height: 40px !important;
+  }
+
+  .row-paint {
+    min-height: 50px !important;
+  }
+
+  .fleet-label {
+    font-weight: 700 !important;
+    color: #333333 !important;
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+  }
+
+  .fleet-value {
+    font-weight: 500 !important;
+    color: #111111 !important;
+    font-size: 0.8rem !important;
+    text-align: right !important;
+    word-break: break-word !important;
+    line-height: 1.2 !important;
+  }
+</style>
+
+<style>
   .fleet-card-content {
     display: flex !important;
     flex-direction: column !important;
