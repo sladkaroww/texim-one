@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Private / utility pages — do not index
+Disallow: /add-convoy
+Disallow: /404
+
+Sitemap: https://vtc.texim.one/sitemap-index.xml

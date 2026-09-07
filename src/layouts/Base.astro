@@ -3,16 +3,39 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import LangModal from '../components/LangModal.astro';
 import Preloader from '../components/Preloader.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description?: string;
   active?: string;
+  /** Path of the current page, e.g. "/events.html". Used for canonical + OG URL. */
+  path?: string;
+  /** Override the OG image (absolute URL). Defaults to the site OG image. */
+  image?: string;
+  /** Robots directive. Defaults to index,follow. */
+  robots?: string;
 }
 
-const { title, description = '', active = '' } = Astro.props;
+const {
+  title,
+  description = '',
+  active = '',
+  path = '/',
+  image = '/img/og/og-image.jpg',
+  robots = 'index,follow',
+} = Astro.props;
+
+const SITE = 'https://vtc.texim.one';
+const canonical = new URL(path, SITE).href;
+const ogImage = image.startsWith('http') ? image : new URL(image, SITE).href;
+
+// Cloudflare Web Analytics token (set via PUBLIC_CF_WEB_ANALYTICS_TOKEN env var).
+// Analytics only loads after the visitor accepts the cookie consent banner.
+const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? '';
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,10 +43,33 @@ const { title, description = '', active = '' } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta name="robots" content={robots} />
+  <link rel="canonical" href={canonical} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="TEXIM ONE" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1920" />
+  <meta property="og:image:height" content="1080" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="bg_BG" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://i.ibb.co" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" type="image/png" />
   <slot name="head" />
 </head>
 <body>
@@ -38,5 +84,7 @@ const { title, description = '', active = '' } = Astro.props;
   <script src="/js/i18n.js" is:inline></script>
   <script src="/js/main.js" is:inline></script>
   <slot name="scripts" />
+
+  <CookieConsent token={analyticsToken} />
 </body>
 </html>

@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+const title = 'Page Not Found | TEXIM ONE';
+const description = 'The page you are looking for does not exist or has moved.';
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex,follow" />
+    <link rel="icon" href="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style is:global>
+      .nf-wrap {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem 1.5rem;
+        background:
+          radial-gradient(1200px 600px at 50% -10%, rgba(0,0,0,0.0), rgba(0,0,0,0.6)),
+          linear-gradient(135deg, #0b0e1a 0%, #11141d 100%);
+      }
+      .nf-card { max-width: 640px; }
+      .nf-code {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 700;
+        font-size: clamp(4rem, 18vw, 9rem);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #ff7a18, #e62b2b);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .nf-title {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 500;
+        font-size: clamp(1.3rem, 4vw, 1.8rem);
+        color: #ffffff;
+        margin: 1rem 0 0.5rem;
+      }
+      .nf-text { color: #9aa0a6; margin: 0 0 2rem; }
+      .nf-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+      .nf-wrap .btn-outline { color: #ffffff; border-color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.04); }
+      .nf-wrap .btn-outline:hover { background: #ffffff; color: #111111; }
+    </style>
+  </head>
+  <body>
+    <main class="nf-wrap">
+      <div class="nf-card">
+        <div class="nf-code">404</div>
+        <h1 class="nf-title">Page Not Found</h1>
+        <p class="nf-text">The page you are looking for doesn't exist or has moved.</p>
+        <div class="nf-btns">
+          <a class="btn btn-primary" href="/">Back to Home</a>
+          <a class="btn btn-outline" href="/events.html">View Events</a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

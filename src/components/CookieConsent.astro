@@ -1,0 +1,91 @@
+---
+// Cookie consent banner + Cloudflare Web Analytics loader.
+// The banner always shows (the site uses localStorage for language/preferences).
+// Analytics only loads after the visitor accepts AND a token is configured.
+const token = Astro.props.token ?? '';
+---
+
+<div id="cookie-consent" class="cookie-consent" hidden>
+  <div class="cc-text">
+    <strong>We value your privacy.</strong>
+    <span>We use essential storage for site functionality (language, preferences). With your consent, we also use privacy-friendly, cookie-free analytics to understand how the site is used.</span>
+  </div>
+  <div class="cc-actions">
+    <button type="button" id="cc-accept" class="btn btn-primary cc-btn">Accept</button>
+    <button type="button" id="cc-decline" class="btn btn-outline cc-btn">Decline</button>
+  </div>
+</div>
+
+<script is:inline define:vars={{ token }}>
+  (function () {
+    var KEY = 'texim_cookie_consent';
+    var banner = document.getElementById('cookie-consent');
+    if (!banner) return;
+
+    function loadBeacon() {
+      if (!token) return;
+      if (document.querySelector('script[data-cf-beacon]')) return;
+      var s = document.createElement('script');
+      s.defer = true;
+      s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+      s.setAttribute('data-cf-beacon', JSON.stringify({ token: token }));
+      document.head.appendChild(s);
+    }
+
+    var choice = null;
+    try { choice = localStorage.getItem(KEY); } catch (e) {}
+
+    if (choice === 'accepted') {
+      loadBeacon();
+    } else if (choice !== 'declined') {
+      banner.hidden = false;
+    }
+
+    function decide(value) {
+      try { localStorage.setItem(KEY, value); } catch (e) {}
+      banner.hidden = true;
+      if (value === 'accepted') loadBeacon();
+    }
+
+    var accept = document.getElementById('cc-accept');
+    var decline = document.getElementById('cc-decline');
+    if (accept) accept.addEventListener('click', function () { decide('accepted'); });
+    if (decline) decline.addEventListener('click', function () { decide('declined'); });
+  })();
+</script>
+
+<style is:global>
+  .cookie-consent {
+    position: fixed;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem 1.25rem;
+    background: rgba(17, 20, 29, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    color: #e6e6e6;
+    max-width: 920px;
+    margin-inline: auto;
+  }
+  .cc-text { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9rem; }
+  .cc-text strong { color: #fff; }
+  .cc-text span { color: #9aa0a6; }
+  .cc-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+  .cc-btn { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
+  .cookie-consent .btn-outline { color: #ffffff; border-color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.04); }
+  .cookie-consent .btn-outline:hover { background: #ffffff; color: #111111; }
+  @media (max-width: 560px) {
+    .cookie-consent { flex-direction: column; align-items: stretch; }
+    .cc-actions { justify-content: stretch; }
+    .cc-btn { width: 100%; }
+  }
+</style>
