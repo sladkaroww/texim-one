@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Events';
+const description = 'TEXIM ONE events calendar and invite requests.';
+---
+<Base title={title} description={description} active="events">
+  <section class="hero hero--inner">
+    <div class="hero-bg" style="background-image:url('https://i.ibb.co/d0WGDjhd/viber-2025-03-09-03-14-32-09422.jpg');"></div>
+    <div class="hero-overlay"></div>
+    <div class="container"><div class="hero-content">
+      <h1 class="hero-title" data-i18n="nav.events">Events</h1>
+      <p class="hero-subtitle" data-i18n="events.sub">All the events we ve been invited to.</p>
+    </div></div>
+  </section>
+
+  <section class="section" id="invite" style="background-color:#fff;padding-top:1.5rem;padding-bottom:3rem;">
+    <div class="container section--narrow">
+      <div class="invite-head" style="text-align:center;margin-top:0;margin-bottom:2rem;">
+        <h2 class="section-title" data-i18n="events.inviteTitle" style="margin:0;">Invite Us</h2>
+      </div>
+
+      <form id="inviteForm" class="invite-form">
+        <div class="form-group">
+          <label for="eventLink" data-i18n="contact.eventLink">TruckersMP Event Link *</label>
+          <input type="url" id="eventLink" name="eventLink" placeholder="https://truckersmp.com/events/12345" autocomplete="url" required />
+          <p class="form-hint" style="margin-top:.35rem;">Paste the TruckersMP event link. We’ll read the event automatically and fill in the details below.</p>
+          <input type="hidden" name="eventData" id="eventData" />
+        </div>
+
+        <div id="eventPreview" class="event-preview" hidden style="display:grid;grid-template-columns:minmax(120px,220px) 1fr;gap:1rem;align-items:center;padding:1rem;border:1px solid #d1d5db;border-radius:8px;background:#f8f8f8;">
+          <img class="event-preview-banner" id="eventPreviewBanner" alt="" hidden style="width:100%;max-height:125px;object-fit:cover;border-radius:6px;" />
+          <div class="event-preview-body" style="min-width:0;">
+            <strong class="event-preview-name" id="eventPreviewName" style="display:block;font-size:1.05rem;margin-bottom:.35rem;"></strong>
+            <div class="event-preview-meta" id="eventPreviewMeta" style="font-size:.85rem;color:#555;line-height:1.5;"></div>
+            <span class="event-preview-status" id="eventPreviewStatus" style="display:block;margin-top:.5rem;font-size:.85rem;font-weight:600;"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="eventName" data-i18n="contact.eventName">Event Name *</label>
+            <input type="text" id="eventName" name="eventName" required />
+          </div>
+          <div class="form-group">
+            <label for="eventDate" data-i18n="contact.eventDate">Event Date *</label>
+            <input type="date" id="eventDate" name="eventDate" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="eventTime" data-i18n="contact.eventTime">Event Time (UTC)</label>
+            <input type="time" id="eventTime" name="eventTime" />
+          </div>
+          <div class="form-group">
+            <label for="discord" data-i18n="contact.discord">Your Discord *</label>
+            <input type="text" id="discord" name="discord" placeholder="name#0000 or @user" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" data-i18n="contact.email">Email</label>
+          <input type="email" id="email" name="email" />
+        </div>
+        <div class="form-group">
+          <label for="details" data-i18n="contact.details">Additional Details</label>
+          <textarea id="details" name="details" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" data-i18n="contact.submit">Send Invite</button>
+        <div id="formMessage" class="form-message"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section section--light" style="padding-top:1.5rem;padding-bottom:3rem;">
+    <style is:global>
+      #calendar .event-card,#calendar .calendar-card,#calendar > div{background-color:#fff!important;}
+      @media (max-width:700px){#eventPreview{grid-template-columns:1fr!important;}}
+      .event-preview-status--error{color:#b00020!important;}
+    </style>
+    <div class="container">
+      <div class="section-head" style="text-align:center;margin-top:0;margin-bottom:2rem;">
+        <h2 class="section-title" data-i18n="events.calendar.title" style="margin:0;">Calendar</h2>
+      </div>
+      <div id="calendar" class="calendar-grid"><div class="calendar-loading" data-i18n="events.calendar.loading">Loading events...</div></div>
+    </div>
+  </section>
+
+  <script slot="scripts" src="/js/convoy.js" is:inline></script>
+  <script slot="scripts" src="/js/form.js" is:inline></script>
+</Base>

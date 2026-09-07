@@ -1,4 +1,4 @@
-import { animate } from 'https://cdn.jsdelivr.net/npm/motion@11.12.0/+esm';
+import { animate } from 'motion';
 
 const PRESETS = {
     blur: {

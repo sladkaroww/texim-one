@@ -1,0 +1,6 @@
+/* TEXIM ONE - Tailwind entry (utilities + theme, NO preflight)
+   Preflight is intentionally disabled so the existing design system
+   in /css/style.css (which has its own reset) is not disturbed.
+   Tailwind utilities are available for new component work. */
+@import "tailwindcss/theme";
+@import "tailwindcss/utilities";

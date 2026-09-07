@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'TEXIM ONE | Calendar';
+const description = 'Review a convoy invite and add it to the TEXIM ONE calendar.';
+---
+<Base title={title} description={description}>
+  <header slot="header" class="header"><div class="container header-container">
+    <a href="/" class="logo"><img src="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" alt="TEXIM ONE" class="logo-img"></a>
+    <nav class="nav"><ul class="nav-list"><li><a href="/" class="nav-link" data-i18n="nav.home">Home</a></li><li><a href="/convoy.html" class="nav-link" data-i18n="nav.convoy">Convoy</a></li><li><a href="/media.html" class="nav-link" data-i18n="nav.media">Media</a></li></ul></nav>
+    <select id="langSwitcher" class="lang-switcher" aria-label="Language"><option value="en">EN</option><option value="bg">BG</option></select>
+  </div></header>
+
+  <section class="page-hero"><div class="container"><h1 class="page-title" data-i18n="addconvoy.title">Review Convoy Invitation</h1><p class="page-subtitle" data-i18n="addconvoy.sub">Review the invite and confirm to add it to the TEXIM ONE calendar.</p></div></section>
+  <section class="section section--light"><div class="container"><div class="form-wrapper">
+    <div class="invite-summary" id="summary"><div class="summary-row"><span>Convoy Name</span><b id="f-name">Loading...</b></div><div class="summary-row"><span>Date</span><b id="f-date">-</b></div><div class="summary-row"><span>Start Time (UTC)</span><b id="f-time">-</b></div><div class="summary-row"><span>Invited by (Discord)</span><b id="f-discord">-</b></div><div class="summary-row"><span>Link</span><a id="f-link" href="#" target="_blank" rel="noopener">-</a></div><div class="summary-row"><span>Details</span><b id="f-details">-</b></div></div>
+    <div class="summary-actions"><button id="confirmBtn" class="btn btn-primary">Add to Calendar</button><a href="/convoy.html" class="btn btn-outline">Cancel</a></div><p class="form-note" id="status"></p>
+  </div><div class="form-success" id="success"><div class="success-icon">✓</div><h3 data-i18n="addconvoy.successTitle">Added to Calendar!</h3><p data-i18n="addconvoy.successText">This convoy is now on the TEXIM ONE calendar.</p><a href="/convoy.html" class="btn btn-outline" data-i18n="addconvoy.viewCalendar">View Calendar</a></div></div></section>
+
+  <script slot="scripts" is:inline>
+  document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(location.search);
+      const token = params.get('token') || '';
+      const summary = document.getElementById('summary'), actions = document.querySelector('.summary-actions'), success = document.getElementById('success');
+      const status = document.getElementById('status'), btn = document.getElementById('confirmBtn');
+      const set = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value || '-'; };
+      if (!/^[a-f0-9]{64}$/i.test(token)) { set('f-name', 'Invalid or expired invitation'); status.textContent = 'This review link is invalid.'; btn.disabled = true; return; }
+      try {
+          const res = await fetch(`/api/invite?token=${encodeURIComponent(token)}`);
+          const data = await res.json();
+          if (!res.ok || !data.success) throw new Error(data.message || 'This invitation is invalid or expired.');
+          set('f-name', data.invite.eventName); set('f-date', data.invite.eventDate); set('f-time', data.invite.eventTime); set('f-discord', data.invite.discord); set('f-details', data.invite.details);
+          const link = document.getElementById('f-link'); link.href = data.invite.eventLink || '#'; link.textContent = data.invite.eventLink || '-';
+      } catch (e) { set('f-name', 'Unable to load invitation'); status.textContent = e.message; btn.disabled = true; return; }
+      btn.addEventListener('click', async () => {
+          btn.disabled = true; const original = btn.textContent; btn.textContent = 'Adding...';
+          try {
+              const res = await fetch('/api/add-convoy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token }) });
+              const data = await res.json(); if (!res.ok || !data.success) throw new Error(data.message || 'Failed to add.');
+              summary.style.display = 'none'; actions.style.display = 'none'; success.style.display = 'block';
+          } catch (e) { status.textContent = e.message; btn.disabled = false; btn.textContent = original; }
+      });
+  });
+  </script>
+</Base>
