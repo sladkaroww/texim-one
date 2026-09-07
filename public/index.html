@@ -45,7 +45,7 @@
             <div class="hero-content" style="display: flex; flex-direction: column; gap: 20px;">
                 
                 <!-- Заглавие -->
-                <h1 class="hero-title" style="font-size: 2.2rem; line-height: 1.2; margin: 0;">"Always 1 in mind, behind TEXIM!"</h1>
+                <h1 class="hero-title text-effect" data-text-effect="per-word" data-text-preset="blur" style="font-size: 2.2rem; line-height: 1.2; margin: 0;">"Always 1 in mind, behind TEXIM!"</h1>
 
                 <!-- Описание с линкове -->
                 <p class="hero-text" style="margin: 0; line-height: 1.5;">
@@ -141,6 +141,18 @@
 </footer>
 
     <script src="/js/i18n.js"></script>
+    <script type="module" src="/js/text-effect.js"></script>
+    <script type="module">
+        import { TextEffect } from '/js/text-effect.js';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const title = document.querySelector('[data-text-effect="per-word"]');
+            TextEffect(title, {
+                per: 'word',
+                preset: title?.dataset.textPreset || 'blur',
+            });
+        });
+    </script>
     <script src="/js/main.js"></script>
     <!-- Language Modal -->
     <div id="langModal" class="lang-modal">
@@ -162,4 +174,3 @@
         </div>
     </div></body>
 </html>
-
