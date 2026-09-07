@@ -1,63 +1,74 @@
 import { animate } from 'https://cdn.jsdelivr.net/npm/motion@11.12.0/+esm';
 
-const DEFAULT_STAGGER = 0.05;
-const DEFAULT_DURATION = 0.3;
+const PRESETS = {
+    blur: {
+        opacity: [0, 1],
+        filter: ['blur(12px)', 'blur(0px)'],
+    },
+    'fade-in-blur': {
+        opacity: [0, 1],
+        y: [20, 0],
+        filter: ['blur(12px)', 'blur(0px)'],
+    },
+    fade: {
+        opacity: [0, 1],
+    },
+    slide: {
+        opacity: [0, 1],
+        y: [20, 0],
+    },
+    scale: {
+        opacity: [0, 1],
+        scale: [0, 1],
+    },
+};
 
-export function TextEffect(element, {
-    per = 'word',
-    preset = 'fade',
-    delay = 0,
-    speedReveal = 1,
-    speedSegment = 1,
-} = {}) {
+export function TextEffect(element, options = {}) {
     if (!element || element.dataset.textEffectReady === 'true') return;
+
+    const {
+        per = 'word',
+        preset = 'fade',
+        delay = 0,
+        speedReveal = 1,
+        speedSegment = 1,
+    } = options;
 
     const text = element.textContent.trim();
     if (!text) return;
 
     const segments = per === 'word' ? text.split(/(\s+)/) : [text];
+    const words = segments.filter((segment) => !/^\s+$/.test(segment));
+
     element.textContent = '';
     element.dataset.textEffectReady = 'true';
     element.setAttribute('aria-label', text);
 
-    const visibleSegments = [];
-
     segments.forEach((segment) => {
         const span = document.createElement('span');
-        span.setAttribute('aria-hidden', 'true');
-        span.style.display = 'inline-block';
-        span.style.whiteSpace = 'pre';
         span.textContent = segment;
 
         if (/^\s+$/.test(segment)) {
-            span.style.display = 'inline';
+            span.style.whiteSpace = 'pre';
         } else {
-            visibleSegments.push(span);
+            span.setAttribute('aria-hidden', 'true');
+            span.style.display = 'inline-block';
+            span.style.whiteSpace = 'pre';
+            span.style.opacity = '0';
         }
 
         element.appendChild(span);
     });
 
-    const initialState = {
-        blur: { opacity: 0, filter: 'blur(12px)' },
-        'fade-in-blur': { opacity: 0, y: 20, filter: 'blur(12px)' },
-        scale: { opacity: 0, scale: 0 },
-        fade: { opacity: 0 },
-        slide: { opacity: 0, y: 20 },
-    }[preset] || { opacity: 0 };
+    const wordElements = Array.from(element.children).filter(
+        (span) => span.getAttribute('aria-hidden') === 'true'
+    );
 
-    visibleSegments.forEach((span, index) => {
-        animate(span, [initialState, {
-            opacity: 1,
-            filter: 'blur(0px)',
-            y: 0,
-            scale: 1,
-        }], {
-            duration: DEFAULT_DURATION / speedSegment,
-            delay: delay + (index * DEFAULT_STAGGER) / speedReveal,
-            easing: 'ease-out',
-        });
+    const presetValues = PRESETS[preset] || PRESETS.fade;
+
+    animate(wordElements, presetValues, {
+        duration: 0.3 / speedSegment,
+        delay: (index) => delay + (index * 0.05) / speedReveal,
+        ease: 'easeOut',
     });
 }
-
-window.TextEffect = TextEffect;
