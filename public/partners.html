@@ -100,7 +100,8 @@
 <style>
 /* Base Section Setup */
 .section {
-    padding: 2.5rem 0 !important; /* Балансирано симетрично отстояние отгоре и отдолу */
+    padding-top: 1.8rem !important; /* Намалено за компенсация на шрифта */
+    padding-bottom: 2.5rem !important;
     box-sizing: border-box;
 }
 
@@ -114,14 +115,14 @@
 
 /* Base Titles Setup */
 .section-title {
-    margin-top: 0 !important;
-    margin-bottom: 2rem;
+    margin-top: -0.2em !important; /* Обиране на горната празнина на шрифта */
+    margin-bottom: 2rem !important;
     text-align: center !important;
     font-family: 'Orbitron', sans-serif;
     font-size: 2rem;
     font-weight: 700;
     color: #111111;
-    line-height: 1.2;
+    line-height: 1.1;
 }
 
 .section-header {
@@ -168,7 +169,7 @@
 
 /* Partners Details */
 .partners-title {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.25rem !important;
 }
 
 .partners-content {
@@ -194,7 +195,8 @@
     }
     
     .section {
-        padding: 2rem 0 !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 2rem !important;
     }
 }
 </style>
