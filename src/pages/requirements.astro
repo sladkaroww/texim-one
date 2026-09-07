@@ -169,6 +169,102 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
   .fleet-card-header {
     display: flex !important;
     flex-direction: column !important;
+    height: 170px !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+    border-bottom: none !important; /* Премахане на бордер под значката */
+  }
+
+  /* Контейнер за снимката */
+  .fleet-img-wrap {
+    height: 125px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .fleet-img-wrap img {
+    max-height: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+  }
+
+  .fleet-type-badge {
+    align-self: flex-start !important;
+    margin: 0 !important;
+    border-bottom: none !important;
+  }
+
+  /* Редове с данни */
+  .fleet-card-content {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+  }
+
+  .fleet-info-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: auto !important;
+    width: 100% !important;
+  }
+
+  .fleet-info-row,
+  .fleet-info-row:last-child {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+    padding: 10px 0 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  /* Премахване на най-горната линия (над Series, ако идва от контейнер/badge) */
+  .fleet-info-grid > .fleet-info-row:first-child {
+    border-top: none !important;
+  }
+
+  .row-series {
+    min-height: 60px !important;
+  }
+
+  .row-engine {
+    min-height: 40px !important;
+  }
+
+  .row-paint {
+    min-height: 50px !important;
+  }
+
+  .fleet-label {
+    font-weight: 700 !important;
+    color: #333333 !important;
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+  }
+
+  .fleet-value {
+    font-weight: 500 !important;
+    color: #111111 !important;
+    font-size: 0.8rem !important;
+    text-align: right !important;
+    word-break: break-word !important;
+    line-height: 1.2 !important;
+  }
+</style>
+
+<style>
+  /* Фиксирана височина на заглавната кутия за значката */
+  .fleet-card-header {
+    display: flex !important;
+    flex-direction: column !important;
     height: 170px !important; /* Фиксира точната позиция на TRUCK / TRAILER значката */
     justify-content: space-between !important;
     align-items: flex-start !important;
