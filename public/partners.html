@@ -47,92 +47,173 @@
         </div>
     </section>
 
-<section class="section" style="background-color: #ffffff; padding-top: 3rem; padding-bottom: 3rem;">
-    <div class="container">
-        
-        <!-- Центрирано заглавие със симетрични отстояния отгоре и отдолу -->
-        <div style="text-align: center; margin-bottom: 2.5rem;">
-            <h2 class="section-title" style="margin: 0;">
-                Merch
-            </h2>
-        </div>
-
-        <!-- Ред със снимка вляво и съдържание вдясно -->
-        <div class="hero-row" style="display: flex; align-items: center; gap: 3rem;">
+    <!-- MERCH SECTION -->
+    <section class="section section--merch">
+        <div class="container">
             
-            <div class="hero-truck" style="flex: 1;">
-                <img src="https://i.ibb.co/Z6ZXTfnb/viber-image-2026-07-03-21-54-40-065.jpg" alt="TEXIM ONE Merch" style="width: 100%; height: auto; object-fit: contain; display: block;">
+            <!-- Центрирано заглавие -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    Merch
+                </h2>
             </div>
 
-            <div class="hero-content" style="flex: 1;">
-                <h3 style="font-size: 1.4rem; font-weight: 600; color: #111111; margin-bottom: 1rem;">
-                    🔥TEXIM ONE Vtc. x TEXIM ONE Ltd.🔥
-                </h3>
-
-                <p class="hero-text" style="color: #222222; line-height: 1.65; font-size: 1.3rem; margin-bottom: 1.8rem; font-weight: 400;">
-                    Heavyweight Oversized T-Shirts, Sweatshirts, and Hoodies made from 100% combed cotton. A minimalist design with precise embroidery, created for anyone who values quality and comfort.
-                </p>
-
-                <div class="hero-btns">
-                    <a href="http://texim.one/" class="btn btn-primary" target="_blank" rel="noopener">texim.one</a>
+            <!-- Ред със снимка вляво и съдържание вдясно -->
+            <div class="hero-row">
+                
+                <div class="hero-truck">
+                    <img src="https://i.ibb.co/Z6ZXTfnb/viber-image-2026-07-03-21-54-40-065.jpg" alt="TEXIM ONE Merch">
                 </div>
+
+                <div class="hero-content">
+                    <h3 class="hero-title">
+                        🔥TEXIM ONE Vtc. x TEXIM ONE Ltd.🔥
+                    </h3>
+
+                    <p class="hero-text">
+                        Heavyweight Oversized T-Shirts, Sweatshirts, and Hoodies made from 100% combed cotton. A minimalist design with precise embroidery, created for anyone who values quality and comfort.
+                    </p>
+
+                    <div class="hero-btns">
+                        <a href="http://texim.one/" class="btn btn-primary" target="_blank" rel="noopener">texim.one</a>
+                    </div>
+                </div>
+
             </div>
 
         </div>
+    </section>
 
-    </div>
-</section>
+    <!-- PARTNERS SECTION -->
+    <section class="section section--light partners-section">
+        <div class="container">
+            <h2 class="section-title partners-title">Collaboration</h2>
+            
+            <div class="partners-content">
+                <p class="section-text text-center partners-text">
+                    If you would like to collaborate on joining our Twitch Team, creating your future Merch, or for any other reason, you can contact us via our Discord Server.
+                </p>
+            </div>
+        </div>
+    </section>
 
-<!-- PARTNERS SECTION -->
-<section class="section section--light partners-section">
-    <div class="container">
-        <h2 class="section-title partners-title">Collaboration</h2>
+    <!-- CSS STYLES -->
+    <style>
+    /* Base Section Setup */
+    .section {
+        padding-top: 2rem !important;
+        padding-bottom: 2.5rem !important;
+        box-sizing: border-box;
+    }
+
+    .section--merch {
+        background-color: #ffffff;
+    }
+
+    .section--light {
+        background-color: #f8f9fa;
+    }
+
+    /* Base Titles Setup with 0.1em top offset reduction */
+    .section-title {
+        margin-top: -0.1em !important; /* Намалява разстоянието над заглавието с точно 0.1 от размера му */
+        margin-bottom: 2rem !important;
+        text-align: center !important;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111111;
+        line-height: 1.1;
+    }
+
+    .section-header {
+        text-align: center;
+    }
+
+    /* Merch Layout Details */
+    .hero-row {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+    }
+
+    .hero-truck {
+        flex: 1;
+    }
+
+    .hero-truck img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+    .hero-content {
+        flex: 1;
+    }
+
+    .hero-title {
+        margin-top: 0 !important;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #111111;
+    }
+
+    .hero-text {
+        color: #222222;
+        line-height: 1.65;
+        font-size: 1.1rem;
+        margin-bottom: 1.8rem;
+        font-weight: 400;
+    }
+
+    /* Partners Details */
+    .partners-title {
+        margin-bottom: 1.25rem !important;
+    }
+
+    .partners-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .partners-text {
+        margin: 0;
+        line-height: 1.6;
+        color: #222222;
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 768px) {
+        .hero-row {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
         
-        <div class="partners-content">
-            <p class="section-text text-center partners-text">
-                If you would like to collaborate on joining our Twitch Team, creating your future Merch, or for any other reason, you can contact us via our Discord Server.
-            </p>
+        .section {
+            padding-top: 1.5rem !important;
+            padding-bottom: 2rem !important;
+        }
+    }
+    </style>
+        
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="social-links">
+                <a href="https://discord.com/invite/2sSKVXUTn" class="social-link" title="Discord" target="_blank" rel="noopener noreferrer"><img src="/img/icons/DISCORD.png" alt="Discord"></a>
+                <a href="https://steamcommunity.com/groups/tex1m" class="social-link" title="Steam" target="_blank" rel="noopener noreferrer"><img src="/img/icons/STEAM.png" alt="Steam"></a>
+                <a href="https://www.twitch.tv/team/tex1m" class="social-link" title="Twitch" target="_blank" rel="noopener noreferrer"><img src="/img/icons/TWITCH.png" alt="Twitch"></a>
+                <a href="https://trucksbook.eu/company/218511" class="social-link" title="TrucksBook" target="_blank" rel="noopener noreferrer"><img src="/img/icons/TRUCKSBOOK.png" alt="TrucksBook"></a>
+                <a href="https://truckersmp.com/vtc/74050" class="social-link" title="TruckersMP" target="_blank" rel="noopener noreferrer"><img src="/img/icons/TRUCKERSMP.png" alt="TruckersMP"></a>
+            </div>
+            <p>Made with &#10084;&#65039; by sladkaroww & chea7er044</p>
         </div>
-    </div>
-</section>
-
-<!-- CSS STYLES -->
-<style>
-.partners-section {
-    padding: 3rem 0; /* Равно външно отстояние отгоре и отдолу на секцията */
-}
-
-.partners-title {
-    margin-top: 0;
-    margin-bottom: 1.5rem; /* Равно отстояние между заглавието и текста */
-}
-
-.partners-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.partners-text {
-    margin-bottom: 0; /* Премахва излишното долно отстояние на параграфа */
-}
-
-.text-center {
-    text-align: center;
-}
-</style>
-    
-<footer class="footer">
-    <div class="footer-bottom">
-        <div class="social-links">
-            <a href="https://discord.com/invite/2sSKVXUTn" class="social-link" title="Discord" target="_blank" rel="noopener noreferrer"><img src="/img/icons/DISCORD.png" alt="Discord"></a>
-            <a href="https://steamcommunity.com/groups/tex1m" class="social-link" title="Steam" target="_blank" rel="noopener noreferrer"><img src="/img/icons/STEAM.png" alt="Steam"></a>
-            <a href="https://www.twitch.tv/team/tex1m" class="social-link" title="Twitch" target="_blank" rel="noopener noreferrer"><img src="/img/icons/TWITCH.png" alt="Twitch"></a>
-            <a href="https://trucksbook.eu/company/218511" class="social-link" title="TrucksBook" target="_blank" rel="noopener noreferrer"><img src="/img/icons/TRUCKSBOOK.png" alt="TrucksBook"></a>
-            <a href="https://truckersmp.com/vtc/74050" class="social-link" title="TruckersMP" target="_blank" rel="noopener noreferrer"><img src="/img/icons/TRUCKERSMP.png" alt="TruckersMP"></a>
-        </div>
-        <p>Made with &#10084;&#65039; by sladkaroww & chea7er044</p>
-    </div>
-</footer>
+    </footer>
 
     <script src="/js/i18n.js"></script>
     <script src="/js/main.js"></script>
@@ -154,5 +235,6 @@
             </div>
             <button class="lang-close" aria-label="Close">✕</button>
         </div>
-    </div></body>
+    </div>
+</body>
 </html>
