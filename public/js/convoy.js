@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         list.innerHTML = visibleEvents.map(eventHTML).join('') + `
             ${events.length > 3 ? `
                 <div style="grid-column:1/-1;text-align:center;margin-top:1.5rem;">
-                    <button type="button" class="btn btn-primary" id="convoyToggle" style="padding:.5rem 1rem;font-size:.85rem;">
+                    <button type="button" class="btn btn-primary btn-block" id="convoyToggle">
                         ${expanded ? 'Show Less' : 'See More'}
                     </button>
                 </div>
