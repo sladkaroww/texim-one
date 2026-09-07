@@ -55,73 +55,15 @@
     </div>
 </section>
 
-<!-- CSS STYLES -->
-<style>
-/* Section Background & Padding */
-.section--white {
-    background-color: #ffffff;
-    padding: 2.5rem 0;
-}
-
-.text-center {
-    text-align: center;
-}
-
-/* Title Styling */
-.section-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #111111;
-    margin: 0;
-}
-
-/* Subtitle Styling */
-.section-subtitle {
-    color: #111111;
-    font-size: 1.05rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-    font-weight: 500;
-}
-
-/* Links Styling */
-.section-subtitle .subtitle-link {
-    color: #0056b3 !important; /* Гарантира синия цвят */
-    font-weight: 600;
-    text-decoration: underline !important;
-    cursor: pointer;
-    position: relative;
-    z-index: 10; /* Гарантира, че друг елемент не го закрива */
-    transition: color 0.2s ease;
-}
-
-.section-subtitle .subtitle-link:hover {
-    color: #003d80 !important;
-}
-
-/* Responsive Handling */
-@media (max-width: 768px) {
-    .section--white {
-        padding: 1.5rem 0;
-    }
-
-    .section-title {
-        font-size: 1.6rem;
-    }
-
-    .section-subtitle {
-        font-size: 0.95rem;
-    }
-}
-</style>
-    
+<!-- FLEET CONFIGURATIONS SECTION -->
 <section class="section section--light">
-    <div class="container">
-        <h2 class="section-title text-center">Vehicle Fleet</h2>
-        <p class="section-subtitle text-center">Required for formal events.</p>
+    <div class="container text-center">
+        <h2 class="section-title">Vehicle Fleet</h2>
+        <p class="section-subtitle">Required for formal events.</p>
 
+        <!-- Fleet Grid Layout -->
         <div class="fleet-grid-5">
+            <!-- 1. Влекач 1 -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
                     <img src="https://i.ibb.co/NngmPy7D/ets2-20260907-093518-00-Photoroom.png" alt="Truck 1">
@@ -139,6 +81,7 @@
                 </div>
             </div>
 
+            <!-- 2. Ремарке 1 -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
                     <img src="https://i.ibb.co/gb0ttC02/ets2-20260907-093526-00-Photoroom.png" alt="Trailer 1">
@@ -156,6 +99,7 @@
                 </div>
             </div>
 
+            <!-- 3. Автобус -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
                     <img src="COMING SOON" alt="Bus">
@@ -173,6 +117,7 @@
                 </div>
             </div>
 
+            <!-- 4. Влекач 2 -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
                     <img src="https://i.ibb.co/4wBKrzgz/ats-20260907-093747-00-Photoroom.png" alt="Truck 2">
@@ -190,6 +135,7 @@
                 </div>
             </div>
 
+            <!-- 5. Ремарке 2 -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
                     <img src="https://i.ibb.co/j9XXNW24/ats-20260907-093740-00-Photoroom.png" alt="Trailer 2">
@@ -208,43 +154,76 @@
             </div>
         </div>
 
-        <p class="section-bottom-subtitle text-center">HEX Colors: FFFFFF; 00000; E1E1E1; FF0000. Do not make any changes to the exterior, except for the paint.</p>
+        <p class="section-bottom-subtitle">HEX Colors: FFFFFF; 00000; E1E1E1; FF0000. Do not make any changes to the exterior, except for the paint.</p>
     </div>
 </section>
 
+<!-- UNIFIED CSS STYLES -->
 <style>
-.section--light {
-    background-color: #f8f9fa; /* Light background */
-    padding: 2.5rem 0;
+/* Base Section Setup */
+.section {
+    padding: 3rem 0; /* Равностоящо отстояние отгоре и отдолу за всички секции */
+    box-sizing: border-box;
 }
 
-.text-center { text-align: center; }
+.section--white {
+    background-color: #ffffff;
+}
 
+.section--light {
+    background-color: #f8f9fa;
+}
+
+.text-center { 
+    text-align: center; 
+}
+
+/* Titles and Subtitles Vertical Rhythm */
 .section-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 2rem;
     font-weight: 700;
     color: #111111;
-    margin: 0;
+    margin: 0 0 0.5rem 0; /* Фиксиран марджин отдолу към подзаглавието */
+    line-height: 1.2;
 }
 
 .section-subtitle {
     color: #111111;
     font-size: 1.05rem;
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
+    margin: 0 0 2rem 0; /* Равностойно разстояние от подзаглавието към картата/съдържанието */
     font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Корекция за секцията без грид (Avatar & Tag) */
+.section--white .section-subtitle {
+    margin-bottom: 0;
 }
 
 .section-bottom-subtitle {
-    color: #111111;
-    font-size: 0.95rem;
-    margin-top: 2.5rem;
-    margin-bottom: 0;
+    color: #666666;
+    font-size: 0.9rem;
+    margin: 2rem 0 0 0; /* Балансиран марджин от грида надолу */
     font-weight: 500;
 }
 
-/* 5-Item Responsive Grid */
+/* Subtitle Links */
+.section-subtitle .subtitle-link {
+    color: #0056b3 !important;
+    font-weight: 600;
+    text-decoration: underline !important;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+    transition: color 0.2s ease;
+}
+
+.section-subtitle .subtitle-link:hover {
+    color: #003d80 !important;
+}
+
+/* Fleet Grid Layout */
 .fleet-grid-5 {
     display: flex;
     flex-wrap: wrap;
@@ -259,10 +238,11 @@
     border: 1px solid #e2e8f0;
     border-radius: 10px;
     padding: 1.25rem;
-    width: calc(33.333% - 1rem); /* 3 карти на ред на десктоп */
+    width: calc(33.333% - 1rem);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
+    text-align: left;
     box-sizing: border-box;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -326,13 +306,32 @@
 /* Responsiveness */
 @media (max-width: 992px) {
     .fleet-card-item {
-        width: calc(50% - 1rem); /* 2 карти на ред */
+        width: calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 2rem 0;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .section-bottom-subtitle {
+        margin-top: 1.5rem;
     }
 }
 
 @media (max-width: 600px) {
     .fleet-card-item {
-        width: 100%; /* 1 карта на ред */
+        width: 100%;
     }
 }
 </style>
