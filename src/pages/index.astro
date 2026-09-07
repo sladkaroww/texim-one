@@ -31,7 +31,7 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     <div class="carousel-3d-wrapper">
       
       <!-- Лява стрелка -->
-      <button class="nav-arrow prev-arrow" onclick="prevSlide()" aria-label="Previous">
+      <button type="button" class="nav-arrow prev-arrow" id="prevBtn" aria-label="Previous">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
 
@@ -97,7 +97,7 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
       </div>
 
       <!-- Дясна стрелка -->
-      <button class="nav-arrow next-arrow" onclick="nextSlide()" aria-label="Next">
+      <button type="button" class="nav-arrow next-arrow" id="nextBtn" aria-label="Next">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
 
@@ -105,10 +105,10 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
 
     <!-- 4 Индикаторни точки -->
     <div class="carousel-pagination">
-      <span class="dot active" onclick="goToCard(0)"></span>
-      <span class="dot" onclick="goToCard(1)"></span>
-      <span class="dot" onclick="goToCard(2)"></span>
-      <span class="dot" onclick="goToCard(3)"></span>
+      <span class="dot active" data-dot="0"></span>
+      <span class="dot" data-dot="1"></span>
+      <span class="dot" data-dot="2"></span>
+      <span class="dot" data-dot="3"></span>
     </div>
 
   </div>
@@ -144,7 +144,7 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     position: relative;
     width: 100%;
     height: 100%;
-    perspective: 1200px; /* Дълбочина на 3D ефекта */
+    perspective: 1200px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -170,7 +170,7 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     pointer-events: none;
   }
 
-  /* Позиция: ЦЕНТЪР (Централен фокус - много по-голям) */
+  /* Позиция: ЦЕНТЪР (Много по-голям) */
   .fleet-card.card-center {
     opacity: 1;
     pointer-events: auto;
@@ -180,7 +180,7 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
   }
 
-  /* Позиция: ЛЯВО (Обърнат надясно към средата) */
+  /* Позиция: ЛЯВО (Обърнат надясно) */
   .fleet-card.card-left {
     opacity: 0.75;
     pointer-events: auto;
@@ -189,7 +189,7 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
   }
 
-  /* Позиция: ДЯСНО (Обърнат наляво към средата) */
+  /* Позиция: ДЯСНО (Обърнат наляво) */
   .fleet-card.card-right {
     opacity: 0.75;
     pointer-events: auto;
@@ -262,13 +262,13 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     color: #000000;
   }
 
-  /* Навигационни стрелки */
+  /* Навигационни стрелки - висока интерактивност */
   .nav-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background: #ffffff;
     border: 1px solid #e2e8f0;
@@ -277,8 +277,9 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 10;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 100; /* Намира се над всичко */
+    pointer-events: auto;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
   }
 
@@ -286,11 +287,11 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     background: #000000;
     color: #ffffff;
     border-color: #000000;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   }
 
-  .prev-arrow { left: 10px; }
-  .next-arrow { right: 10px; }
+  .prev-arrow { left: 15px; }
+  .next-arrow { right: 15px; }
 
   /* Точки */
   .carousel-pagination {
@@ -315,7 +316,7 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     transform: scale(1.4);
   }
 
-  /* Респонсив адаптация за мобилни устройства */
+  /* Респонсив */
   @media (max-width: 900px) {
     .fleet-card.card-left {
       transform: translateX(-240px) scale(0.75) rotateY(20deg);
@@ -341,73 +342,83 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
 </style>
 
 <script>
-  let activeIndex = 0;
-  const cards = document.querySelectorAll('.fleet-card');
-  const dots = document.querySelectorAll('.dot');
-  const totalCards = cards.length;
-  let autoTimer;
+  document.addEventListener('DOMContentLoaded', function() {
+    let activeIndex = 0;
+    const cards = document.querySelectorAll('.fleet-card');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const totalCards = cards.length;
+    let autoTimer;
 
-  function update3DCarousel() {
-    cards.forEach((card, idx) => {
-      // Премахване на всички предишни класове
-      card.classList.remove('card-center', 'card-left', 'card-right', 'card-hidden');
+    function update3DCarousel() {
+      cards.forEach((card, idx) => {
+        card.classList.remove('card-center', 'card-left', 'card-right', 'card-hidden');
 
-      // Изчисляване на индексите за лява и дясна карта (с цикъл)
-      let leftIndex = (activeIndex - 1 + totalCards) % totalCards;
-      let rightIndex = (activeIndex + 1) % totalCards;
+        let leftIndex = (activeIndex - 1 + totalCards) % totalCards;
+        let rightIndex = (activeIndex + 1) % totalCards;
 
-      if (idx === activeIndex) {
-        card.classList.add('card-center');
-      } else if (idx === leftIndex) {
-        card.classList.add('card-left');
-      } else if (idx === rightIndex) {
-        card.classList.add('card-right');
-      } else {
-        card.classList.add('card-hidden');
-      }
-    });
+        if (idx === activeIndex) {
+          card.classList.add('card-center');
+        } else if (idx === leftIndex) {
+          card.classList.add('card-left');
+        } else if (idx === rightIndex) {
+          card.classList.add('card-right');
+        } else {
+          card.classList.add('card-hidden');
+        }
+      });
 
-    // Актуализиране на точките
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === activeIndex);
+      });
+    }
+
+    function goToCard(index) {
+      activeIndex = index;
+      update3DCarousel();
+      resetTimer();
+    }
+
+    function nextSlide() {
+      activeIndex = (activeIndex + 1) % totalCards;
+      update3DCarousel();
+      resetTimer();
+    }
+
+    function prevSlide() {
+      activeIndex = (activeIndex - 1 + totalCards) % totalCards;
+      update3DCarousel();
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(nextSlide, 4000);
+    }
+
+    // Закачане на събития за стрелките
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+    // Закачане на събития за точките
     dots.forEach((dot, idx) => {
-      dot.classList.toggle('active', idx === activeIndex);
+      dot.addEventListener('click', () => goToCard(idx));
     });
-  }
 
-  function goToCard(index) {
-    activeIndex = index;
-    update3DCarousel();
-    resetTimer();
-  }
-
-  function nextSlide() {
-    activeIndex = (activeIndex + 1) % totalCards;
-    update3DCarousel();
-    resetTimer();
-  }
-
-  function prevSlide() {
-    activeIndex = (activeIndex - 1 + totalCards) % totalCards;
-    update3DCarousel();
-    resetTimer();
-  }
-
-  function resetTimer() {
-    clearInterval(autoTimer);
-    autoTimer = setInterval(nextSlide, 4000); // Въртене на всеки 4 секунди
-  }
-
-  // Кликване директно върху странична карта я прави централна
-  cards.forEach((card, idx) => {
-    card.addEventListener('click', () => {
-      if (idx !== activeIndex) {
-        goToCard(idx);
-      }
+    // Закачане на клик върху самите карти
+    cards.forEach((card, idx) => {
+      card.addEventListener('click', () => {
+        if (idx !== activeIndex) {
+          goToCard(idx);
+        }
+      });
     });
+
+    // Стартиране
+    update3DCarousel();
+    resetTimer();
   });
-
-  // Стартиране
-  update3DCarousel();
-  resetTimer();
 </script>
 
   <section class="section" style="padding-top:1.5rem;padding-bottom:1.5rem;">
