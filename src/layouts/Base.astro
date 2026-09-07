@@ -31,9 +31,9 @@ const SITE = 'https://vtc.texim.one';
 const canonical = new URL(path, SITE).href;
 const ogImage = image.startsWith('http') ? image : new URL(image, SITE).href;
 
-// Cloudflare Web Analytics token (set via PUBLIC_CF_WEB_ANALYTICS_TOKEN env var).
-// Analytics only loads after the visitor accepts the cookie consent banner.
-const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? '';
+// Cloudflare Web Analytics token. Privacy-friendly (cookie-free); loaded only
+// after the visitor accepts the cookie consent banner.
+const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb1f4ec4fa390f043ffbeb29066';
 ---
 
 <!DOCTYPE html>
