@@ -1,0 +1,95 @@
+/* TEXIM ONE mobile layout */
+.nav-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    padding: 8px;
+    border: 1px solid #e3e8e8;
+    border-radius: 6px;
+    background: #fff;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+.nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #111;
+    transition: transform .2s ease, opacity .2s ease;
+}
+.nav-toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+    .header-container { padding: .65rem 1rem; gap: .65rem; }
+    .logo-img { height: 30px; }
+    .nav-toggle { display: flex !important; margin-left: auto; }
+    .nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(255,255,255,.98);
+        border-bottom: 1px solid #e3e8e8;
+        box-shadow: 0 10px 25px rgba(0,0,0,.08);
+        display: none;
+    }
+    .nav.is-open { display: block; }
+    .nav-list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: .5rem 1rem 1rem;
+    }
+    .nav-list li { width: 100%; }
+    .nav-link {
+        display: block;
+        padding: .85rem .5rem;
+        font-size: .9rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .nav-list li:last-child .nav-link { border-bottom: 0; }
+    .lang-switcher { flex-shrink: 0; }
+
+    .hero {
+        min-height: 680px;
+        height: auto;
+        padding: 5rem 0 3rem;
+        margin-top: 58px;
+    }
+    .hero-row { flex-direction: column; }
+    .hero-content { width: 100%; max-width: 100%; }
+    .hero-title {
+        font-size: clamp(1.65rem, 8vw, 2.2rem) !important;
+        overflow-wrap: anywhere;
+    }
+    .hero-text { font-size: 1rem; }
+    .hero-subtitle { font-size: 1.05rem; }
+    .hero-btns { width: 100%; }
+    .hero-btns .btn { width: 100%; text-align: center; }
+    .hero-truck { width: 100%; margin-top: 1rem; }
+    .hero-truck-img { width: min(90vw, 500px); margin: 0 auto; }
+
+    .container { padding-left: 1rem; padding-right: 1rem; }
+    .section { padding: 3rem 0; }
+    .section-title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+    .stats-grid, .features-grid, .team-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .stat-card, .feature-card { padding: 1.35rem; }
+    .activity-grid, .about-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .event-card { gap: 1rem; }
+    .summary-row { flex-direction: column; gap: .25rem; }
+    .summary-row b, .summary-row a { text-align: left; }
+    .social-links { flex-wrap: wrap; padding: 0 .5rem; }
+    .footer-bottom p { font-size: .8rem; line-height: 1.35; }
+}
+
+@media (max-width: 480px) {
+    .hero { min-height: 620px; padding-top: 4rem; }
+    .hero-content { gap: 15px !important; }
+    .hero-title { font-size: 1.55rem !important; }
+    .section-title { font-size: 1.6rem; }
+    .btn { padding: .75rem 1rem; font-size: .9rem; }
+}
