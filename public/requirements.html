@@ -278,7 +278,9 @@
 <section class="section section--light">
     <div class="container text-center">
         <h2 class="section-title">Avatar & Tag</h2>
-        <p class="section-subtitle">The <a href="#" class="https://i.ibb.co/ynhkwJh9/TEXIM1-AVATAR2026.png">AVATAR</a> is used in TruckersMP and TrucksBook, while the <a href="#" class="https://i.ibb.co/xqmb3p0P/ets2-20260907-101253-00.png">TAG</a> is used only in TruckersMP.</p>
+        <p class="section-subtitle">
+            The <a href="https://i.ibb.co/ynhkwJh9/TEXIM1-AVATAR2026.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">AVATAR</a> is used in TruckersMP and TrucksBook, while the <a href="https://i.ibb.co/xqmb3p0P/ets2-20260907-101253-00.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">TAG</a> is used only in TruckersMP.
+        </p>
     </div>
 </section>
 
@@ -314,14 +316,17 @@
 
 /* Links Styling */
 .section-subtitle .subtitle-link {
-    color: #0056b3;
+    color: #0056b3 !important; /* Гарантира синия цвят */
     font-weight: 600;
-    text-decoration: underline;
+    text-decoration: underline !important;
+    cursor: pointer;
+    position: relative;
+    z-index: 10; /* Гарантира, че друг елемент не го закрива */
     transition: color 0.2s ease;
 }
 
 .section-subtitle .subtitle-link:hover {
-    color: #003d80;
+    color: #003d80 !important;
 }
 
 /* Responsive Handling */
