@@ -23,71 +23,176 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     </div>
   </section>
 
-  <section class="section section--light">
-    <div class="container text-center">
-      <h2 class="section-title">Vehicle Fleet</h2>
-      <p class="section-subtitle">Required for formal events.</p>
+---
+// VehicleFleet.astro (или можеш да го поставиш директно в страницата си)
+---
 
-      <div class="fleet-grid-5">
-        <div class="fleet-card-item">
-          <div class="fleet-img-wrap">
-            <img src="https://i.ibb.co/NngmPy7D/ets2-20260907-093518-00-Photoroom.png" alt="Truck 1" loading="lazy" decoding="async" />
-          </div>
-          <div class="fleet-card-content">
-            <span class="fleet-type-badge">Truck</span>
-            <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">Volvo FH6 Aero Globetrotter XL</span></div>
-            <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Vision</span></div>
-          </div>
+<section class="section section--light">
+  <div class="container text-center">
+    <h2 class="section-title">Vehicle Fleet</h2>
+    <p class="section-subtitle">Required for formal events.</p>
+
+    <div class="fleet-grid-5">
+      <!-- 1. TRUCK 1 -->
+      <div class="fleet-card-item">
+        <div class="fleet-img-wrap">
+          <img src="https://i.ibb.co/zHW7Y4N9/ets2-20260907-093518-00-Photoroom.png" alt="Truck 1" loading="lazy" decoding="async" />
         </div>
-
-        <div class="fleet-card-item">
-          <div class="fleet-img-wrap">
-            <img src="https://i.ibb.co/gb0ttC02/ets2-20260907-093526-00-Photoroom.png" alt="Trailer 1" loading="lazy" decoding="async" />
-          </div>
-          <div class="fleet-card-content">
-            <span class="fleet-type-badge">Trailer</span>
-            <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">Kässbohrer K.SCS X+</span></div>
-            <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Kässbohrer White Arrow</span></div>
-          </div>
-        </div>
-
-        <div class="fleet-card-item">
-          <div class="fleet-img-wrap">
-            <img src="COMING SOON" alt="Bus" loading="lazy" decoding="async" />
-          </div>
-          <div class="fleet-card-content">
-            <span class="fleet-type-badge">Bus</span>
-            <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">Volvo 9700 DD</span></div>
-            <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Coming Soon</span></div>
-          </div>
-        </div>
-
-        <div class="fleet-card-item">
-          <div class="fleet-img-wrap">
-            <img src="https://i.ibb.co/4wBKrzgz/ats-20260907-093747-00-Photoroom.png" alt="Truck 2" loading="lazy" decoding="async" />
-          </div>
-          <div class="fleet-card-content">
-            <span class="fleet-type-badge">Truck</span>
-            <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">Volvo VNL 860</span></div>
-            <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Slipstream</span></div>
-          </div>
-        </div>
-
-        <div class="fleet-card-item">
-          <div class="fleet-img-wrap">
-            <img src="https://i.ibb.co/j9XXNW24/ats-20260907-093740-00-Photoroom.png" alt="Trailer 2" loading="lazy" decoding="async" />
-          </div>
-          <div class="fleet-card-content">
-            <span class="fleet-type-badge">Trailer</span>
-            <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">Sliding Tarp</span></div>
-            <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Aurora</span></div>
-          </div>
+        <div class="fleet-card-content">
+          <span class="fleet-type-badge">Truck</span>
+          <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">Volvo FH6 Aero Globetrotter XL</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Engine:</span><span class="fleet-value">780 HP</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Vision</span></div>
         </div>
       </div>
 
-      <p class="section-bottom-subtitle">HEX Colors: FFFFFF; 00000; E1E1E1; FF0000. Do not make any changes to the exterior, except for the paint.</p>
+      <!-- 2. TRUCK 2 -->
+      <div class="fleet-card-item">
+        <div class="fleet-img-wrap">
+          <img src="https://i.ibb.co/VcshqFQM/ets2-20260907-163057-00-Photoroom.png" alt="Truck 2" loading="lazy" decoding="async" />
+        </div>
+        <div class="fleet-card-content">
+          <span class="fleet-type-badge">Truck</span>
+          <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">MAN TGX GX</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Engine:</span><span class="fleet-value">640 HP</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Vision</span></div>
+        </div>
+      </div>
+
+      <!-- 3. TRUCK 3 -->
+      <div class="fleet-card-item">
+        <div class="fleet-img-wrap">
+          <img src="https://i.ibb.co/GvTBmKnV/ets2-20260907-163131-00-Photoroom.png" alt="Truck 3" loading="lazy" decoding="async" />
+        </div>
+        <div class="fleet-card-content">
+          <span class="fleet-type-badge">Truck</span>
+          <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">Mercedes-Benz New Actros GigaSpace</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Engine:</span><span class="fleet-value">625 HP</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Vision</span></div>
+        </div>
+      </div>
+
+      <!-- 4. TRUCK 4 / BUS -->
+      <div class="fleet-card-item">
+        <div class="fleet-img-wrap">
+          <img src="https://i.ibb.co/LdKywgSv/ets2-20260907-163114-00-Photoroom.png" alt="Truck 4" loading="lazy" decoding="async" />
+        </div>
+        <div class="fleet-card-content">
+          <span class="fleet-type-badge">Truck</span>
+          <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">Scania S High Roof</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Engine:</span><span class="fleet-value">770 HP</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Vision</span></div>
+        </div>
+      </div>
+
+      <!-- 5. TRAILER (Преместено на последна позиция) -->
+      <div class="fleet-card-item">
+        <div class="fleet-img-wrap">
+          <img src="https://i.ibb.co/35xSSHx3/ets2-20260907-093526-00-Photoroom.png" alt="Trailer 1" loading="lazy" decoding="async" />
+        </div>
+        <div class="fleet-card-content">
+          <span class="fleet-type-badge">Trailer</span>
+          <div class="fleet-info-row"><span class="fleet-label">Series:</span><span class="fleet-value">Kässbohrer K.SCS X+</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Engine:</span><span class="fleet-value">N/A</span></div>
+          <div class="fleet-info-row"><span class="fleet-label">Paint Job:</span><span class="fleet-value">Kässbohrer White Arrow</span></div>
+        </div>
+      </div>
     </div>
-  </section>
+
+    <p class="section-bottom-subtitle">HEX Colors: FFFFFF; 000000; E1E1E1; FF0000. The Transmission, Interior, and Interior accessories are optional.</p>
+  </div>
+</section>
+
+<style scoped>
+  /* Стил за заглавието с обиране на празнината за Orbitron font */
+  .section-title {
+    margin-top: -0.1em;
+    margin-bottom: 0.5rem;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .fleet-grid-5 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .fleet-card-item {
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fleet-img-wrap {
+    width: 100%;
+    height: 160px;
+    background: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .fleet-img-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .fleet-card-content {
+    padding: 1.25rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .fleet-type-badge {
+    align-self: flex-start;
+    background-color: #111111;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.25rem;
+  }
+
+  .fleet-info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    border-bottom: 1px dashed #e5e5e5;
+    padding-bottom: 0.35rem;
+  }
+
+  .fleet-info-row:last-child {
+    border-bottom: none;
+  }
+
+  .fleet-label {
+    font-weight: 600;
+    color: #666666;
+  }
+
+  .fleet-value {
+    font-weight: 500;
+    color: #111111;
+    text-align: right;
+  }
+
+  .section-bottom-subtitle {
+    font-size: 0.9rem;
+    color: #666666;
+    margin-top: 1rem;
+  }
+</style>
 
   <style is:global>
     .section { padding: 3rem 0; box-sizing: border-box; }
