@@ -574,6 +574,27 @@ button { cursor: pointer; border: none; background: none; }
     line-height: 1; /* Премахва излишното вертикално отстояние под текста */
 }
 
+.footer-policies {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.footer-policy-link {
+    color: #555555;
+    transition: color 0.2s ease;
+}
+
+.footer-policy-link:hover {
+    color: #111111;
+}
+
+.footer-policy-divider {
+    color: #cccccc;
+}
+
 /* Preloader */
 .preloader {
     position: fixed;
