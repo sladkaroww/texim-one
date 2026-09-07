@@ -18,6 +18,7 @@ export function TextEffect(element, {
     const segments = per === 'word' ? text.split(/(\s+)/) : [text];
     element.textContent = '';
     element.dataset.textEffectReady = 'true';
+    element.setAttribute('aria-label', text);
 
     const visibleSegments = [];
 
@@ -37,7 +38,7 @@ export function TextEffect(element, {
         element.appendChild(span);
     });
 
-    const from = {
+    const initialState = {
         blur: { opacity: 0, filter: 'blur(12px)' },
         'fade-in-blur': { opacity: 0, y: 20, filter: 'blur(12px)' },
         scale: { opacity: 0, scale: 0 },
@@ -45,21 +46,13 @@ export function TextEffect(element, {
         slide: { opacity: 0, y: 20 },
     }[preset] || { opacity: 0 };
 
-    const to = {
-        opacity: 1,
-        filter: 'blur(0px)',
-        y: 0,
-        scale: 1,
-    };
-
     visibleSegments.forEach((span, index) => {
-        animate(span, from, {
-            duration: DEFAULT_DURATION / speedSegment,
-            delay: delay + (index * DEFAULT_STAGGER) / speedReveal,
-            easing: 'ease-out',
-        });
-
-        animate(span, to, {
+        animate(span, [initialState, {
+            opacity: 1,
+            filter: 'blur(0px)',
+            y: 0,
+            scale: 1,
+        }], {
             duration: DEFAULT_DURATION / speedSegment,
             delay: delay + (index * DEFAULT_STAGGER) / speedReveal,
             easing: 'ease-out',
