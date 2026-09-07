@@ -44,6 +44,235 @@
             <p class="hero-subtitle" data-i18n="events.sub">Corporate Identity.</p>
         </div></div>
     </section>
+
+<!-- FLEET CONFIGURATIONS SECTION -->
+<section class="section section--light-white">
+    <div class="container">
+        <h2 class="section-title text-center">Fleet</h2>
+        <p class="section-subtitle text-center">Official company paintjobs and specifications for formal events.</p>
+
+        <!-- Fleet Grid Layout -->
+        <div class="fleet-grid-5">
+            <!-- 1. Влекач 1 -->
+            <div class="fleet-card-item">
+                <div class="fleet-img-wrap">
+                    <img src="https://i.ibb.co/0RBv0MSd/ets2-20260907-031933-00-Photoroom.png" alt="Truck 1">
+                </div>
+                <div class="fleet-card-content">
+                    <span class="fleet-type-badge">Truck</span>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Модел:</span>
+                        <span class="fleet-value">Volvo FH16 Aero</span>
+                    </div>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Боя:</span>
+                        <span class="fleet-value">Official VTC Skin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Ремарке 1 -->
+            <div class="fleet-card-item">
+                <div class="fleet-img-wrap">
+                    <img src="https://i.ibb.co/HT12R67Z/ets2-20260907-031646-00-Photoroom.png" alt="Trailer 1">
+                </div>
+                <div class="fleet-card-content">
+                    <span class="fleet-type-badge">Trailer</span>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Модел:</span>
+                        <span class="fleet-value">Kässbohrer Curtainsider</span>
+                    </div>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Боя:</span>
+                        <span class="fleet-value">Official VTC Livery</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Автобус -->
+            <div class="fleet-card-item">
+                <div class="fleet-img-wrap">
+                    <img src="COMING SOON" alt="Bus">
+                </div>
+                <div class="fleet-card-content">
+                    <span class="fleet-type-badge">Bus</span>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Модел:</span>
+                        <span class="fleet-value">Intercity Coach</span>
+                    </div>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Боя:</span>
+                        <span class="fleet-value">Official VTC Skin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Влекач 2 -->
+            <div class="fleet-card-item">
+                <div class="fleet-img-wrap">
+                    <img src="https://i.ibb.co/0RBv0MSd/ets2-20260907-031933-00-Photoroom.png" alt="Truck 2">
+                </div>
+                <div class="fleet-card-content">
+                    <span class="fleet-type-badge">Truck</span>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Модел:</span>
+                        <span class="fleet-value">Scania S Super</span>
+                    </div>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Боя:</span>
+                        <span class="fleet-value">Secondary VTC Skin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Ремарке 2 -->
+            <div class="fleet-card-item">
+                <div class="fleet-img-wrap">
+                    <img src="https://i.ibb.co/HT12R67Z/ets2-20260907-031646-00-Photoroom.png" alt="Trailer 2">
+                </div>
+                <div class="fleet-card-content">
+                    <span class="fleet-type-badge">Trailer</span>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Модел:</span>
+                        <span class="fleet-value">Krone Dry Liner</span>
+                    </div>
+                    <div class="fleet-info-row">
+                        <span class="fleet-label">Боя:</span>
+                        <span class="fleet-value">Secondary VTC Livery</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="section-bottom-subtitle text-center">All paintjobs must be properly applied prior to official community convoys.</p>
+    </div>
+</section>
+
+<!-- CSS STYLES FOR VARIANT 1 -->
+<style>
+.section--light-white {
+    background-color: #ffffff;
+    padding: 2.5rem 0;
+}
+
+.text-center { text-align: center; }
+
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111111;
+    margin: 0;
+}
+
+.section-subtitle {
+    color: #111111;
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.section-bottom-subtitle {
+    color: #111111;
+    font-size: 0.95rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/* 5-Item Responsive Grid */
+.fleet-grid-5 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.fleet-card-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.25rem;
+    width: calc(33.333% - 1rem); /* 3 карти на ред на десктоп */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fleet-card-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.fleet-img-wrap {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.fleet-img-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.08));
+}
+
+.fleet-card-content {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 0.85rem;
+}
+
+.fleet-type-badge {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #111111;
+    background: #f8f9fa;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    border: 1px solid #e2e8f0;
+}
+
+.fleet-info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+}
+
+.fleet-label {
+    color: #666666;
+    font-weight: 500;
+}
+
+.fleet-value {
+    color: #111111;
+    font-weight: 600;
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+    .fleet-card-item {
+        width: calc(50% - 1rem); /* 2 карти на ред */
+    }
+}
+
+@media (max-width: 600px) {
+    .fleet-card-item {
+        width: 100%; /* 1 карта на ред */
+    }
+}
+</style>
     
   <footer class="footer">
     <div class="footer-bottom">
