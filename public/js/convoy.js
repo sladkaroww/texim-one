@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="event-tag">${escapeHTML(e.server)}</span>
                     </div>
                     <p class="event-when">${dateStr} &middot; ${timeStr}</p>
-                    <a class="convoy-link-button" href="${escapeHTML(e.url)}" target="_blank" rel="noopener noreferrer">Convoy Link</a>
+                    <a class="btn btn-primary" href="${escapeHTML(e.url)}" target="_blank" rel="noopener noreferrer">Convoy Link</a>
                 </div>
             </div>
         `;
