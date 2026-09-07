@@ -28,7 +28,7 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     <h2 class="section-title">Vehicle Fleet</h2>
     <p class="section-subtitle">Required for formal events.</p>
 
-    <div class="fleet-grid">
+    <div class="fleet-grid-5">
       <!-- 1. TRUCK 1 -->
       <div class="fleet-card-item">
         <div class="fleet-img-wrap">
@@ -98,6 +98,38 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     <p class="section-bottom-subtitle">HEX Colors: FFFFFF; 000000; E1E1E1; FF0000. The Transmission, Interior, and Interior Accessories are optional.</p>
   </div>
 </section>
+
+<style>
+  /* Гарантираме хоризонтално подреждане и линия за всеки ред, включително и за последния */
+  .fleet-info-row,
+  .fleet-info-row:last-child {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    border-bottom: 1px solid #e5e5e5 !important; /* Непрекъсната линия за всички редове */
+    padding-bottom: 6px !important;
+    margin-bottom: 6px !important;
+    width: 100% !important;
+  }
+
+  /* Стилове и размер за етикетите (Series, Engine, Paint Job) */
+  .fleet-label {
+    font-weight: 700 !important;
+    color: #333333 !important;
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+  }
+
+  .fleet-value {
+    font-weight: 500 !important;
+    color: #111111 !important;
+    font-size: 0.8rem !important;
+    text-align: right !important;
+    word-break: break-word !important;
+  }
+</style>
 
 <style>
   .fleet-grid {
