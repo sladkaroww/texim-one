@@ -17,6 +17,10 @@
       'nav.home': 'Home',
       'nav.convoy': 'Convoy',
       'nav.media': 'Media',
+      'nav.events': 'Events',
+      'nav.partners': 'Partners',
+      'nav.requirements': 'Requirements',
+      'nav.apply': 'Apply',
 
       // Home - Hero
       'hero.subtitle': 'Professional Virtual Trucking Logistics',
@@ -24,12 +28,14 @@
       'hero.discord': 'Discord Server',
 
       // Home - Stats
+      'stats.title': 'Statistics',
       'stat.drivers': 'Members',
       'stat.founded': 'Years experience',
       'stat.km': 'Mln WoTr Km',
       'stat.discord': 'Discord Members',
 
       // Home - Features
+      'about.title': 'About Us',
       'features.title': 'Why?',
       'features.sub': 'A virtual trucking experience built around accessibility and community.',
       'features.f1.title': 'No Pressure',
@@ -69,6 +75,12 @@
       'convoy.meet': 'Meeting point',
       'convoy.view': 'View event',
 
+      // Events page
+      'events.sub': 'All the events we’ve been invited to.',
+      'events.inviteTitle': 'Invite Us',
+      'events.calendar.title': 'Calendar',
+      'events.calendar.loading': 'Loading events...',
+
       // Contact form
       'contact.eventName': 'Event Name *',
       'contact.eventDate': 'Event Date *',
@@ -94,6 +106,13 @@
       'addconvoy.successText': 'This convoy is now on the TEXIM ONE calendar.',
       'addconvoy.viewCalendar': 'View Calendar',
 
+      // Partners page
+      'partners.sub': 'Connected to the community.',
+
+      // Apply page
+      'apply.title': 'Google Form',
+      'apply.sub': 'Fill out the form.',
+
       // Form
       'form.success': 'Invite sent successfully!',
       // TruckersMP auto-fill preview
@@ -111,18 +130,24 @@
       'nav.home': '\u041d\u0430\u0447\u0430\u043b\u043e',
       'nav.convoy': '\u041a\u043e\u043d\u0432\u043e\u0439',
       'nav.media': '\u041c\u0435\u0434\u0438\u044f',
+      'nav.events': 'Събития',
+      'nav.partners': 'Партньори',
+      'nav.requirements': 'Изисквания',
+      'nav.apply': 'Кандидатствай',
 
       // Home - Hero
       'hero.subtitle': '\u041f\u0440\u043e\u0444\u0435\u0441\u0438\u043e\u043d\u0430\u043b\u043d\u0430 \u0432\u0438\u0440\u0442\u0443\u0430\u043b\u043d\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u043d\u0430 \u043b\u043e\u0433\u0438\u0441\u0442\u0438\u043a\u0430',
       'hero.text': 'TEXIM ONE \u0435 \u0432\u0438\u0440\u0442\u0443\u0430\u043b\u043d\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u043d\u0430 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u044f, \u043a\u043e\u044f\u0442\u043e \u0441\u0435 \u0432\u043a\u043b\u044e\u0447\u0432\u0430 \u0432 \u043a\u043e\u043d\u0432\u043e\u0438 \u0438\u0437 \u0446\u044f\u043b\u0430\u0442\u0430 \u043e\u0431\u0449\u043d\u043e\u0441\u0442 \u043d\u0430 TruckersMP. \u041f\u043b\u0430\u043d\u0438\u0440\u0430\u0442\u0435 \u0441\u044a\u0431\u0438\u0442\u0438\u0435? \u041f\u043e\u043a\u0430\u043d\u0435\u0442\u0435 \u043d\u0438 \u0434\u0430 \u0443\u0447\u0430\u0441\u0442\u0432\u0430\u043c\u0435\u2026',
       'hero.discord': 'Discord \u0441\u044a\u0440\u0432\u044a\u0440',
 
+      'stats.title': 'Статистика',
       // Home - Stats
       'stat.drivers': '\u0427\u043b\u0435\u043d\u043e\u0432\u0435',
       'stat.founded': '\u0413\u043e\u0434\u0438\u043d\u0438 \u043e\u043f\u0438\u0442',
       'stat.km': '\u041c\u043b\u043d. WoTr \u043a\u043c',
       'stat.discord': 'Discord \u0447\u043b\u0435\u043d\u043e\u0432\u0435',
 
+      'about.title': 'За нас',
       // Home - Features
       'features.title': '\u0417\u0430\u0449\u043e?',
       'features.sub': '\u0412\u0438\u0440\u0442\u0443\u0430\u043b\u043d\u043e \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u043d\u043e \u0438\u0437\u0436\u0438\u0432\u044f\u0432\u0430\u043d\u0435, \u0438\u0437\u0433\u0440\u0430\u0434\u0435\u043d\u043e \u043e\u043a\u043e\u043b\u043e \u0434\u043e\u0441\u0442\u044a\u043f\u043d\u043e\u0441\u0442\u0442\u0430 \u0438 \u043e\u0431\u0449\u043d\u043e\u0441\u0442\u0442\u0430.',
@@ -163,6 +188,12 @@
       'convoy.meet': '\u041c\u044f\u0441\u0442\u043e \u043d\u0430 \u0441\u0440\u0435\u0449\u0430',
       'convoy.view': '\u0412\u0438\u0436 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e',
 
+      // Events page
+      'events.sub': 'Всички събития, към които сме поканени.',
+      'events.inviteTitle': 'Поканете ни',
+      'events.calendar.title': 'Календар',
+      'events.calendar.loading': 'Зареждане на събитията...',
+
       // Contact form
       'contact.eventName': '\u0418\u043c\u0435 \u043d\u0430 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e *',
       'contact.eventDate': '\u0414\u0430\u0442\u0430 \u043d\u0430 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e *',
@@ -187,6 +218,13 @@
       'addconvoy.successTitle': '\u0414\u043e\u0431\u0430\u0432\u0435\u043d\u043e \u043a\u044a\u043c \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0430!',
       'addconvoy.successText': '\u0422\u043e\u0437\u0438 \u043a\u043e\u043d\u0432\u043e\u0439 \u0432\u0435\u0447\u0435 \u0435 \u0432 \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0430 \u043d\u0430 TEXIM ONE.',
       'addconvoy.viewCalendar': '\u0412\u0438\u0436 \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0430',
+
+      // Partners page
+      'partners.sub': 'Свързани с общността.',
+
+      // Apply page
+      'apply.title': 'Google формуляр',
+      'apply.sub': 'Попълнете формуляра.',
 
       // Form
       'form.success': '\u041f\u043e\u043a\u0430\u043d\u0430\u0442\u0430 \u0435 \u0438\u0437\u043f\u0440\u0430\u0442\u0435\u043d\u0430 \u0443\u0441\u043f\u0435\u0448\u043d\u043e!',
