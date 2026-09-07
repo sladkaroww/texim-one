@@ -35,7 +35,7 @@
             </select>
         </div>
     </header>
-
+    
     <section class="hero hero--inner">
         <div class="hero-bg" style="background-image:url('https://i.ibb.co/9mHLkpnw/ets2-20250308-220747-00.png');"></div>
         <div class="hero-overlay"></div>
@@ -45,15 +45,83 @@
         </div></div>
     </section>
 
-<!-- FLEET CONFIGURATIONS SECTION -->
-<section class="section section--light-white">
+<!-- AVATAR & TAG TITLE SECTION -->
+<section class="section section--white">
+    <div class="container text-center">
+        <h2 class="section-title">Avatar & Tag</h2>
+        <p class="section-subtitle">
+            The <a href="https://i.ibb.co/ynhkwJh9/TEXIM1-AVATAR2026.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">AVATAR</a> is used in TruckersMP and TrucksBook, while the <a href="https://i.ibb.co/MxSSQh3T/ets2-20260907-101253-00.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">TAG</a> is used only in TruckersMP.
+        </p>
+    </div>
+</section>
+
+<!-- CSS STYLES -->
+<style>
+/* Section Background & Padding */
+.section--white {
+    background-color: #ffffff;
+    padding: 2.5rem 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Title Styling */
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111111;
+    margin: 0;
+}
+
+/* Subtitle Styling */
+.section-subtitle {
+    color: #111111;
+    font-size: 1.05rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/* Links Styling */
+.section-subtitle .subtitle-link {
+    color: #0056b3 !important; /* Гарантира синия цвят */
+    font-weight: 600;
+    text-decoration: underline !important;
+    cursor: pointer;
+    position: relative;
+    z-index: 10; /* Гарантира, че друг елемент не го закрива */
+    transition: color 0.2s ease;
+}
+
+.section-subtitle .subtitle-link:hover {
+    color: #003d80 !important;
+}
+
+/* Responsive Handling */
+@media (max-width: 768px) {
+    .section--white {
+        padding: 1.5rem 0;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.95rem;
+    }
+}
+</style>
+    
+<section class="section section--light">
     <div class="container">
         <h2 class="section-title text-center">Vehicle Fleet</h2>
         <p class="section-subtitle text-center">Required for formal events.</p>
 
-        <!-- Fleet Grid Layout -->
         <div class="fleet-grid-5">
-            <!-- 1. Влекач 1 -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
                     <img src="https://i.ibb.co/NngmPy7D/ets2-20260907-093518-00-Photoroom.png" alt="Truck 1">
@@ -71,10 +139,9 @@
                 </div>
             </div>
 
-            <!-- 2. Ремарке 1 -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
-                    <img src="https://i.ibb.co/gb0ttC02/ets2-20260907-093526-00-Photoroom.png">
+                    <img src="https://i.ibb.co/gb0ttC02/ets2-20260907-093526-00-Photoroom.png" alt="Trailer 1">
                 </div>
                 <div class="fleet-card-content">
                     <span class="fleet-type-badge">Trailer</span>
@@ -89,7 +156,6 @@
                 </div>
             </div>
 
-            <!-- 3. Автобус -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
                     <img src="COMING SOON" alt="Bus">
@@ -107,10 +173,9 @@
                 </div>
             </div>
 
-            <!-- 4. Влекач 2 -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
-                    <img src="https://i.ibb.co/4wBKrzgz/ats-20260907-093747-00-Photoroom.png">
+                    <img src="https://i.ibb.co/4wBKrzgz/ats-20260907-093747-00-Photoroom.png" alt="Truck 2">
                 </div>
                 <div class="fleet-card-content">
                     <span class="fleet-type-badge">Truck</span>
@@ -125,10 +190,9 @@
                 </div>
             </div>
 
-            <!-- 5. Ремарке 2 -->
             <div class="fleet-card-item">
                 <div class="fleet-img-wrap">
-                    <img src="https://i.ibb.co/j9XXNW24/ats-20260907-093740-00-Photoroom.png">
+                    <img src="https://i.ibb.co/j9XXNW24/ats-20260907-093740-00-Photoroom.png" alt="Trailer 2">
                 </div>
                 <div class="fleet-card-content">
                     <span class="fleet-type-badge">Trailer</span>
@@ -148,10 +212,9 @@
     </div>
 </section>
 
-<!-- CSS STYLES FOR VARIANT 1 -->
 <style>
-.section--light-white {
-    background-color: #ffffff;
+.section--light {
+    background-color: #f8f9fa; /* Light background */
     padding: 2.5rem 0;
 }
 
@@ -270,77 +333,6 @@
 @media (max-width: 600px) {
     .fleet-card-item {
         width: 100%; /* 1 карта на ред */
-    }
-}
-</style>
-
-<!-- AVATAR & TAG TITLE SECTION -->
-<section class="section section--light">
-    <div class="container text-center">
-        <h2 class="section-title">Avatar & Tag</h2>
-        <p class="section-subtitle">
-            The <a href="https://i.ibb.co/ynhkwJh9/TEXIM1-AVATAR2026.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">AVATAR</a> is used in TruckersMP and TrucksBook, while the <a href="https://i.ibb.co/MxSSQh3T/ets2-20260907-101253-00.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">TAG</a> is used only in TruckersMP.
-        </p>
-    </div>
-</section>
-
-<!-- CSS STYLES -->
-<style>
-/* Section Background & Padding */
-.section--light {
-    background-color: #f8f9fa;
-    padding: 2.5rem 0;
-}
-
-.text-center {
-    text-align: center;
-}
-
-/* Title Styling */
-.section-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #111111;
-    margin: 0;
-}
-
-/* Subtitle Styling */
-.section-subtitle {
-    color: #111111;
-    font-size: 1.05rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-    font-weight: 500;
-}
-
-/* Links Styling */
-.section-subtitle .subtitle-link {
-    color: #0056b3 !important; /* Гарантира синия цвят */
-    font-weight: 600;
-    text-decoration: underline !important;
-    cursor: pointer;
-    position: relative;
-    z-index: 10; /* Гарантира, че друг елемент не го закрива */
-    transition: color 0.2s ease;
-}
-
-.section-subtitle .subtitle-link:hover {
-    color: #003d80 !important;
-}
-
-/* Responsive Handling */
-@media (max-width: 768px) {
-    .section--light {
-        padding: 1.5rem 0;
-    }
-
-    .section-title {
-        font-size: 1.6rem;
-    }
-
-    .section-subtitle {
-        font-size: 0.95rem;
     }
 }
 </style>
