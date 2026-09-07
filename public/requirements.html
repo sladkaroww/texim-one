@@ -162,7 +162,7 @@
 <style>
 /* Base Section Setup */
 .section {
-    padding: 3rem 0; /* Равностоящо отстояние отгоре и отдолу за всички секции */
+    padding: 3rem 0;
     box-sizing: border-box;
 }
 
@@ -174,8 +174,14 @@
     background-color: #f8f9fa;
 }
 
-.text-center { 
-    text-align: center; 
+/* Force Text Alignment */
+.text-center, 
+.section-title, 
+.section-subtitle, 
+.section-bottom-subtitle { 
+    text-align: center !important; 
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 /* Titles and Subtitles Vertical Rhythm */
@@ -184,16 +190,19 @@
     font-size: 2rem;
     font-weight: 700;
     color: #111111;
-    margin: 0 0 0.5rem 0; /* Фиксиран марджин отдолу към подзаглавието */
+    margin-top: 0;
+    margin-bottom: 0.5rem;
     line-height: 1.2;
 }
 
 .section-subtitle {
     color: #111111;
     font-size: 1.05rem;
-    margin: 0 0 2rem 0; /* Равностойно разстояние от подзаглавието към картата/съдържанието */
+    margin-top: 0;
+    margin-bottom: 2rem;
     font-weight: 500;
     line-height: 1.5;
+    max-width: 800px; /* Предотвратява разтягането на текста прекалено много по ширина */
 }
 
 /* Корекция за секцията без грид (Avatar & Tag) */
@@ -204,8 +213,10 @@
 .section-bottom-subtitle {
     color: #666666;
     font-size: 0.9rem;
-    margin: 2rem 0 0 0; /* Балансиран марджин от грида надолу */
+    margin-top: 2rem;
+    margin-bottom: 0;
     font-weight: 500;
+    max-width: 900px;
 }
 
 /* Subtitle Links */
@@ -242,7 +253,7 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
-    text-align: left;
+    text-align: left; /* Картите вътре си остават с подравняване вляво за яснота */
     box-sizing: border-box;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
