@@ -38,13 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="event-year">${start.getFullYear()}</div>
                 </div>
                 <div class="event-body">
-                    <h3 class="event-title"><a href="${escapeHTML(e.url)}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">${escapeHTML(e.name)}</a></h3>
+                    <h3 class="event-title">${escapeHTML(e.name)}</h3>
                     <div class="event-meta">
                         <span class="event-tag">${escapeHTML(e.type)}</span>
                         <span class="event-tag">${escapeHTML(e.game)}</span>
                         <span class="event-tag">${escapeHTML(e.server)}</span>
                     </div>
                     <p class="event-when">${dateStr} &middot; ${timeStr}</p>
+                    <a class="convoy-link-button" href="${escapeHTML(e.url)}" target="_blank" rel="noopener noreferrer">Convoy Link</a>
                 </div>
             </div>
         `;
