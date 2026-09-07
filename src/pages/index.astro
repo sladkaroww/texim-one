@@ -28,75 +28,72 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
   <div class="container text-center">
     <h2 class="section-title">Vehicles</h2>
 
-    <!-- Оновен контейнер със стрелки -->
-    <div class="carousel-outer-wrapper">
+    <div class="carousel-3d-wrapper">
       
       <!-- Лява стрелка -->
       <button class="nav-arrow prev-arrow" onclick="prevSlide()" aria-label="Previous">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
 
-      <!-- Viewport за картите -->
-      <div class="carousel-viewport">
-        <div class="carousel-track" id="fleetTrack">
-          
-          <!-- 1. VOLVO FH6 -->
-          <div class="fleet-card">
-            <h3 class="truck-title">Volvo FH6</h3>
-            <div class="truck-image-box">
-              <img src="https://i.ibb.co/BHP4VntG/ets2-20260907-165303-00-Photoroom.png" alt="Volvo FH6" />
-            </div>
-            <div class="truck-spec-badge">
-              <div class="spec-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              </div>
-              <span class="spec-hp-val">780 HP</span>
-            </div>
+      <!-- 3D Сцена за картите -->
+      <div class="carousel-3d-stage" id="carouselStage">
+        
+        <!-- 1. VOLVO FH6 -->
+        <div class="fleet-card" data-index="0">
+          <h3 class="truck-title">Volvo FH6</h3>
+          <div class="truck-image-box">
+            <img src="https://i.ibb.co/BHP4VntG/ets2-20260907-165303-00-Photoroom.png" alt="Volvo FH6" />
           </div>
-
-          <!-- 2. MAN TGX -->
-          <div class="fleet-card">
-            <h3 class="truck-title">MAN TGX</h3>
-            <div class="truck-image-box">
-              <img src="https://i.ibb.co/cGJCCsk/ets2-20260907-165324-00-Photoroom.png" alt="MAN TGX" />
+          <div class="truck-spec-badge">
+            <div class="spec-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             </div>
-            <div class="truck-spec-badge">
-              <div class="spec-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              </div>
-              <span class="spec-hp-val">640 HP</span>
-            </div>
+            <span class="spec-hp-val">780 HP</span>
           </div>
-
-          <!-- 3. MERCEDES NEW ACTROS -->
-          <div class="fleet-card">
-            <h3 class="truck-title">Mercedes New Actros</h3>
-            <div class="truck-image-box">
-              <img src="https://i.ibb.co/vxYg97VJ/ets2-20260907-163131-00-Photoroom.png" alt="Mercedes New Actros" />
-            </div>
-            <div class="truck-spec-badge">
-              <div class="spec-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              </div>
-              <span class="spec-hp-val">625 HP</span>
-            </div>
-          </div>
-
-          <!-- 4. SCANIA S -->
-          <div class="fleet-card">
-            <h3 class="truck-title">Scania S</h3>
-            <div class="truck-image-box">
-              <img src="https://i.ibb.co/LdKywgSv/ets2-20260907-163114-00-Photoroom.png" alt="Scania S" />
-            </div>
-            <div class="truck-spec-badge">
-              <div class="spec-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              </div>
-              <span class="spec-hp-val">770 HP</span>
-            </div>
-          </div>
-
         </div>
+
+        <!-- 2. MAN TGX -->
+        <div class="fleet-card" data-index="1">
+          <h3 class="truck-title">MAN TGX</h3>
+          <div class="truck-image-box">
+            <img src="https://i.ibb.co/cGJCCsk/ets2-20260907-165324-00-Photoroom.png" alt="MAN TGX" />
+          </div>
+          <div class="truck-spec-badge">
+            <div class="spec-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <span class="spec-hp-val">640 HP</span>
+          </div>
+        </div>
+
+        <!-- 3. MERCEDES NEW ACTROS -->
+        <div class="fleet-card" data-index="2">
+          <h3 class="truck-title">Mercedes New Actros</h3>
+          <div class="truck-image-box">
+            <img src="https://i.ibb.co/vxYg97VJ/ets2-20260907-163131-00-Photoroom.png" alt="Mercedes New Actros" />
+          </div>
+          <div class="truck-spec-badge">
+            <div class="spec-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <span class="spec-hp-val">625 HP</span>
+          </div>
+        </div>
+
+        <!-- 4. SCANIA S -->
+        <div class="fleet-card" data-index="3">
+          <h3 class="truck-title">Scania S</h3>
+          <div class="truck-image-box">
+            <img src="https://i.ibb.co/LdKywgSv/ets2-20260907-163114-00-Photoroom.png" alt="Scania S" />
+          </div>
+          <div class="truck-spec-badge">
+            <div class="spec-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <span class="spec-hp-val">770 HP</span>
+          </div>
+        </div>
+
       </div>
 
       <!-- Дясна стрелка -->
@@ -107,7 +104,7 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     </div>
 
     <!-- 4 Индикаторни точки -->
-    <div class="carousel-pagination" id="carouselPagination">
+    <div class="carousel-pagination">
       <span class="dot active" onclick="goToCard(0)"></span>
       <span class="dot" onclick="goToCard(1)"></span>
       <span class="dot" onclick="goToCard(2)"></span>
@@ -121,94 +118,91 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
   .fleet-carousel-section {
     padding: 60px 0;
     background-color: #ffffff;
+    overflow: hidden;
   }
 
   .section-title {
     font-size: 2.2rem;
     font-weight: 800;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     color: #000000;
   }
 
-  /* Външен контейнер за стрелките и карусела */
-  .carousel-outer-wrapper {
+  /* Външна 3D Сцена */
+  .carousel-3d-wrapper {
     position: relative;
     width: 100%;
-    max-width: 1250px;
+    max-width: 1280px;
+    height: 480px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  /* Бутони-стрелки */
-  .nav-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    color: #000000;
+  .carousel-3d-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 1200px; /* Дълбочина на 3D ефекта */
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    transition: all 0.3s ease;
   }
 
-  .nav-arrow:hover {
-    background: #000000;
-    color: #ffffff;
-    border-color: #000000;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  }
-
-  .prev-arrow { left: 0; }
-  .next-arrow { right: 0; }
-
-  /* Viewport за 3 карти */
-  .carousel-viewport {
-    width: 100%;
-    max-width: 1120px;
-    overflow: hidden;
-    padding: 25px 0;
-  }
-
-  .carousel-track {
-    display: flex;
-    gap: 24px;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-
-  /* Дизайн на картите */
+  /* Дизайн на Картата */
   .fleet-card {
-    flex: 0 0 calc((100% - 48px) / 3);
-    box-sizing: border-box;
+    position: absolute;
+    width: 340px;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 20px;
-    padding: 28px 20px 24px 20px;
+    padding: 28px 22px 24px 22px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    opacity: 0.65;
-    transform: scale(0.92);
-    transition: transform 0.5s ease, opacity 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+    cursor: pointer;
+    user-select: none;
+    opacity: 0;
+    pointer-events: none;
   }
 
-  /* Централна фокусна карта (По-голяма) */
-  .fleet-card.active-focus {
+  /* Позиция: ЦЕНТЪР (Централен фокус - много по-голям) */
+  .fleet-card.card-center {
     opacity: 1;
-    transform: scale(1.08);
+    pointer-events: auto;
+    z-index: 5;
+    transform: translateX(0) scale(1.22) rotateY(0deg);
     border-color: #000000;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-    z-index: 2;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Позиция: ЛЯВО (Обърнат надясно към средата) */
+  .fleet-card.card-left {
+    opacity: 0.75;
+    pointer-events: auto;
+    z-index: 3;
+    transform: translateX(-380px) scale(0.85) rotateY(18deg);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Позиция: ДЯСНО (Обърнат наляво към средата) */
+  .fleet-card.card-right {
+    opacity: 0.75;
+    pointer-events: auto;
+    z-index: 3;
+    transform: translateX(380px) scale(0.85) rotateY(-18deg);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Скрити карти */
+  .fleet-card.card-hidden {
+    opacity: 0;
+    z-index: 1;
+    transform: translateX(0) scale(0.5);
   }
 
   .truck-title {
@@ -219,10 +213,9 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     text-align: left;
   }
 
-  /* Кутия със снимка */
   .truck-image-box {
     width: 100%;
-    height: 200px;
+    height: 180px;
     background: #f4f4f6;
     border-radius: 14px;
     display: flex;
@@ -239,23 +232,22 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     object-fit: contain;
   }
 
-  /* Панел за HP */
   .truck-spec-badge {
     align-self: center;
     background: #f8f9fa;
     border: 1px solid #e9ecef;
     border-radius: 12px;
-    padding: 10px 16px;
+    padding: 8px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    min-width: 90px;
+    min-width: 85px;
   }
 
   .spec-icon {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     background: #000000;
     color: #ffffff;
     border-radius: 50%;
@@ -270,13 +262,43 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     color: #000000;
   }
 
+  /* Навигационни стрелки */
+  .nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  .nav-arrow:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+
+  .prev-arrow { left: 10px; }
+  .next-arrow { right: 10px; }
+
   /* Точки */
   .carousel-pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 12px;
-    margin-top: 32px;
+    margin-top: 30px;
   }
 
   .dot {
@@ -293,57 +315,59 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     transform: scale(1.4);
   }
 
-  /* Респонсив */
-  @media (max-width: 992px) {
-    .fleet-card {
-      flex: 0 0 calc((100% - 24px) / 2);
+  /* Респонсив адаптация за мобилни устройства */
+  @media (max-width: 900px) {
+    .fleet-card.card-left {
+      transform: translateX(-240px) scale(0.75) rotateY(20deg);
+    }
+    .fleet-card.card-right {
+      transform: translateX(240px) scale(0.75) rotateY(-20deg);
+    }
+    .fleet-card.card-center {
+      transform: translateX(0) scale(1.05) rotateY(0deg);
     }
   }
 
-  @media (max-width: 600px) {
-    .fleet-card {
-      flex: 0 0 100%;
+  @media (max-width: 650px) {
+    .fleet-card.card-left,
+    .fleet-card.card-right {
+      opacity: 0;
+      pointer-events: none;
     }
-    .carousel-outer-wrapper {
-      padding: 0 20px;
+    .fleet-card.card-center {
+      transform: translateX(0) scale(1) rotateY(0deg);
     }
   }
 </style>
 
 <script>
   let activeIndex = 0;
-  const track = document.getElementById('fleetTrack');
   const cards = document.querySelectorAll('.fleet-card');
   const dots = document.querySelectorAll('.dot');
   const totalCards = cards.length;
-  let timer;
+  let autoTimer;
 
-  function updateSlide() {
-    if (!cards.length) return;
-
-    const cardWidth = cards[0].offsetWidth + 24; // Ширина + gap
-
-    // Изчисляваме фокусната карта (за 3 показвани карти, фокусната е средната)
+  function update3DCarousel() {
     cards.forEach((card, idx) => {
-      card.classList.remove('active-focus');
-      // В зависимост от текущата позиция, маркираме средната като уголемена
-      let focusIndex = activeIndex + 1; 
-      if (focusIndex >= totalCards) focusIndex = totalCards - 1;
-      
-      if (idx === focusIndex || (window.innerWidth <= 600 && idx === activeIndex)) {
-        card.classList.add('active-focus');
+      // Премахване на всички предишни класове
+      card.classList.remove('card-center', 'card-left', 'card-right', 'card-hidden');
+
+      // Изчисляване на индексите за лява и дясна карта (с цикъл)
+      let leftIndex = (activeIndex - 1 + totalCards) % totalCards;
+      let rightIndex = (activeIndex + 1) % totalCards;
+
+      if (idx === activeIndex) {
+        card.classList.add('card-center');
+      } else if (idx === leftIndex) {
+        card.classList.add('card-left');
+      } else if (idx === rightIndex) {
+        card.classList.add('card-right');
+      } else {
+        card.classList.add('card-hidden');
       }
     });
 
-    let maxShift = totalCards - 3;
-    if (window.innerWidth <= 992) maxShift = totalCards - 2;
-    if (window.innerWidth <= 600) maxShift = totalCards - 1;
-
-    let shiftIndex = activeIndex;
-    if (shiftIndex > maxShift) shiftIndex = maxShift;
-
-    track.style.transform = `translateX(-${shiftIndex * cardWidth}px)`;
-
+    // Актуализиране на точките
     dots.forEach((dot, idx) => {
       dot.classList.toggle('active', idx === activeIndex);
     });
@@ -351,33 +375,39 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
 
   function goToCard(index) {
     activeIndex = index;
-    updateSlide();
-    restartTimer();
+    update3DCarousel();
+    resetTimer();
   }
 
   function nextSlide() {
     activeIndex = (activeIndex + 1) % totalCards;
-    updateSlide();
-    restartTimer();
+    update3DCarousel();
+    resetTimer();
   }
 
   function prevSlide() {
     activeIndex = (activeIndex - 1 + totalCards) % totalCards;
-    updateSlide();
-    restartTimer();
+    update3DCarousel();
+    resetTimer();
   }
 
-  function restartTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => {
-      activeIndex = (activeIndex + 1) % totalCards;
-      updateSlide();
-    }, 4000);
+  function resetTimer() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(nextSlide, 4000); // Въртене на всеки 4 секунди
   }
 
-  window.addEventListener('resize', updateSlide);
-  updateSlide();
-  restartTimer();
+  // Кликване директно върху странична карта я прави централна
+  cards.forEach((card, idx) => {
+    card.addEventListener('click', () => {
+      if (idx !== activeIndex) {
+        goToCard(idx);
+      }
+    });
+  });
+
+  // Стартиране
+  update3DCarousel();
+  resetTimer();
 </script>
 
   <section class="section" style="padding-top:1.5rem;padding-bottom:1.5rem;">
