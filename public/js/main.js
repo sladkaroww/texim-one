@@ -13,33 +13,49 @@ const yearSpan = document.getElementById('year');
 if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
 // Mobile navigation
-const initMobileNav = () => {
+function initMobileNav() {
     const toggle = document.querySelector('.nav-toggle');
-    const nav = document.querySelector('.nav');
-    if (!toggle || !nav) return;
+    const nav = document.querySelector('#mobileNav');
+    if (!toggle || !nav || toggle.dataset.mobileNavReady === 'true') return;
 
-    const closeMenu = () => {
-        toggle.classList.remove('is-open');
-        nav.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Open menu');
-    };
+    toggle.dataset.mobileNavReady = 'true';
 
-    toggle.addEventListener('click', () => {
-        const open = !nav.classList.contains('is-open');
+    function setMenu(open) {
         toggle.classList.toggle('is-open', open);
         nav.classList.toggle('is-open', open);
-        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
+    toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        setMenu(!nav.classList.contains('is-open'));
     });
 
-    nav.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', closeMenu));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
-};
+    nav.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => setMenu(false));
+    });
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMobileNav, { once: true });
-else initMobileNav();
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') setMenu(false);
+    });
+
+    document.addEventListener('click', event => {
+        if (!nav.classList.contains('is-open')) return;
+        if (!nav.contains(event.target) && !toggle.contains(event.target)) setMenu(false);
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) setMenu(false);
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileNav, { once: true });
+} else {
+    initMobileNav();
+}
 
 // Gallery + Lightbox
 document.addEventListener('DOMContentLoaded', () => {
@@ -56,24 +72,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const lb = document.createElement('div');
     lb.className = 'lightbox';
-    lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Image gallery');
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', 'Image gallery');
     lb.innerHTML = '<button class="lightbox-close" aria-label="Close">&times;</button><button class="lightbox-nav lightbox-prev" aria-label="Previous">&#8249;</button><img class="lightbox-image" alt=""><button class="lightbox-nav lightbox-next" aria-label="Next">&#8250;</button><div class="lightbox-caption"></div><div class="lightbox-counter"></div>';
     document.body.appendChild(lb);
-    const lbImage = lb.querySelector('.lightbox-image'), lbCaption = lb.querySelector('.lightbox-caption'), lbCounter = lb.querySelector('.lightbox-counter'), closeBtn = lb.querySelector('.lightbox-close'), prevBtn = lb.querySelector('.lightbox-prev'), nextBtn = lb.querySelector('.lightbox-next');
+    const lbImage = lb.querySelector('.lightbox-image');
+    const lbCaption = lb.querySelector('.lightbox-caption');
+    const lbCounter = lb.querySelector('.lightbox-counter');
+    const closeBtn = lb.querySelector('.lightbox-close');
+    const prevBtn = lb.querySelector('.lightbox-prev');
+    const nextBtn = lb.querySelector('.lightbox-next');
     let currentIndex = 0, isOpen = false, swapTimer = null;
     const captionFor = link => { const img = link.querySelector('img'); return img ? (img.getAttribute('data-caption') || img.alt || '') : ''; };
     const preload = index => { const i = (index + links.length) % links.length; const img = new Image(); img.src = links[i].getAttribute('href'); };
     function show(index) {
         currentIndex = (index + links.length) % links.length;
         const link = links[currentIndex], href = link.getAttribute('href'), thumb = link.querySelector('img');
-        lbImage.classList.add('lightbox-image--loading'); clearTimeout(swapTimer);
-        swapTimer = setTimeout(() => { lbImage.onload = lbImage.onerror = () => lbImage.classList.remove('lightbox-image--loading'); lbImage.src = href; lbImage.alt = thumb ? (thumb.alt || '') : ''; lbCaption.textContent = captionFor(link); lbCounter.textContent = (currentIndex + 1) + ' / ' + links.length; preload(currentIndex + 1); preload(currentIndex - 1); }, 160);
+        lbImage.classList.add('lightbox-image--loading');
+        clearTimeout(swapTimer);
+        swapTimer = setTimeout(() => {
+            lbImage.onload = lbImage.onerror = () => lbImage.classList.remove('lightbox-image--loading');
+            lbImage.src = href;
+            lbImage.alt = thumb ? (thumb.alt || '') : '';
+            lbCaption.textContent = captionFor(link);
+            lbCounter.textContent = (currentIndex + 1) + ' / ' + links.length;
+            preload(currentIndex + 1);
+            preload(currentIndex - 1);
+        }, 160);
     }
     function open(index) { currentIndex = index; show(index); lb.classList.add('open'); document.body.style.overflow = 'hidden'; isOpen = true; setTimeout(() => closeBtn.focus(), 50); }
     function close() { lb.classList.remove('open'); document.body.style.overflow = ''; isOpen = false; clearTimeout(swapTimer); setTimeout(() => { lbImage.src = ''; lbImage.classList.remove('lightbox-image--loading'); }, 300); }
-    function showPrev() { if (isOpen) show(currentIndex - 1); } function showNext() { if (isOpen) show(currentIndex + 1); }
+    function showPrev() { if (isOpen) show(currentIndex - 1); }
+    function showNext() { if (isOpen) show(currentIndex + 1); }
     links.forEach((link, idx) => link.addEventListener('click', e => { e.preventDefault(); open(idx); }));
-    closeBtn.addEventListener('click', close); prevBtn.addEventListener('click', showPrev); nextBtn.addEventListener('click', showNext);
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
     lb.addEventListener('click', e => { if (e.target === lb) close(); });
     document.addEventListener('keydown', e => { if (!isOpen) return; if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') showPrev(); else if (e.key === 'ArrowRight') showNext(); });
     let touchStartX = 0, touchStartY = 0;

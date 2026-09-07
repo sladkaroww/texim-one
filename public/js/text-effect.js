@@ -38,7 +38,6 @@ export function TextEffect(element, options = {}) {
     if (!text) return;
 
     const segments = per === 'word' ? text.split(/(\s+)/) : [text];
-    const words = segments.filter((segment) => !/^\s+$/.test(segment));
 
     element.textContent = '';
     element.dataset.textEffectReady = 'true';
@@ -66,10 +65,10 @@ export function TextEffect(element, options = {}) {
 
     const presetValues = PRESETS[preset] || PRESETS.fade;
 
-    // Slightly slower reveal so the headline is easier to read while still feeling smooth.
+    // Slower word-by-word reveal for a calmer, more readable headline.
     animate(wordElements, presetValues, {
-        duration: 0.55 / speedSegment,
-        delay: (index) => delay + (index * 0.09) / speedReveal,
+        duration: 0.7 / speedSegment,
+        delay: (index) => delay + (index * 0.13) / speedReveal,
         ease: 'easeOut',
     });
 }
