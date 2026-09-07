@@ -47,29 +47,29 @@
         </div>
     </section>
 
-<section class="section" style="background-color: #ffffff; padding-top: 3rem; padding-bottom: 3rem;">
+<section class="section section--merch">
     <div class="container">
         
-        <!-- Центрирано заглавие със симетрични отстояния отгоре и отдолу -->
-        <div style="text-align: center; margin-bottom: 2.5rem;">
-            <h2 class="section-title" style="margin: 0;">
+        <!-- Центрирано заглавие -->
+        <div class="section-header">
+            <h2 class="section-title">
                 Merch
             </h2>
         </div>
 
         <!-- Ред със снимка вляво и съдържание вдясно -->
-        <div class="hero-row" style="display: flex; align-items: center; gap: 3rem;">
+        <div class="hero-row">
             
-            <div class="hero-truck" style="flex: 1;">
-                <img src="https://i.ibb.co/Z6ZXTfnb/viber-image-2026-07-03-21-54-40-065.jpg" alt="TEXIM ONE Merch" style="width: 100%; height: auto; object-fit: contain; display: block;">
+            <div class="hero-truck">
+                <img src="https://i.ibb.co/Z6ZXTfnb/viber-image-2026-07-03-21-54-40-065.jpg" alt="TEXIM ONE Merch">
             </div>
 
-            <div class="hero-content" style="flex: 1;">
-                <h3 style="font-size: 1.4rem; font-weight: 600; color: #111111; margin-bottom: 1rem;">
+            <div class="hero-content">
+                <h3 class="hero-title">
                     🔥TEXIM ONE Vtc. x TEXIM ONE Ltd.🔥
                 </h3>
 
-                <p class="hero-text" style="color: #222222; line-height: 1.65; font-size: 1.3rem; margin-bottom: 1.8rem; font-weight: 400;">
+                <p class="hero-text">
                     Heavyweight Oversized T-Shirts, Sweatshirts, and Hoodies made from 100% combed cotton. A minimalist design with precise embroidery, created for anyone who values quality and comfort.
                 </p>
 
@@ -96,15 +96,80 @@
     </div>
 </section>
 
-<!-- CSS STYLES -->
+<!-- UNIFIED CSS STYLES -->
 <style>
-.partners-section {
-    padding: 3rem 0; /* Равно външно отстояние отгоре и отдолу на секцията */
+/* Base Section Setup */
+.section {
+    padding-top: 1.5rem !important; /* Намалено отстояние над заглавието */
+    padding-bottom: 2.5rem;
+    box-sizing: border-box;
 }
 
+.section--merch {
+    background-color: #ffffff;
+}
+
+.section--light {
+    background-color: #f8f9fa;
+}
+
+/* Base Titles Setup */
+.section-title {
+    margin-top: 0 !important; /* Премахва дефолтния горен марджин на браузъра */
+    margin-bottom: 2rem;
+    text-align: center !important;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111111;
+    line-height: 1.2;
+}
+
+.section-header {
+    text-align: center;
+}
+
+/* Merch Layout Details */
+.hero-row {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.hero-truck {
+    flex: 1;
+}
+
+.hero-truck img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-title {
+    margin-top: 0 !important; /* Занулен горен марджин за подзаглавието */
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #111111;
+}
+
+.hero-text {
+    color: #222222;
+    line-height: 1.65;
+    font-size: 1.1rem;
+    margin-bottom: 1.8rem;
+    font-weight: 400;
+}
+
+/* Partners Details */
 .partners-title {
-    margin-top: 0;
-    margin-bottom: 1.5rem; /* Равно отстояние между заглавието и текста */
+    margin-bottom: 1.25rem;
 }
 
 .partners-content {
@@ -113,11 +178,26 @@
 }
 
 .partners-text {
-    margin-bottom: 0; /* Премахва излишното долно отстояние на параграфа */
+    margin: 0;
+    line-height: 1.6;
+    color: #222222;
 }
 
 .text-center {
-    text-align: center;
+    text-align: center !important;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .hero-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .section {
+        padding-top: 1.25rem !important;
+        padding-bottom: 2rem;
+    }
 }
 </style>
     
