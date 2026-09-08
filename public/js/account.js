@@ -93,42 +93,123 @@ if ($('profileForm')) {
     }
 
     const deleteButton = $('deleteProfileButton');
-    if (deleteButton) {
-      deleteButton.addEventListener('click', async () => {
-        const confirmed = window.confirm('Warning: deleting your profile is irreversible. Your TEXIM ONE account and profile will be permanently deleted. Are you absolutely sure you want to continue?');
-        if (!confirmed) return;
-        deleteButton.disabled = true;
-        deleteButton.textContent = 'Deleting…';
-        message('Deleting your profile…');
-        try {
-          if (!SUPABASE_URL) throw new Error('Supabase configuration is missing.');
-          const { data: { session } } = await supabase.auth.getSession();
-          if (!session?.access_token) throw new Error('Your session has expired. Please log in again.');
-          const response = await fetch(`${SUPABASE_URL}/functions/v1/delete-account`, {
-            method: 'POST',
-            headers: { Authorization: `Bearer ${session.access_token}` }
-          });
-          const payload = await response.json().catch(() => ({}));
-          if (!response.ok) throw new Error(payload.error || 'Could not delete your profile.');
-          await supabase.auth.signOut();
-          location.href = '/';
-        } catch (err) {
-          deleteButton.disabled = false;
-          deleteButton.textContent = 'Delete profile';
-          message(err.message || 'Could not delete your profile.', 'error');
+    const deleteModal = $('deleteProfileModal');
+    const confirmDeleteButton = $('confirmDeleteButton');
+    const holdProgress = confirmDeleteButton?.querySelector('.hold-delete-progress');
+    let holdTimer = null;
+    let holdStartedAt = 0;
+    let holdFrame = null;
+    let deletionStarted = false;
+    const HOLD_DURATION = 3000;
+
+    const resetHold = () => {
+      if (holdTimer) clearTimeout(holdTimer);
+      if (holdFrame) cancelAnimationFrame(holdFrame);
+      holdTimer = null;
+      holdFrame = null;
+      holdStartedAt = 0;
+      if (holdProgress) holdProgress.style.width = '0%';
+      confirmDeleteButton?.classList.remove('is-holding');
+    };
+
+    const closeDeleteModal = () => {
+      if (deletionStarted) return;
+      resetHold();
+      if (deleteModal) {
+        deleteModal.hidden = true;
+        deleteModal.setAttribute('aria-hidden', 'true');
+      }
+    };
+
+    const openDeleteModal = () => {
+      if (!deleteModal || deletionStarted) return;
+      deleteModal.hidden = false;
+      deleteModal.setAttribute('aria-hidden', 'false');
+      resetHold();
+      requestAnimationFrame(() => confirmDeleteButton?.focus());
+    };
+
+    deleteButton?.addEventListener('click', openDeleteModal);
+    deleteModal?.querySelectorAll('[data-delete-close]').forEach((button) => button.addEventListener('click', closeDeleteModal));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && deleteModal && !deleteModal.hidden) closeDeleteModal();
+    });
+
+    const finishDeletion = async () => {
+      if (deletionStarted) return;
+      deletionStarted = true;
+      resetHold();
+      if (confirmDeleteButton) {
+        confirmDeleteButton.disabled = true;
+        confirmDeleteButton.querySelector('.hold-delete-label').textContent = 'Deleting…';
+      }
+      if (deleteButton) deleteButton.disabled = true;
+      message('Deleting your profile…');
+      try {
+        if (!SUPABASE_URL) throw new Error('Supabase configuration is missing.');
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.access_token) throw new Error('Your session has expired. Please log in again.');
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/delete-account`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${session.access_token}` }
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.error || 'Could not delete your profile.');
+        await supabase.auth.signOut();
+        location.href = '/';
+      } catch (err) {
+        deletionStarted = false;
+        if (confirmDeleteButton) {
+          confirmDeleteButton.disabled = false;
+          confirmDeleteButton.querySelector('.hold-delete-label').textContent = 'Press and hold to delete';
         }
-      });
-    }
+        if (deleteButton) deleteButton.disabled = false;
+        message(err.message || 'Could not delete your profile.', 'error');
+        resetHold();
+      }
+    };
+
+    const updateHoldProgress = () => {
+      if (!holdStartedAt || deletionStarted) return;
+      const elapsed = performance.now() - holdStartedAt;
+      const progress = Math.min(elapsed / HOLD_DURATION, 1);
+      if (holdProgress) holdProgress.style.width = `${progress * 100}%`;
+      if (progress < 1) holdFrame = requestAnimationFrame(updateHoldProgress);
+    };
+
+    const startHold = (e) => {
+      if (deletionStarted || confirmDeleteButton?.disabled) return;
+      e.preventDefault();
+      holdStartedAt = performance.now();
+      confirmDeleteButton.classList.add('is-holding');
+      try { confirmDeleteButton.setPointerCapture(e.pointerId); } catch {}
+      holdFrame = requestAnimationFrame(updateHoldProgress);
+      holdTimer = setTimeout(finishDeletion, HOLD_DURATION);
+    };
+
+    const cancelHold = (e) => {
+      if (!holdStartedAt || deletionStarted) return;
+      e?.preventDefault();
+      try { if (e?.pointerId != null) confirmDeleteButton.releasePointerCapture(e.pointerId); } catch {}
+      resetHold();
+    };
+
+    confirmDeleteButton?.addEventListener('pointerdown', startHold);
+    confirmDeleteButton?.addEventListener('pointerup', cancelHold);
+    confirmDeleteButton?.addEventListener('pointercancel', cancelHold);
+    confirmDeleteButton?.addEventListener('pointerleave', (e) => { if (e.buttons === 0) cancelHold(e); });
+
+    $('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault(); message('Saving profile…');
+      try {
+        const form = new FormData(e.currentTarget);
+        const updates = { username: form.get('username').trim() || null, display_name: form.get('display_name').trim() || null };
+        const { error } = await supabase.from('profiles').update(updates).eq('id', user.id);
+        if (error) throw error;
+        if ($('profileAvatar')) $('profileAvatar').src = DEFAULT_AVATAR;
+        message('Profile saved.', 'success');
+      } catch (err) { message(err.message || 'Could not save profile.', 'error'); }
+    });
   }
-  $('profileForm').addEventListener('submit', async (e) => {
-    e.preventDefault(); message('Saving profile…');
-    try {
-      const form = new FormData(e.currentTarget);
-      const updates = { username: form.get('username').trim() || null, display_name: form.get('display_name').trim() || null };
-      const { error } = await supabase.from('profiles').update(updates).eq('id', user.id);
-      if (error) throw error;
-      if ($('profileAvatar')) $('profileAvatar').src = DEFAULT_AVATAR;
-      message('Profile saved.', 'success');
-    } catch (err) { message(err.message || 'Could not save profile.', 'error'); }
-  });
 }
