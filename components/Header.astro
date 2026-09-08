@@ -1,0 +1,29 @@
+---
+const { active = '' } = Astro.props;
+const links = [
+  { href: '/', key: 'nav.home', label: 'Home', id: 'home' },
+  { href: '/events.html', key: 'nav.events', label: 'Events', id: 'events' },
+  { href: '/media.html', key: 'nav.media', label: 'Media', id: 'media' },
+  { href: '/ranks.html', key: 'nav.ranks', label: 'Ranks', id: 'ranks' },
+  { href: '/partners.html', key: 'nav.partners', label: 'Partners', id: 'partners' },
+  { href: '/requirements.html', key: 'nav.requirements', label: 'Requirements', id: 'requirements' },
+  { href: '/apply.html', key: 'nav.apply', label: 'Apply', id: 'apply' },
+];
+---
+<header class="header">
+  <div class="container header-container">
+    <a href="/" class="logo"><img src="https://files.catbox.moe/07u3sd.png" alt="TEXIM ONE" class="logo-img" /></a>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
+    <nav class="nav" id="mobileNav"><ul class="nav-list">{links.map((link) => (<li><a href={link.href} class={`nav-link${active === link.id ? ' active' : ''}`} data-i18n={link.key}>{link.label}</a></li>))}</ul></nav>
+    <select id="langSwitcher" class="lang-switcher" aria-label="Language"><option value="en">EN</option><option value="bg">BG</option></select>
+  </div>
+</header>
+<style>
+  .logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+</style>
