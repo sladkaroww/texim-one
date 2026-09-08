@@ -71,41 +71,102 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
     .texim-team-subtitle { margin: 0; color: #666666; font-size: 1rem; }
     .texim-team-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
     
-    /* Light панел стил */
+    /* Единен чист Light панел */
     .texim-team-card { 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
       text-align: center; 
-      padding: 1.5rem 1.1rem; 
-      background: #ffffff; 
-      border: 1px solid #e5e7eb; 
-      border-radius: 16px; 
-      box-shadow: 0 8px 24px rgba(0,0,0,.06); 
-      transition: transform .2s ease, box-shadow .2s ease; 
-    }
-    .texim-team-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,.1); }
-    .texim-team-avatar { width: 88px; height: 88px; border-radius: 50%; object-fit: cover; background: #f1f1f1; border: 2px solid #eeeeee; margin-bottom: 1rem; }
-    .texim-team-name { font-family: Orbitron, Inter, sans-serif; font-size: .95rem; font-weight: 700; color: #111111; text-decoration: none; word-break: break-word; }
-    .texim-team-name:hover { text-decoration: underline; }
-    .texim-team-role { margin: .45rem 0 .8rem; color: #777777; font-size: .82rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-    
-    /* Стилизация на новите графи Rank и Level */
-    .texim-team-stats { display: flex; gap: .5rem; width: 100%; justify-content: center; margin-bottom: .8rem; }
-    .texim-stat-box { 
-      flex: 1; 
+      padding: 1.6rem 1.2rem; 
       background: #f8fafc; 
       border: 1px solid #e2e8f0; 
-      border-radius: 8px; 
-      padding: .4rem .2rem; 
+      border-radius: 16px; 
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); 
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; 
+    }
+    .texim-team-card:hover { 
+      transform: translateY(-4px); 
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08); 
+      border-color: #cbd5e1;
+    }
+    
+    .texim-team-avatar { 
+      width: 80px; 
+      height: 80px; 
+      border-radius: 50%; 
+      object-fit: cover; 
+      background: #ffffff; 
+      border: 2px solid #e2e8f0; 
+      margin-bottom: 0.8rem; 
+    }
+    .texim-team-name { 
+      font-family: Orbitron, Inter, sans-serif; 
+      font-size: .95rem; 
+      font-weight: 700; 
+      color: #0f172a; 
+      text-decoration: none; 
+      word-break: break-word; 
+    }
+    .texim-team-name:hover { text-decoration: underline; }
+    .texim-team-role { 
+      margin: .3rem 0 1rem; 
+      color: #64748b; 
+      font-size: .8rem; 
+      font-weight: 600; 
+      text-transform: uppercase; 
+      letter-spacing: .06em; 
+    }
+    
+    /* Графи Rank и Level с единен цвят */
+    .texim-team-stats { 
+      display: flex; 
+      gap: .6rem; 
+      width: 100%; 
+      justify-content: center; 
+      margin-bottom: 1.2rem; 
+    }
+    .texim-stat-box { 
+      flex: 1; 
+      background: #ffffff; 
+      border: 1px solid #e2e8f0; 
+      border-radius: 10px; 
+      padding: .5rem .2rem; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
     }
-    .texim-stat-label { font-size: .65rem; color: #64748b; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
-    .texim-stat-val { font-family: Orbitron, sans-serif; font-size: .85rem; font-weight: 700; color: #0f172a; }
+    .texim-stat-label { 
+      font-size: .65rem; 
+      color: #94a3b8; 
+      text-transform: uppercase; 
+      font-weight: 600; 
+      margin-bottom: 2px; 
+    }
+    .texim-stat-val { 
+      font-family: Orbitron, sans-serif; 
+      font-size: .9rem; 
+      font-weight: 700; 
+      color: #0f172a; 
+    }
     
-    .texim-team-link { font-size: .75rem; color: #555555; text-decoration: underline; font-weight: 500; }
+    /* Стилизиран TruckersMP бутон */
+    .btn-tmp {
+      width: 100%;
+      display: inline-block;
+      padding: 0.55rem 1rem;
+      background-color: #0f172a;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    .btn-tmp:hover {
+      background-color: #1e293b;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
     
     @media(max-width:1000px){ .texim-team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media(max-width:700px){ 
@@ -145,7 +206,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
         const aboutSection = aboutTitle?.closest('section');
         if (!aboutSection) return;
 
-        // Масив със служителите, включващ новите полета rank и level
+        // Ръчно попълване на Rank и Level за всеки служител
         const members = [
           { name: 'chea7er044', role: 'Owner', rank: '#1', level: '100', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/5605295' },
           { name: '[BG] Mitaka', role: 'Driver', rank: '#2', level: '45', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/4710545' },
@@ -176,7 +237,6 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
                   <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
                   <div class="texim-team-role">${member.role}</div>
                   
-                  <!-- Новите графи Rank и Level -->
                   <div class="texim-team-stats">
                     <div class="texim-stat-box">
                       <span class="texim-stat-label">Rank</span>
@@ -188,7 +248,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
                     </div>
                   </div>
 
-                  <a class="texim-team-link" href="${member.profile}" target="_blank" rel="noopener noreferrer">TruckersMP</a>
+                  <a class="btn-tmp" href="${member.profile}" target="_blank" rel="noopener noreferrer">TruckersMP</a>
                 </article>
               `).join('')}
             </div>
