@@ -118,7 +118,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
       letter-spacing: .06em; 
     }
     
-    /* Графи Rank и Level – преливащи в #f4f4f6 */
+    /* Графи Rank и Level – бели кутийки с рамка */
     .texim-team-stats { 
       display: flex; 
       gap: .6rem; 
@@ -128,12 +128,14 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
     }
     .texim-stat-box { 
       flex: 1; 
-      background: transparent; 
-      border: none; 
-      padding: .2rem 0; 
+      background: #ffffff; 
+      border: 1px solid #e5e7eb; 
+      border-radius: 8px; 
+      padding: .5rem .4rem; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     }
     .texim-stat-label { 
       font-size: .65rem; 
@@ -144,7 +146,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
     }
     .texim-stat-val { 
       font-family: Orbitron, sans-serif; 
-      font-size: .95rem; 
+      font-size: .9rem; 
       font-weight: 700; 
       color: #111111; 
     }
