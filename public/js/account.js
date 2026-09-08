@@ -1,6 +1,7 @@
 import { supabaseClient, getUser, getProfile } from './texim-supabase.js';
 
 const DEFAULT_AVATAR = 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png';
+const SUPABASE_URL = window.__TEXIM_SUPABASE__?.url || '';
 const supabase = await supabaseClient();
 const $ = (id) => document.getElementById(id);
 const message = (text, type = '') => { const el = $('accountMessage'); if (el) { el.textContent = text; el.className = `account-message ${type}`; } };
@@ -25,9 +26,30 @@ if ($('loginForm')) {
   $('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault(); message('Signing you in…');
     const form = new FormData(e.currentTarget);
+    const identifier = String(form.get('identifier') || '').trim();
+    const password = String(form.get('password') || '');
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email: form.get('email').trim(), password: form.get('password') });
-      if (error) throw error;
+      let result;
+
+      if (identifier.includes('@')) {
+        result = await supabase.auth.signInWithPassword({ email: identifier, password });
+      } else {
+        if (!SUPABASE_URL) throw new Error('Supabase configuration is missing.');
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/login-with-username`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: identifier, password })
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.error || 'Invalid username or password.');
+        if (!payload.access_token || !payload.refresh_token) throw new Error('Login failed.');
+        result = await supabase.auth.setSession({
+          access_token: payload.access_token,
+          refresh_token: payload.refresh_token
+        });
+      }
+
+      if (result.error) throw result.error;
       window.dispatchEvent(new Event('supabase-auth-changed'));
       location.href = '/profile.html';
     } catch (err) { message(err.message || 'Login failed.', 'error'); }
