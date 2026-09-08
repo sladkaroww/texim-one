@@ -12,3 +12,251 @@ const description = 'TEXIM ONE in pictures — community screenshots, convoy hig
   <section class="section section--light" id="truckersmp-news" style="padding-top:1.5rem;padding-bottom:3rem;"><div class="container"><div class="news-heading" style="text-align:center;margin-top:0;margin-bottom:2rem;"><h2 class="section-title" style="margin:0">Latest News</h2></div><div id="newsGrid" class="news-grid" aria-live="polite"></div><p id="newsStatus" class="news-status" aria-live="polite"></p></div></section>
   <script slot="scripts" src="/js/news.js" type="module"></script>
 </Base>
+
+---
+import Layout from '../layouts/Layout.astro';
+
+// TruckersMP VTC News RSS
+const RSS_URL = 'https://truckersmp.com/vtc/74050/news/rss';
+
+interface NewsItem {
+  title: string;
+  link: string;
+  pubDate: string;
+  description: string;
+}
+
+let newsList: NewsItem[] = [];
+
+try {
+  const res = await fetch(RSS_URL);
+  if (res.ok) {
+    const xmlText = await res.text();
+    
+    // Извличане на <item> елементите от XML
+    const items = xmlText.match(/<item>[\s\S]*?<\/item>/g) || [];
+    
+    newsList = items.slice(0, 4).map((itemXml) => {
+      const getTag = (tag: string) => {
+        const match = itemXml.match(new RegExp(`<${tag}>(.*?)</${tag}>`, 's'));
+        return match ? match[1].replace(/<!\[CDATA\[(.*?)\]\]>/s, '$1').trim() : '';
+      };
+
+      const title = getTag('title');
+      const link = getTag('link');
+      const rawDate = getTag('pubDate');
+      const rawDesc = getTag('description');
+
+      // Форматиране на датата
+      let formattedDate = rawDate;
+      if (rawDate) {
+        const d = new Date(rawDate);
+        if (!isNaN(d.getTime())) {
+          formattedDate = d.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          });
+        }
+      }
+
+      // Изчистване на HTML тагове от описанието за чист преглед
+      const cleanDesc = rawDesc
+        .replace(/<[^>]*>?/gm, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      return {
+        title: title || 'Latest Update',
+        link: link || 'https://truckersmp.com/vtc/74050',
+        pubDate: formattedDate,
+        description: cleanDesc.length > 140 ? cleanDesc.substring(0, 140) + '...' : cleanDesc,
+      };
+    });
+  }
+} catch (error) {
+  console.error('Failed to fetch TruckersMP RSS news:', error);
+}
+---
+
+<Layout title="Media & News - TEXIM ONE" active="media">
+  <main class="media-page">
+    {/* Секция с последните новини */}
+    <section class="latest-news-section">
+      <div class="container">
+        <div class="news-header">
+          <h2 class="news-title">Latest News</h2>
+          <p class="news-subtitle">Direct feed from our TruckersMP VTC portal</p>
+        </div>
+
+        {newsList.length > 0 ? (
+          <div class="news-grid">
+            {newsList.map((item) => (
+              <article class="news-card">
+                <div class="news-card-body">
+                  <span class="news-date">{item.pubDate}</span>
+                  <h3 class="news-card-title">{item.title}</h3>
+                  <p class="news-excerpt">{item.description}</p>
+                </div>
+                <a href={item.link} target="_blank" rel="noopener noreferrer" class="btn-news">
+                  Read More
+                </a>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="news-empty">
+            <p>Unable to load latest news at this time.</p>
+            <a href="https://truckersmp.com/vtc/74050" target="_blank" rel="noopener noreferrer" class="btn-news-fallback">
+              Visit TruckersMP VTC
+            </a>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style is:global>
+  /* Основен светъл (сив) фон на секцията */
+  .latest-news-section {
+    padding: 4rem 0;
+    background-color: #f4f4f6;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .news-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .news-title {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .news-subtitle {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+
+  /* Решетка за 4-те новини */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* Бели карти на новините */
+  .news-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    border-color: #d1d5db;
+  }
+
+  .news-card-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .news-date {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .news-card-title {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+
+  .news-excerpt {
+    font-size: 0.85rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0 0 1.25rem 0;
+  }
+
+  /* Черни бутони в тон с общия стил */
+  .btn-news {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    background-color: #111111;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+
+  .btn-news:hover {
+    background-color: #000000;
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  .news-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+  }
+
+  .btn-news-fallback {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background-color: #111111;
+    color: #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  /* Адаптивност за мобилни устройства */
+  @media (max-width: 1024px) {
+    .news-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .latest-news-section {
+      padding: 3rem 0;
+    }
+    .news-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>
