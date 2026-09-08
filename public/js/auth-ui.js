@@ -1,10 +1,11 @@
 import { supabaseClient, getProfile, escapeHtml } from './texim-supabase.js';
-const nav = document.querySelector('.nav-list');
-if (!nav) return;
 
+const nav = document.querySelector('.nav-list');
 const DEFAULT_AVATAR = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png';
 
 async function render() {
+  if (!nav) return;
+
   const supabase = await supabaseClient();
   const { data: { session } } = await supabase.auth.getSession();
   document.getElementById('accountNav')?.remove();
