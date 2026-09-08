@@ -1,5 +1,6 @@
-import { supabaseClient, getUser, getProfile, escapeHtml } from './texim-supabase.js';
+import { supabaseClient, getUser, getProfile } from './texim-supabase.js';
 
+const DEFAULT_AVATAR = 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png';
 const supabase = await supabaseClient();
 const $ = (id) => document.getElementById(id);
 const message = (text, type = '') => { const el = $('accountMessage'); if (el) { el.textContent = text; el.className = `account-message ${type}`; } };
@@ -73,43 +74,20 @@ if ($('profileForm')) {
     if (profile) {
       $('username').value = profile.username || '';
       $('display_name').value = profile.display_name || '';
-      $('avatar_url').value = profile.avatar_url || '';
       if ($('profileRole')) $('profileRole').textContent = profile.role || 'member';
       if ($('profileEmail')) $('profileEmail').textContent = user.email || '';
-      if ($('profileAvatar')) $('profileAvatar').src = profile.avatar_url || 'https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png';
+      if ($('profileAvatar')) $('profileAvatar').src = DEFAULT_AVATAR;
     }
   }
   $('profileForm').addEventListener('submit', async (e) => {
     e.preventDefault(); message('Saving profile…');
     try {
       const form = new FormData(e.currentTarget);
-      const updates = { username: form.get('username').trim() || null, display_name: form.get('display_name').trim() || null, avatar_url: form.get('avatar_url').trim() || null };
+      const updates = { username: form.get('username').trim() || null, display_name: form.get('display_name').trim() || null };
       const { error } = await supabase.from('profiles').update(updates).eq('id', user.id);
       if (error) throw error;
-      if ($('profileAvatar')) $('profileAvatar').src = updates.avatar_url || 'https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png';
+      if ($('profileAvatar')) $('profileAvatar').src = DEFAULT_AVATAR;
       message('Profile saved.', 'success');
     } catch (err) { message(err.message || 'Could not save profile.', 'error'); }
-  });
-}
-
-if ($('avatarForm')) {
-  const user = await getUser();
-  if (user) $('avatarForm').addEventListener('submit', async (e) => {
-    e.preventDefault(); message('Uploading avatar…');
-    try {
-      const file = new FormData(e.currentTarget).get('avatar');
-      if (!(file instanceof File) || !file.size) throw new Error('Choose an image first.');
-      if (file.size > 4 * 1024 * 1024) throw new Error('Avatar must be smaller than 4 MB.');
-      if (!file.type.startsWith('image/')) throw new Error('Avatar must be an image.');
-      const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
-      const path = `${user.id}/avatar.${ext}`;
-      const { error: uploadError } = await supabase.storage.from('avatars').upload(path, file, { upsert: true, contentType: file.type });
-      if (uploadError) throw uploadError;
-      const { data } = supabase.storage.from('avatars').getPublicUrl(path);
-      const { error } = await supabase.from('profiles').update({ avatar_url: data.publicUrl }).eq('id', user.id);
-      if (error) throw error;
-      if ($('profileAvatar')) $('profileAvatar').src = `${data.publicUrl}?v=${Date.now()}`;
-      message('Avatar updated.', 'success');
-    } catch (err) { message(err.message || 'Avatar upload failed.', 'error'); }
   });
 }
