@@ -65,21 +65,21 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
   <link rel="stylesheet" href="/css/account.css" />
   <link rel="icon" href="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" type="image/png" />
   <style is:global>
-    /* Уеднаквен светлосив фон на секцията спрямо style.css */
-    .texim-team-section { padding: 4rem 0; background: #f4f4f6; }
+    /* Бял фон на цялата секция */
+    .texim-team-section { padding: 4rem 0; background: #ffffff; }
     .texim-team-header { text-align: center; margin-bottom: 2.5rem; }
     .texim-team-title { font-family: Orbitron, Inter, sans-serif; font-size: 2.2rem; font-weight: 700; color: #111111; margin: 0 0 .7rem; }
     .texim-team-subtitle { margin: 0; color: #666666; font-size: 1rem; }
     .texim-team-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
     
-    /* Чисто бяла карта със същата рамка и сянка като в About Us */
+    /* Панел с цвят #f4f4f6 */
     .texim-team-card { 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
       text-align: center; 
       padding: 1.6rem 1.2rem; 
-      background: #ffffff; 
+      background: #f4f4f6; 
       border: 1px solid #e5e7eb; 
       border-radius: 12px; 
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
@@ -118,7 +118,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
       letter-spacing: .06em; 
     }
     
-    /* Графи Rank и Level */
+    /* Графи Rank и Level – преливащи в #f4f4f6 */
     .texim-team-stats { 
       display: flex; 
       gap: .6rem; 
@@ -128,10 +128,9 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
     }
     .texim-stat-box { 
       flex: 1; 
-      background: #f8f9fa; 
-      border: 1px solid #e5e7eb; 
-      border-radius: 8px; 
-      padding: .5rem .2rem; 
+      background: transparent; 
+      border: none; 
+      padding: .2rem 0; 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
@@ -145,17 +144,17 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
     }
     .texim-stat-val { 
       font-family: Orbitron, sans-serif; 
-      font-size: .9rem; 
+      font-size: .95rem; 
       font-weight: 700; 
       color: #111111; 
     }
     
-    /* TruckersMP Бутон */
+    /* Черен бутон според основната тема */
     .btn-tmp {
       width: 100%;
       display: inline-block;
       padding: 0.6rem 1rem;
-      background-color: #0f172a;
+      background-color: #111111;
       color: #ffffff;
       font-size: 0.8rem;
       font-weight: 600;
@@ -164,7 +163,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
       transition: background-color 0.2s ease, transform 0.1s ease;
     }
     .btn-tmp:hover {
-      background-color: #1e293b;
+      background-color: #000000;
       color: #ffffff;
       transform: translateY(-1px);
     }
