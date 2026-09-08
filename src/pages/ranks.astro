@@ -64,7 +64,8 @@ const description = 'Build your reputation, raise your standing, and set the dir
     <!-- Разпънат контейнер за таблицата -->
     <div class="full-table-wrapper">
       <iframe 
-        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSpsfoa5PWmppRtGeUQV_h0e4f2QpXFKDRRrHnl0yCBwrWCIIaQBo06YvNajSazidWlSxvOQ9Vj-ive/pubhtml?widget=false&amp;headers=false&amp;chrome=false" 
+        id="liveGoogleSheet"
+        src="about:blank" 
         scrolling="no">
       </iframe>
     </div>
@@ -86,10 +87,21 @@ const description = 'Build your reputation, raise your standing, and set the dir
 
   .full-table-wrapper iframe {
     width: 100%;
-    /* Регулирайте тази височина според това колко реда имате в таблицата, за да се види цялата без скролбар */
-    height: 1200px; 
+    height: 1200px; /* Регулирайте спрямо редовете */
     border: none;
     display: block;
     overflow: hidden;
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const iframe = document.getElementById('liveGoogleSheet');
+    const baseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSpsfoa5PWmppRtGeUQV_h0e4f2QpXFKDRRrHnl0yCBwrWCIIaQBo06YvNajSazidWlSxvOQ9Vj-ive/pubhtml";
+    
+    // Добавяме уникален параметър (timestamp), за да избегнем кеширането от браузъра
+    const freshUrl = baseUrl + "?widget=false&headers=false&chrome=false&t=" + new Date().getTime();
+    
+    iframe.src = freshUrl;
+  });
+</script>
