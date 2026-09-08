@@ -64,6 +64,23 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
   <link rel="stylesheet" href="/css/mobile.css" />
   <link rel="stylesheet" href="/css/account.css" />
   <link rel="icon" href="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" type="image/png" />
+  <style is:global>
+    .texim-team-section{padding:4rem 0;background:#fff}
+    .texim-team-header{text-align:center;margin-bottom:2.5rem}
+    .texim-team-title{font-family:Orbitron,Inter,sans-serif;font-size:2.2rem;font-weight:700;color:#111;margin:0 0 .7rem}
+    .texim-team-subtitle{margin:0;color:#666;font-size:1rem}
+    .texim-team-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem}
+    .texim-team-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:1.5rem 1.1rem;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.06);transition:transform .2s ease,box-shadow .2s ease}
+    .texim-team-card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.1)}
+    .texim-team-avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;background:#f1f1f1;border:2px solid #eee;margin-bottom:1rem}
+    .texim-team-name{font-family:Orbitron,Inter,sans-serif;font-size:.95rem;font-weight:700;color:#111;text-decoration:none;word-break:break-word}
+    .texim-team-name:hover{text-decoration:underline}
+    .texim-team-role{margin:.45rem 0 0;color:#777;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+    .texim-team-link{margin-top:1rem;font-size:.75rem;color:#555;text-decoration:underline}
+    @media(max-width:1000px){.texim-team-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:700px){.texim-team-section{padding:3rem 0}.texim-team-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}.texim-team-card{padding:1.2rem .8rem}.texim-team-avatar{width:72px;height:72px}}
+    @media(max-width:480px){.texim-team-grid{grid-template-columns:1fr}.texim-team-card{max-width:340px;width:100%;margin:0 auto}}
+  </style>
   <slot name="head" />
 </head>
 <body>
@@ -80,6 +97,59 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
   <script src="/js/i18n.js" is:inline></script>
   <script src="/js/main.js" is:inline></script>
   <script src="/js/auth-ui.js" type="module"></script>
+  <script is:inline>
+    (() => {
+      if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
+
+      const mountTeam = () => {
+        if (document.querySelector('.texim-team-section')) return;
+        const aboutTitle = document.querySelector('h2[data-i18n="about.title"]');
+        const aboutSection = aboutTitle?.closest('section');
+        if (!aboutSection) return;
+
+        const members = [
+          { name: 'chea7er044', role: 'Owner', avatar: 'https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png', profile: 'https://truckersmp.com/user/5605295' },
+          { name: '[BG] Mitaka', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/4710545' },
+          { name: '[BG] NiksaN', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/4492540.1766442611.png', profile: 'https://truckersmp.com/user/4492540' },
+          { name: '[BG] Mariyanko', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/2587553.1767200331.png', profile: 'https://truckersmp.com/user/2587553' },
+          { name: '[BG] Iv4o_56', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/4947166.1767264328.png', profile: 'https://truckersmp.com/user/4947166' },
+          { name: 'SkodaSolaris', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/1910186.1767387345.png', profile: 'https://truckersmp.com/user/1910186' },
+          { name: '[BG] cickaa', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/3597382.1767699185.png', profile: 'https://truckersmp.com/user/3597382' },
+          { name: '[BG] Metko', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/5118236.1776869300.png', profile: 'https://truckersmp.com/user/5118236' },
+          { name: 'AcerBG', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/2003826.1779619724.png', profile: 'https://truckersmp.com/user/2003826' },
+          { name: 'Petkovv', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/6358471.1788385527.png', profile: 'https://truckersmp.com/user/6358471' },
+          { name: 'hollowaznai', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/6358812.1788445624.png', profile: 'https://truckersmp.com/user/6358812' },
+          { name: '[BG] slad', role: 'Representative', avatar: 'https://static.truckersmp.com/avatarsN/4049929.1766433092.png', profile: 'https://truckersmp.com/user/4049929' },
+          { name: '[BG] Marvinito', role: 'Manager', avatar: 'https://static.truckersmp.com/avatarsN/2064608.1766412005.png', profile: 'https://truckersmp.com/user/2064608' }
+        ];
+
+        const section = document.createElement('section');
+        section.className = 'texim-team-section';
+        section.innerHTML = `
+          <div class="container">
+            <div class="texim-team-header">
+              <h2 class="texim-team-title">Our Team</h2>
+              <p class="texim-team-subtitle">The TEXIM ONE team on TruckersMP.</p>
+            </div>
+            <div class="texim-team-grid">
+              ${members.map(member => `
+                <article class="texim-team-card">
+                  <img class="texim-team-avatar" src="${member.avatar}" alt="${member.name}" loading="lazy">
+                  <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
+                  <div class="texim-team-role">${member.role}</div>
+                  <a class="texim-team-link" href="${member.profile}" target="_blank" rel="noopener noreferrer">View TruckersMP profile</a>
+                </article>
+              `).join('')}
+            </div>
+          </div>`;
+
+        aboutSection.insertAdjacentElement('afterend', section);
+      };
+
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountTeam, { once: true });
+      else mountTeam();
+    })();
+  </script>
   <slot name="scripts" />
   <CookieConsent token={analyticsToken} />
 </body>
