@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Login | TEXIM ONE" description="Log in to your TEXIM ONE member account." path="/login.html">
+  <section class="account-page"><div class="container"><div class="account-card account-card--narrow">
+    <h1 class="account-title">Member Login</h1><p class="account-muted">Sign in to access your TEXIM ONE profile and member features.</p>
+    <form id="loginForm" class="account-form">
+      <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+      <button class="btn btn-primary" type="submit">Login</button>
+      <div id="accountMessage" class="account-message" role="status"></div>
+    </form>
+    <p><a class="account-link" href="/forgot-password.html">Forgot your password?</a></p>
+    <p class="account-muted">No account? <a class="account-link" href="/register.html">Create one</a></p>
+  </div></div></section>
+  <script slot="scripts" src="/js/account.js" type="module"></script>
+</Base>
