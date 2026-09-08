@@ -7,7 +7,7 @@ create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   username text unique,
   display_name text,
-  avatar_url text,
+  avatar_url text default 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png',
   role text not null default 'member' check (role in ('member', 'admin')),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -91,14 +91,15 @@ security definer
 set search_path = public
 as $$
 begin
-  insert into public.profiles (id, username, display_name)
+  insert into public.profiles (id, username, display_name, avatar_url)
   values (
     new.id,
     nullif(new.raw_user_meta_data ->> 'username', ''),
     coalesce(
       nullif(new.raw_user_meta_data ->> 'display_name', ''),
       nullif(new.raw_user_meta_data ->> 'username', '')
-    )
+    ),
+    'https://static.truckersmp.com/avatarsN/4710545.1766443403.png'
   )
   on conflict (id) do nothing;
   return new;
@@ -155,7 +156,10 @@ create policy "users can update their profile"
 on public.profiles for update
 to authenticated
 using (auth.uid() = id)
-with check (auth.uid() = id);
+with check (
+  auth.uid() = id
+  and avatar_url = (select p.avatar_url from public.profiles p where p.id = auth.uid())
+);
 
 drop policy if exists "admins can manage profiles" on public.profiles;
 create policy "admins can manage profiles"
@@ -228,13 +232,11 @@ create policy "users can join events"
 on public.event_participants for insert
 to authenticated
 with check (auth.uid() = user_id);
-
 drop policy if exists "users can leave events" on public.event_participants;
 create policy "users can leave events"
 on public.event_participants for delete
 to authenticated
 using (auth.uid() = user_id or public.is_admin());
-
 drop policy if exists "admins can manage participants" on public.event_participants;
 create policy "admins can manage participants"
 on public.event_participants for all
@@ -242,38 +244,12 @@ to authenticated
 using (public.is_admin())
 with check (public.is_admin());
 
--- Storage: the avatars bucket is public for reading. Authenticated users may only
--- create, replace, and delete files inside their own <user-id>/ folder.
+-- Storage: the avatars bucket is public for reading. Member avatar uploads are no longer used.
 drop policy if exists "Public can view avatars" on storage.objects;
 create policy "Public can view avatars"
 on storage.objects for select
 to public
 using (bucket_id = 'avatars');
-
-drop policy if exists "Users select own avatar" on storage.objects;
-create policy "Users select own avatar"
-on storage.objects for select
-to authenticated
-using (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text);
-
-drop policy if exists "Users upload own avatar" on storage.objects;
-create policy "Users upload own avatar"
-on storage.objects for insert
-to authenticated
-with check (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text);
-
-drop policy if exists "Users update own avatar" on storage.objects;
-create policy "Users update own avatar"
-on storage.objects for update
-to authenticated
-using (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text)
-with check (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text);
-
-drop policy if exists "Users delete own avatar" on storage.objects;
-create policy "Users delete own avatar"
-on storage.objects for delete
-to authenticated
-using (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text);
 
 -- Useful indexes
 create index if not exists news_published_idx on public.news (published, published_at desc);
