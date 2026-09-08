@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="My Profile | TEXIM ONE" description="Manage your TEXIM ONE member profile." active="" path="/profile.html" robots="noindex,nofollow">
+  <section class="account-page"><div class="container"><div class="account-card">
+    <div class="profile-head"><img id="profileAvatar" class="avatar" src="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" alt="Profile avatar" /><div><h1 class="account-title">My Profile</h1><div id="profileEmail" class="account-muted"></div><span id="profileRole" class="badge">member</span></div></div>
+    <form id="profileForm" class="account-form">
+      <label>Username<input id="username" name="username" type="text" minlength="3" maxlength="30" required /></label>
+      <label>Display name<input id="display_name" name="display_name" type="text" maxlength="60" required /></label>
+      <label>Avatar URL<input id="avatar_url" name="avatar_url" type="url" placeholder="https://…" /></label>
+      <div class="account-actions"><button class="btn btn-primary" type="submit">Save profile</button><a class="btn" href="/members.html">Member list</a><a class="btn" href="/logout.html">Log out</a></div>
+      <div id="accountMessage" class="account-message" role="status"></div>
+    </form>
+    <hr style="margin:2rem 0;border:0;border-top:1px solid #eee" />
+    <h2>Upload avatar</h2><form id="avatarForm" class="account-form"><label>Image<input name="avatar" type="file" accept="image/*" required /></label><button class="btn" type="submit">Upload avatar</button></form>
+  </div></div></section>
+  <script slot="scripts" src="/js/account.js" type="module"></script>
+</Base>
