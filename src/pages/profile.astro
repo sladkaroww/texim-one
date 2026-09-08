@@ -10,6 +10,10 @@ import Base from '../layouts/Base.astro';
       <div class="account-actions"><button class="btn btn-primary" type="submit">Save profile</button><a class="btn" href="/logout.html">Log out</a></div>
       <div id="accountMessage" class="account-message" role="status"></div>
     </form>
+    <div class="account-danger-zone">
+      <button id="deleteProfileButton" class="delete-profile-button" type="button">Delete profile</button>
+      <p class="delete-profile-hint">Permanently delete your TEXIM ONE account and profile.</p>
+    </div>
   </div></div></section>
   <script slot="scripts" src="/js/account.js" type="module"></script>
 </Base>
