@@ -15,5 +15,22 @@ import Base from '../layouts/Base.astro';
       <p class="delete-profile-hint">Permanently delete your TEXIM ONE account and profile.</p>
     </div>
   </div></div></section>
+
+  <div id="deleteProfileModal" class="delete-modal" hidden aria-hidden="true">
+    <div class="delete-modal-backdrop" data-delete-close></div>
+    <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+      <button class="delete-modal-close" type="button" aria-label="Close" data-delete-close>×</button>
+      <div class="delete-modal-icon">!</div>
+      <h2 id="deleteModalTitle">Delete your profile?</h2>
+      <p>This action is <strong>irreversible</strong>. Your TEXIM ONE account and profile will be permanently deleted.</p>
+      <p class="delete-modal-instruction">To confirm, press and hold the button for 3 seconds.</p>
+      <button id="confirmDeleteButton" class="hold-delete-button" type="button">
+        <span class="hold-delete-progress"></span>
+        <span class="hold-delete-label">Press and hold to delete</span>
+      </button>
+      <button class="delete-modal-cancel" type="button" data-delete-close>Cancel</button>
+    </div>
+  </div>
+
   <script slot="scripts" src="/js/account.js" type="module"></script>
 </Base>
