@@ -108,12 +108,10 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
         if (!aboutSection) return;
 
         const members = [
-          { name: 'chea7er044', role: 'Owner', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/5605295' },
+          { name: 'chea7er044', role: 'Owner', avatar: 'https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png', profile: 'https://truckersmp.com/user/5605295' },
           { name: '[BG] Mitaka', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/4710545' },
           { name: '[BG] NiksaN', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/4492540.1766442611.png', profile: 'https://truckersmp.com/user/4492540' },
-          { name: '[BG] Marvinito', role: 'Manager', avatar: 'https://static.truckersmp.com/avatarsN/2064608.1766412005.png', profile: 'https://truckersmp.com/user/2064608' }
           { name: '[BG] Mariyanko', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/2587553.1767200331.png', profile: 'https://truckersmp.com/user/2587553' },
-          { name: '[BG] slad', role: 'Representative', avatar: 'https://static.truckersmp.com/avatarsN/4049929.1766433092.png', profile: 'https://truckersmp.com/user/4049929' },
           { name: '[BG] Iv4o_56', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/4947166.1767264328.png', profile: 'https://truckersmp.com/user/4947166' },
           { name: 'SkodaSolaris', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/1910186.1767387345.png', profile: 'https://truckersmp.com/user/1910186' },
           { name: '[BG] cickaa', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/3597382.1767699185.png', profile: 'https://truckersmp.com/user/3597382' },
@@ -121,6 +119,8 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
           { name: 'AcerBG', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/2003826.1779619724.png', profile: 'https://truckersmp.com/user/2003826' },
           { name: 'Petkovv', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/6358471.1788385527.png', profile: 'https://truckersmp.com/user/6358471' },
           { name: 'hollowaznai', role: 'Driver', avatar: 'https://static.truckersmp.com/avatarsN/6358812.1788445624.png', profile: 'https://truckersmp.com/user/6358812' },
+          { name: '[BG] slad', role: 'Representative', avatar: 'https://static.truckersmp.com/avatarsN/4049929.1766433092.png', profile: 'https://truckersmp.com/user/4049929' },
+          { name: '[BG] Marvinito', role: 'Manager', avatar: 'https://static.truckersmp.com/avatarsN/2064608.1766412005.png', profile: 'https://truckersmp.com/user/2064608' }
         ];
 
         const section = document.createElement('section');
@@ -128,7 +128,8 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
         section.innerHTML = `
           <div class="container">
             <div class="texim-team-header">
-              <h2 class="texim-team-title">Employees</h2>
+              <h2 class="texim-team-title">Our Team</h2>
+              <p class="texim-team-subtitle">The TEXIM ONE team on TruckersMP.</p>
             </div>
             <div class="texim-team-grid">
               ${members.map(member => `
