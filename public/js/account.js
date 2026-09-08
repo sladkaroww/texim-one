@@ -30,25 +30,16 @@ if ($('loginForm')) {
     const password = String(form.get('password') || '');
     try {
       let result;
-
       if (identifier.includes('@')) {
         result = await supabase.auth.signInWithPassword({ email: identifier, password });
       } else {
         if (!SUPABASE_URL) throw new Error('Supabase configuration is missing.');
-        const response = await fetch(`${SUPABASE_URL}/functions/v1/login-with-username`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: identifier, password })
-        });
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/login-with-username`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: identifier, password }) });
         const payload = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(payload.error || 'Invalid username or password.');
         if (!payload.access_token || !payload.refresh_token) throw new Error('Login failed.');
-        result = await supabase.auth.setSession({
-          access_token: payload.access_token,
-          refresh_token: payload.refresh_token
-        });
+        result = await supabase.auth.setSession({ access_token: payload.access_token, refresh_token: payload.refresh_token });
       }
-
       if (result.error) throw result.error;
       window.dispatchEvent(new Event('supabase-auth-changed'));
       location.href = '/profile.html';
@@ -99,6 +90,34 @@ if ($('profileForm')) {
       if ($('profileRole')) $('profileRole').textContent = profile.role || 'member';
       if ($('profileEmail')) $('profileEmail').textContent = user.email || '';
       if ($('profileAvatar')) $('profileAvatar').src = DEFAULT_AVATAR;
+    }
+
+    const deleteButton = $('deleteProfileButton');
+    if (deleteButton) {
+      deleteButton.addEventListener('click', async () => {
+        const confirmed = window.confirm('Warning: deleting your profile is irreversible. Your TEXIM ONE account and profile will be permanently deleted. Are you absolutely sure you want to continue?');
+        if (!confirmed) return;
+        deleteButton.disabled = true;
+        deleteButton.textContent = 'Deleting…';
+        message('Deleting your profile…');
+        try {
+          if (!SUPABASE_URL) throw new Error('Supabase configuration is missing.');
+          const { data: { session } } = await supabase.auth.getSession();
+          if (!session?.access_token) throw new Error('Your session has expired. Please log in again.');
+          const response = await fetch(`${SUPABASE_URL}/functions/v1/delete-account`, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${session.access_token}` }
+          });
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(payload.error || 'Could not delete your profile.');
+          await supabase.auth.signOut();
+          location.href = '/';
+        } catch (err) {
+          deleteButton.disabled = false;
+          deleteButton.textContent = 'Delete profile';
+          message(err.message || 'Could not delete your profile.', 'error');
+        }
+      });
     }
   }
   $('profileForm').addEventListener('submit', async (e) => {
