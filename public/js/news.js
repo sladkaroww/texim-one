@@ -12,11 +12,6 @@
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 
-  const stripHtml = (value = '') => {
-    const doc = new DOMParser().parseFromString(String(value), 'text/html');
-    return (doc.body?.textContent || '').replace(/\s+/g, ' ').trim();
-  };
-
   const firstText = (node, names) => {
     for (const name of names) {
       const match = node.querySelector(name);
@@ -39,17 +34,6 @@
     return match?.[1] || '';
   };
 
-  const formatDate = (value) => {
-    if (!value) return '';
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return '';
-    return new Intl.DateTimeFormat(undefined, {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    }).format(date);
-  };
-
   function parseFeed(xml) {
     const doc = new DOMParser().parseFromString(xml, 'application/xml');
     if (doc.querySelector('parsererror')) throw new Error('The TruckersMP news feed could not be read.');
@@ -61,19 +45,15 @@
     return nodes.map((node) => {
       const isAtom = node.tagName.toLowerCase() === 'entry';
       const title = firstText(node, ['title']);
-      const description = firstText(node, ['description', 'summary', 'content']);
-      const content = firstText(node, ['content\\:encoded', 'content']) || description;
+      const content = firstText(node, ['content\\:encoded', 'description', 'summary', 'content']);
       const link = isAtom
         ? (node.querySelector('link[rel="alternate"]')?.getAttribute('href') || node.querySelector('link')?.getAttribute('href') || '')
         : firstText(node, ['link']);
-      const date = firstText(node, ['pubDate', 'published', 'updated']);
       const image = firstAttribute(node, ['enclosure[type^="image/"]', 'media\\:content[type^="image/"]', 'media\\:thumbnail'], 'url') || extractImage(content);
 
       return {
-        title: stripHtml(title),
-        description: stripHtml(description),
+        title: title.replace(/\s+/g, ' ').trim(),
         link,
-        date,
         image,
       };
     }).filter((item) => item.title && item.link);
@@ -82,14 +62,13 @@
   function render(items) {
     grid.innerHTML = items.length
       ? items.map((item) => {
-          const excerpt = item.description.length > 180 ? `${item.description.slice(0, 177).trimEnd()}…` : item.description;
           const image = item.image || 'https://i.ibb.co/4n4FZpq4/viber-2025-03-10-09-33-32-746.jpg';
-          return `<article class="db-card news-card">
-            <img src="${escapeHtml(image)}" alt="" loading="lazy" style="width:100%;height:180px;object-fit:cover;border-radius:7px;margin-bottom:1rem">
-            ${item.date ? `<span class="news-date">${escapeHtml(formatDate(item.date))}</span>` : ''}
-            <h2>${escapeHtml(item.title)}</h2>
-            ${excerpt ? `<p>${escapeHtml(excerpt)}</p>` : ''}
-            <a class="btn btn-primary" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Read article</a>
+          return `<article class="news-card">
+            <img class="news-card-banner" src="${escapeHtml(image)}" alt="" loading="lazy">
+            <div class="news-card-content">
+              <h3>${escapeHtml(item.title)}</h3>
+              <a class="news-card-link" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Read article →</a>
+            </div>
           </article>`;
         }).join('')
       : '<div class="empty-state">No TEXIM ONE news has been published yet.</div>';
@@ -100,9 +79,23 @@
   async function load() {
     const response = await fetch(RSS_PROXY, { headers: { Accept: 'application/rss+xml, application/xml, text/xml' } });
     if (!response.ok) throw new Error('Could not load the latest TEXIM ONE news.');
-    const xml = await response.text();
-    render(parseFeed(xml));
+    render(parseFeed(await response.text()));
   }
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #newsGrid.news-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.25rem; }
+    #newsGrid .news-card { background:#fff; border:1px solid #e3e8e8; border-radius:10px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,.05); transition:transform .2s ease, box-shadow .2s ease; }
+    #newsGrid .news-card:hover { transform:translateY(-3px); box-shadow:0 8px 22px rgba(0,0,0,.08); }
+    #newsGrid .news-card-banner { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:#e9e9eb; }
+    #newsGrid .news-card-content { padding:1rem; }
+    #newsGrid .news-card h3 { font-family:'Orbitron',sans-serif; font-size:.95rem; line-height:1.4; margin:0 0 .8rem; color:#111; }
+    #newsGrid .news-card-link { font-size:.85rem; font-weight:600; color:#111; }
+    #newsGrid .news-card-link:hover { text-decoration:underline; }
+    @media (max-width:900px) { #newsGrid.news-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:600px) { #newsGrid.news-grid { grid-template-columns:1fr; } }
+  `;
+  document.head.appendChild(style);
 
   load().catch((error) => {
     grid.innerHTML = '<div class="empty-state">The latest news could not be loaded right now.</div>';
