@@ -1,7 +1,7 @@
 import { supabaseClient, getProfile, escapeHtml } from './texim-supabase.js';
 
 const nav = document.querySelector('.nav-list');
-const DEFAULT_AVATAR = '/img/icons/USER.svg';
+const DEFAULT_AVATAR = 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png';
 
 async function render() {
   if (!nav) return;
@@ -27,15 +27,15 @@ async function render() {
   const profile = await getProfile(session.user.id);
   const displayName = profile?.display_name || profile?.username || session.user.email?.split('@')[0] || 'Member';
   const username = profile?.username ? `@${profile.username}` : '';
-  const avatar = profile?.avatar_url || DEFAULT_AVATAR;
+  const avatar = DEFAULT_AVATAR;
 
   li.innerHTML = `
     <button type="button" class="account-avatar-button" aria-label="Open profile preview" aria-expanded="false" aria-haspopup="true">
-      <img src="${escapeHtml(avatar)}" alt="${escapeHtml(displayName)}" class="account-avatar-icon">
+      <img src="${avatar}" alt="${escapeHtml(displayName)}" class="account-avatar-icon">
     </button>
     <div class="profile-dropdown" hidden>
       <div class="profile-dropdown-head">
-        <img src="${escapeHtml(avatar)}" alt="${escapeHtml(displayName)}" class="profile-dropdown-avatar">
+        <img src="${avatar}" alt="${escapeHtml(displayName)}" class="profile-dropdown-avatar">
         <div class="profile-dropdown-info">
           <strong>${escapeHtml(displayName)}</strong>
           ${username ? `<span>${escapeHtml(username)}</span>` : ''}
