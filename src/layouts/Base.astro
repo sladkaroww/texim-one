@@ -65,29 +65,30 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
   <link rel="stylesheet" href="/css/account.css" />
   <link rel="icon" href="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" type="image/png" />
   <style is:global>
-    .texim-team-section { padding: 4rem 0; background: #ffffff; }
+    /* Уеднаквен светлосив фон на секцията спрямо style.css */
+    .texim-team-section { padding: 4rem 0; background: #f4f4f6; }
     .texim-team-header { text-align: center; margin-bottom: 2.5rem; }
     .texim-team-title { font-family: Orbitron, Inter, sans-serif; font-size: 2.2rem; font-weight: 700; color: #111111; margin: 0 0 .7rem; }
     .texim-team-subtitle { margin: 0; color: #666666; font-size: 1rem; }
     .texim-team-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
     
-    /* Единен чист Light панел */
+    /* Чисто бяла карта със същата рамка и сянка като в About Us */
     .texim-team-card { 
       display: flex; 
       flex-direction: column; 
       align-items: center; 
       text-align: center; 
       padding: 1.6rem 1.2rem; 
-      background: #f8fafc; 
-      border: 1px solid #e2e8f0; 
-      border-radius: 16px; 
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04); 
+      background: #ffffff; 
+      border: 1px solid #e5e7eb; 
+      border-radius: 12px; 
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; 
     }
     .texim-team-card:hover { 
       transform: translateY(-4px); 
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08); 
-      border-color: #cbd5e1;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08); 
+      border-color: #d1d5db;
     }
     
     .texim-team-avatar { 
@@ -96,28 +97,28 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
       border-radius: 50%; 
       object-fit: cover; 
       background: #ffffff; 
-      border: 2px solid #e2e8f0; 
+      border: 2px solid #e5e7eb; 
       margin-bottom: 0.8rem; 
     }
     .texim-team-name { 
       font-family: Orbitron, Inter, sans-serif; 
       font-size: .95rem; 
       font-weight: 700; 
-      color: #0f172a; 
+      color: #111111; 
       text-decoration: none; 
       word-break: break-word; 
     }
     .texim-team-name:hover { text-decoration: underline; }
     .texim-team-role { 
       margin: .3rem 0 1rem; 
-      color: #64748b; 
+      color: #6b7280; 
       font-size: .8rem; 
       font-weight: 600; 
       text-transform: uppercase; 
       letter-spacing: .06em; 
     }
     
-    /* Графи Rank и Level с единен цвят */
+    /* Графи Rank и Level */
     .texim-team-stats { 
       display: flex; 
       gap: .6rem; 
@@ -127,9 +128,9 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
     }
     .texim-stat-box { 
       flex: 1; 
-      background: #ffffff; 
-      border: 1px solid #e2e8f0; 
-      border-radius: 10px; 
+      background: #f8f9fa; 
+      border: 1px solid #e5e7eb; 
+      border-radius: 8px; 
       padding: .5rem .2rem; 
       display: flex; 
       flex-direction: column; 
@@ -137,7 +138,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
     }
     .texim-stat-label { 
       font-size: .65rem; 
-      color: #94a3b8; 
+      color: #6b7280; 
       text-transform: uppercase; 
       font-weight: 600; 
       margin-bottom: 2px; 
@@ -146,14 +147,14 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
       font-family: Orbitron, sans-serif; 
       font-size: .9rem; 
       font-weight: 700; 
-      color: #0f172a; 
+      color: #111111; 
     }
     
-    /* Стилизиран TruckersMP бутон */
+    /* TruckersMP Бутон */
     .btn-tmp {
       width: 100%;
       display: inline-block;
-      padding: 0.55rem 1rem;
+      padding: 0.6rem 1rem;
       background-color: #0f172a;
       color: #ffffff;
       font-size: 0.8rem;
@@ -206,7 +207,6 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
         const aboutSection = aboutTitle?.closest('section');
         if (!aboutSection) return;
 
-        // Ръчно попълване на Rank и Level за всеки служител
         const members = [
           { name: 'chea7er044', role: 'Owner', rank: '#1', level: '100', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/5605295' },
           { name: '[BG] Mitaka', role: 'Driver', rank: '#2', level: '45', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/4710545' },
