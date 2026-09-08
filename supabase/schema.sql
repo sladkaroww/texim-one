@@ -60,7 +60,7 @@ create table if not exists public.applications (
 
 create table if not exists public.event_participants (
   event_id bigint not null references public.events(id) on delete cascade,
-  user_id uuid not null references public.profiles(id) on delete cascade,
+  user_id uuid not null references auth.users(id) on delete cascade,
   joined_at timestamptz not null default now(),
   primary key (event_id, user_id)
 );
@@ -145,7 +145,7 @@ alter table public.applications enable row level security;
 alter table public.event_participants enable row level security;
 
 -- Profiles
- drop policy if exists "profiles are publicly readable" on public.profiles;
+drop policy if exists "profiles are publicly readable" on public.profiles;
 create policy "profiles are publicly readable"
 on public.profiles for select
 using (true);
@@ -165,7 +165,7 @@ using (public.is_admin())
 with check (public.is_admin());
 
 -- News
- drop policy if exists "published news is public" on public.news;
+drop policy if exists "published news is public" on public.news;
 create policy "published news is public"
 on public.news for select
 using (published = true or public.is_admin());
@@ -178,7 +178,7 @@ using (public.is_admin())
 with check (public.is_admin());
 
 -- Events
- drop policy if exists "events are public" on public.events;
+drop policy if exists "events are public" on public.events;
 create policy "events are public"
 on public.events for select
 using (true);
@@ -191,7 +191,7 @@ using (public.is_admin())
 with check (public.is_admin());
 
 -- Applications
- drop policy if exists "users can create their own application" on public.applications;
+drop policy if exists "users can create their own application" on public.applications;
 create policy "users can create their own application"
 on public.applications for insert
 to authenticated
@@ -218,7 +218,7 @@ using (public.is_admin())
 with check (public.is_admin());
 
 -- Event participants
- drop policy if exists "participants are public" on public.event_participants;
+drop policy if exists "participants are public" on public.event_participants;
 create policy "participants are public"
 on public.event_participants for select
 using (true);
@@ -241,6 +241,39 @@ on public.event_participants for all
 to authenticated
 using (public.is_admin())
 with check (public.is_admin());
+
+-- Storage: the avatars bucket is public for reading. Authenticated users may only
+-- create, replace, and delete files inside their own <user-id>/ folder.
+drop policy if exists "Public can view avatars" on storage.objects;
+create policy "Public can view avatars"
+on storage.objects for select
+to public
+using (bucket_id = 'avatars');
+
+drop policy if exists "Users select own avatar" on storage.objects;
+create policy "Users select own avatar"
+on storage.objects for select
+to authenticated
+using (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text);
+
+drop policy if exists "Users upload own avatar" on storage.objects;
+create policy "Users upload own avatar"
+on storage.objects for insert
+to authenticated
+with check (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text);
+
+drop policy if exists "Users update own avatar" on storage.objects;
+create policy "Users update own avatar"
+on storage.objects for update
+to authenticated
+using (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text)
+with check (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text);
+
+drop policy if exists "Users delete own avatar" on storage.objects;
+create policy "Users delete own avatar"
+on storage.objects for delete
+to authenticated
+using (bucket_id = 'avatars' and (storage.foldername(name))[1] = (select auth.uid())::text);
 
 -- Useful indexes
 create index if not exists news_published_idx on public.news (published, published_at desc);
