@@ -19,12 +19,11 @@ const description = 'Build your reputation, raise your standing, and set the dir
 <section class="section section--white">
   <div class="container text-center">
     
-    <!-- Контейнер за таблицата със светъл фон -->
-    <div class="table-container">
+    <!-- Разпънат контейнер за таблицата -->
+    <div class="full-table-wrapper">
       <iframe 
-        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSpsfoa5PWmppRtGeUQV_h0e4f2QpXFKDRRrHnl0yCBwrWCIIaQBo06YvNajSazidWlSxvOQ9Vj-ive/pubhtml?widget=true&amp;headers=false&amp;chrome=false" 
-        title="Google Sheet"
-        loading="lazy">
+        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSpsfoa5PWmppRtGeUQV_h0e4f2QpXFKDRRrHnl0yCBwrWCIIaQBo06YvNajSazidWlSxvOQ9Vj-ive/pubhtml?widget=false&amp;headers=false&amp;chrome=false" 
+        scrolling="no">
       </iframe>
     </div>
 
@@ -32,33 +31,23 @@ const description = 'Build your reputation, raise your standing, and set the dir
 </section>
 
 <style>
-  /* Контейнер със светъл фон (Light) и заоблени ъгли */
-  .table-container {
+  .full-table-wrapper {
     width: 100%;
-    max-width: 1100px;
-    height: 600px; /* Височина на таблицата */
-    margin: 20px auto;
-    background-color: #f8f9fa; /* Light фон */
+    max-width: 1200px; /* Разпъване по ширина */
+    margin: 0 auto;
+    border-radius: 12px;
     border: 1px solid #e2e8f0;
-    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   }
 
-  /* Вграден iframe */
-  .table-container iframe {
+  .full-table-wrapper iframe {
     width: 100%;
-    height: 100%;
+    /* Регулирайте тази височина според това колко реда имате в таблицата, за да се види цялата без скролбар */
+    height: 1200px; 
     border: none;
-    background-color: #ffffff; /* Светъл цвят за самата таблица */
     display: block;
-  }
-
-  /* Мобилна адаптация */
-  @media (max-width: 768px) {
-    .table-container {
-      height: 450px;
-      border-radius: 10px;
-    }
+    overflow: hidden;
   }
 </style>
