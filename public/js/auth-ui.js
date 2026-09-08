@@ -2,7 +2,7 @@ import { supabaseClient, getProfile, escapeHtml } from './texim-supabase.js';
 const nav = document.querySelector('.nav-list');
 if (!nav) return;
 
-const profileIcon = `<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c.8-4 3.5-6 8-6s7.2 2 8 6"></path></svg>`;
+const DEFAULT_AVATAR = 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png';
 
 async function render() {
   const supabase = await supabaseClient();
@@ -12,12 +12,59 @@ async function render() {
 
   const li = document.createElement('li');
   li.id = 'accountNav';
-  li.innerHTML = `<a href="${session?.user ? '/profile.html' : '/login.html'}" class="nav-link account-nav-link" aria-label="${session?.user ? 'My Profile' : 'Login'}" title="${session?.user ? 'My Profile' : 'Login'}">${profileIcon}<span>${session?.user ? 'Profile' : 'Login'}</span></a>`;
-  nav.appendChild(li);
+  li.className = 'account-nav';
 
-  if (!session?.user) return;
+  if (!session?.user) {
+    li.innerHTML = `
+      <a href="/login.html" class="account-avatar-button" aria-label="Login" title="Login">
+        <img src="${DEFAULT_AVATAR}" alt="User" class="account-avatar-icon">
+      </a>`;
+    nav.appendChild(li);
+    return;
+  }
 
   const profile = await getProfile(session.user.id);
+  const displayName = profile?.display_name || profile?.username || session.user.email?.split('@')[0] || 'Member';
+  const username = profile?.username ? `@${profile.username}` : '';
+  const avatar = profile?.avatar_url || DEFAULT_AVATAR;
+
+  li.innerHTML = `
+    <button type="button" class="account-avatar-button" aria-label="Open profile preview" aria-expanded="false" aria-haspopup="true">
+      <img src="${escapeHtml(avatar)}" alt="${escapeHtml(displayName)}" class="account-avatar-icon">
+    </button>
+    <div class="profile-dropdown" hidden>
+      <div class="profile-dropdown-head">
+        <img src="${escapeHtml(avatar)}" alt="${escapeHtml(displayName)}" class="profile-dropdown-avatar">
+        <div class="profile-dropdown-info">
+          <strong>${escapeHtml(displayName)}</strong>
+          ${username ? `<span>${escapeHtml(username)}</span>` : ''}
+          <span>${escapeHtml(session.user.email || '')}</span>
+        </div>
+      </div>
+      <div class="profile-dropdown-divider"></div>
+      <a href="/profile.html" class="profile-dropdown-link">View profile</a>
+      <a href="/logout.html" class="profile-dropdown-link">Log out</a>
+    </div>`;
+
+  nav.appendChild(li);
+
+  const button = li.querySelector('.account-avatar-button');
+  const dropdown = li.querySelector('.profile-dropdown');
+
+  button.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const open = !dropdown.hidden;
+    dropdown.hidden = open;
+    button.setAttribute('aria-expanded', String(!open));
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!li.contains(event.target)) {
+      dropdown.hidden = true;
+      button.setAttribute('aria-expanded', 'false');
+    }
+  });
+
   if (profile?.role === 'admin') {
     const admin = document.createElement('li');
     admin.id = 'adminNav';
