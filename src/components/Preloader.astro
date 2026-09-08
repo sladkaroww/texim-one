@@ -1,3 +1,183 @@
 ---
 ---
-<div class="preloader"><div class="spinner"></div></div>
+<div class="preloader" aria-label="Loading page">
+  <div class="skeleton-page" aria-hidden="true">
+    <div class="skeleton-header">
+      <div class="skeleton skeleton-logo"></div>
+      <div class="skeleton-nav">
+        <span class="skeleton skeleton-nav-item"></span>
+        <span class="skeleton skeleton-nav-item"></span>
+        <span class="skeleton skeleton-nav-item"></span>
+        <span class="skeleton skeleton-nav-item"></span>
+      </div>
+    </div>
+    <div class="skeleton-hero">
+      <div class="skeleton skeleton-hero-title"></div>
+      <div class="skeleton skeleton-hero-text"></div>
+      <div class="skeleton skeleton-hero-text skeleton-hero-text--short"></div>
+      <div class="skeleton skeleton-button"></div>
+    </div>
+    <div class="skeleton-content">
+      <div class="skeleton skeleton-section-title"></div>
+      <div class="skeleton-grid">
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #fff;
+    overflow: hidden;
+    transition: opacity .35s ease, visibility .35s ease;
+  }
+
+  .preloader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .skeleton-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #fff;
+  }
+
+  .skeleton-header {
+    height: 68px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+  }
+
+  .skeleton-nav {
+    display: flex;
+    gap: 1.4rem;
+  }
+
+  .skeleton {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: #e9e9eb;
+    border-radius: 6px;
+  }
+
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent);
+    animation: skeleton-shimmer 1.4s infinite;
+  }
+
+  .skeleton-logo {
+    width: 125px;
+    height: 30px;
+    border-radius: 4px;
+  }
+
+  .skeleton-nav-item {
+    width: 68px;
+    height: 12px;
+    border-radius: 999px;
+  }
+
+  .skeleton-hero {
+    min-height: 430px;
+    padding: 8rem 8%;
+    background: #f1f1f3;
+  }
+
+  .skeleton-hero-title {
+    width: min(520px, 70%);
+    height: 62px;
+    margin-bottom: 1.2rem;
+    border-radius: 8px;
+  }
+
+  .skeleton-hero-text {
+    width: min(600px, 80%);
+    height: 17px;
+    margin-bottom: .7rem;
+  }
+
+  .skeleton-hero-text--short {
+    width: min(390px, 60%);
+  }
+
+  .skeleton-button {
+    width: 145px;
+    height: 44px;
+    margin-top: 1.4rem;
+    border-radius: 999px;
+  }
+
+  .skeleton-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .skeleton-section-title {
+    width: 260px;
+    height: 32px;
+    margin: 0 auto 2rem;
+    border-radius: 6px;
+  }
+
+  .skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .skeleton-card {
+    height: 170px;
+    border-radius: 12px;
+  }
+
+  @keyframes skeleton-shimmer {
+    100% { transform: translateX(100%); }
+  }
+
+  @media (max-width: 700px) {
+    .skeleton-header { padding: 0 1rem; }
+    .skeleton-nav-item:nth-child(n+3) { display: none; }
+    .skeleton-hero { padding: 6rem 1.5rem; min-height: 380px; }
+    .skeleton-hero-title { width: 85%; height: 48px; }
+    .skeleton-hero-text { width: 90%; }
+    .skeleton-grid { grid-template-columns: 1fr; }
+    .skeleton-card { height: 130px; }
+    .skeleton-content { padding: 3rem 1.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton::after { animation: none; }
+  }
+</style>
+
+<script>
+  const preloader = document.querySelector('.preloader');
+  const hidePreloader = () => {
+    if (!preloader) return;
+    preloader.classList.add('is-hidden');
+    window.setTimeout(() => preloader.remove(), 400);
+  };
+
+  if (document.readyState === 'complete') {
+    window.setTimeout(hidePreloader, 120);
+  } else {
+    window.addEventListener('load', hidePreloader, { once: true });
+  }
+</script>
