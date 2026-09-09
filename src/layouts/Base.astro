@@ -28,10 +28,6 @@ const SITE = 'https://vtc.texim.one';
 const canonical = new URL(path, SITE).href;
 const ogImage = image.startsWith('http') ? image : new URL(image, SITE).href;
 const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb1f4ec4fa390f043ffbeb29066';
-
-// Supabase publishable keys are safe to expose to the browser; RLS is the security boundary.
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL ?? import.meta.env.SUPABASE_URL ?? 'https://raqvhwktxzsgeeyshijp.supabase.co';
-const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.meta.env.SUPABASE_KEY ?? 'sb_publishable_9CK9hAhnEowjkvCH4ZHOlw_OcC5hoUB';
 ---
 
 <!DOCTYPE html>
@@ -65,129 +61,30 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
   <link rel="stylesheet" href="/css/account.css" />
   <link rel="icon" href="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" type="image/png" />
   <style is:global>
-    /* Бял фон на цялата секция */
     .texim-team-section { padding: 4rem 0; background: #ffffff; }
     .texim-team-header { text-align: center; margin-bottom: 2.5rem; }
     .texim-team-title { font-family: Orbitron, Inter, sans-serif; font-size: 2.2rem; font-weight: 700; color: #111111; margin: 0 0 .7rem; }
     .texim-team-subtitle { margin: 0; color: #666666; font-size: 1rem; }
     .texim-team-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
-    
-    /* Панел с цвят #f4f4f6 */
-    .texim-team-card { 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      text-align: center; 
-      padding: 1.6rem 1.2rem; 
-      background: #f4f4f6; 
-      border: 1px solid #e5e7eb; 
-      border-radius: 12px; 
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; 
-    }
-    .texim-team-card:hover { 
-      transform: translateY(-4px); 
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08); 
-      border-color: #d1d5db;
-    }
-    
-    .texim-team-avatar { 
-      width: 80px; 
-      height: 80px; 
-      border-radius: 50%; 
-      object-fit: cover; 
-      background: #ffffff; 
-      border: 2px solid #e5e7eb; 
-      margin-bottom: 0.8rem; 
-    }
-    .texim-team-name { 
-      font-family: Orbitron, Inter, sans-serif; 
-      font-size: .95rem; 
-      font-weight: 700; 
-      color: #111111; 
-      text-decoration: none; 
-      word-break: break-word; 
-    }
+    .texim-team-card { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.6rem 1.2rem; background: #f4f4f6; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+    .texim-team-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08); border-color: #d1d5db; }
+    .texim-team-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: #ffffff; border: 2px solid #e5e7eb; margin-bottom: 0.8rem; }
+    .texim-team-name { font-family: Orbitron, Inter, sans-serif; font-size: .95rem; font-weight: 700; color: #111111; text-decoration: none; word-break: break-word; }
     .texim-team-name:hover { text-decoration: underline; }
-    .texim-team-role { 
-      margin: .3rem 0 1rem; 
-      color: #6b7280; 
-      font-size: .8rem; 
-      font-weight: 600; 
-      text-transform: uppercase; 
-      letter-spacing: .06em; 
-    }
-    
-    /* Графи Rank и Level – бели кутийки с рамка */
-    .texim-team-stats { 
-      display: flex; 
-      gap: .6rem; 
-      width: 100%; 
-      justify-content: center; 
-      margin-bottom: 1.2rem; 
-    }
-    .texim-stat-box { 
-      flex: 1; 
-      background: #ffffff; 
-      border: 1px solid #e5e7eb; 
-      border-radius: 8px; 
-      padding: .5rem .4rem; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-    }
-    .texim-stat-label { 
-      font-size: .65rem; 
-      color: #6b7280; 
-      text-transform: uppercase; 
-      font-weight: 600; 
-      margin-bottom: 2px; 
-    }
-    .texim-stat-val { 
-      font-family: Orbitron, sans-serif; 
-      font-size: .9rem; 
-      font-weight: 700; 
-      color: #111111; 
-    }
-    
-    /* Черен бутон според основната тема */
-    .btn-tmp {
-      width: 100%;
-      display: inline-block;
-      padding: 0.6rem 1rem;
-      background-color: #111111;
-      color: #ffffff;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: background-color 0.2s ease, transform 0.1s ease;
-    }
-    .btn-tmp:hover {
-      background-color: #000000;
-      color: #ffffff;
-      transform: translateY(-1px);
-    }
-    
+    .texim-team-role { margin: .3rem 0 1rem; color: #6b7280; font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+    .texim-team-stats { display: flex; gap: .6rem; width: 100%; justify-content: center; margin-bottom: 1.2rem; }
+    .texim-stat-box { flex: 1; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: .5rem .4rem; display: flex; flex-direction: column; align-items: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02); }
+    .texim-stat-label { font-size: .65rem; color: #6b7280; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
+    .texim-stat-val { font-family: Orbitron, sans-serif; font-size: .9rem; font-weight: 700; color: #111111; }
+    .btn-tmp { width: 100%; display: inline-block; padding: 0.6rem 1rem; background-color: #111111; color: #ffffff; font-size: 0.8rem; font-weight: 600; text-decoration: none; border-radius: 8px; transition: background-color 0.2s ease, transform 0.1s ease; }
+    .btn-tmp:hover { background-color: #000000; color: #ffffff; transform: translateY(-1px); }
     @media(max-width:1000px){ .texim-team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media(max-width:700px){ 
-      .texim-team-section { padding: 3rem 0; }
-      .texim-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; }
-      .texim-team-card { padding: 1.2rem .8rem; }
-      .texim-team-avatar { width: 72px; height: 72px; }
-    }
-    @media(max-width:480px){ 
-      .texim-team-grid { grid-template-columns: 1fr; }
-      .texim-team-card { max-width: 340px; width: 100%; margin: 0 auto; }
-    }
+    @media(max-width:700px){ .texim-team-section { padding: 3rem 0; } .texim-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; } .texim-team-card { padding: 1.2rem .8rem; } .texim-team-avatar { width: 72px; height: 72px; } }
+    @media(max-width:480px){ .texim-team-grid { grid-template-columns: 1fr; } .texim-team-card { max-width: 340px; width: 100%; margin: 0 auto; } }
   </style>
   <slot name="head" />
 </head>
 <body>
-  <script is:inline define:vars={{ supabaseUrl, supabaseKey }}>
-    window.__TEXIM_SUPABASE__ = { url: supabaseUrl, key: supabaseKey };
-  </script>
   <Preloader />
   <slot name="header"><Header active={active} /></slot>
   <main>
@@ -197,72 +94,43 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
   <LangModal />
   <script src="/js/i18n.js" is:inline></script>
   <script src="/js/main.js" is:inline></script>
-  <script src="/js/auth-ui.js" type="module"></script>
-<script is:inline>
-  (() => {
-    if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
-
-    const mountTeam = () => {
-      if (document.querySelector('.texim-team-section')) return;
-      const aboutTitle = document.querySelector('h2[data-i18n="about.title"]');
-      const aboutSection = aboutTitle?.closest('section');
-      if (!aboutSection) return;
-
-      const members = [
-        { name: 'chea7er044', role: 'Owner', rp: '516K', level: '1', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/5605295' },
-        { name: '[BG] Mitaka', role: 'Driver', rp: '231K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/4710545' },
-        { name: '[BG] NiksaN', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4492540.1766442611.png', profile: 'https://truckersmp.com/user/4492540' },
-        { name: '[BG] Mariyanko', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2587553.1767200331.png', profile: 'https://truckersmp.com/user/2587553' },
-        { name: '[BG] Iv4o_56', role: 'Driver', rp: '62K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4947166.1767264328.png', profile: 'https://truckersmp.com/user/4947166' },
-        { name: 'SkodaSolaris', role: 'Driver', rp: '82K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/1910186.1767387345.png', profile: 'https://truckersmp.com/user/1910186' },
-        { name: '[BG] cickaa', role: 'Driver', rp: '118K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/3597382.1767699185.png', profile: 'https://truckersmp.com/user/3597382' },
-        { name: '[BG] Metko', role: 'Driver', rp: '9K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/5118236.1776869300.png', profile: 'https://truckersmp.com/user/5118236' },
-        { name: 'AcerBG', role: 'Driver', rp: '13K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2003826.1779619724.png', profile: 'https://truckersmp.com/user/2003826' },
-        { name: 'Petkovv', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358471.1788385527.png', profile: 'https://truckersmp.com/user/6358471' },
-        { name: 'hollowaznai', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358812.1788445624.png', profile: 'https://truckersmp.com/user/6358812' },
-        { name: '[BG] slad', role: 'Representative', rp: '37K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4049929.1766433092.png', profile: 'https://truckersmp.com/user/4049929' },
-        { name: '[BG] Marvinito', role: 'Manager', rp: '114K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2064608.1766412005.png', profile: 'https://truckersmp.com/user/2064608' }
-      ];
-
-      const section = document.createElement('section');
-      section.className = 'texim-team-section';
-      section.innerHTML = `
-        <div class="container">
-          <div class="texim-team-header">
-            <h2 class="texim-team-title">Employees</h2>
-          </div>
-          <div class="texim-team-grid">
-            ${members.map(member => `
-              <article class="texim-team-card">
-                <img class="texim-team-avatar" src="${member.avatar}" alt="${member.name}" loading="lazy">
-                <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
-                <div class="texim-team-role">${member.role}</div>
-                
-                <div class="texim-team-stats">
-                  <div class="texim-stat-box">
-                    <span class="texim-stat-label">RP</span>
-                    <span class="texim-stat-val">${member.rp ?? '0'}</span>
-                  </div>
-                  <div class="texim-stat-box">
-                    <span class="texim-stat-label">LVL</span>
-                    <span class="texim-stat-val">${member.level ?? '0'}</span>
-                  </div>
-                </div>
-
-                <a class="btn-tmp" href="${member.profile}" target="_blank" rel="noopener noreferrer">TruckersMP</a>
-              </article>
-            `).join('')}
-          </div>
-        </div>`;
-
-      aboutSection.insertAdjacentElement('afterend', section);
-    };
-
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountTeam, { once: true });
-    else mountTeam();
-  })();
-</script>
   <slot name="scripts" />
   <CookieConsent token={analyticsToken} />
+  <script is:inline>
+    (() => {
+      if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
+
+      const mountTeam = () => {
+        if (document.querySelector('.texim-team-section')) return;
+        const aboutTitle = document.querySelector('h2[data-i18n="about.title"]');
+        const aboutSection = aboutTitle?.closest('section');
+        if (!aboutSection) return;
+
+        const members = [
+          { name: 'chea7er044', role: 'Owner', rp: '516K', level: '1', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/5605295' },
+          { name: '[BG] Mitaka', role: 'Driver', rp: '231K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/4710545' },
+          { name: '[BG] NiksaN', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4492540.1766442611.png', profile: 'https://truckersmp.com/user/4492540' },
+          { name: '[BG] Mariyanko', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2587553.1767200331.png', profile: 'https://truckersmp.com/user/2587553' },
+          { name: '[BG] Iv4o_56', role: 'Driver', rp: '62K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4947166.1767264328.png', profile: 'https://truckersmp.com/user/4947166' },
+          { name: 'SkodaSolaris', role: 'Driver', rp: '82K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/1910186.1767387345.png', profile: 'https://truckersmp.com/user/1910186' },
+          { name: '[BG] cickaa', role: 'Driver', rp: '118K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/3597382.1767699185.png', profile: 'https://truckersmp.com/user/3597382' },
+          { name: '[BG] Metko', role: 'Driver', rp: '9K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/5118236.1776869300.png', profile: 'https://truckersmp.com/user/5118236' },
+          { name: 'AcerBG', role: 'Driver', rp: '13K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2003826.1779619724.png', profile: 'https://truckersmp.com/user/2003826' },
+          { name: 'Petkovv', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358471.1788385527.png', profile: 'https://truckersmp.com/user/6358471' },
+          { name: 'hollowaznai', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358812.1788445624.png', profile: 'https://truckersmp.com/user/6358812' },
+          { name: '[BG] slad', role: 'Representative', rp: '37K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4049929.1766433092.png', profile: 'https://truckersmp.com/user/4049929' },
+          { name: '[BG] Marvinito', role: 'Manager', rp: '114K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2064608.1766412005.png', profile: 'https://truckersmp.com/user/2064608' }
+        ];
+
+        const section = document.createElement('section');
+        section.className = 'texim-team-section';
+        section.innerHTML = `<div class="container"><div class="texim-team-header"><h2 class="texim-team-title">Employees</h2></div><div class="texim-team-grid">${members.map(member => `<article class="texim-team-card"><img class="texim-team-avatar" src="${member.avatar}" alt="${member.name}" loading="lazy"><a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a><div class="texim-team-role">${member.role}</div><div class="texim-team-stats"><div class="texim-stat-box"><span class="texim-stat-label">RP</span><span class="texim-stat-val">${member.rp ?? '0'}</span></div><div class="texim-stat-box"><span class="texim-stat-label">LVL</span><span class="texim-stat-val">${member.level ?? '0'}</span></div></div><a class="btn-tmp" href="${member.profile}" target="_blank" rel="noopener noreferrer">TruckersMP</a></article>`).join('')}</div></div>`;
+        aboutSection.insertAdjacentElement('afterend', section);
+      };
+
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountTeam, { once: true });
+      else mountTeam();
+    })();
+  </script>
 </body>
 </html>
