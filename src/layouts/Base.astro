@@ -198,70 +198,70 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? import.me
   <script src="/js/i18n.js" is:inline></script>
   <script src="/js/main.js" is:inline></script>
   <script src="/js/auth-ui.js" type="module"></script>
-  <script is:inline>
-    (() => {
-      if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
+<script is:inline>
+  (() => {
+    if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') return;
 
-      const mountTeam = () => {
-        if (document.querySelector('.texim-team-section')) return;
-        const aboutTitle = document.querySelector('h2[data-i18n="about.title"]');
-        const aboutSection = aboutTitle?.closest('section');
-        if (!aboutSection) return;
+    const mountTeam = () => {
+      if (document.querySelector('.texim-team-section')) return;
+      const aboutTitle = document.querySelector('h2[data-i18n="about.title"]');
+      const aboutSection = aboutTitle?.closest('section');
+      if (!aboutSection) return;
 
-        const members = [
-          { name: 'chea7er044', role: 'Owner', rank: 'Instructor', level: '1', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/5605295' },
-          { name: '[BG] Mitaka', role: 'Driver', rank: 'King', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/4710545' },
-          { name: '[BG] NiksaN', role: 'Driver', rank: 'None', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4492540.1766442611.png', profile: 'https://truckersmp.com/user/4492540' },
-          { name: '[BG] Mariyanko', role: 'Driver', rank: 'None', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2587553.1767200331.png', profile: 'https://truckersmp.com/user/2587553' },
-          { name: '[BG] Iv4o_56', role: 'Driver', rank: 'Professional', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4947166.1767264328.png', profile: 'https://truckersmp.com/user/4947166' },
-          { name: 'SkodaSolaris', role: 'Driver', rank: 'Master', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/1910186.1767387345.png', profile: 'https://truckersmp.com/user/1910186' },
-          { name: '[BG] cickaa', role: 'Driver', rank: 'Instructor', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/3597382.1767699185.png', profile: 'https://truckersmp.com/user/3597382' },
-          { name: '[BG] Metko', role: 'Driver', rank: 'Enthusiast', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/5118236.1776869300.png', profile: 'https://truckersmp.com/user/5118236' },
-          { name: 'AcerBG', role: 'Driver', rank: 'Enthusiast', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2003826.1779619724.png', profile: 'https://truckersmp.com/user/2003826' },
-          { name: 'Petkovv', role: 'Driver', rank: 'None', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358471.1788385527.png', profile: 'https://truckersmp.com/user/6358471' },
-          { name: 'hollowaznai', role: 'Driver', rank: 'None', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358812.1788445624.png', profile: 'https://truckersmp.com/user/6358812' },
-          { name: '[BG] slad', role: 'Representative', rank: 'Professional', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4049929.1766433092.png', profile: 'https://truckersmp.com/user/4049929' },
-          { name: '[BG] Marvinito', role: 'Manager', rank: 'Instructor', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2064608.1766412005.png', profile: 'https://truckersmp.com/user/2064608' }
-        ];
+      const members = [
+        { name: 'chea7er044', role: 'Owner', rp: '516K', level: '1', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/5605295' },
+        { name: '[BG] Mitaka', role: 'Driver', rp: '231K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/4710545' },
+        { name: '[BG] NiksaN', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4492540.1766442611.png', profile: 'https://truckersmp.com/user/4492540' },
+        { name: '[BG] Mariyanko', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2587553.1767200331.png', profile: 'https://truckersmp.com/user/2587553' },
+        { name: '[BG] Iv4o_56', role: 'Driver', rp: '62K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4947166.1767264328.png', profile: 'https://truckersmp.com/user/4947166' },
+        { name: 'SkodaSolaris', role: 'Driver', rp: '82K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/1910186.1767387345.png', profile: 'https://truckersmp.com/user/1910186' },
+        { name: '[BG] cickaa', role: 'Driver', rp: '118K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/3597382.1767699185.png', profile: 'https://truckersmp.com/user/3597382' },
+        { name: '[BG] Metko', role: 'Driver', rp: '9K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/5118236.1776869300.png', profile: 'https://truckersmp.com/user/5118236' },
+        { name: 'AcerBG', role: 'Driver', rp: '13K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2003826.1779619724.png', profile: 'https://truckersmp.com/user/2003826' },
+        { name: 'Petkovv', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358471.1788385527.png', profile: 'https://truckersmp.com/user/6358471' },
+        { name: 'hollowaznai', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358812.1788445624.png', profile: 'https://truckersmp.com/user/6358812' },
+        { name: '[BG] slad', role: 'Representative', rp: '37K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4049929.1766433092.png', profile: 'https://truckersmp.com/user/4049929' },
+        { name: '[BG] Marvinito', role: 'Manager', rp: '114K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2064608.1766412005.png', profile: 'https://truckersmp.com/user/2064608' }
+      ];
 
-        const section = document.createElement('section');
-        section.className = 'texim-team-section';
-        section.innerHTML = `
-          <div class="container">
-            <div class="texim-team-header">
-              <h2 class="texim-team-title">Employees</h2>
-            </div>
-            <div class="texim-team-grid">
-              ${members.map(member => `
-                <article class="texim-team-card">
-                  <img class="texim-team-avatar" src="${member.avatar}" alt="${member.name}" loading="lazy">
-                  <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
-                  <div class="texim-team-role">${member.role}</div>
-                  
-                  <div class="texim-team-stats">
-                    <div class="texim-stat-box">
-                      <span class="texim-stat-label">Rank</span>
-                      <span class="texim-stat-val">${member.rank || '-'}</span>
-                    </div>
-                    <div class="texim-stat-box">
-                      <span class="texim-stat-label">Level</span>
-                      <span class="texim-stat-val">${member.level || '-'}</span>
-                    </div>
+      const section = document.createElement('section');
+      section.className = 'texim-team-section';
+      section.innerHTML = `
+        <div class="container">
+          <div class="texim-team-header">
+            <h2 class="texim-team-title">Employees</h2>
+          </div>
+          <div class="texim-team-grid">
+            ${members.map(member => `
+              <article class="texim-team-card">
+                <img class="texim-team-avatar" src="${member.avatar}" alt="${member.name}" loading="lazy">
+                <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
+                <div class="texim-team-role">${member.role}</div>
+                
+                <div class="texim-team-stats">
+                  <div class="texim-stat-box">
+                    <span class="texim-stat-label">RP</span>
+                    <span class="texim-stat-val">${member.rp ?? '0'}</span>
                   </div>
+                  <div class="texim-stat-box">
+                    <span class="texim-stat-label">LVL</span>
+                    <span class="texim-stat-val">${member.level ?? '0'}</span>
+                  </div>
+                </div>
 
-                  <a class="btn-tmp" href="${member.profile}" target="_blank" rel="noopener noreferrer">TruckersMP</a>
-                </article>
-              `).join('')}
-            </div>
-          </div>`;
+                <a class="btn-tmp" href="${member.profile}" target="_blank" rel="noopener noreferrer">TruckersMP</a>
+              </article>
+            `).join('')}
+          </div>
+        </div>`;
 
-        aboutSection.insertAdjacentElement('afterend', section);
-      };
+      aboutSection.insertAdjacentElement('afterend', section);
+    };
 
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountTeam, { once: true });
-      else mountTeam();
-    })();
-  </script>
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountTeam, { once: true });
+    else mountTeam();
+  })();
+</script>
   <slot name="scripts" />
   <CookieConsent token={analyticsToken} />
 </body>
