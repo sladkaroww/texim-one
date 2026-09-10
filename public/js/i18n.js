@@ -41,11 +41,11 @@
       'features.f1.title': 'Accessibility',
       'features.f1.text': 'We do not require a monthly mileage limit, mandatory participation in convoys, a specific age, in-game hours, or DLCs.',
       'features.f2.title': 'Identity',
-      'features.f2.text': 'Easily recognizable avatars, tags, trucks, trailers, buses, pickup trucks, SUVs, and passenger cars thanks to our colors: gray, white, black, and red.',
+      'features.f2.text': 'Easily recognizable vehicles, avatars, and tags thanks to our colors: gray, white, black, and red.',
       'features.f3.title': 'Reputation',
-      'features.f3.text': 'Our system rewards the most active users by giving their votes greater weight when voting on proposals for the community's development.',
+      'features.f3.text': 'Our system rewards the more active members by giving their votes greater weight in decision-making.',
       'features.f4.title': 'Prestige',
-      'features.f4.text': 'A dedicated website, a Twitch team, and merchandise—all of which thriving communities can boast about.\u2026',
+      'features.f4.text': 'Their own website, Twitch team, and merchandise—features that thriving communities can boast about.',
 
       // Media page
       'media.title': 'Media',
