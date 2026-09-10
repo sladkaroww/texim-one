@@ -16,40 +16,40 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
     </div>
   </section>
 
-  <section class="section" style="background-color: #ffffff; padding-top: 3rem; padding-bottom: 3rem;">
-    <div class="container">
-      <div style="text-align: center; margin-bottom: 2.5rem;">
-        <h2 class="section-title" style="margin: 0;">
-          Merch
-        </h2>
+ <section class="section custom-partners-section" style="background-color: #ffffff;">
+  <div class="container">
+    <div class="section-title-wrapper">
+      <h2 class="section-title">
+        Merch
+      </h2>
+    </div>
+
+    <div class="hero-row" style="display: flex; align-items: center; gap: 3rem;">
+      <div class="hero-truck" style="flex: 1;">
+        <img src="https://i.ibb.co/Z6ZXTfnb/viber-image-2026-07-03-21-54-40-065.jpg" alt="TEXIM ONE Merch" style="width: 100%; height: auto; object-fit: contain; display: block;" />
       </div>
 
-      <div class="hero-row" style="display: flex; align-items: center; gap: 3rem;">
-        <div class="hero-truck" style="flex: 1;">
-          <img src="https://i.ibb.co/Z6ZXTfnb/viber-image-2026-07-03-21-54-40-065.jpg" alt="TEXIM ONE Merch" style="width: 100%; height: auto; object-fit: contain; display: block;" />
-        </div>
+      <div class="hero-content" style="flex: 1;">
+        <h3 style="font-size: 1.4rem; font-weight: 600; color: #111111; margin-bottom: 1rem;">
+          🔥TEXIM ONE Ltd.🔥
+        </h3>
 
-        <div class="hero-content" style="flex: 1;">
-          <h3 style="font-size: 1.4rem; font-weight: 600; color: #111111; margin-bottom: 1rem;">
-            🔥TEXIM ONE Ltd.🔥
-          </h3>
+        <p class="hero-text" style="color: #222222; line-height: 1.65; font-size: 1.3rem; margin-bottom: 1.8rem; font-weight: 400;">
+          Heavyweight Oversized T-Shirts, Sweatshirts, and Hoodies made from 100% combed cotton. A minimalist design with precise embroidery, created for anyone who values quality and comfort.
+        </p>
 
-          <p class="hero-text" style="color: #222222; line-height: 1.65; font-size: 1.3rem; margin-bottom: 1.8rem; font-weight: 400;">
-            Heavyweight Oversized T-Shirts, Sweatshirts, and Hoodies made from 100% combed cotton. A minimalist design with precise embroidery, created for anyone who values quality and comfort.
-          </p>
-
-          <div class="hero-btns">
-            <a href="http://texim.one/" class="btn btn-primary" target="_blank" rel="noopener">texim.one</a>
-          </div>
+        <div class="hero-btns">
+          <a href="http://texim.one/" class="btn btn-primary" target="_blank" rel="noopener">texim.one</a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-<section class="section" style="background-color: #ffffff; padding-top: 3rem; padding-bottom: 3rem;">
+<section class="section custom-partners-section" style="background-color: #ffffff;">
   <div class="container">
-    <div style="text-align: center; margin-bottom: 2.5rem;">
-      <h2 class="section-title" style="margin: 0;">
+    <div class="section-title-wrapper">
+      <h2 class="section-title">
         Statistics
       </h2>
     </div>
@@ -78,22 +78,47 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
   </div>
 </section>
 
-  <section class="section section--light partners-section">
-    <div class="container">
-      <h2 class="section-title partners-title">Collaboration</h2>
-      <div class="partners-content">
-        <p class="section-text text-center partners-text">
-          If you would like to collaborate on joining our Twitch Team, creating your future Merch, or for any other reason, you can contact us via our Discord Server.
-        </p>
-      </div>
+<section class="section section--light custom-partners-section">
+  <div class="container">
+    <div class="section-title-wrapper">
+      <h2 class="section-title">Collaboration</h2>
     </div>
-  </section>
+    <div class="partners-content">
+      <p class="section-text text-center partners-text">
+        If you would like to collaborate on joining our Twitch Team, creating your future Merch, or for any other reason, you can contact us via our Discord Server.
+      </p>
+    </div>
+  </div>
+</section>
 
-  <style is:global>
-    .partners-section { padding: 3rem 0; }
-    .partners-title { margin-top: 0; margin-bottom: 1.5rem; }
-    .partners-content { max-width: 800px; margin: 0 auto; }
-    .partners-text { margin-bottom: 0; }
-    .text-center { text-align: center; }
-  </style>
-</Base>
+<style is:global>
+  /* Уеднаквяване на отстоянията над и под всяка секция */
+  .custom-partners-section {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  /* Уеднаквяване на центрирането и разстоянието под заглавията */
+  .section-title-wrapper {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title-wrapper .section-title,
+  .custom-partners-section .section-title {
+    margin: 0 0 1.5rem 0 !important;
+  }
+
+  .partners-content { 
+    max-width: 800px; 
+    margin: 0 auto; 
+  }
+
+  .partners-text { 
+    margin-bottom: 0; 
+  }
+
+  .text-center { 
+    text-align: center; 
+  }
+</style>
