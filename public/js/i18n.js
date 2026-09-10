@@ -135,6 +135,7 @@
       'nav.media': '\u041c\u0435\u0434\u0438\u044f',
       'nav.events': 'Събития',
       'nav.partners': 'Партньори',
+      'nav.reputation': 'Репутация',
       'nav.requirements': 'Изисквания',
       'nav.apply': 'Кандидатствай',
 
