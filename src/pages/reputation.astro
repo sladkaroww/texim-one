@@ -16,7 +16,7 @@ const description = 'Build your reputation, raise your standing, and set the dir
     </div>
   </section>
 
-<section class="section section--white">
+<section class="section section--white custom-tight-section">
   <div class="container text-center">
     
     <!-- Блок 1: Reputation System (Снимка) -->
@@ -47,19 +47,20 @@ const description = 'Build your reputation, raise your standing, and set the dir
 </section>
 
 <style>
-  /* Равномерни разстояния между блоковете */
-  .reputation-block,
-  .sheet-block {
-    margin-bottom: 2rem; /* Равнотно отстояние под всеки блок */
+  /* Намаляване и изравняване на отстоянията най-отгоре и най-отдолу на секцията */
+  .custom-tight-section {
+    padding-top: 1.5rem !important;    /* Намалено отстояние над първото заглавие */
+    padding-bottom: 1.5rem !important; /* Намалено отстояние под таблицата */
   }
 
+  /* Разстояние между снимката и второто заглавие */
   .sheet-block {
-    margin-top: 2.5rem; /* Равнотно отстояние между снимката и следващото заглавие */
+    margin-top: 2rem;
   }
 
-  /* Заглавия - намалено долно отстояние спрямо съдържанието */
+  /* Отстояние под заглавията */
   .section-title {
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.8rem !important;
   }
 
   /* Контейнер за снимката (1000px) */
@@ -102,8 +103,9 @@ const description = 'Build your reputation, raise your standing, and set the dir
 
   /* Мобилна адаптивност */
   @media (max-width: 768px) {
-    .sheet-block {
-      margin-top: 2rem;
+    .custom-tight-section {
+      padding-top: 1rem !important;
+      padding-bottom: 1rem !important;
     }
     .full-table-wrapper iframe {
       height: 450px;
