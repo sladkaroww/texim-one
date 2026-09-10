@@ -51,7 +51,7 @@
       'media.title': 'Media',
       'media.sub': 'Our story, our moments, our community.',
       'media.twitch': 'Twitch Team',
-      'media.twitch.text': 'We run an official TruckersMP Twitch Team where we stream our convoys and community moments live.',
+      'media.twitch.text': 'Follow our Twitch Team, with whom we stream live for the community!',
       'media.twitch.btn': 'Watch on Twitch',
       'gallery.title': 'Gallery',
       'media.news': 'News',
