@@ -41,7 +41,7 @@
       'features.f1.title': 'Accessibility',
       'features.f1.text': 'We do not require a monthly mileage limit, mandatory participation in convoys, a specific age, in-game hours, or DLCs.',
       'features.f2.title': 'Identity',
-      'features.f2.text': 'Recognizable tractors, buses, trailers, avatars, and tags.',
+      'features.f2.text': 'Trucks, buses, trailers, avatars, and tags that stand out, thanks to our colors: gray, white, black, and red.',
       'features.f3.title': 'Reputation',
       'features.f3.text': 'Our system rewards the most active users by giving their votes greater weight when voting on proposals for the community's development.',
       'features.f4.title': 'Prestige',
