@@ -30,7 +30,7 @@
       // Home - Stats
       'stats.title': 'Statistics',
       'stat.drivers': 'Employees',
-      'stat.founded': 'Years experience',
+      'stat.founded': 'Years Experience',
       'stat.km': 'Mln WoTr Km',
       'stat.discord': 'Discord Members',
 
@@ -41,11 +41,11 @@
       'features.f1.title': 'Accessibility',
       'features.f1.text': 'We do not require a monthly mileage limit, mandatory participation in convoys, a specific age, in-game hours, or DLCs.',
       'features.f2.title': 'Identity',
-      'features.f2.text': 'Easily recognizable vehicles, avatars, and tags thanks to our colors: gray, white, black, and red.',
+      'features.f2.text': 'Easily Recognizable Vehicles, Avatars, and Tags thanks to our colors: Gray, White, Black, and Red.',
       'features.f3.title': 'Reputation',
       'features.f3.text': 'Our system rewards the more active members by giving their votes greater weight in decision-making.',
       'features.f4.title': 'Prestige',
-      'features.f4.text': 'Their own website, Twitch team, and merchandise—features that thriving communities can boast about.',
+      'features.f4.text': 'Their own Website, Twitch Team, and Merchandise—features that thriving communities can boast about.',
 
       // Media page
       'media.title': 'Media',
@@ -130,9 +130,8 @@
 
     bg: {
       // Navigation
-      'nav.home': '\u041d\u0430\u0447\u0430\u043b\u043e',
-      'nav.convoy': '\u041a\u043e\u043d\u0432\u043e\u0439',
-      'nav.media': '\u041c\u0435\u0434\u0438\u044f',
+      'nav.home': 'Начало',
+      'nav.media': 'Медия',
       'nav.events': 'Събития',
       'nav.partners': 'Партньори',
       'nav.reputation': 'Репутация',
@@ -140,38 +139,38 @@
       'nav.apply': 'Кандидатствай',
 
       // Home - Hero
-      'hero.subtitle': '\u041f\u0440\u043e\u0444\u0435\u0441\u0438\u043e\u043d\u0430\u043b\u043d\u0430 \u0432\u0438\u0440\u0442\u0443\u0430\u043b\u043d\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u043d\u0430 \u043b\u043e\u0433\u0438\u0441\u0442\u0438\u043a\u0430',
-      'hero.text': 'TEXIM ONE \u0435 \u0432\u0438\u0440\u0442\u0443\u0430\u043b\u043d\u0430 \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u043d\u0430 \u043a\u043e\u043c\u043f\u0430\u043d\u0438\u044f, \u043a\u043e\u044f\u0442\u043e \u0441\u0435 \u0432\u043a\u043b\u044e\u0447\u0432\u0430 \u0432 \u043a\u043e\u043d\u0432\u043e\u0438 \u0438\u0437 \u0446\u044f\u043b\u0430\u0442\u0430 \u043e\u0431\u0449\u043d\u043e\u0441\u0442 \u043d\u0430 TruckersMP. \u041f\u043b\u0430\u043d\u0438\u0440\u0430\u0442\u0435 \u0441\u044a\u0431\u0438\u0442\u0438\u0435? \u041f\u043e\u043a\u0430\u043d\u0435\u0442\u0435 \u043d\u0438 \u0434\u0430 \u0443\u0447\u0430\u0441\u0442\u0432\u0430\u043c\u0435\u2026',
-      'hero.discord': 'Discord \u0441\u044a\u0440\u0432\u044a\u0440',
+      'hero.subtitle': '"Винаги 1 на ум, зад TEXIM!"',
+      'hero.text': 'TEXIM ONE стартира на 1 Януари 2026 г. като естествено продължение на TEXIM, основана на 10 Март 2019 г.',
+      'hero.discord': 'Discord Server',
 
       'stats.title': 'Статистика',
       // Home - Stats
-      'stat.drivers': '\u0427\u043b\u0435\u043d\u043e\u0432\u0435',
-      'stat.founded': '\u0413\u043e\u0434\u0438\u043d\u0438 \u043e\u043f\u0438\u0442',
-      'stat.km': '\u041c\u043b\u043d. WoTr \u043a\u043c',
-      'stat.discord': 'Discord \u0447\u043b\u0435\u043d\u043e\u0432\u0435',
+      'stat.drivers': 'Служители',
+      'stat.founded': 'Години Опит',
+      'stat.km': 'Млн WoTr Км',
+      'stat.discord': 'Discord Членове',
 
       'about.title': 'За нас',
       // Home - Features
       'features.title': '\u0417\u0430\u0449\u043e?',
       'features.sub': '\u0412\u0438\u0440\u0442\u0443\u0430\u043b\u043d\u043e \u0442\u0440\u0430\u043d\u0441\u043f\u043e\u0440\u0442\u043d\u043e \u0438\u0437\u0436\u0438\u0432\u044f\u0432\u0430\u043d\u0435, \u0438\u0437\u0433\u0440\u0430\u0434\u0435\u043d\u043e \u043e\u043a\u043e\u043b\u043e \u0434\u043e\u0441\u0442\u044a\u043f\u043d\u043e\u0441\u0442\u0442\u0430 \u0438 \u043e\u0431\u0449\u043d\u043e\u0441\u0442\u0442\u0430.',
-      'features.f1.title': '\u0411\u0435\u0437 \u043d\u0430\u043f\u0440\u0435\u0436\u0435\u043d\u0438\u0435',
-      'features.f1.text': '\u0411\u0435\u0437 \u043c\u0435\u0441\u0435\u0447\u043d\u0438 \u043a\u0438\u043b\u043e\u043c\u0435\u0442\u0440\u0438\u0447\u043d\u0438 \u043b\u0438\u043c\u0438\u0442\u0438, \u0431\u0435\u0437 \u0437\u0430\u0434\u044a\u043b\u0436\u0438\u0442\u0435\u043b\u043d\u043e \u0443\u0447\u0430\u0441\u0442\u0438\u0435 \u0432 \u043a\u043e\u043d\u0432\u043e\u0438, \u0431\u0435\u0437 \u0438\u0437\u0438\u0441\u043a\u0432\u0430\u043d\u0438\u044f \u0437\u0430 \u0432\u044a\u0437\u0440\u0430\u0441\u0442 \u0438\u043b\u0438 \u0438\u0437\u0438\u0433\u0440\u0430\u043d\u0438 \u0447\u0430\u0441\u043e\u0432\u0435, \u0431\u0435\u0437 \u0438\u0437\u043f\u0438\u0442\u0430\u0442\u0435\u043b\u0435\u043d \u043f\u0435\u0440\u0438\u043e\u0434. \u0428\u043e\u0444\u0438\u0440\u0430\u0439\u0442\u0435 \u043d\u0430 \u0441\u0432\u043e\u0438 \u0443\u0441\u043b\u043e\u0432\u0438\u044f.',
-      'features.f2.title': '\u041a\u043e\u0440\u043f\u043e\u0440\u0430\u0442\u0438\u0432\u043d\u0430 \u0438\u0434\u0435\u043d\u0442\u0438\u0447\u043d\u043e\u0441\u0442',
-      'features.f2.text': '\u0420\u0430\u0437\u043f\u043e\u0437\u043d\u0430\u0432\u0430\u0435\u043c\u0438 \u0447\u0440\u0435\u0437 \u043d\u0430\u0448\u0438\u044f TMP \u0442\u0430\u0433, \u0435\u043a\u0441\u043a\u043b\u044e\u0437\u0438\u0432\u0435\u043d \u0430\u0432\u0430\u0442\u0430\u0440 \u0438 \u0444\u0438\u0440\u043c\u0435\u043d\u0430\u0442\u0430 \u043a\u043e\u043c\u0431\u0438\u043d\u0430\u0446\u0438\u044f \u043e\u0442 \u043a\u0430\u043c\u0438\u043e\u043d + \u0440\u0435\u043c\u0430\u0440\u043a\u0435, \u043a\u043e\u044f\u0442\u043e \u043d\u0438 \u043e\u0442\u043b\u0438\u0447\u0430\u0432\u0430 \u043d\u0430 \u043f\u044a\u0442\u044f\u2026',
-      'features.f3.title': '\u0421\u0435\u043b\u0435\u043a\u0442\u0438\u0432\u043d\u043e \u043d\u0430\u0431\u0438\u0440\u0430\u043d\u0435',
-      'features.f3.text': '\u041a\u0430\u043d\u0434\u0438\u0434\u0430\u0442\u0443\u0440\u0438\u0442\u0435 \u0441\u0435 \u0440\u0430\u0437\u0433\u043b\u0435\u0436\u0434\u0430\u0442 \u0438\u043d\u0434\u0438\u0432\u0438\u0434\u0443\u0430\u043b\u043d\u043e \u0447\u0440\u0435\u0437 \u043d\u0430\u0448\u0430\u0442\u0430 \u0444\u043e\u0440\u043c\u0430 \u0437\u0430 \u043a\u0430\u043d\u0434\u0438\u0434\u0430\u0442\u0441\u0442\u0432\u0430\u043d\u0435. \u0426\u0435\u043d\u0438\u043c \u043a\u0430\u0447\u0435\u0441\u0442\u0432\u043e\u0442\u043e \u0438 \u0430\u043d\u0433\u0430\u0436\u0438\u0440\u0430\u043d\u043e\u0441\u0442\u0442\u0430 \u043f\u043e\u0432\u0435\u0447\u0435 \u043e\u0442 \u043a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u0430\u0442\u0430.',
-      'features.f4.title': '\u0420\u0430\u043d\u0433\u043e\u0432\u0435',
-      'features.f4.text': '\u041d\u0430\u0448\u0430\u0442\u0430 \u0441\u0438\u0441\u0442\u0435\u043c\u0430 \u0437\u0430 \u0440\u0435\u043f\u0443\u0442\u0430\u0446\u0438\u044f (RS) \u043a\u043b\u0430\u0441\u0438\u0440\u0430 \u0432\u0441\u0435\u043a\u0438 \u0448\u043e\u0444\u044c\u043e\u0440 \u0441\u043f\u043e\u0440\u0435\u0434 \u043f\u0440\u0438\u043d\u043e\u0441\u0430: \u041d\u043e\u0432\u0430\u043a, \u0415\u043d\u0442\u0443\u0437\u0438\u0430\u0441\u0442, \u0420\u0430\u0431\u043e\u0442\u043d\u0438\u043a, \u041f\u0440\u043e\u0444\u0435\u0441\u0438\u043e\u043d\u0430\u043b\u0438\u0441\u0442, \u041c\u0430\u0439\u0441\u0442\u043e\u0440, \u0418\u043d\u0441\u0442\u0440\u0443\u043a\u0442\u043e\u0440\u2026',
+      'features.f1.title': 'Достъпност',
+      'features.f1.text': 'Не изискваме месечен лимит километри, задължително участие в конвои, определена възраст, часове в игра или DLC-та.',
+      'features.f2.title': 'Идентичност',
+      'features.f2.text': 'Разпознаваеми Превозни средства, Аватари и Тагове благодарение на нашите цветове: Сиво, Бяло, Черно и Червено.',
+      'features.f3.title': 'Репутация',
+      'features.f3.text': 'Системата ни възнаграждава по-активните членове, като придава по-голяма тежест на гласовете им при вземането на решения.',
+      'features.f4.title': 'Престиж',
+      'features.f4.text': 'Собствен Уебсайт, Twitch Team и Merch, с които могат да се похвалят само развитите общности.',
 
       // Media page
-      'media.title': '\u041c\u0435\u0434\u0438\u044f',
-      'media.sub': '\u041d\u0430\u0448\u0430\u0442\u0430 \u0438\u0441\u0442\u043e\u0440\u0438\u044f, \u043d\u0430\u0448\u0438\u0442\u0435 \u043c\u043e\u043c\u0435\u043d\u0442\u0438, \u043d\u0430\u0448\u0430\u0442\u0430 \u043e\u0431\u0449\u043d\u043e\u0441\u0442.',
-      'media.twitch': 'Twitch \u043e\u0442\u0431\u043e\u0440',
-      'media.twitch.text': '\u041f\u043e\u0434\u0434\u044a\u0440\u0436\u0430\u043c\u0435 \u043e\u0444\u0438\u0446\u0438\u0430\u043b\u0435\u043d Twitch \u043e\u0442\u0431\u043e\u0440 \u0432 TruckersMP, \u043a\u044a\u0434\u0435\u0442\u043e \u0441\u0442\u0440\u0438\u0439\u043c\u0432\u0430\u043c\u0435 \u043d\u0430\u0448\u0438\u0442\u0435 \u043a\u043e\u043d\u0432\u043e\u0438 \u0438 \u043e\u0431\u0449\u043d\u043e\u0441\u0442\u043d\u0438 \u043c\u043e\u043c\u0435\u043d\u0442\u0438 \u043d\u0430 \u0436\u0438\u0432\u043e.',
-      'media.twitch.btn': '\u0413\u043b\u0435\u0434\u0430\u0439 \u0432 Twitch',
-      'gallery.title': '\u0413\u0430\u043b\u0435\u0440\u0438\u044f',
-      'media.news': '\u041d\u043e\u0432\u0438\u043d\u0438',
+      'media.title': 'Медия',
+      'media.sub': 'Нашата история, нашите моменти, нашата общност.',
+      'media.twitch': 'Twitch Team',
+      'media.twitch.text': 'Следете нашия Twitch Team, където излъчваме на живо за общността!',
+      'media.twitch.btn': 'Гледай',
+      'gallery.title': 'Галерия',
+      'media.news': 'Последни новини',
       'media.news.text': '\u041d\u0430\u0439-\u043d\u043e\u0432\u0438\u0442\u0435 \u043f\u0443\u0431\u043b\u0438\u043a\u0430\u0446\u0438\u0438 \u0438 \u0430\u043a\u0442\u0443\u0430\u043b\u0438\u0437\u0430\u0446\u0438\u0438 \u043e\u0442 TEXIM ONE.',
       'media.news.read': '\u0412\u0438\u0436 \u043f\u043e\u0432\u0435\u0447\u0435',
       'media.news.68663.title': 'TEXIM ONE Vtc x TEXIM ONE Ltd \u041c\u0415\u0420\u0427!',
@@ -193,7 +192,7 @@
       'convoy.view': '\u0412\u0438\u0436 \u0441\u044a\u0431\u0438\u0442\u0438\u0435\u0442\u043e',
 
       // Events page
-      'events.sub': 'Всички събития, към които сме поканени.',
+      'events.sub': 'Всички събития, на които сме поканени.',
       'events.inviteTitle': 'Поканете ни',
       'events.calendar.title': 'Календар',
       'events.calendar.loading': 'Зареждане на събитията...',
@@ -230,7 +229,7 @@
       'partners.sub': 'Свързани с общността.',
 
       // Apply page
-      'apply.title': 'Google формуляр',
+      'apply.title': 'Google Формуляр',
       'apply.sub': 'Попълнете формуляра.',
 
       // Form
