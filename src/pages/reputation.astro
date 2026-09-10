@@ -19,34 +19,60 @@ const description = 'Build your reputation, raise your standing, and set the dir
 <section class="section section--white">
   <div class="container text-center">
     
-    <!-- Заглавие на секцията -->
-    <h2 class="section-title">Reputation System</h2>
-    
-    <!-- Контейнер за снимката -->
-    <div class="full-image-wrapper">
-      <img 
-        src="https://i.ibb.co/2708PT5b/Gemini-Generated-Image-r121lrr121lrr121.jpg" 
-        alt="Reputation Points" 
-        class="full-size-image"
-      />
+    <!-- Блок 1: Reputation System (Снимка) -->
+    <div class="reputation-block">
+      <h2 class="section-title">Reputation System</h2>
+      <div class="full-image-wrapper">
+        <img 
+          src="https://i.ibb.co/2708PT5b/Gemini-Generated-Image-r121lrr121lrr121.jpg" 
+          alt="Reputation Points" 
+          class="full-size-image"
+        />
+      </div>
+    </div>
+
+    <!-- Блок 2: Google Sheet (Таблица) -->
+    <div class="sheet-block">
+      <h2 class="section-title">Google Sheet</h2>
+      <div class="full-table-wrapper">
+        <iframe 
+          id="liveGoogleSheet"
+          src="about:blank" 
+          scrolling="auto">
+        </iframe>
+      </div>
     </div>
 
   </div>
 </section>
 
 <style>
-  /* Контейнер за центриране с ширина 1000px */
+  /* Равномерни разстояния между блоковете */
+  .reputation-block,
+  .sheet-block {
+    margin-bottom: 2rem; /* Равнотно отстояние под всеки блок */
+  }
+
+  .sheet-block {
+    margin-top: 2.5rem; /* Равнотно отстояние между снимката и следващото заглавие */
+  }
+
+  /* Заглавия - намалено долно отстояние спрямо съдържанието */
+  .section-title {
+    margin-bottom: 1rem !important;
+  }
+
+  /* Контейнер за снимката (1000px) */
   .full-image-wrapper {
     width: 100%;
-    max-width: 1000px; /* Зададено на 1000px */
-    margin: 20px auto 0;
+    max-width: 1000px;
+    margin: 0 auto;
     overflow: hidden;
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
     background-color: #ffffff;
   }
 
-  /* Настройки за показване на снимката */
   .full-size-image {
     width: 100%;
     height: auto;
@@ -54,31 +80,12 @@ const description = 'Build your reputation, raise your standing, and set the dir
     object-fit: contain;
     margin: 0 auto;
   }
-</style>
 
-<section class="section section--white">
-  <div class="container text-center">
-    
-    <!-- Заглавие на секцията -->
-    <h2 class="section-title">Google Sheet</h2>
-    
-    <!-- Разпънат контейнер за таблицата -->
-    <div class="full-table-wrapper">
-      <iframe 
-        id="liveGoogleSheet"
-        src="about:blank" 
-        scrolling="auto">
-      </iframe>
-    </div>
-
-  </div>
-</section>
-
-<style>
+  /* Контейнер за таблицата (1200px) */
   .full-table-wrapper {
     width: 100%;
     max-width: 1200px;
-    margin: 20px auto 0;
+    margin: 0 auto;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
     overflow: hidden;
@@ -93,8 +100,11 @@ const description = 'Build your reputation, raise your standing, and set the dir
     display: block;
   }
 
-  /* Респонсив настройка за мобилни устройства */
+  /* Мобилна адаптивност */
   @media (max-width: 768px) {
+    .sheet-block {
+      margin-top: 2rem;
+    }
     .full-table-wrapper iframe {
       height: 450px;
     }
