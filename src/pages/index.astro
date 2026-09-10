@@ -114,18 +114,17 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
 </section>
 
 <style>
-  /* Намалени отстояния за секцията на карусела */
   .fleet-carousel-section {
     padding: 24px 0 10px 0 !important;
     background-color: #ffffff;
     overflow: hidden;
   }
 
-  /* Намалено разстояние под заглавието Vehicles */
+  /* Допълнително намалено отстояние под Vehicles */
   .carousel-title {
     font-size: 2.2rem;
     font-weight: 800;
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 0.5rem !important; /* Намалено от 1.5rem на 0.5rem */
     color: #000000;
   }
 
@@ -417,6 +416,18 @@ const description = 'TEXIM ONE is a Bulgarian virtual trucking company in Trucke
     resetTimer();
   });
 </script>
+
+<section class="section" style="padding-top:1rem; padding-bottom:1.5rem;">
+  <div class="container">
+    <h2 class="section-title" data-i18n="stats.title" style="margin:0 0 1.2rem 0;">Statistics</h2>
+    <div class="stats-grid" style="margin-top:0;">
+      <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label" data-i18n="stat.drivers">Employees</div></div>
+      <div class="stat-card"><div class="stat-number">7+</div><div class="stat-label" data-i18n="stat.founded">Years Experience</div></div>
+      <div class="stat-card"><div class="stat-number">9+</div><div class="stat-label" data-i18n="stat.km">Mln WoTr Km</div></div>
+      <div class="stat-card"><div class="stat-number">80+</div><div class="stat-label" data-i18n="stat.discord">Discord Members</div></div>
+    </div>
+  </div>
+</section>
 
 <!-- Секция Statistics с намален padding-top -->
 <section class="section" style="padding-top:1rem; padding-bottom:1.5rem;">
