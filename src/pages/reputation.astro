@@ -35,10 +35,10 @@ const description = 'Build your reputation, raise your standing, and set the dir
 </section>
 
 <style>
-  /* Контейнер за центриране и подравняване */
+  /* Контейнер за центриране с намалена ширина */
   .full-image-wrapper {
     width: 100%;
-    max-width: 1200px; /* Ширина, съответстваща на таблицата */
+    max-width: 600px; /* Намалена ширина на снимката (можете да я промените, напр. 500px или 700px) */
     margin: 20px auto 0;
     overflow: hidden;
     border-radius: 12px;
@@ -46,12 +46,14 @@ const description = 'Build your reputation, raise your standing, and set the dir
     background-color: #ffffff;
   }
 
-  /* Настройки за показване на снимката в пълен размер */
+  /* Настройки за показване на снимката */
   .full-size-image {
     width: 100%;
+    max-height: 400px; /* Ограничение във височината, за да не става прекалено голяма */
     height: auto;
     display: block;
     object-fit: contain;
+    margin: 0 auto;
   }
 </style>
 
@@ -76,7 +78,7 @@ const description = 'Build your reputation, raise your standing, and set the dir
 <style>
   .full-table-wrapper {
     width: 100%;
-    max-width: 1200px; /* Разпъване по ширина */
+    max-width: 1200px;
     margin: 20px auto 0;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
@@ -87,7 +89,6 @@ const description = 'Build your reputation, raise your standing, and set the dir
 
   .full-table-wrapper iframe {
     width: 100%;
-    /* Намалена височина, за да няма излишно празно място отдолу */
     height: 550px; 
     border: none;
     display: block;
