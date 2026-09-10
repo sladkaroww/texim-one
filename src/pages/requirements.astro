@@ -16,18 +16,32 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
 
 <section class="section section--white">
   <div class="container text-center">
-    <h2 class="section-title">Platforms</h2>
-    <p class="section-subtitle">
-      To join us, you need to register, download, and install 
-      <a href="https://discord.com/" target="_blank" rel="noopener noreferrer" class="subtitle-link">Discord</a>, 
-      <a href="https://trucksbook.eu/" target="_blank" rel="noopener noreferrer" class="subtitle-link">TrucksBook</a>, and 
-      <a href="https://truckersmp.com/" target="_blank" rel="noopener noreferrer" class="subtitle-link">TruckersMP</a>. 
-      Follow the rules of these platforms and drive with the TrucksBook client running at speeds up to 100 km/h.
-    </p>
+    
+    <!-- Първа подсекция: Platforms -->
+    <div class="info-block">
+      <h2 class="section-title">Platforms</h2>
+      <p class="section-subtitle">
+        To join us, you need to register, download, and install 
+        <a href="https://discord.com/" target="_blank" rel="noopener noreferrer" class="subtitle-link">Discord</a>, 
+        <a href="https://trucksbook.eu/" target="_blank" rel="noopener noreferrer" class="subtitle-link">TrucksBook</a>, and 
+        <a href="https://truckersmp.com/" target="_blank" rel="noopener noreferrer" class="subtitle-link">TruckersMP</a>. 
+        Follow the rules of these platforms and drive with the TrucksBook client running at speeds up to 100 km/h.
+      </p>
+    </div>
+
+    <!-- Втора подсекция: Avatar & Tag -->
+    <div class="info-block info-block--compact">
+      <h2 class="section-title">Avatar & Tag</h2>
+      <p class="section-subtitle">
+        The <a href="https://i.ibb.co/ynhkwJh9/TEXIM1-AVATAR2026.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">Avatar</a> is used in TruckersMP and TrucksBook, while the <a href="https://i.ibb.co/MxSSQh3T/ets2-20260907-101253-00.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">Tag</a> is used only in TruckersMP.
+      </p>
+    </div>
+
   </div>
 </section>
 
 <style>
+  /* Стил за линковете */
   .subtitle-link {
     color: #0066cc !important;
     text-decoration: underline !important;
@@ -37,16 +51,17 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
   .subtitle-link:hover {
     color: #004080 !important;
   }
-</style>
 
-  <section class="section section--white">
-    <div class="container text-center">
-      <h2 class="section-title">Avatar & Tag</h2>
-      <p class="section-subtitle">
-        The <a href="https://i.ibb.co/ynhkwJh9/TEXIM1-AVATAR2026.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">Avatar</a> is used in TruckersMP and TrucksBook, while the <a href="https://i.ibb.co/MxSSQh3T/ets2-20260907-101253-00.png" target="_blank" rel="noopener noreferrer" class="subtitle-link">Tag</a> is used only in TruckersMP.
-      </p>
-    </div>
-  </section>
+  /* Регулиране на разстоянието между двата блока */
+  .info-block--compact {
+    margin-top: 1.8rem; /* Намалено разстояние между двата заглавни блока (можете да го регулирате, напр. 1.5rem) */
+  }
+
+  /* Намаляване на излишните долни разстояния на самите заглавия */
+  .info-block .section-title {
+    margin-bottom: 0.5rem;
+  }
+</style>
 
 <section class="section section--light">
   <div class="container text-center">
