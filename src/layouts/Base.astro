@@ -66,6 +66,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
   <link rel="stylesheet" href="/css/mobile.css" />
   <link rel="stylesheet" href="/css/account.css" />
   <link rel="icon" href="https://i.ibb.co/21RJ4r30/TEXIM-ONE-TRUE-CUT.png" type="image/png" />
+  
   <style is:global>
     .texim-team-section { padding: 4rem 0; background: #ffffff; }
     .texim-team-header { text-align: center; margin-bottom: 2.5rem; }
@@ -74,7 +75,25 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
     .texim-team-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
     .texim-team-card { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.6rem 1.2rem; background: #f4f4f6; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
     .texim-team-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08); border-color: #d1d5db; }
-    .texim-team-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: #ffffff; border: 2px solid #e5e7eb; margin-bottom: 0.8rem; }
+    
+    /* UPDATED: Styled for inline SVG placeholder */
+    .texim-team-avatar { 
+      width: 80px; 
+      height: 80px; 
+      border-radius: 50%; 
+      background: #f3f4f6; 
+      border: 2px solid #e5e7eb; 
+      margin-bottom: 0.8rem; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      color: #6b7280; 
+    }
+    .texim-team-avatar svg {
+      width: 48px;
+      height: 48px;
+    }
+
     .texim-team-name { font-family: Orbitron, Inter, sans-serif; font-size: .95rem; font-weight: 700; color: #111111; text-decoration: none; word-break: break-word; }
     .texim-team-name:hover { text-decoration: underline; }
     .texim-team-role { margin: .3rem 0 1rem; color: #6b7280; font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
@@ -84,8 +103,9 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
     .texim-stat-val { font-family: Orbitron, sans-serif; font-size: .9rem; font-weight: 700; color: #111111; }
     .btn-tmp { width: 100%; display: inline-block; padding: 0.6rem 1rem; background-color: #111111; color: #ffffff; font-size: 0.8rem; font-weight: 600; text-decoration: none; border-radius: 8px; transition: background-color 0.2s ease, transform 0.1s ease; }
     .btn-tmp:hover { background-color: #000000; color: #ffffff; transform: translateY(-1px); }
+    
     @media(max-width:1000px){ .texim-team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media(max-width:700px){ .texim-team-section { padding: 3rem 0; } .texim-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; } .texim-team-card { padding: 1.2rem .8rem; } .texim-team-avatar { width: 72px; height: 72px; } }
+    @media(max-width:700px){ .texim-team-section { padding: 3rem 0; } .texim-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; } .texim-team-card { padding: 1.2rem .8rem; } .texim-team-avatar { width: 72px; height: 72px; } .texim-team-avatar svg { width: 42px; height: 42px; } }
     @media(max-width:480px){ .texim-team-grid { grid-template-columns: 1fr; } .texim-team-card { max-width: 340px; width: 100%; margin: 0 auto; } }
   </style>
   <slot name="head" />
@@ -112,25 +132,57 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
         const aboutSection = aboutTitle?.closest('section');
         if (!aboutSection) return;
 
+        // REMOVED: 'avatar' property from all members to save ~700KB of external image downloads
         const members = [
-          { name: 'chea7er044', role: 'Owner', rp: '586K', level: '1', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/5605295' },
-          { name: '[BG] Mitaka', role: 'Driver', rp: '312K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4710545.1766443403.png', profile: 'https://truckersmp.com/user/4710545' },
-          { name: '[BG] NiksaN', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4492540.1766442611.png', profile: 'https://truckersmp.com/user/4492540' },
-          { name: '[BG] Mariyanko', role: 'Driver', rp: '37K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2587553.1767200331.png', profile: 'https://truckersmp.com/user/2587553' },
-          { name: '[BG] Iv4o_56', role: 'Driver', rp: '68K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4947166.1767264328.png', profile: 'https://truckersmp.com/user/4947166' },
-          { name: 'SkodaSolaris', role: 'Driver', rp: '150K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/1910186.1767387345.png', profile: 'https://truckersmp.com/user/1910186' },
-          { name: '[BG] cickaa', role: 'Driver', rp: '120K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/3597382.1767699185.png', profile: 'https://truckersmp.com/user/3597382' },
-          { name: '[BG] Metko', role: 'Driver', rp: '9K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/5118236.1776869300.png', profile: 'https://truckersmp.com/user/5118236' },
-          { name: 'AcerBG', role: 'Driver', rp: '13K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/2003826.1779619724.png', profile: 'https://truckersmp.com/user/2003826' },
-          { name: 'Petkovv', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358471.1788385527.png', profile: 'https://truckersmp.com/user/6358471' },
-          { name: 'hollowaznai', role: 'Driver', rp: '0', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/6358812.1788445624.png', profile: 'https://truckersmp.com/user/6358812' },
-          { name: '[BG] slad', role: 'Representative', rp: '48K', level: '0', avatar: 'https://static.truckersmp.com/avatarsN/4049929.1766433092.png', profile: 'https://truckersmp.com/user/4049929' },
-          { name: '[BG] Marvinito', role: 'Manager', rp: '389K', level: '1', avatar: 'https://static.truckersmp.com/avatarsN/2064608.1766412005.png', profile: 'https://truckersmp.com/user/2064608' }
+          { name: 'chea7er044', role: 'Owner', rp: '586K', level: '1', profile: 'https://truckersmp.com/user/5605295' },
+          { name: '[BG] Mitaka', role: 'Driver', rp: '312K', level: '0', profile: 'https://truckersmp.com/user/4710545' },
+          { name: '[BG] NiksaN', role: 'Driver', rp: '0', level: '0', profile: 'https://truckersmp.com/user/4492540' },
+          { name: '[BG] Mariyanko', role: 'Driver', rp: '37K', level: '0', profile: 'https://truckersmp.com/user/2587553' },
+          { name: '[BG] Iv4o_56', role: 'Driver', rp: '68K', level: '0', profile: 'https://truckersmp.com/user/4947166' },
+          { name: 'SkodaSolaris', role: 'Driver', rp: '150K', level: '0', profile: 'https://truckersmp.com/user/1910186' },
+          { name: '[BG] cickaa', role: 'Driver', rp: '120K', level: '0', profile: 'https://truckersmp.com/user/3597382' },
+          { name: '[BG] Metko', role: 'Driver', rp: '9K', level: '0', profile: 'https://truckersmp.com/user/5118236' },
+          { name: 'AcerBG', role: 'Driver', rp: '13K', level: '0', profile: 'https://truckersmp.com/user/2003826' },
+          { name: 'Petkovv', role: 'Driver', rp: '0', level: '0', profile: 'https://truckersmp.com/user/6358471' },
+          { name: 'hollowaznai', role: 'Driver', rp: '0', level: '0', profile: 'https://truckersmp.com/user/6358812' },
+          { name: '[BG] slad', role: 'Representative', rp: '48K', level: '0', profile: 'https://truckersmp.com/user/4049929' },
+          { name: '[BG] Marvinito', role: 'Manager', rp: '389K', level: '1', profile: 'https://truckersmp.com/user/2064608' }
         ];
 
         const section = document.createElement('section');
         section.className = 'texim-team-section';
-        section.innerHTML = `<div class="container"><div class="texim-team-header"><h2 class="texim-team-title">Employees</h2></div><div class="texim-team-grid">${members.map(member => `<article class="texim-team-card"><img class="texim-team-avatar" src="${member.avatar}" alt="${member.name}" loading="lazy"><a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a><div class="texim-team-role">${member.role}</div><div class="texim-team-stats"><div class="texim-stat-box"><span class="texim-stat-label">RP</span><span class="texim-stat-val">${member.rp ?? '0'}</span></div><div class="texim-stat-box"><span class="texim-stat-label">LVL</span><span class="texim-stat-val">${member.level ?? '0'}</span></div></div><a class="btn-tmp" href="${member.profile}" target="_blank" rel="noopener noreferrer">TruckersMP</a></article>`).join('')}</div></div>`;
+        
+        // REPLACED: <img> tag with a lightweight, inline SVG placeholder
+        section.innerHTML = `<div class="container">
+          <div class="texim-team-header">
+            <h2 class="texim-team-title">Employees</h2>
+          </div>
+          <div class="texim-team-grid">
+            ${members.map(member => `
+              <article class="texim-team-card">
+                <div class="texim-team-avatar">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                  </svg>
+                </div>
+                <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
+                <div class="texim-team-role">${member.role}</div>
+                <div class="texim-team-stats">
+                  <div class="texim-stat-box">
+                    <span class="texim-stat-label">RP</span>
+                    <span class="texim-stat-val">${member.rp ?? '0'}</span>
+                  </div>
+                  <div class="texim-stat-box">
+                    <span class="texim-stat-label">LVL</span>
+                    <span class="texim-stat-val">${member.level ?? '0'}</span>
+                  </div>
+                </div>
+                <a class="btn-tmp" href="${member.profile}" target="_blank" rel="noopener noreferrer">TruckersMP</a>
+              </article>
+            `).join('')}
+          </div>
+        </div>`;
+        
         aboutSection.insertAdjacentElement('afterend', section);
       };
 
