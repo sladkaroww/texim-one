@@ -31,7 +31,15 @@ const description = 'Build your reputation, raise your standing, and set the dir
       </div>
     </div>
 
-    <!-- Блок 2: Google Sheet (Таблица) -->
+    <!-- Блок 2: Mods (Нова секция с заглавие и описание) -->
+    <div class="mods-block">
+      <h2 class="section-title">Mods</h2>
+      <p class="mods-description">
+        Once you reach Level 1, we will provide you with the paid mods JBX Graphics 2, PNG: WinterExperience, and Alaska - North to the Future.
+      </p>
+    </div>
+
+    <!-- Блок 3: Google Sheet (Таблица) -->
     <div class="sheet-block">
       <h2 class="section-title">Google Sheet</h2>
       <div class="full-table-wrapper">
@@ -53,7 +61,8 @@ const description = 'Build your reputation, raise your standing, and set the dir
     padding-bottom: 1.5rem !important; /* Намалено отстояние под таблицата */
   }
 
-  /* Разстояние между снимката и второто заглавие */
+  /* Разстояние между отделните блокове */
+  .mods-block,
   .sheet-block {
     margin-top: 2rem;
   }
@@ -61,6 +70,16 @@ const description = 'Build your reputation, raise your standing, and set the dir
   /* Отстояние под заглавията */
   .section-title {
     margin-bottom: 0.8rem !important;
+  }
+
+  /* Стил за описанието в секция Mods */
+  .mods-description {
+    color: #000000;             /* Изцяло черен цвят */
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;             /* Центриране на блока с текст */
+    font-weight: 400;
   }
 
   /* Контейнер за снимката (1000px) */
@@ -109,6 +128,9 @@ const description = 'Build your reputation, raise your standing, and set the dir
     }
     .full-table-wrapper iframe {
       height: 450px;
+    }
+    .mods-description {
+      font-size: 1rem;
     }
   }
 </style>
