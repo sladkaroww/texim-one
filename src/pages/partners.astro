@@ -27,10 +27,10 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
 
       <div class="hero-row" style="display: flex; align-items: center; gap: 3rem;">
         <div class="hero-truck" style="flex: 1;">
-          <img src="https://i.ibb.co/Z6ZXTfnb/viber-image-2026-07-03-21-54-40-065.jpg" alt="TEXIM ONE Merch" style="width: 100%; height: auto; object-fit: contain; display: block;" />
+          <img src="https://i.ibb.co/Z6ZXTfnb/viber-image-2026-07-03-21-54-40-065.jpg" alt="TEXIM ONE Merch" class="partner-img" />
         </div>
 
-        <div class="hero-content" style="flex: 1;">
+        <div class="hero-content" style="flex: 1; text-align: left;">
           <h3 style="font-size: 1.4rem; font-weight: 600; color: #111111; margin-bottom: 1rem;">
             🔥TEXIM ONE Ltd.🔥
           </h3>
@@ -39,7 +39,7 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
             Heavyweight Oversized T-Shirts, Sweatshirts, and Hoodies made from 100% combed cotton. A minimalist design with precise embroidery, created for anyone who values quality and comfort.
           </p>
 
-          <div class="hero-btns">
+          <div class="hero-btns" style="display: flex; justify-content: flex-start;">
             <a href="http://texim.one/" class="btn btn-primary" target="_blank" rel="noopener">texim.one</a>
           </div>
         </div>
@@ -47,7 +47,7 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
     </div>
   </section>
 
-  <!-- Блок 2: НОВ БЛОК (Текст вляво, Снимка вдясно) -->
+  <!-- Блок 2: IT Store (Текст вляво подравнен надясно към снимката, Снимка вдясно) -->
   <section class="section custom-partners-section" style="background-color: #ffffff;">
     <div class="container">
       <div class="section-title-wrapper">
@@ -57,8 +57,8 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
       </div>
 
       <div class="hero-row" style="display: flex; align-items: center; gap: 3rem;">
-        <!-- Подзаглавие, описание и бутон ВЛЯВО -->
-        <div class="hero-content" style="flex: 1; text-align: left;">
+        <!-- Подзаглавие, описание и бутон ВЛЯВО (подравнени НАДЯСНО към снимката) -->
+        <div class="hero-content" style="flex: 1; text-align: right;">
           <h3 style="font-size: 1.4rem; font-weight: 600; color: #111111; margin-bottom: 1rem;">
             🔥PIC Computer🔥
           </h3>
@@ -67,20 +67,20 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
             Може да подкрепите общността, като пазарувате от PIC Computer чрез нашия афилиейт линк! Преди да направите поръчката си, трябва да влезете в сайта, като цъкнете бутона.
           </p>
 
-          <div class="hero-btns" style="display: flex; justify-content: flex-start;">
+          <div class="hero-btns" style="display: flex; justify-content: flex-end;">
             <a href="https://www.pic.bg?affId=tex1m" class="btn btn-primary" target="_blank" rel="noopener">pic.bg</a>
           </div>
         </div>
 
         <!-- Снимка ВДЯСНО -->
         <div class="hero-truck" style="flex: 1;">
-          <img src="https://i.ibb.co/RV3Rh0S/565170148-1263470885819722-6077325697252228820-n.jpg" alt="Име на новия елемент" style="width: 100%; height: auto; object-fit: contain; display: block;" />
+          <img src="https://i.ibb.co/RV3Rh0S/565170148-1263470885819722-6077325697252228820-n.jpg" alt="PIC Computer" class="partner-img" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Блок 3: Statistics (Текст вляво, Снимка вдясно) -->
+  <!-- Блок 3: Statistics (Снимка вляво, Текст вдясно) -->
   <section class="section custom-partners-section" style="background-color: #ffffff;">
     <div class="container">
       <div class="section-title-wrapper">
@@ -90,7 +90,12 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
       </div>
 
       <div class="hero-row" style="display: flex; align-items: center; gap: 3rem;">
-        <!-- Текст, подзаглавие и бутон ВЛЯВО -->
+        <!-- Изображение ВЛЯВО -->
+        <div class="hero-truck" style="flex: 1;">
+          <img src="https://i.ibb.co/G3FMtvmR/CERTIFICATE-ALL-TIME.png" alt="TrucksBook Bulgaria Certificate" class="partner-img" />
+        </div>
+
+        <!-- Текст, подзаглавие и бутон ВДЯСНО -->
         <div class="hero-content" style="flex: 1; text-align: left;">
           <h3 style="font-size: 1.4rem; font-weight: 600; color: #111111; margin-bottom: 1rem;">
             🔥TrucksBook Bulgaria🔥
@@ -103,11 +108,6 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
           <div class="hero-btns" style="display: flex; justify-content: flex-start;">
             <a href="https://www.facebook.com/trucksbook.bulgaria" class="btn btn-primary" target="_blank" rel="noopener">Facebook</a>
           </div>
-        </div>
-
-        <!-- Изображение ВДЯСНО -->
-        <div class="hero-truck" style="flex: 1;">
-          <img src="https://i.ibb.co/G3FMtvmR/CERTIFICATE-ALL-TIME.png" alt="TrucksBook Bulgaria Certificate" style="width: 100%; height: auto; object-fit: contain; display: block;" />
         </div>
       </div>
     </div>
@@ -128,6 +128,22 @@ const description = 'TEXIM ONE partners, official merchandise, and community col
   </section>
 
   <style is:global>
+    /* Ограничаване и уеднаквяване на снимките */
+    .hero-truck {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .partner-img {
+      width: auto;
+      max-width: 100%;
+      max-height: 320px; /* Ограничение във височина за всички снимки */
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+    }
+
     /* Уеднаквяване на отстоянията над и под всяка секция */
     .custom-partners-section {
       padding-top: 1.5rem !important;
