@@ -76,22 +76,15 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
     .texim-team-card { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.6rem 1.2rem; background: #f4f4f6; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
     .texim-team-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08); border-color: #d1d5db; }
     
-    /* UPDATED: Styled for inline SVG placeholder */
-    .texim-team-avatar { 
-      width: 80px; 
-      height: 80px; 
-      border-radius: 50%; 
-      background: #f3f4f6; 
-      border: 2px solid #e5e7eb; 
-      margin-bottom: 0.8rem; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      color: #6b7280; 
-    }
-    .texim-team-avatar svg {
-      width: 48px;
-      height: 48px;
+    .texim-team-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #f3f4f6;
+      border: 2px solid #e5e7eb;
+      margin-bottom: 0.8rem;
+      display: block;
     }
 
     .texim-team-name { font-family: Orbitron, Inter, sans-serif; font-size: .95rem; font-weight: 700; color: #111111; text-decoration: none; word-break: break-word; }
@@ -105,7 +98,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
     .btn-tmp:hover { background-color: #000000; color: #ffffff; transform: translateY(-1px); }
     
     @media(max-width:1000px){ .texim-team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    @media(max-width:700px){ .texim-team-section { padding: 3rem 0; } .texim-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; } .texim-team-card { padding: 1.2rem .8rem; } .texim-team-avatar { width: 72px; height: 72px; } .texim-team-avatar svg { width: 42px; height: 42px; } }
+    @media(max-width:700px){ .texim-team-section { padding: 3rem 0; } .texim-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; } .texim-team-card { padding: 1.2rem .8rem; } .texim-team-avatar { width: 72px; height: 72px; } }
     @media(max-width:480px){ .texim-team-grid { grid-template-columns: 1fr; } .texim-team-card { max-width: 340px; width: 100%; margin: 0 auto; } }
   </style>
   <slot name="head" />
@@ -132,7 +125,6 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
         const aboutSection = aboutTitle?.closest('section');
         if (!aboutSection) return;
 
-        // REMOVED: 'avatar' property from all members to save ~700KB of external image downloads
         const members = [
           { name: 'chea7er044', role: 'Owner', rp: '586K', level: '1', profile: 'https://truckersmp.com/user/5605295' },
           { name: '[BG] Mitaka', role: 'Driver', rp: '312K', level: '0', profile: 'https://truckersmp.com/user/4710545' },
@@ -151,8 +143,6 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
 
         const section = document.createElement('section');
         section.className = 'texim-team-section';
-        
-        // REPLACED: <img> tag with a lightweight, inline SVG placeholder
         section.innerHTML = `<div class="container">
           <div class="texim-team-header">
             <h2 class="texim-team-title">Employees</h2>
@@ -160,11 +150,12 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
           <div class="texim-team-grid">
             ${members.map(member => `
               <article class="texim-team-card">
-                <div class="texim-team-avatar">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
-                </div>
+                <img
+                  class="texim-team-avatar"
+                  src="/img/TEXIM1-AVATAR2026.svg"
+                  alt="${member.name}"
+                  loading="lazy"
+                />
                 <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
                 <div class="texim-team-role">${member.role}</div>
                 <div class="texim-team-stats">
