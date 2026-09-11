@@ -35,7 +35,10 @@ const description = 'Build your reputation, raise your standing, and set the dir
     <div class="mods-block">
       <h2 class="section-title">Mods</h2>
       <p class="mods-description">
-        Once you reach Level 1, we will provide you with the paid mods JBX Graphics 2, PNG: WinterExperience, and Alaska - North to the Future.
+        Once you reach Level 1, we will provide you with the paid mods 
+        <a href="#" class="mod-link" target="_blank" rel="https://www.jbxgraphicsmods.com/">JBX Graphics 2</a>, 
+        <a href="#" class="mod-link" target="_blank" rel="https://store.n-artworks.workers.dev/we">PNG: WinterExperience</a>, and 
+        <a href="#" class="mod-link" target="_blank" rel="https://alaskamod.com/">Alaska - North to the Future</a>.
       </p>
     </div>
 
@@ -80,6 +83,18 @@ const description = 'Build your reputation, raise your standing, and set the dir
     max-width: 900px;
     margin: 0 auto;             /* Центриране на блока с текст */
     font-weight: 400;
+  }
+
+  /* Стил за линковете на модовете */
+  .mods-description .mod-link {
+    color: #000000;             /* Запазва черния цвят */
+    font-weight: 600;           /* В удебелен шрифт за по-добра видимост */
+    text-decoration: underline; /* Подчертаване, за да личи, че са линкове */
+    transition: opacity 0.2s ease;
+  }
+
+  .mods-description .mod-link:hover {
+    opacity: 0.7;               /* Лек ефект при посочване с мишката */
   }
 
   /* Контейнер за снимката (1000px) */
