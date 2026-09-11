@@ -45,7 +45,7 @@
       'features.f3.title': 'Reputation',
       'features.f3.text': 'Our system rewards the more active members by giving their votes greater weight in decision-making.',
       'features.f4.title': 'Prestige',
-      'features.f4.text': 'Their own Website, Twitch Team, and Merchandise—features that thriving communities can boast about.',
+      'features.f4.text': 'A dedicated Website, a Twitch Team, Merchandise, and Paid mods - features that only well-established communities can boast of.',
 
       // Media page
       'media.title': 'Media',
@@ -161,7 +161,7 @@
       'features.f3.title': 'Репутация',
       'features.f3.text': 'Системата ни възнаграждава по-активните членове, като придава по-голяма тежест на гласовете им при вземането на решения.',
       'features.f4.title': 'Престиж',
-      'features.f4.text': 'Собствен Уебсайт, Twitch Team и Merch, с които могат да се похвалят само развитите общности.',
+      'features.f4.text': 'Собствени Уебсайт, Twitch Team, Merch и Платени модификации, с които могат да се похвалят само развитите общности.',
 
       // Media page
       'media.title': 'Медия',
