@@ -2,7 +2,7 @@
 // Cloudflare Pages Function for resolving a TruckersMP event and its optional slots.
 
 const TMP_BASE = 'https://api.truckersmp.com/v2';
-const TMP_USER_AGENT = 'TEXIM-ONE-Website/1.0.0 (contact@teximone.com)';
+const TMP_USER_AGENT = 'TEXIM-ONE-Website/1.0.0 (sladkaroww@gmail.com)';
 
 function json(body, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(body), {
