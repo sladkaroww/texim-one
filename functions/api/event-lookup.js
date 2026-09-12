@@ -6,6 +6,8 @@ const API_ENDPOINTS = [
     'https://truckersmp.com/api/v2/events',
 ];
 
+const TMP_USER_AGENT = 'TEXIM-ONE-Website/1.0.0 (contact@teximone.com)';
+
 function json(body, status = 200) {
     return new Response(JSON.stringify(body), {
         status,
@@ -61,14 +63,12 @@ function normalizeEvent(event, requestedId) {
         server: clean(server.name),
         serverId: server.id ?? null,
         language: clean(event.language),
-
         date: start.date,
         time: start.time,
         startAt: clean(event.start_at),
         meetupDate: meetup.date,
         meetupTime: meetup.time,
         meetupAt: clean(event.meetup_at),
-
         departure: clean(departure.city || departure.location),
         departureCity: clean(departure.city),
         departureLocation: clean(departure.location),
@@ -78,25 +78,21 @@ function normalizeEvent(event, requestedId) {
         route: [clean(departure.city || departure.location), clean(arrival.city || arrival.location)]
             .filter(Boolean)
             .join(' -> '),
-
         banner: clean(event.banner),
         map: clean(event.map),
         description: clean(event.description),
         rule: clean(event.rule),
         voiceLink: clean(event.voice_link),
         externalLink: clean(event.external_link),
-
         vtc: clean(vtc.name),
         vtcId: vtc.id ?? null,
         creator: clean(user.username),
         creatorId: user.id ?? null,
-
         attendance: {
             confirmed: attendance.confirmed ?? 0,
             unsure: attendance.unsure ?? 0,
             vtcs: attendance.vtcs ?? 0,
         },
-
         url: clean(event.url) || `https://truckersmp.com/events/${event.id ?? requestedId}`,
         createdAt: clean(event.created_at),
         updatedAt: clean(event.updated_at),
@@ -108,17 +104,24 @@ async function requestEvent(endpoint, id, signal) {
         method: 'GET',
         headers: {
             Accept: 'application/json',
-            'User-Agent': 'TEXIM-ONE-Event-Importer/1.0',
+            'User-Agent': TMP_USER_AGENT,
         },
         signal,
     });
+
+    console.log(`[TruckersMP] GET event ${id}: HTTP ${response.status}`);
+    if (response.status === 403) {
+        console.error('[TruckersMP] HTTP 403 Forbidden. Check the User-Agent and API access requirements.');
+    } else if (response.status === 200) {
+        console.log('[TruckersMP] HTTP 200 OK. Event data received successfully.');
+    }
 
     const rawText = await response.text();
     let data = null;
     try {
         data = rawText ? JSON.parse(rawText) : null;
-    } catch {
-        data = null;
+    } catch (error) {
+        console.error('[TruckersMP] Failed to parse JSON response:', error);
     }
 
     const apiMessage = clean(
@@ -161,8 +164,6 @@ async function fetchOfficialEvent(id) {
             } catch (error) {
                 if (error?.name === 'AbortError') throw error;
                 errors.push(error);
-
-                // A missing event is definitive; do not hide it behind the fallback.
                 if (Number(error?.status) === 404) throw error;
             }
         }
