@@ -6,7 +6,7 @@ const API_ENDPOINTS = [
     'https://truckersmp.com/api/v2/events',
 ];
 
-const TMP_USER_AGENT = 'TEXIM-ONE-Website/1.0.0 (contact@teximone.com)';
+const TMP_USER_AGENT = 'TEXIM-ONE-Website/1.0.0 (sladkaroww@gmail.com)';
 
 function json(body, status = 200) {
     return new Response(JSON.stringify(body), {
