@@ -14,7 +14,7 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     </div></div>
   </section>
 
-<section class="section section--white">
+<section class="section section--white section--compact">
   <div class="container text-center">
     
     <!-- Първа подсекция: Platforms -->
@@ -48,7 +48,7 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
   </div>
 </section>
 
-<section class="section section--light">
+<section class="section section--light section--compact">
   <div class="container text-center">
     <h2 class="section-title">Vehicle Fleet</h2>
     <p class="section-subtitle">Required for formal events.</p>
@@ -186,7 +186,7 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
         </div>
       </div>
 
-      <!-- РЕД 2: ТРИ НОВИ ВЛЕКАЧА И РЕМАРКЕТО -->
+      <!-- РЕД 2 -->
 
       <!-- 6. Volvo 9700 DD -->
       <div class="fleet-card-item">
@@ -273,6 +273,17 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
 </section>
 
 <style>
+  /* Намаляване на горния и долния отстъп на секциите */
+  .section--compact {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  /* Черен цвят за подзаглавията и текста в секцията */
+  .section-subtitle {
+    color: #111111 !important;
+  }
+
   /* Стил за линковете */
   .subtitle-link {
     color: #0066cc !important;
@@ -284,28 +295,33 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     color: #004080 !important;
   }
 
-  /* По-малко разстояние за блоковете */
+  /* Намалени разстояния за подблоковете */
+  .info-block {
+    margin-bottom: 1.2rem;
+  }
+
   .info-block--compact {
-    margin-top: 1.8rem;
+    margin-top: 1.2rem;
   }
 
   .info-block .section-title {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
   }
 
   .section-title {
     margin-top: -0.1em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
     font-family: 'Orbitron', sans-serif;
+    color: #111111;
   }
 
-  /* Мрежа с 4 колони за точно 2 реда от по 4 елемента */
+  /* Мрежа с 4 колони за 2 реда от по 4 елемента */
   .fleet-grid-4 {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.25rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     width: 100%;
   }
 
@@ -421,7 +437,7 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
 
   .section-bottom-subtitle {
     font-size: 0.85rem;
-    color: #666666;
+    color: #444444;
     margin-top: 1rem;
   }
 
