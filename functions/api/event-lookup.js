@@ -104,7 +104,7 @@ async function requestEvent(endpoint, id, signal) {
         method: 'GET',
         headers: {
             Accept: 'application/json',
-            'User-Agent': TMP_USER_AGENT,
+            'X-User-Agent': TMP_USER_AGENT, // ← changed from 'User-Agent' to 'X-User-Agent'
         },
         signal,
     });
