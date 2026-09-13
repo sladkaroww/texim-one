@@ -14,7 +14,7 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     </div></div>
   </section>
 
-<section class="section section--white section--compact">
+<section class="section section--white section--custom-padding">
   <div class="container text-center">
     
     <!-- Първа подсекция: Platforms -->
@@ -48,7 +48,7 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
   </div>
 </section>
 
-<section class="section section--light section--compact">
+<section class="section section--light section--custom-padding">
   <div class="container text-center">
     <h2 class="section-title">Vehicle Fleet</h2>
     <p class="section-subtitle">Required for formal events.</p>
@@ -273,13 +273,13 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
 </section>
 
 <style>
-  /* Намаляване на горния и долния отстъп на секциите */
-  .section--compact {
-    padding-top: 2.5rem !important;
-    padding-bottom: 2.5rem !important;
+  /* Фиксиране на еднакъв отстъп отгоре и отдолу за двете секции */
+  .section--custom-padding {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
   }
 
-  /* Черен цвят за подзаглавията и текста в секцията */
+  /* Черен цвят за подзаглавията и текста */
   .section-subtitle {
     color: #111111 !important;
   }
@@ -295,22 +295,23 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     color: #004080 !important;
   }
 
-  /* Намалени разстояния за подблоковете */
+  /* Разстояния между блоковете в първата секция */
   .info-block {
-    margin-bottom: 1.2rem;
+    margin-bottom: 2rem;
   }
 
-  .info-block--compact {
-    margin-top: 1.2rem;
+  .info-block:last-child {
+    margin-bottom: 0;
   }
 
   .info-block .section-title {
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
   }
 
+  /* Премахване на отрицателния margin-top, за да са равни разстоянията */
   .section-title {
-    margin-top: -0.1em;
-    margin-bottom: 0.3rem;
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem;
     font-family: 'Orbitron', sans-serif;
     color: #111111;
   }
@@ -439,6 +440,7 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     font-size: 0.85rem;
     color: #444444;
     margin-top: 1rem;
+    margin-bottom: 0 !important;
   }
 
   /* Адаптивност за по-малки екрани */
