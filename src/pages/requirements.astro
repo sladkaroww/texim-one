@@ -273,15 +273,15 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
 </section>
 
 <style>
-  /* Значително намаляване на отстъпите отгоре и отдолу на секциите */
+  /* Външни отстъпи на секциите */
   .section--custom-padding {
     padding-top: 1.5rem !important;
     padding-bottom: 1.5rem !important;
   }
 
-  /* Черен цвят за подзаглавията и текста */
   .section-subtitle {
     color: #111111 !important;
+    margin-bottom: 0;
   }
 
   /* Стил за линковете */
@@ -295,33 +295,33 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     color: #004080 !important;
   }
 
-  /* Намаляване на разстоянието между блоковете Platforms, Avatar & Tag, Activity */
+  /* Свиване на разстоянията между подблоковете */
   .info-block {
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem !important;
   }
 
   .info-block:last-child {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
   }
 
   .info-block .section-title {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.1rem;
   }
 
   .section-title {
     margin-top: 0 !important;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.1rem;
     font-family: 'Orbitron', sans-serif;
     color: #111111;
   }
 
-  /* Мрежа с 4 колони */
+  /* Мрежа с 4 колони и намалено разстояние от заглавието */
   .fleet-grid-4 {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.25rem;
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
+    margin-top: 0.5rem !important;
+    margin-bottom: 1rem;
     width: 100%;
   }
 
@@ -442,7 +442,7 @@ const description = 'What it takes to drive for TEXIM ONE — age and Discord ru
     margin-bottom: 0 !important;
   }
 
-  /* Адаптивност за по-малки екрани */
+  /* Адаптивност */
   @media (max-width: 1024px) {
     .fleet-grid-4 {
       grid-template-columns: repeat(2, 1fr);
