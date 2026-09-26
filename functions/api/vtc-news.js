@@ -1,4 +1,5 @@
 const RSS_URL = 'https://truckersmp.com/vtc/74050/news/rss';
+const API_URL = 'https://api.truckersmp.com/v2/vtc/74050/news';
 
 const stripCdata = (value = '') => value.replace(/^\s*<!\[CDATA\[/, '').replace(/\]\]>\s*$/, '').trim();
 const decodeXml = (value = '') => stripCdata(value)
@@ -23,41 +24,7 @@ const stripHtml = (value = '') => value.replace(/<[^>]*>/g, ' ').replace(/\s+/g,
 
 export async function onRequestGet() {
   try {
-    const response = await fetch(RSS_URL, {
-      headers: {
-        'User-Agent': 'TEXIM-ONE-News/1.0',
-        Accept: 'application/rss+xml, application/xml, text/xml',
-      },
-      cf: { cacheTtl: 300, cacheEverything: true },
-    });
-
-    if (!response.ok) {
-      return new Response(
-        JSON.stringify({ error: `TruckersMP returned ${response.status}.` }),
-        {
-          status: 502,
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-store',
-          },
-        },
-      );
-    }
-
-    const xml = await response.text();
-    const items = [...xml.matchAll(/<item(?:\s[^>]*)?>([\s\S]*?)<\/item>/gi)]
-      .map((match) => match[1])
-      .map((item) => {
-        const description = getTag(item, 'description');
-        return {
-          title: getTag(item, 'title'),
-          link: getTag(item, 'link'),
-          pubDate: getTag(item, 'pubDate'),
-          description: stripHtml(description),
-          image: getImage(item, description),
-        };
-      })
-      .filter((item) => item.title && item.link);
+    const items = await getRssItems();
 
     return new Response(JSON.stringify({ items }), {
       status: 200,
@@ -67,17 +34,75 @@ export async function onRequestGet() {
       },
     });
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : 'Could not fetch TruckersMP news.',
-      }),
-      {
-        status: 502,
+    try {
+      const response = await fetch(API_URL, {
         headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-store',
+          'User-Agent': 'TEXIM-ONE-News/1.0',
+          Accept: 'application/json',
         },
-      },
-    );
+      });
+
+      if (!response.ok) throw new Error(`TruckersMP API returned ${response.status}.`);
+
+      const data = await response.json();
+      const items = (data?.response?.news || [])
+        .filter((item) => item?.id && item?.title)
+        .map((item) => ({
+          title: item.title,
+          link: `https://truckersmp.com/vtc/74050/news/${item.id}`,
+          pubDate: item.published_at || item.updated_at || '',
+          description: '',
+          image: '',
+        }));
+
+      if (!items.length) throw new Error('TruckersMP returned no news items.');
+
+      return new Response(JSON.stringify({ items }), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': 'public, max-age=300, s-maxage=300',
+        },
+      });
+    } catch (fallbackError) {
+      return new Response(
+        JSON.stringify({
+          error: fallbackError instanceof Error ? fallbackError.message : 'Could not fetch TruckersMP news.',
+        }),
+        {
+          status: 502,
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-store',
+          },
+        },
+      );
+    }
   }
+}
+
+async function getRssItems() {
+  const response = await fetch(RSS_URL, {
+    headers: {
+      'User-Agent': 'TEXIM-ONE-News/1.0',
+      Accept: 'application/rss+xml, application/xml, text/xml',
+    },
+  });
+
+  if (!response.ok) throw new Error(`TruckersMP RSS returned ${response.status}.`);
+
+  const xml = await response.text();
+  return [...xml.matchAll(/<item(?:\s[^>]*)?>([\s\S]*?)<\/item>/gi)]
+    .map((match) => match[1])
+    .map((item) => {
+      const description = getTag(item, 'description');
+      return {
+        title: getTag(item, 'title'),
+        link: getTag(item, 'link'),
+        pubDate: getTag(item, 'pubDate'),
+        description: stripHtml(description),
+        image: getImage(item, description),
+      };
+    })
+    .filter((item) => item.title && item.link);
 }
