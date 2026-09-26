@@ -1,4 +1,4 @@
-const RSS_URL = 'https://www.truckersmp.com/vtc/74050/news/rss';
+const RSS_URL = 'https://steamcommunity.com/groups/tex1m/rss/';
 
 const stripCdata = (value = '') => value.replace(/^\s*<!\[CDATA\[/, '').replace(/\]\]>\s*$/, '').trim();
 const decodeXml = (value = '') => stripCdata(value)
