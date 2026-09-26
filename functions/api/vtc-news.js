@@ -37,8 +37,10 @@ export async function onRequestGet() {
     try {
       const response = await fetch(API_URL, {
         headers: {
-          'User-Agent': 'TEXIM-ONE-News/1.0',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140 Safari/537.36',
           Accept: 'application/json',
+          Referer: 'https://truckersmp.com/vtc/74050/news',
+          'Accept-Language': 'en-US,en;q=0.9',
         },
       });
 
@@ -84,8 +86,10 @@ export async function onRequestGet() {
 async function getRssItems() {
   const response = await fetch(RSS_URL, {
     headers: {
-      'User-Agent': 'TEXIM-ONE-News/1.0',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140 Safari/537.36',
       Accept: 'application/rss+xml, application/xml, text/xml',
+      Referer: 'https://truckersmp.com/vtc/74050/news',
+      'Accept-Language': 'en-US,en;q=0.9',
     },
   });
 
