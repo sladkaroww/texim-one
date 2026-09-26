@@ -1,4 +1,4 @@
-const RSS_URL = 'https://truckersmp.com/vtc/74050/news/rss';
+const RSS_URL = 'https://www.truckersmp.com/vtc/74050/news/rss';
 const API_URL = 'https://api.truckersmp.com/v2/vtc/74050/news';
 
 const stripCdata = (value = '') => value.replace(/^\s*<!\[CDATA\[/, '').replace(/\]\]>\s*$/, '').trim();
