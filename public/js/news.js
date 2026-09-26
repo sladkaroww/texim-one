@@ -21,7 +21,10 @@
   };
 
   const renderNews = (news) => {
-    grid.innerHTML = news.map((item) => {
+    const visibleNews = news.slice(0, 6);
+    const hiddenNews = news.slice(6);
+
+    const renderCard = (item) => {
       const image = item.image
         ? `<img class="news-card-banner" src="${escapeHtml(item.image)}" alt="" loading="lazy" decoding="async">`
         : '';
@@ -38,7 +41,22 @@
           </div>
         </article>
       `;
-    }).join('');
+    };
+
+    grid.innerHTML = visibleNews.map(renderCard).join('');
+
+    if (hiddenNews.length > 0) {
+      const more = document.createElement('div');
+      more.className = 'news-more';
+      more.style.cssText = 'display:flex;justify-content:center;margin-top:1.5rem;';
+      more.innerHTML = '<button type="button" class="btn btn-primary news-more-button">Show more</button>';
+      grid.after(more);
+
+      more.querySelector('.news-more-button').addEventListener('click', () => {
+        grid.insertAdjacentHTML('beforeend', hiddenNews.map(renderCard).join(''));
+        more.remove();
+      });
+    }
   };
 
   const loadNews = async () => {
