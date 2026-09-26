@@ -1,5 +1,4 @@
 const RSS_URL = 'https://www.truckersmp.com/vtc/74050/news/rss';
-const API_URL = 'https://api.truckersmp.com/v2/vtc/74050/news';
 
 const stripCdata = (value = '') => value.replace(/^\s*<!\[CDATA\[/, '').replace(/\]\]>\s*$/, '').trim();
 const decodeXml = (value = '') => stripCdata(value)
@@ -34,52 +33,18 @@ export async function onRequestGet() {
       },
     });
   } catch (error) {
-    try {
-      const response = await fetch(API_URL, {
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Could not fetch TruckersMP RSS news.',
+      }),
+      {
+        status: 502,
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140 Safari/537.36',
-          Accept: 'application/json',
-          Referer: 'https://truckersmp.com/vtc/74050/news',
-          'Accept-Language': 'en-US,en;q=0.9',
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store',
         },
-      });
-
-      if (!response.ok) throw new Error(`TruckersMP API returned ${response.status}.`);
-
-      const data = await response.json();
-      const items = (data?.response?.news || [])
-        .filter((item) => item?.id && item?.title)
-        .map((item) => ({
-          title: item.title,
-          link: `https://truckersmp.com/vtc/74050/news/${item.id}`,
-          pubDate: item.published_at || item.updated_at || '',
-          description: '',
-          image: '',
-        }));
-
-      if (!items.length) throw new Error('TruckersMP returned no news items.');
-
-      return new Response(JSON.stringify({ items }), {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          'Cache-Control': 'public, max-age=300, s-maxage=300',
-        },
-      });
-    } catch (fallbackError) {
-      return new Response(
-        JSON.stringify({
-          error: fallbackError instanceof Error ? fallbackError.message : 'Could not fetch TruckersMP news.',
-        }),
-        {
-          status: 502,
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-store',
-          },
-        },
-      );
-    }
+      },
+    );
   }
 }
 
