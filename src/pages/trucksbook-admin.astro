@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="TrucksBook Activity Import | TEXIM ONE" description="Private TrucksBook activity import." robots="noindex,nofollow" path="/trucksbook-admin.html">
+  <section class="hero hero--inner">
+    <div class="container"><div class="hero-content">
+      <h1 class="hero-title">TrucksBook Activity Import</h1>
+      <p class="hero-subtitle">Upload the latest company CSV every two weeks.</p>
+    </div></div>
+  </section>
+  <section class="section section--white section--custom-padding">
+    <div class="container" style="max-width: 720px;">
+      <form id="trucksbook-import" class="info-block">
+        <label for="token">Import token</label>
+        <input id="token" type="password" required autocomplete="off" />
+        <label for="file">TrucksBook CSV</label>
+        <input id="file" type="file" accept=".csv,text/csv" required />
+        <button class="btn btn-primary" type="submit">Upload CSV</button>
+        <p id="result" role="status"></p>
+      </form>
+    </div>
+  </section>
+  <script is:inline>
+    const form = document.querySelector('#trucksbook-import');
+    const result = document.querySelector('#result');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      result.textContent = 'Uploading…';
+      const body = new FormData();
+      body.append('file', document.querySelector('#file').files[0]);
+      try {
+        const response = await fetch('/api/trucksbook-activity', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${document.querySelector('#token').value}` },
+          body,
+        });
+        const data = await response.json();
+        if (!response.ok || !data.success) throw new Error(data.message || 'Upload failed.');
+        result.textContent = `Imported ${data.data.deliveryCount} deliveries from ${data.data.filename}.`;
+      } catch (error) {
+        result.textContent = error.message;
+      }
+    });
+  </script>
+</Base>
