@@ -185,16 +185,16 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
           update: '(activity is updated every 14 days)',
           lastUpdate: 'Last updated 25.10.2026 12:00 PM',
           unknown: 'Activity: unavailable',
-          active: (days) => `Active · ${days} days left`,
-          inactive: 'Inactive · over 90 days'
+          active: 'Active · TruckersMP match',
+          inactive: 'Inactive · no TruckersMP match'
         },
         bg: {
           title: 'Служители',
           update: '(активността се обновява на всеки 14 дни)',
           lastUpdate: 'Последна актуализация: 25.10.2026 г., 12:00 ч.',
           unknown: 'Активност: няма данни',
-          active: (days) => `Активен · остават ${days} дни`,
-          inactive: 'Неактивен · над 90 дни'
+          active: 'Активен · потвърдена доставка в TruckersMP',
+          inactive: 'Неактивен · няма потвърдена доставка'
         }
       };
       const roleText = {
@@ -225,19 +225,21 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
           const response = await fetch('/api/trucksbook-activity', { cache: 'no-store' });
           const payload = await response.json();
           if (!response.ok || !payload.success || !payload.data) return;
-          const now = Date.now();
-          const limit = 90 * 24 * 60 * 60 * 1000;
           const normalize = (value) => String(value || '').normalize('NFKC').trim().toLocaleLowerCase('en-US').replace(/\s+/g, ' ');
           document.querySelectorAll('[data-trucksbook-name]').forEach((element) => {
             const entry = payload.data.employees?.[normalize(element.dataset.trucksbookName)];
-            if (!entry?.lastDeliveryAt) return;
-            const last = new Date(`${entry.lastDeliveryAt}T00:00:00Z`).getTime();
-            const active = now - last < limit;
-            const days = Math.max(0, Math.ceil((limit - (now - last)) / (24 * 60 * 60 * 1000)));
-            element.className = `texim-activity texim-activity--${active ? 'active' : 'inactive'}`;
+            const active = entry.active === true;
             const language = teamText[currentLanguage()];
-            element.textContent = active ? language.active(days) : language.inactive;
-            element.title = `Last delivery: ${entry.lastDeliveryAt}`;
+            if (entry.tmpStatus === 'unavailable') {
+              element.className = 'texim-activity texim-activity--unknown';
+              element.textContent = language.unknown;
+              return;
+            }
+            element.className = `texim-activity texim-activity--${active ? 'active' : 'inactive'}`;
+            element.textContent = active ? language.active : language.inactive;
+            element.title = active && entry.matches?.length
+              ? `TruckersMP match: ${entry.matches[0].cargo} (${entry.matches[0].distanceKm} km)`
+              : `Last TrucksBook delivery: ${entry.lastDeliveryAt || 'unknown'}`;
           });
         } catch {
           // Activity is supplemental; employee cards remain usable if the API is unavailable.

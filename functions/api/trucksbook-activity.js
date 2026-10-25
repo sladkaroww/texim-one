@@ -4,6 +4,18 @@
 
 const STORAGE_KEY = 'trucksbook-activity-current';
 const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
+const TMP_PROFILES = {
+    chea7er044: 5605295,
+    '[bg] mitaka': 4710545,
+    '[bg] niksan': 4492540,
+    '[bg] iv4o_56': 4947166,
+    skodasolaris: 1910186,
+    '[bg] cickaa': 3597382,
+    '[bg] metko': 5118236,
+    petkovv: 6358471,
+    '[bg] slad': 4049929,
+    '[bg] marvinito': 2064608,
+};
 
 function json(body, status = 200) {
     return new Response(JSON.stringify(body), {
@@ -78,6 +90,43 @@ function parseDate(value) {
     return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString().slice(0, 10);
 }
 
+function normalizeCargo(value) {
+    return normalize(value)
+        .replace(/&amp;/g, '&')
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
+        .trim();
+}
+
+function parseDistance(value) {
+    const match = String(value || '').replace(',', '.').match(/\d+(?:\.\d+)?/);
+    return match ? Number(match[0]) : null;
+}
+
+function parseTmpDeliveries(html) {
+    const deliveries = [];
+    const pattern = /<h2[^>]*>\s*<span>\s*([^<]+?)\s*<\/span>[\s\S]*?Delivery ID:\s*<\/strong>\s*([A-Z0-9-]+)[\s\S]*?<strong>\s*([^<]+?)\s*<\/strong>\s*\(([\d,.]+)\s*km\)/gi;
+    let match;
+    while ((match = pattern.exec(html))) {
+        const route = match[3].trim().split(/\s*(?:→|-&gt;|->)\s*/);
+        deliveries.push({
+            cargo: match[1].trim(),
+            deliveryId: match[2].trim(),
+            from: route[0] || '',
+            to: route[1] || '',
+            distanceKm: parseDistance(match[4]),
+        });
+    }
+    return deliveries;
+}
+
+async function getTmpDeliveries(userId) {
+    const response = await fetch(`https://truckersmp.com/user/${userId}`, {
+        headers: { 'User-Agent': 'TEXIM-ONE-Activity/1.0', Accept: 'text/html' },
+    });
+    if (!response.ok) throw new Error(`TruckersMP profile returned ${response.status}.`);
+    return parseTmpDeliveries(await response.text());
+}
+
 function parseActivity(csvText) {
     const rows = parseCsv(csvText);
     const headers = Object.keys(rows[0]);
@@ -87,24 +136,35 @@ function parseActivity(csvText) {
     const dateColumn = findColumn(headers, [
         'date', 'delivery date', 'delivered', 'completed', 'completion date', 'uploaded', 'time',
     ]);
+    const cargoColumn = findColumn(headers, ['cargo', 'freight', 'load']);
+    const distanceColumn = findColumn(headers, ['accepted distance', 'distance', 'planned distance']);
 
-    if (!nameColumn || !dateColumn) {
+    if (!nameColumn || !dateColumn || !cargoColumn || !distanceColumn) {
         throw new Error(`Could not identify driver/date columns. Found: ${headers.join(', ')}`);
     }
 
     const employees = {};
+    const deliveriesByEmployee = {};
     let validDeliveries = 0;
     for (const row of rows) {
         const name = row[nameColumn];
         const date = parseDate(row[dateColumn]);
-        if (!name || !date) continue;
+        const cargo = row[cargoColumn];
+        const distanceKm = parseDistance(row[distanceColumn]);
+        if (!name || !date || !cargo || distanceKm === null) continue;
         validDeliveries += 1;
         const key = normalize(name);
+        if (!deliveriesByEmployee[key]) deliveriesByEmployee[key] = [];
+        deliveriesByEmployee[key].push({
+            cargo: cargo.trim(),
+            distanceKm,
+            date,
+        });
         if (!employees[key] || date > employees[key].lastDeliveryAt) {
             employees[key] = {
                 name: name.trim(),
                 lastDeliveryAt: date,
-                deliveryCount: (employees[key]?.deliveryCount || 0) + 1,
+                deliveryCount: 1,
             };
         } else {
             employees[key].deliveryCount += 1;
@@ -112,7 +172,45 @@ function parseActivity(csvText) {
     }
 
     if (!validDeliveries) throw new Error('No deliveries with a recognizable driver and date were found.');
-    return { employees, deliveryCount: validDeliveries, columns: { name: nameColumn, date: dateColumn } };
+    return {
+        employees,
+        deliveriesByEmployee,
+        deliveryCount: validDeliveries,
+        columns: { name: nameColumn, date: dateColumn, cargo: cargoColumn, distance: distanceColumn },
+    };
+}
+
+async function matchTmpDeliveries(activity) {
+    const results = { ...activity.employees };
+    for (const [key, employee] of Object.entries(results)) {
+        const tmpUserId = TMP_PROFILES[key];
+        if (!tmpUserId) {
+            results[key] = { ...employee, active: false, tmpStatus: 'profile_not_configured', matches: [] };
+            continue;
+        }
+        try {
+            const tmpDeliveries = await getTmpDeliveries(tmpUserId);
+            const csvDeliveries = activity.deliveriesByEmployee[key] || [];
+            const matches = tmpDeliveries.filter((tmp) => csvDeliveries.some((csv) =>
+                normalizeCargo(csv.cargo) === normalizeCargo(tmp.cargo)
+                && csv.distanceKm === tmp.distanceKm
+            ));
+            results[key] = {
+                ...employee,
+                active: matches.length > 0,
+                tmpUserId,
+                tmpStatus: 'checked',
+                matches: matches.map((match) => ({
+                    deliveryId: match.deliveryId,
+                    cargo: match.cargo,
+                    distanceKm: match.distanceKm,
+                })),
+            };
+        } catch {
+            results[key] = { ...employee, active: false, tmpUserId, tmpStatus: 'unavailable', matches: [] };
+        }
+    }
+    return results;
 }
 
 function authorized(request, env) {
@@ -151,7 +249,8 @@ export async function onRequest(context) {
     try {
         const parsed = parseActivity(await file.text());
         const importedAt = new Date().toISOString();
-        const data = { importedAt, filename: file.name, ...parsed };
+        const employees = await matchTmpDeliveries(parsed);
+        const data = { importedAt, filename: file.name, ...parsed, employees };
         await env.TEXIM_CALENDAR.put(STORAGE_KEY, JSON.stringify(data));
         return json({ success: true, data });
     } catch (error) {
