@@ -82,7 +82,7 @@ function parseActivity(csvText) {
     const rows = parseCsv(csvText);
     const headers = Object.keys(rows[0]);
     const nameColumn = findColumn(headers, [
-        'driver', 'driver name', 'user', 'username', 'user name', 'nickname', 'player', 'employee',
+        'name', 'driver', 'driver name', 'user', 'username', 'user name', 'nickname', 'player', 'employee',
     ]);
     const dateColumn = findColumn(headers, [
         'date', 'delivery date', 'delivered', 'completed', 'completion date', 'uploaded', 'time',
