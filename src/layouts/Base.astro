@@ -185,16 +185,16 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
           update: '(activity is updated every 14 days)',
           lastUpdate: 'Last updated 25.10.2026 12:00 PM',
           unknown: 'Activity: unavailable',
-          active: 'Active · TruckersMP match',
-          inactive: 'Inactive · no TruckersMP match'
+          active: 'Active · TrucksBook delivery',
+          inactive: 'Inactive · over 90 days'
         },
         bg: {
           title: 'Служители',
           update: '(активността се обновява на всеки 14 дни)',
           lastUpdate: 'Последна актуализация: 25.10.2026 г., 12:00 ч.',
           unknown: 'Активност: няма данни',
-          active: 'Активен · потвърдена доставка в TruckersMP',
-          inactive: 'Неактивен · няма потвърдена доставка'
+          active: 'Активен · доставка в TrucksBook',
+          inactive: 'Неактивен · над 90 дни'
         }
       };
       const roleText = {
@@ -228,18 +228,16 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
           const normalize = (value) => String(value || '').normalize('NFKC').trim().toLocaleLowerCase('en-US').replace(/\s+/g, ' ');
           document.querySelectorAll('[data-trucksbook-name]').forEach((element) => {
             const entry = payload.data.employees?.[normalize(element.dataset.trucksbookName)];
-            const active = entry.active === true;
             const language = teamText[currentLanguage()];
-            if (entry.tmpStatus === 'unavailable') {
+            if (!entry) {
               element.className = 'texim-activity texim-activity--unknown';
               element.textContent = language.unknown;
               return;
             }
+            const active = entry.active === true;
             element.className = `texim-activity texim-activity--${active ? 'active' : 'inactive'}`;
             element.textContent = active ? language.active : language.inactive;
-            element.title = active && entry.matches?.length
-              ? `TruckersMP match: ${entry.matches[0].cargo} (${entry.matches[0].distanceKm} km)`
-              : `Last TrucksBook delivery: ${entry.lastDeliveryAt || 'unknown'}`;
+            element.title = `Last TrucksBook delivery: ${entry.lastDeliveryAt || 'unknown'}`;
           });
         } catch {
           // Activity is supplemental; employee cards remain usable if the API is unavailable.
