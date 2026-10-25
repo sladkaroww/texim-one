@@ -121,10 +121,18 @@ function parseTmpDeliveries(html) {
 
 async function getTmpDeliveries(userId) {
     const response = await fetch(`https://truckersmp.com/user/${userId}`, {
-        headers: { 'User-Agent': 'TEXIM-ONE-Activity/1.0', Accept: 'text/html' },
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36',
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-GB,en;q=0.9',
+            Referer: 'https://truckersmp.com/',
+        },
     });
+    const html = await response.text();
     if (!response.ok) throw new Error(`TruckersMP profile returned ${response.status}.`);
-    return parseTmpDeliveries(await response.text());
+    const deliveries = parseTmpDeliveries(html);
+    if (!deliveries.length) throw new Error('No readable TruckersMP deliveries found.');
+    return deliveries;
 }
 
 function parseActivity(csvText) {
@@ -206,8 +214,15 @@ async function matchTmpDeliveries(activity) {
                     distanceKm: match.distanceKm,
                 })),
             };
-        } catch {
-            results[key] = { ...employee, active: false, tmpUserId, tmpStatus: 'unavailable', matches: [] };
+        } catch (error) {
+            results[key] = {
+                ...employee,
+                active: false,
+                tmpUserId,
+                tmpStatus: 'unavailable',
+                tmpError: error?.message || 'TruckersMP profile could not be read.',
+                matches: [],
+            };
         }
     }
     return results;
