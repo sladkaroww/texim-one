@@ -90,6 +90,10 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
     .texim-team-name { font-family: Orbitron, Inter, sans-serif; font-size: .95rem; font-weight: 700; color: #111111; text-decoration: none; word-break: break-word; }
     .texim-team-name:hover { text-decoration: underline; }
     .texim-team-role { margin: .3rem 0 1rem; color: #6b7280; font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+    .texim-activity { margin: 0 0 1rem; padding: .45rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 700; }
+    .texim-activity--active { color: #166534; background: #dcfce7; }
+    .texim-activity--inactive { color: #991b1b; background: #fee2e2; }
+    .texim-activity--unknown { color: #4b5563; background: #e5e7eb; }
     .texim-team-stats { display: flex; gap: .6rem; width: 100%; justify-content: center; margin-bottom: 1.2rem; }
     .texim-stat-box { flex: 1; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: .5rem .4rem; display: flex; flex-direction: column; align-items: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02); }
     .texim-stat-label { font-size: .65rem; color: #6b7280; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
@@ -155,6 +159,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
                 />
                 <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
                 <div class="texim-team-role">${member.role}</div>
+                <div class="texim-activity texim-activity--unknown" data-trucksbook-name="${member.name}">Activity: unavailable</div>
                 <div class="texim-team-stats">
                   <div class="texim-stat-box">
                     <span class="texim-stat-label">RP</span>
@@ -174,8 +179,33 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
         aboutSection.insertAdjacentElement('afterend', section);
       };
 
+      const loadTrucksBookActivity = async () => {
+        try {
+          const response = await fetch('/api/trucksbook-activity', { cache: 'no-store' });
+          const payload = await response.json();
+          if (!response.ok || !payload.success || !payload.data) return;
+          const now = Date.now();
+          const limit = 90 * 24 * 60 * 60 * 1000;
+          const normalize = (value) => String(value || '').normalize('NFKC').trim().toLocaleLowerCase('en-US').replace(/\s+/g, ' ');
+          document.querySelectorAll('[data-trucksbook-name]').forEach((element) => {
+            const entry = payload.data.employees?.[normalize(element.dataset.trucksbookName)];
+            if (!entry?.lastDeliveryAt) return;
+            const last = new Date(`${entry.lastDeliveryAt}T00:00:00Z`).getTime();
+            const active = now - last < limit;
+            const days = Math.max(0, Math.ceil((limit - (now - last)) / (24 * 60 * 60 * 1000)));
+            element.className = `texim-activity texim-activity--${active ? 'active' : 'inactive'}`;
+            element.textContent = active ? `Active · ${days} days left` : 'Inactive · over 90 days';
+            element.title = `Last delivery: ${entry.lastDeliveryAt}`;
+          });
+        } catch {
+          // Activity is supplemental; employee cards remain usable if the API is unavailable.
+        }
+      };
+
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountTeam, { once: true });
       else mountTeam();
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', loadTrucksBookActivity, { once: true });
+      else loadTrucksBookActivity();
     })();
   </script>
 </body>
