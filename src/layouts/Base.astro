@@ -130,23 +130,23 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
         if (!aboutSection) return;
 
         const members = [
-          { name: 'chea7er044', role: 'Owner', rp: '586K', level: '1', profile: 'https://truckersmp.com/user/5605295' },
-          { name: '[BG] Mitaka', role: 'Driver', rp: '312K', level: '0', profile: 'https://truckersmp.com/user/4710545' },
-          { name: '[BG] NiksaN', role: 'Driver', rp: '0', level: '0', profile: 'https://truckersmp.com/user/4492540' },
-          { name: '[BG] Iv4o_56', role: 'Driver', rp: '68K', level: '0', profile: 'https://truckersmp.com/user/4947166' },
-          { name: 'SkodaSolaris', role: 'Driver', rp: '150K', level: '0', profile: 'https://truckersmp.com/user/1910186' },
-          { name: '[BG] cickaa', role: 'Driver', rp: '120K', level: '0', profile: 'https://truckersmp.com/user/3597382' },
-          { name: '[BG] Metko', role: 'Driver', rp: '9K', level: '0', profile: 'https://truckersmp.com/user/5118236' },
-          { name: 'Petkovv', role: 'Driver', rp: '0', level: '0', profile: 'https://truckersmp.com/user/6358471' },
-          { name: '[BG] slad', role: 'Representative', rp: '48K', level: '0', profile: 'https://truckersmp.com/user/4049929' },
-          { name: '[BG] Marvinito', role: 'Manager', rp: '389K', level: '1', profile: 'https://truckersmp.com/user/2064608' }
+          { name: 'chea7er044', role: 'role.owner', rp: '586K', level: '1', profile: 'https://truckersmp.com/user/5605295' },
+          { name: '[BG] Mitaka', role: 'role.driver', rp: '312K', level: '0', profile: 'https://truckersmp.com/user/4710545' },
+          { name: '[BG] NiksaN', role: 'role.driver', rp: '0', level: '0', profile: 'https://truckersmp.com/user/4492540' },
+          { name: '[BG] Iv4o_56', role: 'role.driver', rp: '68K', level: '0', profile: 'https://truckersmp.com/user/4947166' },
+          { name: 'SkodaSolaris', role: 'role.driver', rp: '150K', level: '0', profile: 'https://truckersmp.com/user/1910186' },
+          { name: '[BG] cickaa', role: 'role.driver', rp: '120K', level: '0', profile: 'https://truckersmp.com/user/3597382' },
+          { name: '[BG] Metko', role: 'role.driver', rp: '9K', level: '0', profile: 'https://truckersmp.com/user/5118236' },
+          { name: 'Petkkov', role: 'role.driver', rp: '0', level: '0', profile: 'https://truckersmp.com/user/6358471' },
+          { name: '[BG] slad', role: 'role.representative', rp: '48K', level: '0', profile: 'https://truckersmp.com/user/4049929' },
+          { name: '[BG] Marvinito', role: 'role.manager', rp: '389K', level: '1', profile: 'https://truckersmp.com/user/2064608' }
         ];
 
         const section = document.createElement('section');
         section.className = 'texim-team-section';
         section.innerHTML = `<div class="container">
           <div class="texim-team-header">
-            <h2 class="texim-team-title">Employees <span class="texim-team-subtitle">(activity is updated every 14 days)<br />Last updated 25.10.2026 12:00 PM</span></h2>
+            <h2 class="texim-team-title"><span data-team-title>Employees</span> <span class="texim-team-subtitle"><span data-team-update>(activity is updated every 14 days)</span><br /><span data-team-last-update>Last updated 25.10.2026 12:00 PM</span></span></h2>
           </div>
           <div class="texim-team-grid">
             ${members.map(member => `
@@ -158,7 +158,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
                   loading="lazy"
                 />
                 <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
-                <div class="texim-team-role">${member.role}</div>
+                <div class="texim-team-role" data-team-role="${member.role}">${member.role}</div>
                 <div class="texim-activity texim-activity--unknown" data-trucksbook-name="${member.name}">Activity: unavailable</div>
                 <div class="texim-team-stats">
                   <div class="texim-stat-box">
@@ -179,7 +179,48 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
         aboutSection.insertAdjacentElement('afterend', section);
       };
 
+      const teamText = {
+        en: {
+          title: 'Employees',
+          update: '(activity is updated every 14 days)',
+          lastUpdate: 'Last updated 25.10.2026 12:00 PM',
+          unknown: 'Activity: unavailable',
+          active: (days) => `Active · ${days} days left`,
+          inactive: 'Inactive · over 90 days'
+        },
+        bg: {
+          title: 'Служители',
+          update: '(активността се обновява на всеки 14 дни)',
+          lastUpdate: 'Последна актуализация: 25.10.2026 г., 12:00 ч.',
+          unknown: 'Активност: няма данни',
+          active: (days) => `Активен · остават ${days} дни`,
+          inactive: 'Неактивен · над 90 дни'
+        }
+      };
+      const roleText = {
+        en: { 'role.owner': 'Owner', 'role.driver': 'Driver', 'role.representative': 'Representative', 'role.manager': 'Manager' },
+        bg: { 'role.owner': 'Собственик', 'role.driver': 'Шофьор', 'role.representative': 'Представител', 'role.manager': 'Мениджър' }
+      };
+      const currentLanguage = () => localStorage.getItem('texim_lang') === 'bg' ? 'bg' : 'en';
+      const applyTeamLanguage = () => {
+        const language = teamText[currentLanguage()];
+        const roles = roleText[currentLanguage()];
+        const title = document.querySelector('[data-team-title]');
+        const update = document.querySelector('[data-team-update]');
+        const lastUpdate = document.querySelector('[data-team-last-update]');
+        if (title) title.textContent = language.title;
+        if (update) update.textContent = language.update;
+        if (lastUpdate) lastUpdate.textContent = language.lastUpdate;
+        document.querySelectorAll('[data-team-role]').forEach((element) => {
+          element.textContent = roles[element.dataset.teamRole] || element.dataset.teamRole;
+        });
+        document.querySelectorAll('[data-trucksbook-name]').forEach((element) => {
+          if (element.classList.contains('texim-activity--unknown')) element.textContent = language.unknown;
+        });
+      };
+
       const loadTrucksBookActivity = async () => {
+        applyTeamLanguage();
         try {
           const response = await fetch('/api/trucksbook-activity', { cache: 'no-store' });
           const payload = await response.json();
@@ -194,7 +235,8 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
             const active = now - last < limit;
             const days = Math.max(0, Math.ceil((limit - (now - last)) / (24 * 60 * 60 * 1000)));
             element.className = `texim-activity texim-activity--${active ? 'active' : 'inactive'}`;
-            element.textContent = active ? `Active · ${days} days left` : 'Inactive · over 90 days';
+            const language = teamText[currentLanguage()];
+            element.textContent = active ? language.active(days) : language.inactive;
             element.title = `Last delivery: ${entry.lastDeliveryAt}`;
           });
         } catch {
@@ -206,6 +248,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
       else mountTeam();
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', loadTrucksBookActivity, { once: true });
       else loadTrucksBookActivity();
+      document.addEventListener('texim:langchange', applyTeamLanguage);
     })();
   </script>
 </body>

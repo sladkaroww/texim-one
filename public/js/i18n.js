@@ -33,6 +33,16 @@
       'stat.founded': 'Years Experience',
       'stat.km': 'Mln WoTr Km',
       'stat.discord': 'Discord Members',
+      'team.title': 'Employees',
+      'team.update': '(activity is updated every 14 days)',
+      'team.lastUpdate': 'Last updated 25.10.2026 12:00 PM',
+      'activity.unknown': 'Activity: unavailable',
+      'activity.active': 'Active · {days} days left',
+      'activity.inactive': 'Inactive · over 90 days',
+      'role.owner': 'Owner',
+      'role.driver': 'Driver',
+      'role.representative': 'Representative',
+      'role.manager': 'Manager',
 
       // Home - Features
       'about.title': 'About Us',
@@ -149,6 +159,16 @@
       'stat.founded': 'Години Опит',
       'stat.km': 'Млн WoTr Км',
       'stat.discord': 'Discord Членове',
+      'team.title': 'Служители',
+      'team.update': '(активността се обновява на всеки 14 дни)',
+      'team.lastUpdate': 'Последна актуализация: 25.10.2026 г., 12:00 ч.',
+      'activity.unknown': 'Активност: няма данни',
+      'activity.active': 'Активен · остават {days} дни',
+      'activity.inactive': 'Неактивен · над 90 дни',
+      'role.owner': 'Собственик',
+      'role.driver': 'Шофьор',
+      'role.representative': 'Представител',
+      'role.manager': 'Мениджър',
 
       'about.title': 'За нас',
       // Home - Features
