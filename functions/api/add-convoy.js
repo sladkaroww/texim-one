@@ -49,9 +49,7 @@ export async function onRequest(context) {
         return json({ success: false, message: 'This invitation has expired or was already used.' }, 410);
     }
 
-    // eventData was resolved from TruckersMP before the invitation was created.
-    // Use it as the source of truth when approving the convoy, while retaining
-    // the contact details supplied by the inviter.
+    // Keep compatibility with older invitations that included API event data.
     const apiEvent = invite.eventData && typeof invite.eventData === 'object'
         ? invite.eventData
         : null;
