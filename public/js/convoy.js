@@ -21,12 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Pink Ribbon VTC - February Convoy', url: 'https://truckersmp.com/events/37152', startAt: '2027-02-05T19:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' }
     ];
 
+    const cutoff = new Date('2026-11-01T00:00:00');
+    const upcomingEvents = events.filter((event) => new Date(event.startAt) >= cutoff);
     let expanded = false;
 
     function load() {
-        const visibleEvents = expanded ? events : events.slice(0, 3);
+        const visibleEvents = expanded ? upcomingEvents : upcomingEvents.slice(0, 3);
         list.innerHTML = visibleEvents.map(eventHTML).join('') + `
-            ${events.length > 3 ? `
+            ${upcomingEvents.length > 3 ? `
                 <div style="grid-column:1/-1;text-align:center;margin-top:1.5rem;">
                     <button type="button" class="btn btn-primary btn-block" id="convoyToggle">
                         ${expanded ? 'Show Less' : 'See More'}
