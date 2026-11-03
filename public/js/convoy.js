@@ -13,12 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Truck Club | November Convoy', url: 'https://truckersmp.com/events/35786', startAt: '2026-11-18T19:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
         { name: '🟡 Nova Group | November Convoy', url: 'https://truckersmp.com/events/36372', startAt: '2026-11-19T17:30:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
         { name: 'Pink Ribbon VTC - December Convoy', url: 'https://truckersmp.com/events/36101', startAt: '2026-12-04T19:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
+        { name: 'Twisted Transport Christmas Convoy', url: 'https://truckersmp.com/events/36367', startAt: '2026-12-18T20:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
         { name: '🟡 Nova Group | December Convoy', url: 'https://truckersmp.com/events/37088', startAt: '2026-12-23T17:30:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
         { name: '🟡 Nova Group | January Convoy', url: 'https://truckersmp.com/events/37318', startAt: '2027-01-05T17:30:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
         { name: "Marking Event | New Year's Event 2027", url: 'https://truckersmp.com/events/36669', startAt: '2027-01-08T18:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
         { name: 'Pink Ribbon VTC - January Convoy', url: 'https://truckersmp.com/events/36805', startAt: '2027-01-15T19:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
         { name: 'Central Transport 4th Anniversary Convoy', url: 'https://truckersmp.com/events/37087', startAt: '2027-01-31T17:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
-        { name: 'Pink Ribbon VTC - February Convoy', url: 'https://truckersmp.com/events/37152', startAt: '2027-02-05T19:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' }
+        { name: 'Pink Ribbon VTC - February Convoy', url: 'https://truckersmp.com/events/37152', startAt: '2027-02-05T19:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
+        { name: '🟡 Nova Group | February Convoy', url: 'https://truckersmp.com/events/37889', startAt: '2027-02-10T17:30:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' },
+        { name: 'TQD Mar Monthly Convoy', url: 'https://truckersmp.com/events/38177', startAt: '2027-03-25T19:00:00', type: 'Convoy', game: 'ETS2', server: 'To be determined' }
     ];
 
     const cutoff = new Date('2026-11-01T00:00:00');
