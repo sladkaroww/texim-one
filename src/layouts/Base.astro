@@ -1,7 +1,6 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import LangModal from '../components/LangModal.astro';
 import Preloader from '../components/Preloader.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 import '../styles/global.css';
@@ -48,7 +47,6 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
   <meta property="og:image:width" content="1920" />
   <meta property="og:image:height" content="1080" />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:locale:alternate" content="bg_BG" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
@@ -90,10 +88,6 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
     .texim-team-name { font-family: Orbitron, Inter, sans-serif; font-size: .95rem; font-weight: 700; color: #111111; text-decoration: none; word-break: break-word; }
     .texim-team-name:hover { text-decoration: underline; }
     .texim-team-role { margin: .3rem 0 1rem; color: #6b7280; font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
-    .texim-activity { margin: 0 0 1rem; padding: .45rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 700; }
-    .texim-activity--active { color: #166534; background: #dcfce7; }
-    .texim-activity--inactive { color: #991b1b; background: #fee2e2; }
-    .texim-activity--unknown { color: #4b5563; background: #e5e7eb; }
     .texim-team-stats { display: flex; gap: .6rem; width: 100%; justify-content: center; margin-bottom: 1.2rem; }
     .texim-stat-box { flex: 1; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: .5rem .4rem; display: flex; flex-direction: column; align-items: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02); }
     .texim-stat-label { font-size: .65rem; color: #6b7280; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
@@ -114,8 +108,6 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
     <slot />
   </main>
   <Footer />
-  <LangModal />
-  <script src="/js/i18n.js" is:inline></script>
   <script src="/js/main.js" is:inline></script>
   <slot name="scripts" />
   <CookieConsent token={analyticsToken} />
@@ -125,7 +117,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
 
       const mountTeam = () => {
         if (document.querySelector('.texim-team-section')) return;
-        const aboutTitle = document.querySelector('h2[data-i18n="about.title"]');
+        const aboutTitle = document.querySelector('[data-about-section] h2');
         const aboutSection = aboutTitle?.closest('section');
         if (!aboutSection) return;
 
@@ -146,7 +138,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
         section.className = 'texim-team-section';
         section.innerHTML = `<div class="container">
           <div class="texim-team-header">
-            <h2 class="texim-team-title"><span data-team-title>Employees</span> <span class="texim-team-subtitle"><span data-team-update>(activity is updated every 14 days)</span><br /><span data-team-last-update>Last updated 25.10.2026 12:00 PM</span></span></h2>
+            <h2 class="texim-team-title">Employees</h2>
           </div>
           <div class="texim-team-grid">
             ${members.map(member => `
@@ -158,8 +150,7 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
                   loading="lazy"
                 />
                 <a class="texim-team-name" href="${member.profile}" target="_blank" rel="noopener noreferrer">${member.name}</a>
-                <div class="texim-team-role" data-team-role="${member.role}">${member.role}</div>
-                <div class="texim-activity texim-activity--unknown" data-trucksbook-name="${member.name}">Activity: unavailable</div>
+                <div class="texim-team-role">${member.role}</div>
                 <div class="texim-team-stats">
                   <div class="texim-stat-box">
                     <span class="texim-stat-label">RP</span>
@@ -179,76 +170,8 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN ?? 'c6129cb
         aboutSection.insertAdjacentElement('afterend', section);
       };
 
-      const teamText = {
-        en: {
-          title: 'Employees',
-          update: '(activity is updated every 14 days)',
-          lastUpdate: 'Last updated 25.10.2026 12:00 PM',
-          unknown: 'Activity: unavailable',
-          active: 'Active · TrucksBook delivery',
-          inactive: 'Inactive · over 90 days'
-        },
-        bg: {
-          title: 'Служители',
-          update: '(активността се обновява на всеки 14 дни)',
-          lastUpdate: 'Последна актуализация: 25.10.2026 г., 12:00 ч.',
-          unknown: 'Активност: няма данни',
-          active: 'Активен · доставка в TrucksBook',
-          inactive: 'Неактивен · над 90 дни'
-        }
-      };
-      const roleText = {
-        en: { 'role.owner': 'Owner', 'role.driver': 'Driver', 'role.representative': 'Representative', 'role.manager': 'Manager' },
-        bg: { 'role.owner': 'Собственик', 'role.driver': 'Шофьор', 'role.representative': 'Представител', 'role.manager': 'Мениджър' }
-      };
-      const currentLanguage = () => localStorage.getItem('texim_lang') === 'bg' ? 'bg' : 'en';
-      const applyTeamLanguage = () => {
-        const language = teamText[currentLanguage()];
-        const roles = roleText[currentLanguage()];
-        const title = document.querySelector('[data-team-title]');
-        const update = document.querySelector('[data-team-update]');
-        const lastUpdate = document.querySelector('[data-team-last-update]');
-        if (title) title.textContent = language.title;
-        if (update) update.textContent = language.update;
-        if (lastUpdate) lastUpdate.textContent = language.lastUpdate;
-        document.querySelectorAll('[data-team-role]').forEach((element) => {
-          element.textContent = roles[element.dataset.teamRole] || element.dataset.teamRole;
-        });
-        document.querySelectorAll('[data-trucksbook-name]').forEach((element) => {
-          if (element.classList.contains('texim-activity--unknown')) element.textContent = language.unknown;
-        });
-      };
-
-      const loadTrucksBookActivity = async () => {
-        applyTeamLanguage();
-        try {
-          const response = await fetch('/api/trucksbook-activity', { cache: 'no-store' });
-          const payload = await response.json();
-          if (!response.ok || !payload.success || !payload.data) return;
-          const normalize = (value) => String(value || '').normalize('NFKC').trim().toLocaleLowerCase('en-US').replace(/\s+/g, ' ');
-          document.querySelectorAll('[data-trucksbook-name]').forEach((element) => {
-            const entry = payload.data.employees?.[normalize(element.dataset.trucksbookName)];
-            const language = teamText[currentLanguage()];
-            if (!entry) {
-              element.className = 'texim-activity texim-activity--unknown';
-              element.textContent = language.unknown;
-              return;
-            }
-            const active = entry.active === true;
-            element.className = `texim-activity texim-activity--${active ? 'active' : 'inactive'}`;
-            element.textContent = active ? language.active : language.inactive;
-            element.title = `Last TrucksBook delivery: ${entry.lastDeliveryAt || 'unknown'}`;
-          });
-        } catch {
-          // Activity is supplemental; employee cards remain usable if the API is unavailable.
-        }
-      };
-
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountTeam, { once: true });
       else mountTeam();
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', loadTrucksBookActivity, { once: true });
-      else loadTrucksBookActivity();
-      document.addEventListener('texim:langchange', applyTeamLanguage);
     })();
   </script>
 </body>

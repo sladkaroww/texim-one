@@ -83,5 +83,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     load();
-    document.addEventListener('texim:langchange', load);
 });

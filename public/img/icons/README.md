@@ -5,7 +5,6 @@ This directory holds SVG icons used in the site footer and elsewhere.
 Upload your SVG files here with these recommended names:
 - DISCORD.png
 - TRUCKERSMP.png
-- TRUCKSBOOK.png
 - STEAM.png
 - TWITCH.png
 
